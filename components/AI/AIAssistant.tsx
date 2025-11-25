@@ -1,6 +1,8 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
 import {
   Send,
   User,
@@ -33,6 +35,7 @@ interface Message {
   feedback?: "helpful" | "not-helpful";
 }
 
+gsap.registerPlugin(ScrollToPlugin);
 export const AIAssistant = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);

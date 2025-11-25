@@ -103,7 +103,7 @@ function LoadingScreen() {
             ref={textRef}
             className="text-3xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
           >
-            <span className="cursor">|</span>
+            <span className="cursor">Soruj Mahmud</span>
           </h2>
 
           <div className="w-80 h-3 bg-gray-800 rounded-full overflow-hidden shadow-inner">

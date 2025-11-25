@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-import { JSONLoader } from "@langchain/classic/document_loaders/fs/json";
+import {
+  JSONLinesLoader,
+  JSONLoader,
+} from "@langchain/classic/document_loaders/fs/json";
+import { TextLoader } from "@langchain/classic/document_loaders/fs/text";
+import { DirectoryLoader } from "@langchain/classic/document_loaders/fs/directory";
 
 interface AIRequestBody {
   message: string;
@@ -39,36 +44,68 @@ export async function POST(request: NextRequest) {
       apiKey: GOOGLE_API_KEY,
     });
 
-    // Load JSON data
-    const loader = new JSONLoader("./data/Parsonal.json");
-    const docs = await loader.load();
+    try {
+      // Load data from directory
+      const loader = new DirectoryLoader("./data", {
+        ".json": (path) => new JSONLoader(path),
+        ".jsonl": (path) => new JSONLinesLoader(path, "/html"),
+        ".txt": (path) => new TextLoader(path),
+      });
+      const docs = await loader.load();
 
-    // Format the conversation properly
-    const formattedHistory =
-      history?.map((msg) => `${msg.role}: ${msg.content}`).join("\n") || "";
+      // Format the conversation properly
+      const formattedHistory =
+        history?.map((msg) => `${msg.role}: ${msg.content}`).join("\n") || "";
 
-    // Create the prompt with context from JSON and conversation history
-    const prompt = `
+      // Create the prompt with context from loaded data and conversation history
+      const contextText =
+        docs.length > 0
+          ? docs.map((doc) => doc.pageContent).join("\n")
+          : "No context data available.";
+
+      const prompt = `
 Context from data:
-${docs.map((doc) => doc.pageContent).join("\n")}
+${contextText}
 
 ${formattedHistory ? `Conversation history:\n${formattedHistory}\n\n` : ""}
 User: ${message}
 
 Assistant:`;
 
-    // Invoke the model with the proper prompt
-    const aiResponse = await model.invoke([
-      {
-        role: "user",
-        content: prompt,
-      },
-    ]);
+      // Invoke the model with the proper prompt
+      const aiResponse = await model.invoke([
+        {
+          role: "user",
+          content: prompt,
+        },
+      ]);
 
-    return NextResponse.json({
-      success: true,
-      response: aiResponse.content,
-    });
+      return NextResponse.json({
+        success: true,
+        response: aiResponse.content,
+      });
+    } catch (fileError) {
+      console.error("Error loading data files:", fileError);
+      // If file loading fails, continue without context
+      const formattedHistory =
+        history?.map((msg) => `${msg.role}: ${msg.content}`).join("\n") || "";
+
+      const prompt = `${
+        formattedHistory ? `Conversation history:\n${formattedHistory}\n\n` : ""
+      }User: ${message}\n\nAssistant:`;
+
+      const aiResponse = await model.invoke([
+        {
+          role: "user",
+          content: prompt,
+        },
+      ]);
+
+      return NextResponse.json({
+        success: true,
+        response: aiResponse.content,
+      });
+    }
   } catch (error: unknown) {
     console.error("AI message handling error:", error);
 

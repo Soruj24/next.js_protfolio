@@ -10,7 +10,7 @@ function LoadingScreen() {
     const ctx = gsap.context(() => {
       if (textRef.current) {
         gsap.to(textRef.current, {
-          text: "Soruj Mahmud • LangChain Specialist • MCP Server Expert",
+          text: "Soruj Mahmud",
           duration: 3,
           ease: "none",
           onComplete: () => {
