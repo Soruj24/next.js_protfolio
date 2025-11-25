@@ -169,7 +169,7 @@ function SkillsShowcase() {
                         </div>
                       </div>
                       <p className="text-gray-400 text-sm mt-2">
-                        {skill.description}
+                        {'description' in skill ? skill.description : ''}
                       </p>
                     </div>
                   ))}
