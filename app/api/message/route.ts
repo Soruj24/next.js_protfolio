@@ -1,5 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import { JSONLoader } from "@langchain/classic/document_loaders/fs/json";
 
 interface AIRequestBody {
   message: string;
@@ -8,7 +9,7 @@ interface AIRequestBody {
 
 export async function POST(request: NextRequest) {
   try {
-    const { message, history } = await request.json() as AIRequestBody;
+    const { message, history } = (await request.json()) as AIRequestBody;
 
     if (!message) {
       return NextResponse.json(
@@ -22,7 +23,11 @@ export async function POST(request: NextRequest) {
     if (!GOOGLE_API_KEY) {
       console.error("GOOGLE_API_KEY is not set in environment variables.");
       return NextResponse.json(
-        { success: false, message: "AI service is currently unavailable. Please try again later." },
+        {
+          success: false,
+          message:
+            "AI service is currently unavailable. Please try again later.",
+        },
         { status: 503 }
       );
     }
@@ -34,50 +39,44 @@ export async function POST(request: NextRequest) {
       apiKey: GOOGLE_API_KEY,
     });
 
-    // Enhanced prompt with portfolio context
-    const portfolioContext = `
-You are Soruj Mahmud's AI assistant. Soruj is a full-stack developer specializing in:
-- LangChain and AI applications
-- MCP Server development
-- Next.js, React, TypeScript
-- MongoDB, Node.js
-- Modern web technologies
+    // Load JSON data
+    const loader = new JSONLoader("./data/Parsonal.json");
+    const docs = await loader.load();
 
-Key information about Soruj:
-- Email: sorujmahmudb2h@gmail.com
-- Phone: +8801795397598
-- Location: Nagur Pur, Tangail, Dhaka, Bangladesh
-- Experience: 3+ years in web development
-- Education: HSC Science background
-- Skills: Full-stack development, AI integration, modern frameworks
+    // Format the conversation properly
+    const formattedHistory =
+      history?.map((msg) => `${msg.role}: ${msg.content}`).join("\n") || "";
 
-Please provide helpful, professional responses about Soruj's:
-1. Projects and technical implementations
-2. Skills and technology stack
-3. Work experience and background
-4. Contact information
-5. Education and certifications
+    // Create the prompt with context from JSON and conversation history
+    const prompt = `
+Context from data:
+${docs.map((doc) => doc.pageContent).join("\n")}
 
-Be concise but informative. If you're unsure about specific details, direct them to contact Soruj directly.
+${formattedHistory ? `Conversation history:\n${formattedHistory}\n\n` : ""}
+User: ${message}
 
-${history && history.length > 0 ? `Conversation history: ${JSON.stringify(history)}\n\n` : ''}
-User message: ${message}
-`;
+Assistant:`;
 
-    const aiResponse = await model.invoke(portfolioContext);
-    
+    // Invoke the model with the proper prompt
+    const aiResponse = await model.invoke([
+      {
+        role: "user",
+        content: prompt,
+      },
+    ]);
+
     return NextResponse.json({
       success: true,
-      response: aiResponse.content
+      response: aiResponse.content,
     });
-    
   } catch (error: unknown) {
-    console.error('AI message handling error:', error);
-    
+    console.error("AI message handling error:", error);
+
     return NextResponse.json(
-      { 
-        success: false, 
-        message: 'Unable to process your request at the moment. Please try again.' 
+      {
+        success: false,
+        message:
+          "Unable to process your request at the moment. Please try again.",
       },
       { status: 500 }
     );
