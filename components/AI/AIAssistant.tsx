@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
+import { gsap } from "gsap";
 import {
   Send,
   User,
@@ -36,6 +37,8 @@ export const AIAssistant = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const quickSuggestionsRef = useRef<HTMLDivElement>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
@@ -65,12 +68,181 @@ export const AIAssistant = () => {
     { text: "Latest project details", icon: Zap, category: "projects" },
   ];
 
-  // Auto-scroll to bottom
+  // GSAP Animations
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-    });
+    if (!isChatOpen || isMinimized) return;
+
+    const ctx = gsap.context(() => {
+      // Chat container entrance animation
+      gsap.fromTo(
+        chatContainerRef.current,
+        {
+          scale: 0.8,
+          opacity: 0,
+          y: 50,
+          rotationY: 15,
+        },
+        {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          rotationY: 0,
+          duration: 0.6,
+          ease: "back.out(1.7)",
+        }
+      );
+
+      // Header animation
+      gsap.fromTo(
+        ".chat-header",
+        {
+          y: -30,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          delay: 0.2,
+          ease: "power2.out",
+        }
+      );
+
+      // Messages area animation
+      gsap.fromTo(
+        messagesContainerRef.current,
+        {
+          opacity: 0,
+          scale: 0.95,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.5,
+          delay: 0.3,
+          ease: "power2.out",
+        }
+      );
+
+      // Input area animation
+      gsap.fromTo(
+        ".chat-input",
+        {
+          y: 30,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          delay: 0.4,
+          ease: "power2.out",
+        }
+      );
+
+      // Quick suggestions animation when no messages
+      if (messages.length === 0 && quickSuggestionsRef.current) {
+        gsap.fromTo(
+          ".quick-suggestion",
+          {
+            y: 20,
+            opacity: 0,
+            scale: 0.8,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            stagger: 0.1,
+            delay: 0.6,
+            ease: "back.out(1.7)",
+          }
+        );
+      }
+
+      // Existing messages animation
+      if (messages.length > 0) {
+        gsap.fromTo(
+          ".message-item",
+          {
+            y: 30,
+            opacity: 0,
+            rotationX: 45,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            rotationX: 0,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "back.out(1.7)",
+          }
+        );
+      }
+    }, chatContainerRef);
+
+    return () => ctx.revert();
+  }, [isChatOpen, isMinimized, messages.length]);
+
+  // Message animations when new messages are added
+  useEffect(() => {
+    if (messages.length === 0) return;
+
+    const ctx = gsap.context(() => {
+      // Animate the last message
+      const lastMessage = document.querySelector(".message-item:last-child");
+      if (lastMessage) {
+        gsap.fromTo(
+          lastMessage,
+          {
+            y: 50,
+            opacity: 0,
+            scale: 0.8,
+            rotationY: messages[messages.length - 1].type === "user" ? -30 : 30,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            rotationY: 0,
+            duration: 0.5,
+            ease: "back.out(1.7)",
+          }
+        );
+      }
+    }, messagesContainerRef);
+
+    return () => ctx.revert();
+  }, [messages]);
+
+  // Loading animation
+  useEffect(() => {
+    if (isLoading) {
+      const ctx = gsap.context(() => {
+        gsap.to(".loading-dot", {
+          y: -10,
+          duration: 0.6,
+          repeat: -1,
+          yoyo: true,
+          stagger: 0.2,
+          ease: "sine.inOut",
+        });
+      }, messagesContainerRef);
+
+      return () => ctx.revert();
+    }
+  }, [isLoading]);
+
+  // Auto-scroll to bottom with animation
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      gsap.to(messagesContainerRef.current, {
+        scrollTo: { y: "max", autoKill: false },
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    }
   }, [messages, isLoading]);
 
   // Auto-resize textarea and focus
@@ -81,11 +253,16 @@ export const AIAssistant = () => {
         Math.min(textareaRef.current.scrollHeight, 120) + "px";
     }
 
-    // Focus input when chat opens
+    // Focus input when chat opens with animation
     if (isChatOpen && !isMinimized) {
       setTimeout(() => {
         textareaRef.current?.focus();
-      }, 300);
+        gsap.fromTo(
+          textareaRef.current,
+          { scale: 0.95, opacity: 0.8 },
+          { scale: 1, opacity: 1, duration: 0.3, ease: "power2.out" }
+        );
+      }, 500);
     }
   }, [inputMessage, isChatOpen, isMinimized]);
 
@@ -97,7 +274,14 @@ export const AIAssistant = () => {
         !chatContainerRef.current.contains(event.target as Node) &&
         isChatOpen
       ) {
-        setIsMinimized(true);
+        // Animate out before minimizing
+        gsap.to(chatContainerRef.current, {
+          scale: 0.9,
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in",
+          onComplete: () => setIsMinimized(true),
+        });
       }
     };
 
@@ -251,15 +435,43 @@ export const AIAssistant = () => {
     category: string;
   }) => {
     setInputMessage(suggestion.text);
+    
+    // Animate the clicked suggestion
+    const button = document.querySelector(`[data-suggestion="${suggestion.text}"]`);
+    if (button) {
+      gsap.fromTo(
+        button,
+        { scale: 1 },
+        {
+          scale: 1.1,
+          duration: 0.2,
+          yoyo: true,
+          repeat: 1,
+          ease: "power2.inOut",
+        }
+      );
+    }
+    
     setTimeout(() => {
       textareaRef.current?.focus();
     }, 100);
   };
 
   const clearChat = () => {
-    setMessages([]);
-    setShowFeedback(null);
-    setConversationHistory([]);
+    // Animate messages out before clearing
+    gsap.to(".message-item", {
+      opacity: 0,
+      y: -30,
+      rotationX: -45,
+      duration: 0.4,
+      stagger: 0.05,
+      ease: "power2.in",
+      onComplete: () => {
+        setMessages([]);
+        setShowFeedback(null);
+        setConversationHistory([]);
+      },
+    });
   };
 
   const handleFeedback = (messageId: string, isPositive: boolean) => {
@@ -272,7 +484,22 @@ export const AIAssistant = () => {
     );
     setShowFeedback(null);
 
-    // In a real app, you might want to send this feedback to your analytics
+    // Animate feedback
+    const feedbackButton = document.querySelector(`[data-feedback="${messageId}"]`);
+    if (feedbackButton) {
+      gsap.fromTo(
+        feedbackButton,
+        { scale: 1 },
+        {
+          scale: 1.3,
+          duration: 0.3,
+          yoyo: true,
+          repeat: 1,
+          ease: "elastic.out(1, 0.5)",
+        }
+      );
+    }
+
     console.log(
       `Feedback: ${
         isPositive ? "positive" : "negative"
@@ -284,6 +511,16 @@ export const AIAssistant = () => {
     if (!isSpeaking) {
       // Start speech recognition (simulated for demo)
       setIsSpeaking(true);
+      
+      // Animate microphone
+      gsap.to(".mic-button", {
+        scale: 1.2,
+        duration: 0.3,
+        yoyo: true,
+        repeat: -1,
+        ease: "power2.inOut",
+      });
+      
       try {
         // In a real implementation, you would use the Web Speech API
         // For now, we'll simulate voice input with common questions
@@ -299,12 +536,23 @@ export const AIAssistant = () => {
         const randomQuestion =
           voiceQuestions[Math.floor(Math.random() * voiceQuestions.length)];
         setInputMessage(randomQuestion);
+        
+        // Animate input appearance
+        gsap.fromTo(
+          textareaRef.current,
+          { scale: 0.9, opacity: 0.5 },
+          { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)" }
+        );
       } finally {
         setIsSpeaking(false);
+        gsap.killTweensOf(".mic-button");
+        gsap.to(".mic-button", { scale: 1, duration: 0.3 });
       }
     } else {
       // Stop speech recognition
       setIsSpeaking(false);
+      gsap.killTweensOf(".mic-button");
+      gsap.to(".mic-button", { scale: 1, duration: 0.3 });
     }
   };
 
@@ -350,9 +598,31 @@ export const AIAssistant = () => {
     a.href = url;
     a.download = `portfolio-chat-${new Date().toISOString().split("T")[0]}.txt`;
     document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    
+    // Animate download button
+    const downloadBtn = document.querySelector(".download-button");
+    if (downloadBtn) {
+      gsap.fromTo(
+        downloadBtn,
+        { scale: 1 },
+        {
+          scale: 1.2,
+          duration: 0.3,
+          yoyo: true,
+          repeat: 1,
+          ease: "power2.inOut",
+          onComplete: () => {
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          },
+        }
+      );
+    } else {
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
   };
 
   // Floating Chat Button
@@ -433,10 +703,10 @@ export const AIAssistant = () => {
   return (
     <div
       ref={chatContainerRef}
-      className="fixed bottom-6 right-6 w-96 h-[600px] flex flex-col bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 z-50 animate-slide-up"
+      className="fixed bottom-6 right-6 w-96 h-[600px] flex flex-col bg-gray-800 rounded-2xl shadow-2xl border border-gray-700 z-50"
     >
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-4 rounded-t-2xl">
+      <div className="chat-header bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-4 rounded-t-2xl">
         <div className="flex items-center justify-between text-white">
           <div className="flex items-center space-x-3">
             <div className="relative">
@@ -457,7 +727,7 @@ export const AIAssistant = () => {
             {messages.length > 0 && (
               <button
                 onClick={exportConversation}
-                className="text-white hover:text-gray-200 transition-colors p-2"
+                className="download-button text-white hover:text-gray-200 transition-colors p-2"
                 title="Export conversation"
               >
                 <Download className="w-4 h-4" />
@@ -491,8 +761,8 @@ export const AIAssistant = () => {
 
       {/* Messages Area */}
       <div
+        ref={messagesContainerRef}
         className="flex-1 overflow-y-auto px-6 py-4 space-y-4 bg-gradient-to-br from-gray-900 to-gray-800 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800"
-        ref={messagesEndRef}
       >
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center space-y-6 px-4">
@@ -516,14 +786,15 @@ export const AIAssistant = () => {
             </div>
 
             {/* Enhanced Quick Actions */}
-            <div className="grid grid-cols-2 gap-3 w-full">
+            <div ref={quickSuggestionsRef} className="grid grid-cols-2 gap-3 w-full">
               {quickSuggestions.map((suggestion, index) => {
                 const Icon = suggestion.icon;
                 return (
                   <button
                     key={index}
+                    data-suggestion={suggestion.text}
                     onClick={() => handleSuggestionClick(suggestion)}
-                    className="bg-gray-700 hover:bg-gray-600 border border-gray-600 text-gray-200 px-4 py-3 rounded-xl text-sm transition-all duration-200 hover:shadow-md hover:border-blue-500 hover:text-blue-300 text-left group flex items-center space-x-2"
+                    className="quick-suggestion bg-gray-700 hover:bg-gray-600 border border-gray-600 text-gray-200 px-4 py-3 rounded-xl text-sm transition-all duration-200 hover:shadow-md hover:border-blue-500 hover:text-blue-300 text-left group flex items-center space-x-2"
                   >
                     <Icon className="w-4 h-4 text-blue-400 group-hover:scale-110 transition-transform" />
                     <span className="flex-1">{suggestion.text}</span>
@@ -537,7 +808,7 @@ export const AIAssistant = () => {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex items-start space-x-3 group ${
+                className={`message-item flex items-start space-x-3 group ${
                   message.type === "user"
                     ? "flex-row-reverse space-x-reverse"
                     : ""
@@ -601,6 +872,7 @@ export const AIAssistant = () => {
                           <Volume2 className="w-3 h-3" />
                         </button>
                         <button
+                          data-feedback={message.id}
                           onClick={() =>
                             setShowFeedback(
                               showFeedback === message.id ? null : message.id
@@ -664,15 +936,9 @@ export const AIAssistant = () => {
                 <div className="bg-gray-700 border border-gray-600 text-gray-200 px-4 py-3 rounded-2xl rounded-bl-none shadow-sm">
                   <div className="flex items-center space-x-2 text-sm text-gray-400">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
-                      <div
-                        className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
-                        style={{ animationDelay: "0.1s" }}
-                      ></div>
-                      <div
-                        className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
-                        style={{ animationDelay: "0.2s" }}
-                      ></div>
+                      <div className="loading-dot w-2 h-2 bg-blue-400 rounded-full"></div>
+                      <div className="loading-dot w-2 h-2 bg-blue-400 rounded-full"></div>
+                      <div className="loading-dot w-2 h-2 bg-blue-400 rounded-full"></div>
                     </div>
                     <span>Thinking...</span>
                   </div>
@@ -685,7 +951,7 @@ export const AIAssistant = () => {
       </div>
 
       {/* Enhanced Input Area */}
-      <div className="border-t border-gray-700 bg-gray-800/95 backdrop-blur-sm p-6 rounded-b-2xl">
+      <div className="chat-input border-t border-gray-700 bg-gray-800/95 backdrop-blur-sm p-6 rounded-b-2xl">
         <form onSubmit={handleSubmit} className="flex space-x-3 items-end">
           <div className="flex-1 relative">
             <textarea
@@ -710,9 +976,9 @@ export const AIAssistant = () => {
               <button
                 type="button"
                 onClick={handleSpeak}
-                className={`p-1 rounded transition-colors ${
+                className={`mic-button p-1 rounded transition-colors ${
                   isSpeaking
-                    ? "text-red-400 bg-red-900/50 animate-pulse"
+                    ? "text-red-400 bg-red-900/50"
                     : "text-gray-400 hover:text-blue-400 hover:bg-blue-900/50"
                 }`}
                 title={isSpeaking ? "Stop recording" : "Voice input"}
@@ -760,7 +1026,7 @@ export const AIAssistant = () => {
           {messages.length > 0 && (
             <button
               onClick={exportConversation}
-              className="flex items-center space-x-1 text-xs text-gray-400 hover:text-gray-300 transition-colors"
+              className="download-button flex items-center space-x-1 text-xs text-gray-400 hover:text-gray-300 transition-colors"
               title="Export conversation"
             >
               <Download className="w-3 h-3" />
