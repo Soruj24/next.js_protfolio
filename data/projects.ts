@@ -1,8 +1,5 @@
 import type { IProject } from "../types";
-
-
-
-
+ 
 export const projects: IProject[] = [
     {
         id: "ai-chatbot",
@@ -43,7 +40,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/ai-chatbot",
         liveUrl: "https://ai-chatbot-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -160,7 +157,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/ecommerce-app",
         liveUrl: "https://ecommerce-soruj.vercel.app",
-        category: "fullstack",
+        category: "Fullstack",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1556742044-3f034b6d94c1?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -276,7 +273,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/fitness-tracker",
         liveUrl: "https://fitness-soruj.vercel.app",
-        category: "mobile",
+        category: "Mobile",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -393,7 +390,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/crypto-dashboard",
         liveUrl: "https://crypto-soruj.vercel.app",
-        category: "fullstack",
+        category: "Fullstack",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1621761191319-c6fb62004040?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -509,7 +506,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/learning-platform",
         liveUrl: "https://learn-soruj.vercel.app",
-        category: "fullstack",
+        category: "Fullstack",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -625,7 +622,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/dev-network",
         liveUrl: "https://dev-network-soruj.vercel.app",
-        category: "fullstack",
+        category: "Fullstack",
         status: "in-progress",
         screenshots: [
             "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -739,7 +736,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/task-manager",
         liveUrl: "https://taskmanager-soruj.vercel.app",
-        category: "fullstack",
+        category: "Fullstack",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -849,7 +846,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/weather-app",
         liveUrl: "https://weather-soruj.vercel.app",
-        category: "frontend",
+        category: "Frontend",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -957,7 +954,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/portfolio",
         liveUrl: "https://sorujmahmud.vercel.app",
-        category: "frontend",
+        category: "Frontend",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -1069,7 +1066,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/chat-app",
         liveUrl: "https://chat-soruj.vercel.app",
-        category: "fullstack",
+        category: "Fullstack",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -1185,7 +1182,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/healthcare-platform",
         liveUrl: "https://healthcare-soruj.vercel.app",
-        category: "fullstack",
+        category: "Fullstack",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -1300,7 +1297,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/food-delivery",
         liveUrl: "https://food-delivery-soruj.vercel.app",
-        category: "mobile",
+        category: "Mobile",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -1415,7 +1412,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/real-estate",
         liveUrl: "https://real-estate-soruj.vercel.app",
-        category: "fullstack",
+        category: "Fullstack",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -1530,7 +1527,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/nft-marketplace",
         liveUrl: "https://nft-marketplace-soruj.vercel.app",
-        category: "blockchain",
+        category: "Blockchain",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1621761191319-c6fb62004040?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -1645,7 +1642,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/travel-platform",
         liveUrl: "https://travel-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -1760,7 +1757,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/fitness-ai-coach",
         liveUrl: "https://fitness-ai-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -1875,7 +1872,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/smart-home",
         liveUrl: "https://smart-home-soruj.vercel.app",
-        category: "iot",
+        category: "IOT",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -1990,7 +1987,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/education-platform",
         liveUrl: "https://education-soruj.vercel.app",
-        category: "fullstack",
+        category: "Fullstack",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -2105,7 +2102,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/finance-tracker",
         liveUrl: "https://finance-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -2220,7 +2217,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/blockchain-supply-chain",
         liveUrl: "https://supply-chain-soruj.vercel.app",
-        category: "blockchain",
+        category: "Blockchain",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -2335,7 +2332,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/ai-content-creator",
         liveUrl: "https://content-creator-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1581276879432-15e50529f34b?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -2450,7 +2447,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/smart-farming",
         liveUrl: "https://smart-farming-soruj.vercel.app",
-        category: "iot",
+        category: "IOT",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -2565,7 +2562,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/mental-health-app",
         liveUrl: "https://mental-health-soruj.vercel.app",
-        category: "mobile",
+        category: "Mobile",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -2680,7 +2677,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/blockchain-voting",
         liveUrl: "https://voting-soruj.vercel.app",
-        category: "blockchain",
+        category: "Blockchain",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1540910419892-4a36d2c326da?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -2795,7 +2792,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/ai-recruitment",
         liveUrl: "https://recruitment-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -2910,7 +2907,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/smart-energy",
         liveUrl: "https://smart-energy-soruj.vercel.app",
-        category: "iot",
+        category: "IOT",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -3025,7 +3022,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/ar-shopping",
         liveUrl: "https://ar-shopping-soruj.vercel.app",
-        category: "mobile",
+        category: "Mobile",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -3140,7 +3137,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/blockchain-identity",
         liveUrl: "https://identity-soruj.vercel.app",
-        category: "blockchain",
+        category: "Blockchain",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -3255,7 +3252,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/ai-medical-diagnosis",
         liveUrl: "https://medical-ai-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -3370,7 +3367,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/smart-transportation",
         liveUrl: "https://transportation-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -3485,7 +3482,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/blockchain-payments",
         liveUrl: "https://payments-soruj.vercel.app",
-        category: "blockchain",
+        category: "Blockchain",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1639762681057-40897d1b5d6e?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -3600,7 +3597,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/ai-language-tutor",
         liveUrl: "https://language-tutor-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -3715,7 +3712,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/smart-retail",
         liveUrl: "https://retail-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1563013546-77f54cc048c4?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -3830,7 +3827,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/blockchain-gaming",
         liveUrl: "https://gaming-soruj.vercel.app",
-        category: "blockchain",
+        category: "Blockchain",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -3945,7 +3942,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/ai-legal-assistant",
         liveUrl: "https://legal-ai-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -4060,7 +4057,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/smart-waste-management",
         liveUrl: "https://waste-management-soruj.vercel.app",
-        category: "iot",
+        category: "IOT",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -4175,7 +4172,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/blockchain-real-estate",
         liveUrl: "https://blockchain-real-estate-soruj.vercel.app",
-        category: "blockchain",
+        category: "Blockchain",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -4290,7 +4287,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/ai-personal-assistant",
         liveUrl: "https://assistant-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
@@ -4405,7 +4402,7 @@ export const projects: IProject[] = [
         ],
         githubUrl: "https://github.com/sorujmahmud/smart-education",
         liveUrl: "https://education-analytics-soruj.vercel.app",
-        category: "ai",
+        category: "AI",
         status: "completed",
         screenshots: [
             "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&w=600&h=400&fit=crop",

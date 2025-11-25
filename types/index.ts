@@ -46,7 +46,7 @@ export interface IProject {
   features: string[];
   githubUrl: string;
   liveUrl: string;
-  category: "AI" | "Fullstack" | "Mobile" | "Frontend" | "Backend" | "Blockchain";
+  category: "AI" | "Fullstack" | "Mobile" | "Frontend" | "Backend" | "Blockchain" | "IOT";
   status: "completed" | "in-progress";
   screenshots: string[];
   challenges: string[];
