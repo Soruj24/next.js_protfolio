@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useRef, useEffect, useState } from "react";
 import {
   Send,
@@ -128,7 +128,7 @@ export const AIAssistant = () => {
 
     try {
       // Call the actual portfolio assistant API
-      const response = await fetch("/api/portfolio-chat", {
+      const response = await fetch("/api/message", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -145,10 +145,29 @@ export const AIAssistant = () => {
 
       const data = await response.json();
 
+      // Handle the response format correctly
+      let aiResponseContent: string;
+
+      if (data.success && data.response) {
+        aiResponseContent = data.response;
+      } else if (data.success && data.data) {
+        // Handle the case where response is in data.data
+        if (typeof data.data === "object" && data.data.content) {
+          aiResponseContent = data.data.content;
+        } else if (typeof data.data === "string") {
+          aiResponseContent = data.data;
+        } else {
+          aiResponseContent =
+            "I apologize, but I'm having trouble processing the response.";
+        }
+      } else {
+        throw new Error(data.message || "Invalid response format from API");
+      }
+
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         type: "ai",
-        content: data.response,
+        content: aiResponseContent,
         timestamp: new Date(),
       };
 
@@ -158,7 +177,7 @@ export const AIAssistant = () => {
       setConversationHistory((prev) => [
         ...prev.slice(-8), // Keep last 4 exchanges
         { role: "user", content: inputMessage },
-        { role: "assistant", content: data.response },
+        { role: "assistant", content: aiResponseContent },
       ]);
     } catch (error) {
       console.error("Chat error:", error);
@@ -294,13 +313,24 @@ export const AIAssistant = () => {
       // Stop any current speech
       speechSynthesis.cancel();
 
-      const utterance = new SpeechSynthesisUtterance(content);
+      const cleanContent = content
+        .replace(/\*\*(.*?)\*\*/g, "$1") // Remove markdown bold
+        .replace(/\*(.*?)\*/g, "$1") // Remove markdown italic
+        .replace(/[•\-]\s*/g, "\n") // Convert bullets to pauses
+        .replace(/\n+/g, ". ") // Convert newlines to pauses
+        .trim();
+
+      const utterance = new SpeechSynthesisUtterance(cleanContent);
       utterance.rate = 0.9;
       utterance.pitch = 1;
       utterance.volume = 0.8;
 
       utterance.onend = () => {
         console.log("Finished reading message aloud");
+      };
+
+      utterance.onerror = (event) => {
+        console.error("Speech synthesis error:", event);
       };
 
       speechSynthesis.speak(utterance);
