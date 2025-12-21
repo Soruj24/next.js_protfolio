@@ -1,6 +1,7 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import NavItem from "../ui/NavItem";
+import AdminProfile from "../Admin/AdminProfile";
 
 interface NavBarProps {
   activeSection: string;
@@ -10,6 +11,119 @@ interface NavBarProps {
 function NavBar({ activeSection, setActiveSection }: NavBarProps) {
   const navRef = useRef<HTMLElement>(null);
   const underlineRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const avatarRef = useRef<HTMLDivElement>(null);
+  const chevronRef = useRef<SVGSVGElement>(null);
+  const mobileProfileRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // TODO:
+  const isAdmin = true;
+
+  // Add the missing handleLogout function
+  const handleLogout = () => {
+    // Implement your logout logic here
+    console.log("Logging out...");
+    // For example: clear tokens, redirect to login page, etc.
+  };
+
+  // Chevron animation
+  useEffect(() => {
+    if (!chevronRef.current) return;
+
+    if (isMobileMenuOpen) {
+      gsap.to(chevronRef.current, {
+        rotation: 180,
+        duration: 0.5,
+        ease: "elastic.out(1.2, 0.5)",
+      });
+    } else {
+      gsap.to(chevronRef.current, {
+        rotation: 0,
+        duration: 0.4,
+        ease: "power3.out",
+      });
+    }
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (isMobileMenuOpen) {
+        gsap.fromTo(
+          backdropRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4, ease: "power2.out" }
+        );
+
+        gsap.fromTo(
+          mobileMenuRef.current,
+          { x: "100%", scale: 0.95 },
+          { x: 0, scale: 1, duration: 0.6, ease: "back.out(1.4)" }
+        );
+
+        gsap.fromTo(
+          ".mobile-nav-item",
+          { x: 100, opacity: 0, rotationY: 45 },
+          {
+            x: 0,
+            opacity: 1,
+            rotationY: 0,
+            duration: 0.8,
+            stagger: 0.08,
+            delay: 0.3,
+            ease: "elastic.out(1, 0.7)",
+          }
+        );
+
+        if (isAdmin && mobileProfileRef.current) {
+          gsap.fromTo(
+            mobileProfileRef.current,
+            { opacity: 0, scale: 0.8, y: 50 },
+            {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              duration: 0.9,
+              delay: 0.6,
+              ease: "elastic.out(1.4, 0.6)",
+            }
+          );
+
+          gsap.fromTo(
+            ".mobile-profile-item",
+            { x: 50, opacity: 0 },
+            {
+              x: 0,
+              opacity: 1,
+              duration: 0.7,
+              stagger: 0.12,
+              delay: 0.9,
+              ease: "power4.out",
+            }
+          );
+        }
+      } else {
+        gsap.to(backdropRef.current, { opacity: 0, duration: 0.3 });
+        gsap.to(mobileMenuRef.current, {
+          x: "100%",
+          duration: 0.4,
+          ease: "power3.in",
+        });
+      }
+    });
+
+    return () => ctx.revert();
+  }, [isMobileMenuOpen, isAdmin]);
+
+  // Scroll & Initial Animations
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 100);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -30,15 +144,15 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
       gsap.fromTo(
         ".nav-logo",
         { scale: 0, rotation: -180 },
-        {
-          scale: 1,
-          rotation: 0,
-          duration: 1.5,
-          ease: "elastic.out(1, 0.8)",
-        }
+        { scale: 1, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.8)" }
+      );
+
+      gsap.fromTo(
+        ".hamburger-line",
+        { opacity: 0, scaleX: 0 },
+        { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, delay: 1 }
       );
     });
-
     return () => ctx.revert();
   }, []);
 
@@ -54,52 +168,168 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
   const updateUnderline = (element: HTMLElement) => {
     if (underlineRef.current && navRef.current) {
       const { left, width } = element.getBoundingClientRect();
-      const navLeft = navRef.current.getBoundingClientRect().left || 0;
-
+      const navLeft = navRef.current.getBoundingClientRect().left;
       gsap.to(underlineRef.current, {
         left: left - navLeft,
-        width: width,
-        duration: 0.3,
-        ease: "power2.out",
+        width,
+        duration: 0.4,
+        ease: "elastic.out(1, 0.5)",
       });
     }
+  };
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+  const handleNavClick = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setActiveSection(id);
+    closeMobileMenu();
   };
 
   return (
     <nav
       ref={navRef}
-      className="fixed top-0 w-full z-50 bg-black/20 backdrop-blur-xl border-b border-white/10"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out
+        ${
+          isScrolled
+            ? "bg-black/80 backdrop-blur-2xl py-2 shadow-lg border-b border-white/20"
+            : "bg-black/20 backdrop-blur-xl py-4 border-b border-white/10"
+        }`}
     >
-      <div className="max-w-7xl mx-auto px-4 py-3">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center">
-          <div className="nav-logo text-2xl font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent hover:scale-110 transition-transform cursor-pointer">
+          <div
+            className={`nav-logo font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent 
+              hover:scale-110 transition-all duration-500 cursor-pointer
+              ${isScrolled ? "text-xl" : "text-2xl"}`}
+          >
             Soruj Mahmud
           </div>
 
-          <div className="hidden md:flex space-x-1 relative">
-            <div
-              ref={underlineRef}
-              className="absolute bottom-0 h-0.5 bg-cyan-400 rounded-full transition-all duration-300"
-              style={{ width: "0px", left: "0px" }}
-            />
-
-            {navItems.map((item) => (
-              <NavItem
-                key={item.id}
-                item={item}
-                isActive={activeSection === item.id}
-                onClick={() => {
-                  document
-                    .getElementById(item.id)
-                    ?.scrollIntoView({ behavior: "smooth" });
-                  setActiveSection(item.id);
-                }}
-                onHover={updateUnderline}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8 relative">
+            <div className="flex space-x-1 relative">
+              <div
+                ref={underlineRef}
+                className="absolute bottom-0 h-0.5 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"
+                style={{ width: "0px", left: "0px" }}
               />
-            ))}
+              {navItems.map((item) => (
+                <NavItem
+                  key={item.id}
+                  item={item}
+                  isActive={activeSection === item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  onHover={updateUnderline}
+                />
+              ))}
+            </div>
+ 
+            {isAdmin && (
+              <AdminProfile
+                avatarRef={avatarRef}
+                chevronRef={chevronRef}
+                handleLogout={handleLogout}
+              />
+            )}
           </div>
+
+          {/* Mobile Hamburger */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="md:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 z-50"
+            aria-label="Toggle menu"
+          >
+            <span
+              className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
+                isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
+              }`}
+            />
+            <span
+              className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
+                isMobileMenuOpen ? "opacity-0" : ""
+              }`}
+            />
+            <span
+              className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
+                isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
+            />
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <div
+        ref={mobileMenuRef}
+        className="fixed inset-y-0 right-0 w-80 bg-black/95 backdrop-blur-3xl border-l border-cyan-500/30 
+          shadow-2xl shadow-cyan-600/30 transform translate-x-full md:hidden"
+      >
+        <div className="flex flex-col items-start space-y-8 pt-32 px-10">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleNavClick(item.id)}
+              className={`mobile-nav-item flex items-center space-x-4 text-3xl font-medium 
+                transition-all duration-500 ${
+                  activeSection === item.id ? "text-cyan-400" : "text-white"
+                } 
+                hover:text-cyan-300 hover:translate-x-4`}
+            >
+              <span className="text-4xl">{item.icon}</span>
+              <span>{item.label}</span>
+            </button>
+          ))}
+
+          {/* মোবাইলে প্রোফাইল সেকশন শুধু অ্যাডমিনের জন্য */}
+          {isAdmin && (
+            <div
+              ref={mobileProfileRef}
+              className="w-full pt-12 border-t border-cyan-500/30"
+            >
+              <div className="flex items-center space-x-5 mb-8">
+                <div
+                  className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 
+                  shadow-2xl shadow-cyan-500/50 flex items-center justify-center text-3xl font-bold"
+                >
+                  SM
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-white">Soruj Mahmud</p>
+                  <p className="text-lg text-cyan-300">soruj@example.com</p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <button className="mobile-profile-item flex items-center space-x-4 text-xl text-white hover:text-cyan-300 hover:translate-x-3 transition-all">
+                  <span>👤</span> <span>Admin Profile</span>
+                </button>
+                <button className="mobile-profile-item flex items-center space-x-4 text-xl text-white hover:text-cyan-300 hover:translate-x-3 transition-all">
+                  <span>⚙️</span> <span>Project</span>
+                </button>
+                <button className="mobile-profile-item flex items-center space-x-4 text-xl text-white hover:text-cyan-300 hover:translate-x-3 transition-all">
+                  <span>👥</span> <span>Invite Users</span>
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="mobile-profile-item flex items-center space-x-4 text-xl text-red-400 hover:text-red-300 hover:translate-x-3 transition-all"
+                >
+                  <span>🚪</span> <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Backdrop */}
+      {isMobileMenuOpen && (
+        <div
+          ref={backdropRef}
+          onClick={closeMobileMenu}
+          className="fixed inset-0 bg-black/70 z-40 md:hidden backdrop-blur-sm"
+        />
+      )}
     </nav>
   );
 }
