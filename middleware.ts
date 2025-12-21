@@ -15,7 +15,7 @@ export default middleware((req) => {
 
   // Optional: redirect logged-in users away from login/register
   if (isAuthenticated && (nextUrl.pathname === "/login" || nextUrl.pathname === "/register")) {
-    return Response.redirect(new URL("/dashboard", nextUrl)); // or "/"
+    return Response.redirect(new URL("/", nextUrl)); // or "/"
   }
 
   if (!isAuthenticated && !isPublic) {
