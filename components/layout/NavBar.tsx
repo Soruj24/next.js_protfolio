@@ -2,7 +2,6 @@
 import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import NavItem from "../ui/NavItem";
-import AdminProfile from "../Admin/ProfileMenu";
 import Link from "next/link";
 
 interface NavBarProps {
@@ -22,16 +21,6 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
-  // TODO:
-  const isAdmin = true;
-
-  // Add the missing handleLogout function
-  const handleLogout = () => {
-    // Implement your logout logic here
-    console.log("Logging out...");
-    // For example: clear tokens, redirect to login page, etc.
-  };
 
   // Chevron animation
   useEffect(() => {
@@ -81,20 +70,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
           }
         );
 
-        if (isAdmin && mobileProfileRef.current) {
-          gsap.fromTo(
-            mobileProfileRef.current,
-            { opacity: 0, scale: 0.8, y: 50 },
-            {
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              duration: 0.9,
-              delay: 0.6,
-              ease: "elastic.out(1.4, 0.6)",
-            }
-          );
-
+        if (mobileProfileRef.current) {
           gsap.fromTo(
             ".mobile-profile-item",
             { x: 50, opacity: 0 },
@@ -119,7 +95,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
     });
 
     return () => ctx.revert();
-  }, [isMobileMenuOpen, isAdmin]);
+  }, [isMobileMenuOpen]);
 
   // Scroll & Initial Animations
   useEffect(() => {
@@ -243,38 +219,10 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
                 />
               ))}
             </div>
-
-            {/* Desktop Register Link */}
-            <Link
-              ref={registerLinkRef}
-              className="register-link text-white hover:text-cyan-300 transition-all duration-300 hover:scale-105 px-4 py-2 rounded-lg hover:bg-white/5 relative z-10"
-              href="/register"
-              onClick={handleRegisterClick}
-            >
-              Register
-            </Link>
-
-            {isAdmin && (
-              <AdminProfile
-                avatarRef={avatarRef}
-                chevronRef={chevronRef}
-                handleLogout={handleLogout}
-              />
-            )}
           </div>
 
           {/* Mobile: Register Link + Hamburger */}
           <div className="md:hidden flex items-center space-x-3">
-            {/* Mobile Register Link */}
-            <Link
-              ref={registerLinkRef}
-              className="register-link text-white hover:text-cyan-300 transition-all duration-300 hover:scale-105 px-3 py-2 rounded-lg hover:bg-white/5 relative z-10"
-              href="/register"
-              onClick={handleRegisterClick}
-            >
-              Register
-            </Link>
-
             {/* Mobile Hamburger */}
             <button
               onClick={(e) => {
@@ -325,59 +273,6 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
               <span>{item.label}</span>
             </button>
           ))}
-
-          {/* Mobile Register Link in Menu */}
-          <Link
-            href="/register"
-            onClick={(e) => {
-              console.log("Mobile menu register link clicked");
-              closeMobileMenu();
-            }}
-            className="mobile-nav-item flex items-center space-x-4 text-3xl font-medium text-white 
-              hover:text-cyan-300 hover:translate-x-4 transition-all duration-500"
-          >
-            <span className="text-4xl">📝</span>
-            <span>Register</span>
-          </Link>
-
-          {/* মোবাইলে প্রোফাইল সেকশন শুধু অ্যাডমিনের জন্য */}
-          {isAdmin && (
-            <div
-              ref={mobileProfileRef}
-              className="w-full pt-12 border-t border-cyan-500/30"
-            >
-              <div className="flex items-center space-x-5 mb-8">
-                <div
-                  className="w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 
-                  shadow-2xl shadow-cyan-500/50 flex items-center justify-center text-3xl font-bold"
-                >
-                  SM
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-white">Soruj Mahmud</p>
-                  <p className="text-lg text-cyan-300">soruj@example.com</p>
-                </div>
-              </div>
-
-              <div className="space-y-6">
-                <button className="mobile-profile-item flex items-center space-x-4 text-xl text-white hover:text-cyan-300 hover:translate-x-3 transition-all">
-                  <span>👤</span> <span>Admin Profile</span>
-                </button>
-                <button className="mobile-profile-item flex items-center space-x-4 text-xl text-white hover:text-cyan-300 hover:translate-x-3 transition-all">
-                  <span>⚙️</span> <span>Project</span>
-                </button>
-                <button className="mobile-profile-item flex items-center space-x-4 text-xl text-white hover:text-cyan-300 hover:translate-x-3 transition-all">
-                  <span>👥</span> <span>Invite Users</span>
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="mobile-profile-item flex items-center space-x-4 text-xl text-red-400 hover:text-red-300 hover:translate-x-3 transition-all"
-                >
-                  <span>🚪</span> <span>Logout</span>
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
