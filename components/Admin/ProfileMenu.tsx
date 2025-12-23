@@ -91,12 +91,7 @@ const AdminProfile: React.FC<AdminProfileProps> = ({
             <span>Projects</span>
           </DropdownMenuItem>
         </Link>
-        <Link href="/admin/contact">
-          <DropdownMenuItem className="text-white hover:bg-cyan-500/10 focus:bg-cyan-500/10 cursor-pointer">
-            <Mail className="w-4 h-4 mr-3" />
-            <span>Contact</span>
-          </DropdownMenuItem>
-        </Link>
+        
 
         <DropdownMenuSeparator className="bg-white/10" />
 

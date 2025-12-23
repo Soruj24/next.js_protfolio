@@ -1,7 +1,9 @@
+"use client";
 import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import NavItem from "../ui/NavItem";
-import AdminProfile from "../Admin/AdminProfile";
+import AdminProfile from "../Admin/ProfileMenu";
+import Link from "next/link";
 
 interface NavBarProps {
   activeSection: string;
@@ -16,6 +18,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
   const chevronRef = useRef<SVGSVGElement>(null);
   const mobileProfileRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
+  const registerLinkRef = useRef<HTMLAnchorElement>(null);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -152,6 +155,13 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
         { opacity: 0, scaleX: 0 },
         { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, delay: 1 }
       );
+
+      // Animate register link
+      gsap.fromTo(
+        ".register-link",
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 0.8, delay: 1.2, ease: "power3.out" }
+      );
     });
     return () => ctx.revert();
   }, []);
@@ -186,6 +196,12 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
     closeMobileMenu();
   };
 
+  // Test if the link is clickable
+  const handleRegisterClick = (e: React.MouseEvent) => {
+    console.log("Register link clicked!");
+    // Add any additional logic here
+  };
+
   return (
     <nav
       ref={navRef}
@@ -198,13 +214,16 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center">
-          <div
-            className={`nav-logo font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent 
+          <Link href={"/"}>
+            <div
+              className={`nav-logo font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent 
               hover:scale-110 transition-all duration-500 cursor-pointer
               ${isScrolled ? "text-xl" : "text-2xl"}`}
-          >
-            Soruj Mahmud
-          </div>
+              onClick={() => handleNavClick("home")}
+            >
+              Soruj Mahmud
+            </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8 relative">
@@ -224,7 +243,17 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
                 />
               ))}
             </div>
- 
+
+            {/* Desktop Register Link */}
+            <Link
+              ref={registerLinkRef}
+              className="register-link text-white hover:text-cyan-300 transition-all duration-300 hover:scale-105 px-4 py-2 rounded-lg hover:bg-white/5 relative z-10"
+              href="/register"
+              onClick={handleRegisterClick}
+            >
+              Register
+            </Link>
+
             {isAdmin && (
               <AdminProfile
                 avatarRef={avatarRef}
@@ -234,28 +263,44 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
             )}
           </div>
 
-          {/* Mobile Hamburger */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden flex flex-col justify-center items-center w-10 h-10 space-y-1.5 z-50"
-            aria-label="Toggle menu"
-          >
-            <span
-              className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
-                isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            />
-            <span
-              className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
-                isMobileMenuOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
-                isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            />
-          </button>
+          {/* Mobile: Register Link + Hamburger */}
+          <div className="md:hidden flex items-center space-x-3">
+            {/* Mobile Register Link */}
+            <Link
+              ref={registerLinkRef}
+              className="register-link text-white hover:text-cyan-300 transition-all duration-300 hover:scale-105 px-3 py-2 rounded-lg hover:bg-white/5 relative z-10"
+              href="/register"
+              onClick={handleRegisterClick}
+            >
+              Register
+            </Link>
+
+            {/* Mobile Hamburger */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMobileMenuOpen(!isMobileMenuOpen);
+              }}
+              className="flex flex-col justify-center items-center w-10 h-10 space-y-1.5 relative z-50"
+              aria-label="Toggle menu"
+            >
+              <span
+                className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
+                  isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
+                }`}
+              />
+              <span
+                className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
+                  isMobileMenuOpen ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
+                  isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -263,7 +308,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
       <div
         ref={mobileMenuRef}
         className="fixed inset-y-0 right-0 w-80 bg-black/95 backdrop-blur-3xl border-l border-cyan-500/30 
-          shadow-2xl shadow-cyan-600/30 transform translate-x-full md:hidden"
+          shadow-2xl shadow-cyan-600/30 transform translate-x-full md:hidden z-40"
       >
         <div className="flex flex-col items-start space-y-8 pt-32 px-10">
           {navItems.map((item) => (
@@ -280,6 +325,20 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
               <span>{item.label}</span>
             </button>
           ))}
+
+          {/* Mobile Register Link in Menu */}
+          <Link
+            href="/register"
+            onClick={(e) => {
+              console.log("Mobile menu register link clicked");
+              closeMobileMenu();
+            }}
+            className="mobile-nav-item flex items-center space-x-4 text-3xl font-medium text-white 
+              hover:text-cyan-300 hover:translate-x-4 transition-all duration-500"
+          >
+            <span className="text-4xl">📝</span>
+            <span>Register</span>
+          </Link>
 
           {/* মোবাইলে প্রোফাইল সেকশন শুধু অ্যাডমিনের জন্য */}
           {isAdmin && (
@@ -327,7 +386,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
         <div
           ref={backdropRef}
           onClick={closeMobileMenu}
-          className="fixed inset-0 bg-black/70 z-40 md:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/70 z-30 md:hidden backdrop-blur-sm"
         />
       )}
     </nav>
