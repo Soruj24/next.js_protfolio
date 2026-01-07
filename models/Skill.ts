@@ -11,11 +11,13 @@ export interface ISkillItem {
 
 export interface ISkillCategory {
   title: string;
+  description?: string;
+  _id?: string;
   icon: string;
   skills: ISkillItem[];
 }
 
-export interface ISkillCategoryDocument extends ISkillCategory, Document {
+export interface ISkillCategoryDocument extends Omit<ISkillCategory, '_id'>, Document {
   createdAt: Date;
   updatedAt: Date;
 }

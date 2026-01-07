@@ -1,18 +1,33 @@
 // Update the ProjectsShowcase component
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SectionTitle from "../ui/SectionTitle";
 import ProjectCard from "../ui/ProjectCard";
-import MagneticButton from "../ui/MagneticButton";
-import ProjectModal from "../ui/ProjectModal"; 
-import { projects } from "../../data/projects";
+import ProjectModal from "../ui/ProjectModal";
 import { IProject } from "@/types";
 
 function ProjectsShowcase() {
+  const [projects, setProjects] = useState<IProject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [visibleProjects, setVisibleProjects] = useState(8);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProject, setSelectedProject] = useState<IProject | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await fetch("/api/projects");
+        const data = await res.json();
+        setProjects(data);
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   const categories = [
     "All",
@@ -52,36 +67,43 @@ function ProjectsShowcase() {
     <>
       <section
         id="projects"
-        className="min-h-screen py-20 relative overflow-hidden"
+        className="min-h-screen py-32 relative overflow-hidden bg-[#020617]"
       >
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-cyan-500/10 to-transparent"></div>
-          <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-purple-500/10 to-transparent"></div>
+        {/* Background Accents */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+          <div className="absolute top-[10%] right-[-5%] w-[30%] h-[30%] bg-cyan-500/5 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[10%] left-[-5%] w-[30%] h-[30%] bg-purple-500/5 rounded-full blur-[120px]" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
           <SectionTitle
-            title="Featured Projects"
-            subtitle={`${projects.length}+ innovative solutions across AI, Web, Mobile, Blockchain, and IoT domains`}
+            title="Project Arsenal"
+            subtitle={`${projects.length}+ production-ready AI solutions and intelligent ecosystems architected with precision.`}
           />
 
-          <div className="mb-12 space-y-6">
-            <div className="max-w-2xl mx-auto">
-              <div className="relative">
+          <div className="mt-20 mb-16 space-y-10">
+            {/* Search Bar */}
+            <div className="max-w-3xl mx-auto">
+              <div className="group relative">
+                <div className="absolute inset-0 bg-cyan-500/20 rounded-[2rem] blur-2xl opacity-0 group-focus-within:opacity-100 transition-opacity" />
                 <input
                   type="text"
-                  placeholder="Search projects by name, description, technology, or tags..."
+                  placeholder="Query projects by name, tech, or functionality..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500 focus:outline-none text-white transition-all duration-300 backdrop-blur-lg hover:bg-white/10 focus:bg-white/10 text-lg"
+                  className="w-full px-8 py-6 bg-white/[0.03] border border-white/10 rounded-[2rem] focus:border-cyan-500/50 focus:outline-none text-white transition-all duration-500 backdrop-blur-3xl text-lg font-medium placeholder:text-gray-600"
                 />
-                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
-                  🔍
+                <div className="absolute right-8 top-1/2 -translate-y-1/2 flex items-center space-x-2 text-gray-500">
+                  <span className="text-xs font-mono tracking-widest uppercase hidden md:block">
+                    Search Database
+                  </span>
+                  <span className="text-xl">⌕</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4">
+            {/* Category Filters */}
+            <div className="flex flex-wrap justify-center gap-3">
               {categories.map((category) => (
                 <button
                   key={category}
@@ -89,26 +111,29 @@ function ProjectsShowcase() {
                     setSelectedCategory(category);
                     setVisibleProjects(8);
                   }}
-                  className={`px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
+                  className={`px-8 py-3 rounded-xl font-bold text-sm tracking-wide transition-all duration-500 border ${
                     selectedCategory === category
-                      ? "bg-cyan-500 text-white shadow-2xl shadow-cyan-500/25 transform scale-105"
-                      : "bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white"
+                      ? "bg-white text-black border-white shadow-[0_0_30px_rgba(255,255,255,0.2)] scale-105"
+                      : "bg-white/5 text-gray-400 border-white/5 hover:bg-white/10 hover:border-white/10 hover:text-white"
                   }`}
                 >
-                  {category} (
-                  {category === "All"
-                    ? projects.length
-                    : projects.filter((p) => p.category === category).length}
-                  )
+                  {category}
+                  <span
+                    className={`ml-2 text-[10px] opacity-50 ${selectedCategory === category ? "text-black" : "text-cyan-400"}`}
+                  >
+                    {category === "All"
+                      ? projects.length
+                      : projects.filter((p) => p.category === category).length}
+                  </span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 mt-8">
             {projectsToShow.map((project, index) => (
               <ProjectCard
-                key={project.id}
+                key={project._id || project.id || index}
                 project={project}
                 index={index}
                 onProjectClick={handleProjectClick}
@@ -117,59 +142,69 @@ function ProjectsShowcase() {
           </div>
 
           {visibleProjects < filteredProjects.length && (
-            <div className="text-center mt-16">
-              <MagneticButton
+            <div className="text-center mt-24">
+              <button
                 onClick={loadMore}
-                className="px-12 py-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300"
+                className="group relative px-12 py-5 bg-white/5 border border-white/10 rounded-2xl font-bold text-white transition-all duration-300 hover:bg-white/10 hover:scale-105"
               >
-                📂 Load More Projects (
-                {filteredProjects.length - visibleProjects} remaining)
-              </MagneticButton>
+                <span className="relative flex items-center">
+                  Load Additional Assets
+                  <span className="ml-2 group-hover:rotate-180 transition-transform duration-500">
+                    ↓
+                  </span>
+                </span>
+              </button>
             </div>
           )}
 
           {filteredProjects.length === 0 && (
-            <div className="text-center py-16">
-              <div className="text-6xl mb-4">🔍</div>
+            <div className="text-center py-32 bg-white/[0.02] rounded-[3rem] border border-dashed border-white/10">
+              <div className="text-5xl mb-6 opacity-20">∅</div>
               <h3 className="text-2xl font-bold text-white mb-2">
-                No projects found
+                No matching intelligence found
               </h3>
-              <p className="text-gray-400">
-                Try adjusting your search or filter criteria
+              <p className="text-gray-500 font-medium">
+                Adjust your parameters and try again.
               </p>
             </div>
           )}
 
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-lg border border-white/10">
-              <div className="text-3xl font-bold text-cyan-400">
-                {projects.length}
+          {/* Stats Grid */}
+          <div className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+            {[
+              {
+                label: "Total Intelligence",
+                value: projects.length,
+                color: "text-cyan-400",
+              },
+              {
+                label: "Production Ready",
+                value: projects.filter((p) => p.status === "completed").length,
+                color: "text-green-400",
+              },
+              {
+                label: "Tech Stacks",
+                value: new Set(projects.flatMap((p) => p.technologies)).size,
+                color: "text-blue-400",
+              },
+              {
+                label: "Domain Reach",
+                value: new Set(projects.map((p) => p.category)).size,
+                color: "text-purple-400",
+              },
+            ].map((stat, i) => (
+              <div
+                key={i}
+                className="bg-white/[0.02] rounded-[2rem] p-8 border border-white/5 backdrop-blur-xl"
+              >
+                <div className={`text-4xl font-black mb-1 ${stat.color}`}>
+                  {stat.value}
+                </div>
+                <div className="text-xs font-mono text-gray-500 uppercase tracking-widest">
+                  {stat.label}
+                </div>
               </div>
-              <div className="text-gray-400">Total Projects</div>
-            </div>
-            <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-lg border border-white/10">
-              <div className="text-3xl font-bold text-green-400">
-                {projects.filter((p) => p.status === "completed").length}
-              </div>
-              <div className="text-gray-400">Completed Projects</div>
-            </div>
-            <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-lg border border-white/10">
-              <div className="text-3xl font-bold text-blue-400">
-                {new Set(projects.map((p) => p.category)).size}
-              </div>
-              <div className="text-gray-400">Categories</div>
-            </div>
-            <div className="bg-white/5 rounded-2xl p-6 backdrop-blur-lg border border-white/10">
-              <div className="text-3xl font-bold text-purple-400">
-                {
-                  projects
-                    .flatMap((p) => p.technologies)
-                    .filter((tech, index, arr) => arr.indexOf(tech) === index)
-                    .length
-                }
-              </div>
-              <div className="text-gray-400">Technologies</div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

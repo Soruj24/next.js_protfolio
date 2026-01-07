@@ -43,8 +43,21 @@ function Footer() {
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-          <div className="footer-float text-gray-400 text-lg">
-            © {currentYear} Soruj Mahmud. Built with ❤️ using Next.js & GSAP
+          <div className="flex flex-col items-center md:items-start space-y-4">
+            <div className="footer-float text-gray-400 text-lg">
+              © {currentYear} Soruj Mahmud. Built with ❤️ using Next.js & GSAP
+            </div>
+            <div className="flex space-x-6">
+              <a href="https://github.com/Soruj24" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                <span className="text-xl">🐙</span>
+              </a>
+              <a href="https://linkedin.com/in/soruj-mahmud" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition-colors">
+                <span className="text-xl">💼</span>
+              </a>
+              <a href="mailto:sorujmahmudb2h@email.com" className="text-gray-400 hover:text-purple-400 transition-colors">
+                <span className="text-xl">📧</span>
+              </a>
+            </div>
           </div>
 
           <div className="flex space-x-8">

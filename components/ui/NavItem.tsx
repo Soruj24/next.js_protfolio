@@ -50,17 +50,18 @@ function NavItem({ item, isActive, onClick, onHover }: NavItemProps) {
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`nav-item relative px-4 py-2 rounded-lg font-medium transition-all group ${
-        isActive ? "text-cyan-400" : "text-gray-300 hover:text-white"
-      }`}
+      className={`nav-item relative px-4 py-1.5 rounded-full font-medium transition-all group flex items-center gap-1.5
+        ${
+          isActive ? "text-cyan-400" : "text-gray-400 hover:text-white"
+        }`}
     >
-      <span className="mr-2">{item.icon}</span>
-      {item.label}
-
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/0 via-cyan-500/20 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <span className="text-sm transition-transform duration-300 group-hover:scale-120 group-hover:rotate-12">
+        {item.icon}
+      </span>
+      <span className="text-sm tracking-wide">{item.label}</span>
 
       {isActive && (
-        <div className="absolute inset-0 rounded-lg bg-cyan-500/10 animate-pulse" />
+        <div className="absolute inset-0 rounded-full bg-cyan-500/10 border border-cyan-500/20 shadow-[0_0_15px_rgba(34,211,238,0.2)]" />
       )}
     </button>
   );

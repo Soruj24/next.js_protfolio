@@ -22,6 +22,7 @@ export interface IProjectStats {
 }
 
 export interface IProject {
+  _id?: string;
   id: string;
   title: string;
   description: string;
@@ -31,7 +32,7 @@ export interface IProject {
   features: string[];
   githubUrl?: string;
   liveUrl?: string;
-  category: 'AI' | 'Fullstack' | 'Mobile' | 'Frontend';
+  category: 'AI' | 'Fullstack' | 'Mobile' | 'Frontend' | 'Backend' | 'Blockchain' | 'IOT';
   status: 'completed' | 'in-progress' | 'planned';
   screenshots: string[];
   challenges: string[];
@@ -40,9 +41,9 @@ export interface IProject {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   duration: string;
   teamSize: string;
-  completionDate: Date;
-  createdAt: Date;
-  updatedAt: Date;
+  completionDate: Date | string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   tags: string[];
   emoji: string;
   stats: IProjectStats;
@@ -55,7 +56,9 @@ export interface IProject {
   performance: IPerformanceStats;
 }
 
-export interface IProjectDocument extends IProject, Document {}
+export interface IProjectDocument extends Omit<IProject, '_id'>, Document {
+  _id: mongoose.Types.ObjectId;
+}
 
 const DevelopmentHighlightSchema = new Schema<IDevelopmentHighlight>({
   title: { type: String, required: true },
@@ -117,7 +120,7 @@ const ProjectSchema = new Schema<IProjectDocument>({
   completionDate: { type: Date, required: true },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
-  tags: [{ type: String, index: true }],
+  tags: [{ type: String }],
   emoji: { type: String, required: true },
   stats: { type: ProjectStatsSchema, required: true },
   architecture: { type: String, required: true },

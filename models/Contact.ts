@@ -1,6 +1,6 @@
 // models/Contact.ts
-import mongoose, { Schema, Document } from 'mongoose';
-import { z } from 'zod';
+import mongoose, { Schema, Document } from "mongoose";
+import { z } from "zod";
 
 export const contactFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -12,31 +12,38 @@ export const contactFormSchema = z.object({
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export interface IContact extends ContactFormData {
-  status: 'pending' | 'read' | 'replied';
+  status: "pending" | "read" | "replied";
   ipAddress?: string;
   userAgent?: string;
+  reply?: string;
+  _id: string;
 }
 
-export interface IContactDocument extends IContact, Document {
+export interface IContactDocument extends Omit<IContact, "_id">, Document {
   createdAt: Date;
   updatedAt: Date;
 }
 
-const ContactSchema = new Schema<IContactDocument>({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  subject: { type: String, required: true },
-  message: { type: String, required: true },
-  status: { 
-    type: String, 
-    enum: ['pending', 'read', 'replied'],
-    default: 'pending'
+const ContactSchema = new Schema<IContactDocument>(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    subject: { type: String, required: true },
+    message: { type: String, required: true },
+    status: {
+      type: String,
+      enum: ["pending", "read", "replied"],
+      default: "pending",
+    },
+    ipAddress: { type: String },
+    userAgent: { type: String },
   },
-  ipAddress: { type: String },
-  userAgent: { type: String }
-}, {
-  timestamps: true,
-  collection: 'contacts'
-});
+  {
+    timestamps: true,
+    collection: "contacts",
+  }
+);
 
-export const Contact = mongoose.models.Contact || mongoose.model<IContactDocument>('Contact', ContactSchema);
+export const Contact =
+  mongoose.models.Contact ||
+  mongoose.model<IContactDocument>("Contact", ContactSchema);

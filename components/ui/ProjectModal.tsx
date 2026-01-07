@@ -182,7 +182,7 @@ function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
               👥 {project.teamSize}
             </span>
             <span className="px-3 py-1 sm:px-4 sm:py-2 bg-purple-500/20 text-purple-400 rounded-full text-xs sm:text-sm font-medium border border-purple-500/30">
-              ❤️ {project.stats.likes}
+              ❤️ {project.stats?.likes || 0}
             </span>
           </div>
         </div>
@@ -283,48 +283,48 @@ function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
                   <div>
                     <div className="flex justify-between text-xs sm:text-sm text-gray-300 mb-1">
                       <span>Load Time</span>
-                      <span>{project.performance.loadTime}/100</span>
+                      <span>{project.performance?.loadTime || 0}/100</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-1.5 sm:h-2">
                       <div
                         className="bg-green-500 h-1.5 sm:h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${project.performance.loadTime}%` }}
+                        style={{ width: `${project.performance?.loadTime || 0}%` }}
                       ></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between text-xs sm:text-sm text-gray-300 mb-1">
                       <span>Accessibility</span>
-                      <span>{project.performance.accessibility}/100</span>
+                      <span>{project.performance?.accessibility || 0}/100</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-1.5 sm:h-2">
                       <div
                         className="bg-blue-500 h-1.5 sm:h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${project.performance.accessibility}%` }}
+                        style={{ width: `${project.performance?.accessibility || 0}%` }}
                       ></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between text-xs sm:text-sm text-gray-300 mb-1">
                       <span>Best Practices</span>
-                      <span>{project.performance.bestPractices}/100</span>
+                      <span>{project.performance?.bestPractices || 0}/100</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-1.5 sm:h-2">
                       <div
                         className="bg-purple-500 h-1.5 sm:h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${project.performance.bestPractices}%` }}
+                        style={{ width: `${project.performance?.bestPractices || 0}%` }}
                       ></div>
                     </div>
                   </div>
                   <div>
                     <div className="flex justify-between text-xs sm:text-sm text-gray-300 mb-1">
                       <span>SEO</span>
-                      <span>{project.performance.seo}/100</span>
+                      <span>{project.performance?.seo || 0}/100</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-1.5 sm:h-2">
                       <div
                         className="bg-yellow-500 h-1.5 sm:h-2 rounded-full transition-all duration-1000"
-                        style={{ width: `${project.performance.seo}%` }}
+                        style={{ width: `${project.performance?.seo || 0}%` }}
                       ></div>
                     </div>
                   </div>

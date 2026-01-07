@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "../ui/SectionTitle";
@@ -152,52 +153,64 @@ function AboutSection() {
     <section
       id="about"
       ref={sectionRef}
-      className="min-h-screen py-20 flex items-center relative overflow-hidden"
+      className="min-h-screen py-32 flex items-center relative overflow-hidden"
     >
-      <div className="absolute inset-0">
-        <div className="absolute top-20 right-20 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-20 left-20 w-40 h-40 bg-purple-500/10 rounded-full blur-2xl"></div>
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 -right-20 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] animate-pulse-slow"></div>
+        <div className="absolute -bottom-1/4 -left-20 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px] animate-pulse-slow delay-1000"></div>
+        
+        {/* Animated Grid lines */}
+        <div className="absolute inset-0 opacity-[0.03]" 
+             style={{backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '50px 50px'}}>
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
         <SectionTitle
-          title="About Me"
-          subtitle="Passionate AI Developer specializing in LangChain and MCP Server technologies"
+          title="The Story"
+          subtitle="Merging Human Creativity with Artificial Intelligence"
         />
 
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div ref={textRef} className="space-y-8">
-            <div className="text-2xl text-gray-300 leading-relaxed">
-              {splitWords(
-                "Hello! I'm Soruj Mahmud, a passionate developer specializing in AI-powered applications with expertise in LangChain and MCP Server development."
-              )}
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
+          <div ref={textRef} className="space-y-8 order-2 lg:order-1">
+            <div className="inline-block px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-4">
+              AI Software Architect
+            </div>
+            
+            <div className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
+              <span className="text-white">I build </span>
+              <span className="text-gradient">Intelligent Systems</span>
+              <span className="text-white"> that bridge the gap between imagination and reality.</span>
             </div>
 
-            <div className="text-lg text-gray-400 leading-relaxed">
-              {splitWords(
-                "I specialize in building sophisticated AI applications using LangChain framework, creating custom MCP servers, and developing intelligent tools that enhance AI capabilities."
-              )}
+            <div className="space-y-6 text-lg text-gray-400 leading-relaxed max-w-2xl">
+              <p>
+                Hello! I&apos;m <span className="text-white font-medium underline decoration-cyan-500/30 decoration-2 underline-offset-4">Soruj Mahmud</span>, 
+                a developer obsessed with the frontier of AI technology. I specialize in the 
+                <span className="text-cyan-400"> LangChain ecosystem</span> and 
+                <span className="text-purple-400"> MCP Server architecture</span>.
+              </p>
+
+              <p>
+                My approach is simple: build tools that aren&apos;t just functional, but 
+                <span className="text-white italic"> transformative</span>. Whether it&apos;s custom AI agents or 
+                sophisticated data pipelines, I focus on creating seamless, high-performance solutions.
+              </p>
             </div>
 
-            <div className="text-lg text-gray-400 leading-relaxed">
-              {splitWords(
-                "While I may not have traditional corporate experience, I've built numerous complex projects that demonstrate my capabilities in modern AI technologies and full-stack development."
-              )}
-            </div>
-
-            <div className="flex flex-wrap gap-6 mt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-12">
               {stats.map((stat, index) => (
                 <div
                   key={stat.label}
                   ref={(el) => addCardRef(el, index)}
-                  className="flex-1 min-w-32 bg-white/5 backdrop-blur-lg rounded-xl p-4 border border-white/10 hover:border-cyan-500/50 transition-all duration-300 group hover:scale-105"
+                  className="glass-card rounded-2xl p-6 border border-white/5 hover:border-cyan-500/30 transition-all duration-500 group relative overflow-hidden"
                 >
-                  <div
-                    className={`text-2xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1`}
-                  >
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className={`text-xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-1`}>
                     {stat.value}
                   </div>
-                  <div className="text-sm text-gray-400 group-hover:text-cyan-400 transition-colors">
+                  <div className="text-xs uppercase tracking-widest text-gray-500 group-hover:text-gray-300 transition-colors">
                     {stat.label}
                   </div>
                 </div>
@@ -205,67 +218,38 @@ function AboutSection() {
             </div>
           </div>
 
-          <div ref={imageRef} className="flex justify-center">
-            <div className="relative">
-              <div className="w-96 h-96 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-3xl border border-cyan-500/30 backdrop-blur-xl flex items-center justify-center shadow-2xl shadow-cyan-500/20 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 group-hover:from-cyan-500/20 group-hover:to-blue-500/20 transition-all duration-500"></div>
-
-                <div className="text-8xl relative z-10 group-hover:scale-110 transition-transform duration-500">
-                  🤖
+          <div ref={imageRef} className="relative order-1 lg:order-2 flex justify-center">
+            <div className="relative w-64 h-64 sm:w-80 sm:h-80 group">
+              {/* Outer glowing rings */}
+              <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-cyan-500/20 to-purple-500/20 blur-xl group-hover:blur-2xl transition-all duration-700 animate-pulse-slow" />
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 opacity-20 group-hover:opacity-40 transition-opacity duration-700" />
+              
+              <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white/10 glass-morphism p-2">
+                <div className="relative w-full h-full rounded-full bg-gray-800 overflow-hidden group-hover:scale-110 transition-transform duration-700 ease-out">
+                  <Image
+                    src="/soruj.jpg"
+                    alt="Soruj Mahmud"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                 </div>
-
-                <div className="absolute inset-0">
-                  {emojiPositions.map((position, i) => (
-                    <div
-                      key={i}
-                      className="floating-emoji absolute text-2xl opacity-60"
-                      style={{
-                        left: `${position.left}%`,
-                        top: `${position.top}%`,
-                        animationDelay: `${i * 0.5}s`,
-                      }}
-                    >
-                      {emojis[i]}
-                    </div>
-                  ))}
-                </div>
-
-                <div className="absolute inset-0 bg-cyan-500/10 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
               </div>
 
-              <div className="absolute inset-0">
-                {[0, 1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="absolute w-16 h-16 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full border border-purple-500/50 backdrop-blur-sm flex items-center justify-center text-xl"
-                    style={{
-                      animation: `orbit ${8 + i * 2}s linear infinite`,
-                      animationDelay: `${i * 2}s`,
-                      top: "50%",
-                      left: "50%",
-                      marginTop: "-2rem",
-                      marginLeft: "-2rem",
-                    }}
-                  >
-                    {["🤖", "🔗", "⚙️"][i]}
-                  </div>
-                ))}
+              {/* Floating tech badges */}
+              <div className="absolute -top-4 -right-4 w-12 h-12 rounded-2xl glass-card flex items-center justify-center animate-float shadow-lg border border-white/20">
+                <span className="text-xl">🤖</span>
+              </div>
+              <div className="absolute bottom-4 -left-8 w-14 h-14 rounded-2xl glass-card flex items-center justify-center animate-float delay-700 shadow-lg border border-white/20">
+                <span className="text-2xl">⚡</span>
+              </div>
+              <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-2xl glass-card flex items-center justify-center animate-float delay-1000 shadow-lg border border-white/20">
+                <span className="text-lg">🧠</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes orbit {
-          0% {
-            transform: rotate(0deg) translateX(150px) rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg) translateX(150px) rotate(-360deg);
-          }
-        }
-      `}</style>
     </section>
   );
 }

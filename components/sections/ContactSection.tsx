@@ -8,12 +8,49 @@ import { contactInfo } from "../../data/contact";
 function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const contactCardRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ success: boolean; message: string } | null>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = contactCardRef.current;
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = (y - centerY) / 20;
+    const rotateY = (centerX - x) / 20;
+
+    gsap.to(card, {
+      rotateX: rotateX,
+      rotateY: rotateY,
+      duration: 0.5,
+      ease: "power2.out",
+      transformPerspective: 1000,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (contactCardRef.current) {
+      gsap.to(contactCardRef.current, {
+        rotateX: 0,
+        rotateY: 0,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    }
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -40,13 +77,14 @@ function ContactSection() {
         }
       );
 
-      gsap.to(".contact-info-card", {
-        y: -10,
-        duration: 3,
+      gsap.to(".floating-bg-element", {
+        y: "random(-20, 20)",
+        x: "random(-20, 20)",
+        duration: "random(2, 4)",
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        stagger: 0.3,
+        stagger: 0.5,
       });
     });
 
@@ -56,62 +94,101 @@ function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitStatus(null);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    gsap.to(".success-message", {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: "back.out(1.7)",
-    });
+      const data = await response.json();
 
-    setIsSubmitting(false);
-    setFormData({ name: "", email: "", message: "" });
+      if (data.success) {
+        setSubmitStatus({ success: true, message: "Thank you! Your message has been sent." });
+        setFormData({ name: "", email: "", subject: "", message: "" });
+        
+        // Success animation
+        gsap.to(".success-message", {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+        });
+
+        // Reset message after 5 seconds
+        setTimeout(() => {
+          gsap.to(".success-message", {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            onComplete: () => {
+              setSubmitStatus(null);
+            }
+          });
+        }, 5000);
+      } else {
+        setSubmitStatus({ success: false, message: data.message || "Something went wrong. Please try again." });
+        gsap.to(".success-message", {
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({ success: false, message: "Network error. Please check your connection." });
+      gsap.to(".success-message", {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <section
       id="contact"
       ref={containerRef}
-      className="min-h-screen py-20 flex items-center relative overflow-hidden"
+      className="min-h-screen py-24 flex items-center relative overflow-hidden"
     >
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-cyan-500/10 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-purple-500/10 to-transparent"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+      {/* Dynamic AI Background Elements */}
+      <div className="absolute inset-0 pointer-events-none noise-bg">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.05),transparent_50%)]"></div>
+        <div className="floating-bg-element absolute top-1/4 left-10 w-64 h-64 bg-cyan-500/10 rounded-full blur-[100px]"></div>
+        <div className="floating-bg-element absolute bottom-1/4 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px]"></div>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 w-full relative z-10">
         <SectionTitle
-          title="Let's Work Together"
-          subtitle="Ready to bring your AI ideas to life? Let's discuss your project!"
+          title="Initiate Neural Link"
+          subtitle="Ready to transform the future? Let's bridge the gap between imagination and reality."
         />
 
-        <div className="grid lg:grid-cols-2 gap-16 mt-16">
-          <div className="space-y-8">
-            <div className="contact-element">
-              <h3 className="text-3xl font-bold text-white mb-6">
-                Get In Touch
+        <div className="grid lg:grid-cols-2 gap-12 mt-20 items-center">
+          <div className="space-y-10">
+            <div className="contact-element group">
+              <h3 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-200 to-white/50 mb-6">
+                Connect with the Future
               </h3>
-              <p className="text-xl text-gray-400 leading-relaxed">
-                I&apos;m always interested in new opportunities and exciting AI
-                projects. Whether you need LangChain integration, MCP server
-                development, or custom AI tools, I&apos;d love to hear from you.
+              <p className="text-xl text-gray-400 leading-relaxed max-w-lg">
+                I specialize in building next-generation AI agents, LangChain ecosystems, and immersive neural interfaces. Let&apos;s architect something extraordinary.
               </p>
             </div>
 
             <div className="space-y-6">
               {contactInfo.map((contact, index) => (
-                <ContactInfo
-                  key={contact.label}
-                  contact={contact}
-                  index={index}
-                />
+                <div key={contact.label} className="contact-element">
+                  <ContactInfo
+                    contact={contact}
+                    index={index}
+                  />
+                </div>
               ))}
             </div>
 
-            <div className="contact-element flex space-x-6 pt-6">
+            <div className="contact-element flex space-x-5 pt-4">
               {[
                 { icon: "💼", label: "LinkedIn", link: "#" },
                 { icon: "🐙", label: "GitHub", link: "#" },
@@ -124,90 +201,132 @@ function ContactSection() {
               ].map((social) => (
                 <button
                   key={social.label}
-                  className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-xl hover:bg-cyan-500 hover:text-white transition-all duration-300 transform hover:scale-110 hover:shadow-lg hover:shadow-cyan-500/25"
+                  className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-2xl hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-all duration-500 group relative overflow-hidden"
                   onClick={() => window.open(social.link, "_blank")}
                 >
-                  {social.icon}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <span className="relative z-10 transform group-hover:scale-110 transition-transform duration-300">
+                    {social.icon}
+                  </span>
                 </button>
               ))}
             </div>
           </div>
 
-          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-            <div className="contact-element">
-              <label className="block text-gray-300 mb-3 text-lg font-semibold">
-                Name
-              </label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500 focus:outline-none text-white transition-all duration-300 backdrop-blur-lg hover:bg-white/10 focus:bg-white/10 text-lg"
-                required
-                placeholder="Your full name"
-              />
-            </div>
-
-            <div className="contact-element">
-              <label className="block text-gray-300 mb-3 text-lg font-semibold">
-                Email
-              </label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500 focus:outline-none text-white transition-all duration-300 backdrop-blur-lg hover:bg-white/10 focus:bg-white/10 text-lg"
-                required
-                placeholder="your.email@example.com"
-              />
-            </div>
-
-            <div className="contact-element">
-              <label className="block text-gray-300 mb-3 text-lg font-semibold">
-                Message
-              </label>
-              <textarea
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-                rows={6}
-                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500 focus:outline-none text-white transition-all duration-300 backdrop-blur-lg hover:bg-white/10 focus:bg-white/10 text-lg resize-none"
-                required
-                placeholder="Tell me about your AI project or collaboration idea..."
-              />
-            </div>
-
-            <div className="contact-element">
-              <MagneticButton
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full px-8 py-5 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-2xl font-bold text-xl hover:shadow-2xl hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-              >
-                {isSubmitting ? (
-                  <span className="flex items-center justify-center">
-                    <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin mr-3"></div>
-                    Sending...
-                  </span>
-                ) : (
-                  "📨 Send Message"
-                )}
-              </MagneticButton>
-            </div>
-
-            <div className="success-message opacity-0 transform translate-y-10 text-center">
-              <div className="text-green-400 text-lg font-semibold">
-                ✅ Message sent successfully!
+          <div 
+            className="contact-element relative"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            ref={contactCardRef}
+          >
+            {/* Form Glow Effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
+            
+            <form 
+              ref={formRef} 
+              onSubmit={handleSubmit} 
+              className="relative space-y-6 bg-[#030712]/80 backdrop-blur-2xl p-8 lg:p-10 rounded-[2rem] border border-white/10 shadow-2xl"
+            >
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-cyan-400/80 uppercase tracking-widest ml-1">
+                  Agent Name
+                </label>
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-white transition-all duration-300 placeholder:text-gray-600"
+                  required
+                  placeholder="Identity identifier"
+                />
               </div>
-              <p className="text-gray-400 mt-2">
-                I&apos;ll get back to you as soon as possible.
-              </p>
-            </div>
-          </form>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-cyan-400/80 uppercase tracking-widest ml-1">
+                  Neural Address
+                </label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-white transition-all duration-300 placeholder:text-gray-600"
+                  required
+                  placeholder="communication@channel.io"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-cyan-400/80 uppercase tracking-widest ml-1">
+                  Subject Protocol
+                </label>
+                <input
+                  type="text"
+                  value={formData.subject}
+                  onChange={(e) =>
+                    setFormData({ ...formData, subject: e.target.value })
+                  }
+                  className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-white transition-all duration-300 placeholder:text-gray-600"
+                  required
+                  placeholder="Reason for connection"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-cyan-400/80 uppercase tracking-widest ml-1">
+                  Transmission Data
+                </label>
+                <textarea
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
+                  rows={4}
+                  className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-white transition-all duration-300 placeholder:text-gray-600 resize-none"
+                  required
+                  placeholder="Encrypt your message here..."
+                />
+              </div>
+
+              <div className="pt-2">
+                <MagneticButton
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full relative group overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-all duration-500 group-hover:scale-105"></div>
+                  <div className="relative px-8 py-5 flex items-center justify-center font-bold text-lg text-white">
+                    {isSubmitting ? (
+                      <span className="flex items-center">
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-3"></div>
+                        Processing...
+                      </span>
+                    ) : (
+                      <span className="flex items-center">
+                        Execute Transmission <span className="ml-2">→</span>
+                      </span>
+                    )}
+                  </div>
+                </MagneticButton>
+              </div>
+
+              <div className="success-message opacity-0 transform translate-y-10 text-center">
+                {submitStatus && (
+                  <div className={`inline-flex items-center px-4 py-2 border rounded-full text-sm font-medium ${
+                    submitStatus.success 
+                      ? "bg-green-500/10 border-green-500/20 text-green-400" 
+                      : "bg-red-500/10 border-red-500/20 text-red-400"
+                  }`}>
+                    <span className="mr-2">{submitStatus.success ? "⚡" : "❌"}</span> 
+                    {submitStatus.message}
+                  </div>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </section>

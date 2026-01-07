@@ -3,6 +3,18 @@ import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import NavItem from "../ui/NavItem";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
+import { LogOut, User as UserIcon, LayoutDashboard, LogIn } from "lucide-react";
+import DynamicResume from "../ui/DynamicResume";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface NavBarProps {
   activeSection: string;
@@ -10,6 +22,7 @@ interface NavBarProps {
 }
 
 function NavBar({ activeSection, setActiveSection }: NavBarProps) {
+  const { data: session } = useSession();
   const navRef = useRef<HTMLElement>(null);
   const underlineRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -21,6 +34,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   // Chevron animation
   useEffect(() => {
@@ -99,7 +113,14 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
 
   // Scroll & Initial Animations
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 100);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+      
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / totalHeight) * 100;
+      setScrollProgress(progress);
+    };
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -179,112 +200,223 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
   };
 
   return (
-    <nav
-      ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out
-        ${
-          isScrolled
-            ? "bg-black/80 backdrop-blur-2xl py-2 shadow-lg border-b border-white/20"
-            : "bg-black/20 backdrop-blur-xl py-4 border-b border-white/10"
-        }`}
-    >
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center">
-          <Link href={"/"}>
-            <div
-              className={`nav-logo font-bold bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent 
-              hover:scale-110 transition-all duration-500 cursor-pointer
-              ${isScrolled ? "text-xl" : "text-2xl"}`}
-              onClick={() => handleNavClick("home")}
-            >
-              Soruj Mahmud
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8 relative">
-            <div className="flex space-x-1 relative">
-              <div
-                ref={underlineRef}
-                className="absolute bottom-0 h-0.5 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"
-                style={{ width: "0px", left: "0px" }}
-              />
-              {navItems.map((item) => (
-                <NavItem
-                  key={item.id}
-                  item={item}
-                  isActive={activeSection === item.id}
-                  onClick={() => handleNavClick(item.id)}
-                  onHover={updateUnderline}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile: Register Link + Hamburger */}
-          <div className="md:hidden flex items-center space-x-3">
-            {/* Mobile Hamburger */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsMobileMenuOpen(!isMobileMenuOpen);
-              }}
-              className="flex flex-col justify-center items-center w-10 h-10 space-y-1.5 relative z-50"
-              aria-label="Toggle menu"
-            >
-              <span
-                className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
-                  isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
-                }`}
-              />
-              <span
-                className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
-                  isMobileMenuOpen ? "opacity-0" : ""
-                }`}
-              />
-              <span
-                className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
-                  isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
-                }`}
-              />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
-        ref={mobileMenuRef}
-        className="fixed inset-y-0 right-0 w-80 bg-black/95 backdrop-blur-3xl border-l border-cyan-500/30 
-          shadow-2xl shadow-cyan-600/30 transform translate-x-full md:hidden z-40"
+    <>
+      <nav
+        ref={navRef}
+        className={`fixed top-6 left-1/2 -translate-x-1/2 transition-all duration-500 ease-out w-[95%] max-w-5xl
+          ${isMobileMenuOpen ? "z-[70]" : "z-50"}
+          ${
+            isScrolled
+              ? "bg-black/40 backdrop-blur-2xl py-2 px-6 rounded-full border border-white/10 shadow-[0_0_30px_rgba(0,0,0,0.5)]"
+              : "bg-transparent py-4 px-4"
+          }`}
       >
-        <div className="flex flex-col items-start space-y-8 pt-32 px-10">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
-              className={`mobile-nav-item flex items-center space-x-4 text-3xl font-medium 
-                transition-all duration-500 ${
-                  activeSection === item.id ? "text-cyan-400" : "text-white"
-                } 
-                hover:text-cyan-300 hover:translate-x-4`}
-            >
-              <span className="text-4xl">{item.icon}</span>
-              <span>{item.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
+        <div className="w-full">
+          <div className="flex justify-between items-center">
+            <Link href={"/"}>
+              <div
+                className={`nav-logo font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent 
+                hover:scale-105 transition-all duration-500 cursor-pointer flex items-center gap-2
+                drop-shadow-[0_0_8px_rgba(34,211,238,0.4)] hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)]
+                ${isScrolled ? "text-xl" : "text-2xl"}`}
+                onClick={() => handleNavClick("home")}
+              >
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-xs rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                  SM
+                </div>
+                <span className="hidden sm:block tracking-tighter">Soruj Mahmud</span>
+              </div>
+            </Link>
 
-      {/* Backdrop */}
-      {isMobileMenuOpen && (
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8 relative">
+              <div className="flex space-x-1 relative">
+                <div
+                  ref={underlineRef}
+                  className="absolute bottom-0 h-0.5 bg-cyan-400 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.8)]"
+                  style={{ width: "0px", left: "0px" }}
+                />
+                {navItems.map((item) => (
+                  <NavItem
+                    key={item.id}
+                    item={item}
+                    isActive={activeSection === item.id}
+                    onClick={() => handleNavClick(item.id)}
+                    onHover={updateUnderline}
+                  />
+                ))}
+              </div>
+
+              {/* Auth Button / User Menu */}
+              <div className="flex items-center ml-4 space-x-4">
+                {session ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="outline-none">
+                      <div className="relative group">
+                        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-500"></div>
+                        <Avatar className="h-10 w-10 border-2 border-white/10 relative">
+                          <AvatarImage src={session.user?.image || ""} alt={session.user?.name || "User"} />
+                          <AvatarFallback className="bg-gray-800 text-cyan-400">
+                            {session.user?.name?.charAt(0) || <UserIcon size={20} />}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56 bg-black/90 backdrop-blur-xl border-white/10 text-white" align="end">
+                      <DropdownMenuLabel className="font-normal">
+                        <div className="flex flex-col space-y-1">
+                          <p className="text-sm font-medium leading-none">{session.user?.name}</p>
+                          <p className="text-xs leading-none text-gray-400">{session.user?.email}</p>
+                        </div>
+                      </DropdownMenuLabel>
+                      <DropdownMenuSeparator className="bg-white/10" />
+                      {(session.user as { role?: string }).role === "admin" && (
+                        <Link href="/admin">
+                          <DropdownMenuItem className="cursor-pointer hover:bg-white/5 focus:bg-white/5 text-white">
+                            <LayoutDashboard className="mr-2 h-4 w-4 text-cyan-400" />
+                            <span>Admin Dashboard</span>
+                          </DropdownMenuItem>
+                        </Link>
+                      )}
+                      <DropdownMenuItem 
+                        className="cursor-pointer text-red-400 hover:bg-red-400/10 focus:bg-red-400/10"
+                        onClick={() => signOut()}
+                      >
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>Log out</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <Link href="/login">
+                    <button className="relative group px-6 py-2 rounded-full overflow-hidden transition-all duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-600 opacity-20 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute inset-[1px] bg-black rounded-full group-hover:bg-transparent transition-colors duration-500"></div>
+                      <span className="relative flex items-center gap-2 text-sm font-medium text-cyan-400 group-hover:text-white transition-colors duration-300">
+                        <LogIn size={16} />
+                        Login
+                      </span>
+                    </button>
+                  </Link>
+                )}
+              </div>
+            </div>
+
+            {/* Mobile: Hamburger */}
+            <div className="md:hidden flex items-center space-x-3">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsMobileMenuOpen(!isMobileMenuOpen);
+                }}
+                className="flex flex-col justify-center items-center w-10 h-10 space-y-1.5 relative z-[60]"
+                aria-label="Toggle menu"
+              >
+                <span
+                  className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
+                    isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
+                  }`}
+                />
+                <span
+                  className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
+                    isMobileMenuOpen ? "opacity-0" : ""
+                  }`}
+                />
+                <span
+                  className={`hamburger-line block w-8 h-0.5 bg-cyan-400 rounded-full transition-all duration-300 ${
+                    isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+                  }`}
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Progress Bar */}
+        <div 
+          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 transition-all duration-150 ease-out rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </nav>
+
+      {/* Mobile Menu Portal Area (Outside transformed container) */}
+      <div className="md:hidden">
+        {/* Backdrop Overlay */}
         <div
           ref={backdropRef}
           onClick={closeMobileMenu}
-          className="fixed inset-0 bg-black/70 z-30 md:hidden backdrop-blur-sm"
+          className={`fixed inset-0 bg-black/80 backdrop-blur-md z-[55] transition-opacity duration-300 ${
+            isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
         />
-      )}
-    </nav>
+
+        {/* Sliding Menu */}
+        <div
+          ref={mobileMenuRef}
+          className="fixed inset-y-0 right-0 w-[85%] max-w-sm bg-black/95 backdrop-blur-2xl border-l border-white/10 
+            shadow-2xl z-[60] flex flex-col pt-32 px-10 overflow-y-auto"
+        >
+          <div className="flex flex-col space-y-6">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className={`mobile-nav-item flex items-center space-x-4 text-2xl font-bold 
+                  transition-all duration-300 ${
+                    activeSection === item.id 
+                      ? "text-cyan-400" 
+                      : "text-white/70"
+                  } 
+                  hover:text-cyan-300`}
+              >
+                <span className="text-2xl">{item.icon}</span>
+                <span>{item.label}</span>
+              </button>
+            ))}
+
+            {/* Mobile Auth Section */}
+            <div className="mobile-nav-item pt-10 mt-6 border-t border-white/10 w-full">
+              {session ? (
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-4">
+                    <Avatar className="h-12 w-12 border-2 border-cyan-500/50">
+                      <AvatarImage src={session.user?.image || ""} />
+                      <AvatarFallback>{session.user?.name?.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="text-lg font-bold text-white leading-tight">{session.user?.name}</p>
+                      <p className="text-xs text-gray-400">{session.user?.email}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col space-y-4">
+                    {(session.user as { role?: string })?.role === "admin" && (
+                      <Link href="/admin" onClick={closeMobileMenu} className="flex items-center space-x-3 text-lg text-cyan-400">
+                        <LayoutDashboard size={20} />
+                        <span>Admin Dashboard</span>
+                      </Link>
+                    )}
+                    <button 
+                      onClick={() => { signOut(); closeMobileMenu(); }}
+                      className="flex items-center space-x-3 text-lg text-red-400"
+                    >
+                      <LogOut size={20} />
+                      <span>Log out</span>
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Link href="/login" onClick={closeMobileMenu}>
+                  <button className="flex items-center space-x-3 text-2xl font-bold text-white hover:text-cyan-400 transition-colors">
+                    <LogIn size={24} className="text-cyan-400" />
+                    <span>Login</span>
+                  </button>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

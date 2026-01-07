@@ -3,11 +3,15 @@ export const LOGIN = '/login';
 export const ROOT = '/';
 
 export const PUBLIC_ROUTES = [
+    '/',
     '/login',
     '/register',
-    '/products',
+    '/projects',
     '/api/auth/callback/google',
     '/api/auth/callback/github',
+    '/forget-password',
+    '/reset-password',
+    '/verify-otp',
 ]
 
 export const PROTECTED_SUB_ROUTES = [

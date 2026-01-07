@@ -2,22 +2,23 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 
 interface StatCardProps {
-  stat: {
-    number: string;
-    label: string;
-    color: string;
-  };
-  index: number;
+  number?: string;
+  value?: string;
+  label: string;
+  color?: string;
+  index?: number;
 }
 
-function StatCard({ stat, index }: StatCardProps) {
+function StatCard({ number, value, label, color = "from-cyan-500 to-blue-500", index = 0 }: StatCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const numberRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
 
+  const displayValue = value || number || "0";
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const targetNumber = parseInt(stat.number.replace("+", "").replace("%", ""));
+      const targetNumber = parseInt(displayValue.replace("+", "").replace("%", ""));
 
       if (numberRef.current) {
         gsap.fromTo(
@@ -39,8 +40,8 @@ function StatCard({ stat, index }: StatCardProps) {
                 const currentValue = Math.floor(Number(this.targets()[0].textContent));
                 numberRef.current.textContent =
                   currentValue +
-                  (stat.number.includes("+") ? "+" : "") +
-                  (stat.number.includes("%") ? "%" : "");
+                  (displayValue.includes("+") ? "+" : "") +
+                  (displayValue.includes("%") ? "%" : "");
               }
             },
           }
@@ -82,21 +83,21 @@ function StatCard({ stat, index }: StatCardProps) {
     });
 
     return () => ctx.revert();
-  }, [stat, index]);
+  }, [displayValue, index]);
 
   return (
     <div ref={cardRef} className="text-center group cursor-pointer">
       <div className="relative bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10 hover:border-cyan-500/50 transition-all duration-500 hover:scale-110 hover:shadow-2xl hover:shadow-cyan-500/25">
         <div
           ref={glowRef}
-          className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${stat.color} opacity-0 blur-xl -z-10`}
+          className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${color} opacity-0 blur-xl -z-10`}
         />
 
         <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent mb-3">
           <span ref={numberRef}>0</span>
         </div>
         <div className="text-gray-400 text-sm uppercase tracking-wider group-hover:text-cyan-400 transition-colors font-light">
-          {stat.label}
+          {label}
         </div>
 
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

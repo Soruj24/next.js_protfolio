@@ -36,53 +36,8 @@ export interface TechChipProps {
   index: number;
 }
 
-export interface IProject {
-  id: string;
-  title: string;
-  description: string;
-  fullDescription: string;
-  image: string;
-  technologies: string[];
-  features: string[];
-  githubUrl: string;
-  liveUrl: string;
-  category: "AI" | "Fullstack" | "Mobile" | "Frontend" | "Backend" | "Blockchain" | "IOT";
-  status: "completed" | "in-progress";
-  screenshots: string[];
-  challenges: string[];
-  solutions: string[];
-  featured: boolean;
-  difficulty: "beginner" | "intermediate" | "advanced";
-  duration: string;
-  teamSize: string;
-  completionDate: string;
-  createdAt: string;
-  updatedAt: string;
-  tags: string[];
-  emoji: string;
-  stats: {
-    completionTime: string;
-    teamSize: string;
-    complexity: string;
-    views: number;
-    likes: number;
-  };
-  architecture: string;
-  developmentHighlights: {
-    title: string;
-    description: string;
-  }[];
-  lessonsLearned: string[];
-  futureImprovements: string[];
-  metaDescription: string;
-  seoTitle: string;
-  performance: {
-    loadTime: number;
-    accessibility: number;
-    bestPractices: number;
-    seo: number;
-  };
-}
+import { IProject } from "@/models/Project";
+export type { IProject };
 
 export interface ProjectCardProps {
   project: IProject;

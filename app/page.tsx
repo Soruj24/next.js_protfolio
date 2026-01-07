@@ -9,6 +9,7 @@ import HomeSection from "@/components/sections/HomeSection";
 import LearningJourney from "@/components/sections/LearningJourney";
 import ProjectsShowcase from "@/components/sections/ProjectsShowcase";
 import SkillsShowcase from "@/components/sections/SkillsShowcase";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -36,6 +37,7 @@ export default function Home() {
         <SkillsShowcase />
         <LearningJourney />
         <ProjectsShowcase />
+        <TestimonialsSection />
         <ContactSection />
         <Footer />
       </div>
