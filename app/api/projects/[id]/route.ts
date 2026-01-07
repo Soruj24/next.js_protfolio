@@ -5,11 +5,12 @@ import { auth } from "@/auth";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     await connectDB();
-    const project = await Project.findById(params.id);
+    const project = await Project.findById(id);
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
@@ -24,9 +25,10 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await auth();
     if (!session || (session.user as { role?: string }).role !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -34,7 +36,7 @@ export async function PUT(
 
     const data = await req.json();
     await connectDB();
-    const project = await Project.findByIdAndUpdate(params.id, data, {
+    const project = await Project.findByIdAndUpdate(id, data, {
       new: true,
       runValidators: true,
     });
@@ -52,16 +54,17 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await auth();
     if (!session || (session.user as { role?: string }).role !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     await connectDB();
-    const project = await Project.findByIdAndDelete(params.id);
+    const project = await Project.findByIdAndDelete(id);
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }

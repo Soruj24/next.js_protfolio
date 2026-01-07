@@ -5,11 +5,12 @@ import { auth } from "@/auth";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     await connectDB();
-    const category = await SkillCategory.findById(params.id);
+    const category = await SkillCategory.findById(id);
     if (!category) {
       return NextResponse.json({ error: "Category not found" }, { status: 404 });
     }
@@ -21,9 +22,10 @@ export async function GET(
 
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await auth();
     if (!session || (session.user as { role?: string }).role !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -31,7 +33,7 @@ export async function PUT(
 
     const data = await req.json();
     await connectDB();
-    const category = await SkillCategory.findByIdAndUpdate(params.id, data, {
+    const category = await SkillCategory.findByIdAndUpdate(id, data, {
       new: true,
       runValidators: true,
     });
@@ -46,16 +48,17 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const session = await auth();
     if (!session || (session.user as { role?: string }).role !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     await connectDB();
-    const category = await SkillCategory.findByIdAndDelete(params.id);
+    const category = await SkillCategory.findByIdAndDelete(id);
     if (!category) {
       return NextResponse.json({ error: "Category not found" }, { status: 404 });
     }
