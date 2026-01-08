@@ -6,7 +6,7 @@ const nextConfig = {
   },
   experimental: {
   },
-  transpilePackages: ['zod'],
+  transpilePackages: ['zod', '@langchain/core', '@langchain/community', 'langchain', '@hookform/resolvers'],
   images: {
     remotePatterns: [
       {
