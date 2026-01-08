@@ -68,7 +68,7 @@ export const ChatWidget = () => {
             ) : (
               messages.map((msg, idx) => (
                 <div
-                  key={msg._id || idx}
+                  key={msg.id || idx}
                   className={cn(
                     "flex flex-col max-w-[80%]",
                     msg.senderId === clientId ? "ml-auto items-end" : "mr-auto items-start"
@@ -85,7 +85,7 @@ export const ChatWidget = () => {
                     {msg.content}
                   </div>
                   <span className="text-[10px] text-gray-500 mt-1">
-                    {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
               ))
