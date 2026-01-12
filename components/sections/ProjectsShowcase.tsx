@@ -18,10 +18,19 @@ function ProjectsShowcase() {
     const fetchProjects = async () => {
       try {
         const res = await fetch("/api/projects");
+        if (!res.ok) {
+          throw new Error(`Failed to fetch projects: ${res.status}`);
+        }
         const data = await res.json();
-        setProjects(data);
+        if (Array.isArray(data)) {
+          setProjects(data);
+        } else {
+          console.error("Projects API returned non-array data:", data);
+          setProjects([]);
+        }
       } catch (error) {
         console.error("Failed to fetch projects:", error);
+        setProjects([]);
       } finally {
         setIsLoading(false);
       }
@@ -31,23 +40,25 @@ function ProjectsShowcase() {
 
   const categories = [
     "All",
-    ...new Set(projects.map((project) => project.category)),
+    ...new Set(Array.isArray(projects) ? projects.map((project) => project.category) : []),
   ];
 
-  const filteredProjects = projects.filter((project) => {
-    const matchesCategory =
-      selectedCategory === "All" || project.category === selectedCategory;
-    const matchesSearch =
-      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.technologies.some((tech) =>
-        tech.toLowerCase().includes(searchTerm.toLowerCase())
-      ) ||
-      project.tags.some((tag) =>
-        tag.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    return matchesCategory && matchesSearch;
-  });
+  const filteredProjects = Array.isArray(projects) 
+    ? projects.filter((project) => {
+        const matchesCategory =
+          selectedCategory === "All" || project.category === selectedCategory;
+        const matchesSearch =
+          project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (project.technologies && project.technologies.some((tech) =>
+            tech.toLowerCase().includes(searchTerm.toLowerCase())
+          )) ||
+          (project.tags && project.tags.some((tag) =>
+            tag.toLowerCase().includes(searchTerm.toLowerCase())
+          ));
+        return matchesCategory && matchesSearch;
+      })
+    : [];
 
   const projectsToShow = filteredProjects.slice(0, visibleProjects);
 

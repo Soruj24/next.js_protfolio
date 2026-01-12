@@ -14,10 +14,19 @@ export default function AdminSkills() {
   const fetchSkills = async () => {
     try {
       const res = await fetch("/api/skills");
+      if (!res.ok) {
+        throw new Error(`Failed to fetch skills: ${res.status}`);
+      }
       const data = await res.json();
-      setCategories(data);
+      if (Array.isArray(data)) {
+        setCategories(data);
+      } else {
+        console.error("Skills API returned non-array data:", data);
+        setCategories([]);
+      }
     } catch {
       toast.error("Failed to fetch skills");
+      setCategories([]);
     } finally {
       setLoading(false);
     }

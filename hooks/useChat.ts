@@ -33,7 +33,12 @@ export const useChat = (receiverId: string = "admin") => {
         );
         if (res.ok) {
           const data = await res.json();
-          setMessages(data);
+          if (Array.isArray(data)) {
+            setMessages(data);
+          } else {
+            console.error("Chat history API returned non-array data:", data);
+            setMessages([]);
+          }
         }
       } catch (error) {
         console.error("Error fetching chat history:", error);

@@ -15,10 +15,19 @@ export default function AdminProjects() {
   const fetchProjects = async () => {
     try {
       const res = await fetch("/api/projects");
+      if (!res.ok) {
+        throw new Error(`Failed to fetch projects: ${res.status}`);
+      }
       const data = await res.json();
-      setProjects(data);
+      if (Array.isArray(data)) {
+        setProjects(data);
+      } else {
+        console.error("Projects API returned non-array data:", data);
+        setProjects([]);
+      }
     } catch {
       toast.error("Failed to fetch projects");
+      setProjects([]);
     } finally {
       setLoading(false);
     }
