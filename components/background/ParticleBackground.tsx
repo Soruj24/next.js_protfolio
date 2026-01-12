@@ -1,3 +1,4 @@
+"use client";
 import { useRef, useEffect } from "react";
 
 interface Particle {
@@ -8,8 +9,20 @@ interface Particle {
   speedY: number;
   color: string;
   originalSize: number;
-  update: () => void;
-  draw: () => void;
+  opacity: number;
+  layer: number;
+  pulse: number;
+  update: (mouseX: number, mouseY: number, width: number, height: number) => void;
+  draw: (ctx: CanvasRenderingContext2D) => void;
+}
+
+interface Burst {
+  x: number;
+  y: number;
+  radius: number;
+  maxRadius: number;
+  opacity: number;
+  color: string;
 }
 
 function ParticleBackground() {
@@ -20,12 +33,14 @@ function ParticleBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
     let animationFrame: number;
-    let mouseX = 0;
-    let mouseY = 0;
+    let mouseX = -1000;
+    let mouseY = -1000;
+    let time = 0;
+    const bursts: Burst[] = [];
 
     const resizeCanvas = () => {
       if (canvas) {
@@ -42,12 +57,21 @@ function ParticleBackground() {
       mouseY = e.clientY;
     };
 
+    const handleClick = (e: MouseEvent) => {
+      bursts.push({
+        x: e.clientX,
+        y: e.clientY,
+        radius: 0,
+        maxRadius: 150,
+        opacity: 0.8,
+        color: "rgba(6, 182, 212, 0.4)"
+      });
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("click", handleClick);
 
-    const particles: Particle[] = [];
-    const particleCount = 100;
-
-    class ParticleImpl {
+    class ParticleImpl implements Particle {
       x: number;
       y: number;
       size: number;
@@ -55,82 +79,106 @@ function ParticleBackground() {
       speedY: number;
       color: string;
       originalSize: number;
+      opacity: number;
+      layer: number;
+      pulse: number;
 
-      constructor(canvas: HTMLCanvasElement) {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.originalSize = Math.random() * 3 + 1;
-        this.size = this.originalSize;
-        this.speedX = Math.random() * 2 - 1;
-        this.speedY = Math.random() * 2 - 1;
-        const hue = 200 + Math.random() * 60;
-        this.color = `hsla(${hue}, 70%, 60%, 0.8)`;
-      }
-
-      update() {
-        if (!canvasRef.current) return;
-
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        const dx = mouseX - this.x;
-        const dy = mouseY - this.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < 100) {
-          this.size = this.originalSize * 2;
-          const force = (100 - distance) / 100;
-          this.x -= dx * force * 0.02;
-          this.y -= dy * force * 0.02;
+      constructor(width: number, height: number, layer: number) {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.layer = layer;
+        
+        if (layer === 1) {
+          this.originalSize = Math.random() * 2 + 1.5;
+          this.speedX = (Math.random() * 1 - 0.5) * 0.8;
+          this.speedY = (Math.random() * 1 - 0.5) * 0.8;
+          this.opacity = Math.random() * 0.5 + 0.3;
         } else {
-          this.size = this.originalSize;
+          this.originalSize = Math.random() * 1 + 0.5;
+          this.speedX = (Math.random() * 0.5 - 0.25) * 0.5;
+          this.speedY = (Math.random() * 0.5 - 0.25) * 0.5;
+          this.opacity = Math.random() * 0.2 + 0.1;
         }
 
-        if (this.x > canvasRef.current.width + 50) this.x = -50;
-        else if (this.x < -50) this.x = canvasRef.current.width + 50;
-        if (this.y > canvasRef.current.height + 50) this.y = -50;
-        else if (this.y < -50) this.y = canvasRef.current.height + 50;
+        this.size = this.originalSize;
+        this.pulse = Math.random() * Math.PI * 2;
+        
+        const hues = [180, 210, 280];
+        const hue = hues[Math.floor(Math.random() * hues.length)];
+        this.color = `hsla(${hue}, 80%, 60%,`;
       }
 
-      draw() {
-        if (!ctx || !canvasRef.current) return;
+      update(mX: number, mY: number, width: number, height: number) {
+        this.pulse += 0.02;
+        const waveX = Math.sin(this.pulse) * 0.2;
+        const waveY = Math.cos(this.pulse) * 0.2;
+        
+        this.x += this.speedX + waveX;
+        this.y += this.speedY + waveY;
 
-        const gradient = ctx.createRadialGradient(
-          this.x,
-          this.y,
-          0,
-          this.x,
-          this.y,
-          this.size * 3
-        );
-        gradient.addColorStop(0, this.color);
-        gradient.addColorStop(1, "transparent");
+        const dx = mX - this.x;
+        const dy = mY - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 200;
 
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
-        ctx.fill();
+        if (distance < maxDist) {
+          const force = (maxDist - distance) / maxDist;
+          this.x -= dx * force * 0.05;
+          this.y -= dy * force * 0.05;
+          this.size = this.originalSize * (1 + force * 2);
+          if (this.layer === 1) this.opacity = Math.min(0.9, this.opacity + 0.05);
+        } else {
+          this.size = this.originalSize + Math.sin(this.pulse) * 0.5;
+          if (this.layer === 1) this.opacity = Math.max(0.4, this.opacity - 0.01);
+        }
 
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+        if (this.x > width + 20) this.x = -20;
+        else if (this.x < -20) this.x = width + 20;
+        if (this.y > height + 20) this.y = -20;
+        else if (this.y < -20) this.y = height + 20;
+      }
+
+      draw(context: CanvasRenderingContext2D) {
+        context.beginPath();
+        context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        context.fillStyle = `${this.color} ${this.opacity})`;
+        
+        if (this.layer === 1) {
+          context.shadowBlur = 15;
+          context.shadowColor = "rgba(6, 182, 212, 0.6)";
+        }
+        
+        context.fill();
+        context.shadowBlur = 0;
       }
     }
 
-    const drawConnections = () => {
-      if (!ctx) return;
+    const particles: ParticleImpl[] = [];
+    const layer0Count = 50;
+    const layer1Count = 40;
 
+    for (let i = 0; i < layer0Count; i++) particles.push(new ParticleImpl(canvas.width, canvas.height, 0));
+    for (let i = 0; i < layer1Count; i++) particles.push(new ParticleImpl(canvas.width, canvas.height, 1));
+
+    const drawConnections = () => {
+      ctx.lineWidth = 0.5;
       for (let i = 0; i < particles.length; i++) {
+        if (particles[i].layer === 0) continue;
+
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
+          const connectDist = 200;
 
-          if (distance < 150) {
-            const opacity = 1 - distance / 150;
-            ctx.strokeStyle = `rgba(100, 200, 255, ${opacity * 0.2})`;
-            ctx.lineWidth = 1;
+          if (distance < connectDist) {
+            const opacity = (1 - distance / connectDist) * 0.2;
+            const mDx = (particles[i].x + particles[j].x) / 2 - mouseX;
+            const mDy = (particles[i].y + particles[j].y) / 2 - mouseY;
+            const mDist = Math.sqrt(mDx * mDx + mDy * mDy);
+            const extraOpacity = mDist < 200 ? (200 - mDist) / 200 * 0.4 : 0;
+
+            ctx.strokeStyle = `rgba(100, 200, 255, ${opacity + extraOpacity})`;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -140,22 +188,76 @@ function ParticleBackground() {
       }
     };
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new ParticleImpl(canvas));
-    }
+    const drawScanningLine = () => {
+      const scanY = (time * 100) % canvas.height;
+      const gradient = ctx.createLinearGradient(0, scanY - 50, 0, scanY + 50);
+      gradient.addColorStop(0, "rgba(6, 182, 212, 0)");
+      gradient.addColorStop(0.5, "rgba(6, 182, 212, 0.05)");
+      gradient.addColorStop(1, "rgba(6, 182, 212, 0)");
+      
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, scanY - 50, canvas.width, 100);
+      
+      ctx.strokeStyle = "rgba(6, 182, 212, 0.1)";
+      ctx.beginPath();
+      ctx.moveTo(0, scanY);
+      ctx.lineTo(canvas.width, scanY);
+      ctx.stroke();
+    };
+
+    const updateBursts = () => {
+      for (let i = bursts.length - 1; i >= 0; i--) {
+        const b = bursts[i];
+        b.radius += 4;
+        b.opacity -= 0.02;
+        
+        if (b.opacity <= 0) {
+          bursts.splice(i, 1);
+          continue;
+        }
+
+        ctx.strokeStyle = `rgba(6, 182, 212, ${b.opacity})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    };
 
     const animate = () => {
-      if (!ctx || !canvas) return;
-
-      ctx.fillStyle = "rgba(15, 23, 42, 0.1)";
+      time += 0.01;
+      ctx.fillStyle = "#020617";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+      // Cyberpunk Grid
+      ctx.strokeStyle = "rgba(30, 41, 59, 0.3)";
+      ctx.lineWidth = 1;
+      const gridSize = 120;
+      const offsetX = (mouseX * 0.05) % gridSize;
+      const offsetY = (mouseY * 0.05) % gridSize;
+      
+      for(let x = offsetX; x < canvas.width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for(let y = offsetY; y < canvas.height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      drawScanningLine();
+
       particles.forEach((particle) => {
-        particle.update();
-        particle.draw();
+        particle.update(mouseX, mouseY, canvas.width, canvas.height);
+        particle.draw(ctx);
       });
 
       drawConnections();
+      updateBursts();
 
       animationFrame = requestAnimationFrame(animate);
     };
@@ -166,11 +268,13 @@ function ParticleBackground() {
       cancelAnimationFrame(animationFrame);
       window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("click", handleClick);
     };
   }, []);
 
   return (
     <div ref={containerRef} className="fixed inset-0 pointer-events-none z-0">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.05),transparent_70%)]" />
       <canvas ref={canvasRef} className="absolute inset-0" />
     </div>
   );

@@ -17,18 +17,18 @@ export default function PageTransition() {
     // Initial entrance animation
     const tl = gsap.timeline();
 
-    tl.set(overlay, { xPercent: 0 })
+    tl.set(overlay, { scaleY: 1, transformOrigin: "top" })
       .to(overlay, {
-        xPercent: 100,
-        duration: 0.8,
-        ease: "power4.inOut",
-        delay: 0.2,
+        scaleY: 0,
+        duration: 1.2,
+        ease: "expo.inOut",
+        delay: 0.1,
       })
       .fromTo(
         ".content-wrapper",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-        "-=0.4"
+        { opacity: 0, scale: 0.98, filter: "blur(10px)" },
+        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1, ease: "power4.out" },
+        "-=0.8"
       );
 
     return () => {

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { toast } from "sonner";
 import { Download, Loader2, Sparkles } from "lucide-react";
+import { gsap } from "gsap";
 import { ISettings } from "@/models/Settings";
 
 export default function DynamicResume() {
@@ -196,28 +197,62 @@ export default function DynamicResume() {
     }
   };
 
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!btnRef.current) return;
+    const rect = btnRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    
+    gsap.to(btnRef.current, {
+      x: x * 0.2,
+      y: y * 0.2,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (!btnRef.current) return;
+    gsap.to(btnRef.current, {
+      x: 0,
+      y: 0,
+      duration: 0.5,
+      ease: "elastic.out(1, 0.3)",
+    });
+  };
+
   return (
     <button
+      ref={btnRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       onClick={generatePDF}
       disabled={isGenerating}
-      className="group relative px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl font-bold transition-all duration-300 hover:scale-105 active:scale-95 disabled:opacity-70 disabled:hover:scale-100 flex items-center gap-2 shadow-lg shadow-cyan-500/20"
+      className="group relative px-6 py-2.5 bg-white text-black rounded-full font-bold transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] disabled:opacity-70 flex items-center gap-2 overflow-hidden"
     >
+      {/* Animated Gradient Background on Hover */}
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 opacity-0 group-hover:opacity-10 transition-opacity duration-500" />
+      
       {isGenerating ? (
         <>
-          <Loader2 size={18} className="animate-spin" />
-          <span>Generating CV...</span>
+          <Loader2 size={16} className="animate-spin text-cyan-600" />
+          <span className="text-sm">Generating...</span>
         </>
       ) : (
         <>
-          <Sparkles
-            size={18}
-            className="group-hover:animate-pulse text-cyan-200"
-          />
-          <span>Download Unique CV</span>
-          <Download
-            size={18}
-            className="ml-1 group-hover:translate-y-0.5 transition-transform"
-          />
+          <div className="relative flex items-center gap-2">
+            <Sparkles
+              size={16}
+              className="group-hover:text-cyan-600 transition-colors duration-300"
+            />
+            <span className="text-sm tracking-tight">Resume</span>
+            <Download
+              size={14}
+              className="opacity-50 group-hover:opacity-100 group-hover:translate-y-0.5 transition-all duration-300"
+            />
+          </div>
         </>
       )}
     </button>
