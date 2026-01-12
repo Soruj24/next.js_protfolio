@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error("Please define MONGODB_URI in your .env file");
-}
-
 interface GlobalMongoose {
   mongoose?: {
     conn: mongoose.Mongoose | null;
@@ -24,12 +20,16 @@ export async function connectDB() {
     return cached.conn;
   }
 
+  if (!MONGODB_URI) {
+    throw new Error("Please define MONGODB_URI in your .env file");
+  }
+
   if (!cached || !cached.promise) {
     const opts = {
       bufferCommands: false, // Disable buffering to surface connection issues early
     };
 
-    cached!.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached!.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log("MongoDB connected");
       return mongoose;
     });
