@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
 interface GlobalMongoose {
   mongoose?: {
     conn: mongoose.Mongoose | null;
@@ -16,11 +14,19 @@ if (!cached) {
 }
 
 export async function connectDB() {
+  const MONGODB_URI = process.env.MONGODB_URI;
+
   if (cached && cached.conn) {
     return cached.conn;
   }
 
   if (!MONGODB_URI) {
+    // During build, we might not have the URI, and that's okay if we don't actually query.
+    // We return null to indicate no connection, and calling code should handle it.
+    if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.NODE_ENV === 'production') {
+       console.warn("MONGODB_URI is not defined. Skipping database connection.");
+       return null;
+    }
     throw new Error("Please define MONGODB_URI in your .env file");
   }
 
