@@ -3,16 +3,28 @@ import { Settings } from "@/models/Settings";
 import SettingsForm from "@/components/admin/SettingsForm";
 import personalData from "@/data/Parsonal.json";
 
+export const dynamic = 'force-dynamic';
+
 async function getSettings() {
-  await connectDB();
-  const settings = await Settings.findOne().lean();
+  const conn = await connectDB();
   
-  if (!settings) {
-    // If no settings in DB, use the JSON data as initial values
+  if (!conn) {
     return personalData;
   }
-  
-  return JSON.parse(JSON.stringify(settings));
+
+  try {
+    const settings = await Settings.findOne().lean();
+    
+    if (!settings) {
+      // If no settings in DB, use the JSON data as initial values
+      return personalData;
+    }
+    
+    return JSON.parse(JSON.stringify(settings));
+  } catch (error) {
+    console.error("Failed to fetch settings:", error);
+    return personalData;
+  }
 }
 
 export default async function SettingsPage() {

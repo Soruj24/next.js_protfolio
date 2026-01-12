@@ -5,21 +5,43 @@ import { Contact, IContact, IContactDocument } from "@/models/Contact";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { FolderKanban, Users, MessageSquare, TrendingUp } from "lucide-react";
 
+export const dynamic = 'force-dynamic';
+
 async function getDashboardData() {
-  await connectDB();
-  const [projectCount, userCount, messageCount, recentMessages] =
-    await Promise.all([
-      Project.countDocuments(),
-      User.countDocuments(),
-      Contact.countDocuments(),
-      Contact.find().sort({ createdAt: -1 }).limit(5).lean(),
-    ]);
-  return {
-    projectCount,
-    userCount,
-    messageCount,
-    recentMessages: JSON.parse(JSON.stringify(recentMessages)),
-  };
+  const conn = await connectDB();
+  
+  if (!conn) {
+    return {
+      projectCount: 0,
+      userCount: 0,
+      messageCount: 0,
+      recentMessages: [],
+    };
+  }
+
+  try {
+    const [projectCount, userCount, messageCount, recentMessages] =
+      await Promise.all([
+        Project.countDocuments(),
+        User.countDocuments(),
+        Contact.countDocuments(),
+        Contact.find().sort({ createdAt: -1 }).limit(5).lean(),
+      ]);
+    return {
+      projectCount,
+      userCount,
+      messageCount,
+      recentMessages: JSON.parse(JSON.stringify(recentMessages)),
+    };
+  } catch (error) {
+    console.error("Failed to fetch dashboard data:", error);
+    return {
+      projectCount: 0,
+      userCount: 0,
+      messageCount: 0,
+      recentMessages: [],
+    };
+  }
 }
 
 export default async function AdminDashboard() {
