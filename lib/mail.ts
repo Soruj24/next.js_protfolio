@@ -1,19 +1,40 @@
 import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const getResend = () => {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) {
+    if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.NODE_ENV === 'production') {
+      return null;
+    }
+    // Only throw in dev if we actually try to use it
+    return null; 
+  }
+  return new Resend(key);
+};
 
 // Nodemailer setup for fallback or Gmail SMTP
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const getTransporter = () => {
+  if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    return null;
+  }
+  return nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+};
 
 export const sendResetPasswordEmail = async (email: string, token: string) => {
   const resetLink = `${process.env.NEXTAUTH_URL}/reset-password/${token}`;
+  const resend = getResend();
+
+  if (!resend) {
+    console.warn('Resend API key missing. Cannot send reset email.');
+    return { success: false, error: 'Email service not configured' };
+  }
 
   try {
     await resend.emails.send({
@@ -54,7 +75,8 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
   `;
 
   // Try Resend first
-  if (process.env.RESEND_API_KEY) {
+  const resend = getResend();
+  if (resend) {
     try {
       console.log('Attempting to send via Resend...');
       const data = await resend.emails.send({
@@ -75,7 +97,8 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
   }
 
   // Fallback to Nodemailer if Gmail credentials exist
-  if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+  const transporter = getTransporter();
+  if (transporter) {
     try {
       console.log('Attempting to send via Nodemailer...');
       await transporter.sendMail({
