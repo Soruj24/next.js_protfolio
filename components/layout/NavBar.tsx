@@ -224,7 +224,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white text-xs rotate-12 group-hover:rotate-0 transition-transform duration-500">
                   SM
                 </div>
-                <span className="hidden sm:block tracking-tighter">Soruj Mahmud</span>
+                <span className="hidden sm:block tracking-tighter">Soruj </span>
               </div>
             </Link>
 
