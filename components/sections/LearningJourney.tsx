@@ -2,45 +2,12 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import SectionTitle from "../ui/SectionTitle";
 import { experiences } from "../../data/experience";
+import JourneyBackground from "../journey/JourneyBackground";
+import JourneyCard from "../journey/JourneyCard";
 
 function LearningJourney() {
   const timelineRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
-    const card = itemsRef.current[index];
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const rotateX = (y - centerY) / 15;
-    const rotateY = (centerX - x) / 15;
-
-    gsap.to(card, {
-      rotateX: rotateX,
-      rotateY: rotateY,
-      duration: 0.5,
-      ease: "power2.out",
-      transformPerspective: 1000,
-    });
-  };
-
-  const handleMouseLeave = (index: number) => {
-    const card = itemsRef.current[index];
-    if (!card) return;
-
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      duration: 0.5,
-      ease: "power2.out",
-    });
-  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -129,10 +96,7 @@ function LearningJourney() {
       id="journey"
       className="min-h-screen py-20 bg-gradient-to-b from-gray-900 to-purple-900/30 relative overflow-hidden"
     >
-      <div className="absolute inset-0">
-        <div className="absolute top-20 right-1/4 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-1/4 w-56 h-56 bg-purple-500/5 rounded-full blur-3xl"></div>
-      </div>
+      <JourneyBackground />
 
       <div className="max-w-6xl mx-auto px-4 relative z-10">
         <SectionTitle
@@ -158,51 +122,11 @@ function LearningJourney() {
                     index % 2 === 0 ? "md:pr-16" : "md:pl-16"
                   }`}
                 >
-                  <div
+                  <JourneyCard
                     ref={(el) => addItemRef(el, index)}
-                    onMouseMove={(e) => handleMouseMove(e, index)}
-                    onMouseLeave={() => handleMouseLeave(index)}
-                    className="bg-white/5 backdrop-blur-2xl rounded-[2.5rem] p-8 border border-white/10 hover:border-cyan-500/50 transition-all duration-700 group hover:shadow-[0_0_50px_rgba(6,182,212,0.1)] relative overflow-hidden"
-                  >
-                    <div className="absolute -right-20 -top-20 w-40 h-40 bg-cyan-500/10 blur-[80px] group-hover:bg-cyan-500/20 transition-all duration-700" />
-                    
-                    <div className="flex items-start mb-6 relative z-10">
-                      <div
-                        className={`w-16 h-16 bg-gradient-to-br ${exp.color} rounded-2xl flex items-center justify-center text-3xl mr-5 group-hover:scale-110 transition-transform duration-500 border border-white/10 shadow-xl`}
-                      >
-                        <span className="drop-shadow-lg">{exp.icon}</span>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-3 mb-1">
-                          <span className="text-cyan-400 font-mono font-bold text-sm tracking-wider">
-                            {exp.year}
-                          </span>
-                          <span className="h-px w-8 bg-cyan-500/30"></span>
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-1 tracking-tight">
-                          {exp.role}
-                        </h3>
-                        <div className="text-gray-400 font-medium">
-                          {exp.company}
-                        </div>
-                      </div>
-                    </div>
-
-                    <p className="text-gray-400 mb-8 leading-relaxed text-base font-medium relative z-10">
-                      {exp.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2 relative z-10">
-                      {exp.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-4 py-1.5 bg-white/5 rounded-xl text-xs font-semibold text-cyan-300 border border-white/10 hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-all duration-300"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                    exp={exp}
+                    index={index}
+                  />
                 </div>
               </div>
             ))}

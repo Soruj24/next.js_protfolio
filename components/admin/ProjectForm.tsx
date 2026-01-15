@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm,  Resolver } from "react-hook-form";
+import { useForm, Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -56,7 +56,9 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<ProjectFormValues>({
-    resolver: zodResolver(projectSchema) as unknown as Resolver<ProjectFormValues>,
+    resolver: zodResolver(
+      projectSchema
+    ) as unknown as Resolver<ProjectFormValues>,
     defaultValues: project
       ? {
           id: project.id,
@@ -96,6 +98,20 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
           emoji: "🚀",
           screenshots: "",
         },
+  });
+
+  // Auto-generate slug from title
+  const title = form.watch("title");
+  const id = form.watch("id");
+
+  useState(() => {
+    if (title && !id && !project) {
+      const slug = title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+      form.setValue("id", slug);
+    }
   });
 
   const onSubmit = async (values: ProjectFormValues) => {
@@ -151,19 +167,34 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-xl"
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <FormField
             control={form.control}
-            name="id"
+            name="title"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Project ID (Slug)</FormLabel>
+              <FormItem className="md:col-span-2">
+                <FormLabel className="text-gray-300 font-medium">
+                  Project Title
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="my-awesome-project"
-                    className="bg-white/5 border-white/10"
+                    placeholder="e.g. Neural Link Dashboard"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      if (!project) {
+                        const slug = e.target.value
+                          .toLowerCase()
+                          .replace(/[^a-z0-9]+/g, "-")
+                          .replace(/(^-|-$)/g, "");
+                        form.setValue("id", slug);
+                      }
+                    }}
                   />
                 </FormControl>
                 <FormMessage />
@@ -172,15 +203,17 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
           />
           <FormField
             control={form.control}
-            name="title"
+            name="id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel className="text-gray-300 font-medium">
+                  Slug (ID)
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Project Title"
-                    className="bg-white/5 border-white/10"
+                    placeholder="neural-link-dashboard"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
                   />
                 </FormControl>
                 <FormMessage />
@@ -189,54 +222,20 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Short Description</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Brief summary"
-                  className="bg-white/5 border-white/10"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="fullDescription"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Description</FormLabel>
-              <FormControl>
-                <Textarea
-                  {...field}
-                  placeholder="Detailed explanation"
-                  className="bg-white/5 border-white/10 min-h-[100px]"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
-            name="image"
+            name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Image URL</FormLabel>
+                <FormLabel className="text-gray-300 font-medium">
+                  One-line Summary
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="https://..."
-                    className="bg-white/5 border-white/10"
+                    placeholder="Briefly describe the project's core purpose"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
                   />
                 </FormControl>
                 <FormMessage />
@@ -248,21 +247,25 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
             name="category"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category</FormLabel>
+                <FormLabel className="text-gray-300 font-medium">
+                  Category
+                </FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="bg-white/5 border-white/10">
+                    <SelectTrigger className="bg-black/40 border-white/10 text-white h-12">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent className="bg-gray-800 border-gray-700 text-white">
-                    <SelectItem value="AI">AI</SelectItem>
-                    <SelectItem value="Fullstack">Fullstack</SelectItem>
-                    <SelectItem value="Mobile">Mobile</SelectItem>
-                    <SelectItem value="Frontend">Frontend</SelectItem>
+                  <SelectContent className="bg-[#030712] border-white/10 text-white">
+                    <SelectItem value="AI">AI / Machine Learning</SelectItem>
+                    <SelectItem value="Fullstack">
+                      Fullstack Development
+                    </SelectItem>
+                    <SelectItem value="Mobile">Mobile Application</SelectItem>
+                    <SelectItem value="Frontend">Frontend / UI/UX</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -271,18 +274,122 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField
+          control={form.control}
+          name="fullDescription"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-gray-300 font-medium">
+                Detailed Case Study
+              </FormLabel>
+              <FormControl>
+                <Textarea
+                  {...field}
+                  placeholder="Explain the problem, solution, and your specific role..."
+                  className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors min-h-[150px] resize-none"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-300 font-medium">
+                  Main Image URL
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="https://images.unsplash.com/..."
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="emoji"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-300 font-medium">
+                  Project Emoji
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="🚀"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="githubUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-300 font-medium">
+                  GitHub Repository URL
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="https://github.com/..."
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="liveUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-300 font-medium">
+                  Live Deployment URL
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="https://project-demo.com"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
             name="technologies"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Technologies (comma separated)</FormLabel>
+                <FormLabel className="text-gray-300 font-medium">
+                  Technologies (comma separated)
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Next.js, Tailwind, MongoDB"
-                    className="bg-white/5 border-white/10"
+                    placeholder="Next.js, TypeScript, Tailwind, OpenAI"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
                   />
                 </FormControl>
                 <FormMessage />
@@ -294,12 +401,14 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
             name="features"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Features (comma separated)</FormLabel>
+                <FormLabel className="text-gray-300 font-medium">
+                  Key Features (comma separated)
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Auth, Real-time, Dashboard"
-                    className="bg-white/5 border-white/10"
+                    placeholder="Neural Processing, Real-time Analysis, Multi-agent support"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
                   />
                 </FormControl>
                 <FormMessage />
@@ -308,26 +417,28 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <FormField
             control={form.control}
             name="status"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Status</FormLabel>
+                <FormLabel className="text-gray-300 font-medium">
+                  Development Status
+                </FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="bg-white/5 border-white/10">
+                    <SelectTrigger className="bg-black/40 border-white/10 text-white h-12">
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent className="bg-gray-800 border-gray-700 text-white">
-                    <SelectItem value="completed">Completed</SelectItem>
-                    <SelectItem value="in-progress">In Progress</SelectItem>
-                    <SelectItem value="planned">Planned</SelectItem>
+                  <SelectContent className="bg-[#030712] border-white/10 text-white">
+                    <SelectItem value="completed">Production Ready</SelectItem>
+                    <SelectItem value="in-progress">In Development</SelectItem>
+                    <SelectItem value="planned">Beta / Planned</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -339,20 +450,22 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
             name="difficulty"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Difficulty</FormLabel>
+                <FormLabel className="text-gray-300 font-medium">
+                  Technical Complexity
+                </FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="bg-white/5 border-white/10">
+                    <SelectTrigger className="bg-black/40 border-white/10 text-white h-12">
                       <SelectValue placeholder="Select difficulty" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent className="bg-gray-800 border-gray-700 text-white">
-                    <SelectItem value="beginner">Beginner</SelectItem>
-                    <SelectItem value="intermediate">Intermediate</SelectItem>
-                    <SelectItem value="advanced">Advanced</SelectItem>
+                  <SelectContent className="bg-[#030712] border-white/10 text-white">
+                    <SelectItem value="beginner">Foundational</SelectItem>
+                    <SelectItem value="intermediate">Advanced Logic</SelectItem>
+                    <SelectItem value="advanced">Expert Systems</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -364,12 +477,14 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
             name="duration"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Duration</FormLabel>
+                <FormLabel className="text-gray-300 font-medium">
+                  Development Time
+                </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="2 weeks"
-                    className="bg-white/5 border-white/10"
+                    placeholder="e.g. 3 Months"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
                   />
                 </FormControl>
                 <FormMessage />
@@ -378,17 +493,63 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
           />
         </div>
 
-        <div className="flex justify-end gap-4 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <FormField
+            control={form.control}
+            name="teamSize"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-300 font-medium">
+                  Core Team Size
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="1"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="screenshots"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-gray-300 font-medium">
+                  Gallery URLs (comma separated)
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="url1, url2, url3"
+                    className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="flex justify-end gap-4 pt-8">
           <Button
             type="submit"
             disabled={isLoading}
-            className="bg-cyan-600 hover:bg-cyan-700 text-white px-8"
+            className="bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white px-10 py-6 rounded-2xl font-bold text-lg shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
           >
-            {isLoading
-              ? "Saving..."
-              : project
-                ? "Update Project"
-                : "Create Project"}
+            {isLoading ? (
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span>Processing...</span>
+              </div>
+            ) : project ? (
+              "Update Intelligence"
+            ) : (
+              "Deploy Project"
+            )}
           </Button>
         </div>
       </form>

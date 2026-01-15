@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import type { IProject } from "../../types";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -15,6 +16,11 @@ interface ProjectCardProps {
 function ProjectCard({ project, index, onProjectClick }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const handleLinkClick = (e: React.MouseEvent, url: string) => {
+    e.stopPropagation();
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const card = cardRef.current;
@@ -107,8 +113,30 @@ function ProjectCard({ project, index, onProjectClick }: ProjectCardProps) {
               {project.category}
             </span>
           </div>
-          <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20">
-            <span className="text-white">↗</span>
+          <div className="flex gap-2">
+            {project.githubUrl && (
+              <button
+                onClick={(e) => handleLinkClick(e, project.githubUrl!)}
+                className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 hover:border-cyan-500/50 transition-all group/link"
+                title="View Source Code"
+              >
+                <FaGithub className="text-white group-hover/link:text-cyan-400" />
+              </button>
+            )}
+            {project.liveUrl && (
+              <button
+                onClick={(e) => handleLinkClick(e, project.liveUrl!)}
+                className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 hover:border-cyan-500/50 transition-all group/link"
+                title="Live Demo"
+              >
+                <FaExternalLinkAlt className="text-white text-xs group-hover/link:text-cyan-400" />
+              </button>
+            )}
+            {!project.githubUrl && !project.liveUrl && (
+              <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20">
+                <span className="text-white">↗</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

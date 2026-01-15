@@ -1,14 +1,17 @@
-import { Resend } from 'resend';
-import nodemailer from 'nodemailer';
+import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 const getResend = () => {
   const key = process.env.RESEND_API_KEY;
   if (!key) {
-    if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.NODE_ENV === 'production') {
+    if (
+      process.env.NEXT_PHASE === "phase-production-build" ||
+      process.env.NODE_ENV === "production"
+    ) {
       return null;
     }
     // Only throw in dev if we actually try to use it
-    return null; 
+    return null;
   }
   return new Resend(key);
 };
@@ -19,7 +22,7 @@ const getTransporter = () => {
     return null;
   }
   return nodemailer.createTransport({
-    service: 'gmail',
+    service: "gmail",
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
@@ -32,15 +35,15 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
   const resend = getResend();
 
   if (!resend) {
-    console.warn('Resend API key missing. Cannot send reset email.');
-    return { success: false, error: 'Email service not configured' };
+    console.warn("Resend API key missing. Cannot send reset email.");
+    return { success: false, error: "Email service not configured" };
   }
 
   try {
     await resend.emails.send({
-      from: 'Next AI Portfolio <onboarding@resend.dev>',
+      from: "Next AI Portfolio <onboarding@resend.dev>",
       to: email,
-      subject: 'Reset your password',
+      subject: "Reset your password",
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #0891b2;">Password Reset Request</h2>
@@ -55,7 +58,7 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
     });
     return { success: true };
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error("Error sending email:", error);
     return { success: false, error };
   }
 };
@@ -78,21 +81,21 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
   const resend = getResend();
   if (resend) {
     try {
-      console.log('Attempting to send via Resend...');
+      console.log("Attempting to send via Resend...");
       const data = await resend.emails.send({
-        from: 'Next AI Portfolio <onboarding@resend.dev>',
+        from: "Next AI Portfolio <onboarding@resend.dev>",
         to: email,
-        subject: 'Verify your email',
+        subject: "Verify your email",
         html: emailHtml,
       });
-      
+
       // Resend returns { id: '...' } on success
-      if (data && !('error' in data)) {
-        console.log('Sent successfully via Resend');
+      if (data && !("error" in data)) {
+        console.log("Sent successfully via Resend");
         return { success: true };
       }
     } catch (error) {
-      console.error('Resend failed, trying fallback:', error);
+      console.error("Resend failed, trying fallback:", error);
     }
   }
 
@@ -100,20 +103,20 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
   const transporter = getTransporter();
   if (transporter) {
     try {
-      console.log('Attempting to send via Nodemailer...');
+      console.log("Attempting to send via Nodemailer...");
       await transporter.sendMail({
         from: `"Next AI Portfolio" <${process.env.EMAIL_USER}>`,
         to: email,
-        subject: 'Verify your email',
+        subject: "Verify your email",
         html: emailHtml,
       });
-      console.log('Sent successfully via Nodemailer');
+      console.log("Sent successfully via Nodemailer");
       return { success: true };
     } catch (error) {
-      console.error('Nodemailer failed:', error);
+      console.error("Nodemailer failed:", error);
       return { success: false, error };
     }
   }
 
-  return { success: false, error: 'No email service configured correctly' };
+  return { success: false, error: "No email service configured correctly" };
 };

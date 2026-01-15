@@ -3,6 +3,8 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "../ui/SectionTitle";
+import TestimonialsBackground from "../testimonials/TestimonialsBackground";
+import TestimonialCard from "../testimonials/TestimonialCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,9 +61,7 @@ function TestimonialsSection() {
 
   return (
     <section id="testimonials" ref={containerRef} className="py-32 relative overflow-hidden bg-[#020617]">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[120px]" />
-      </div>
+      <TestimonialsBackground />
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
         <SectionTitle
@@ -71,28 +71,7 @@ function TestimonialsSection() {
 
         <div className="grid md:grid-cols-3 gap-8 mt-20">
           {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className="testimonial-card group p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 hover:border-cyan-500/50 transition-all duration-500 backdrop-blur-3xl hover:bg-white/[0.05]"
-            >
-              <div className="flex items-center space-x-4 mb-6">
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${t.color} flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
-                  {t.avatar}
-                </div>
-                <div>
-                  <div className="text-white font-bold text-lg">{t.name}</div>
-                  <div className="text-cyan-400 text-sm font-mono">{t.role}</div>
-                </div>
-              </div>
-              <p className="text-gray-400 leading-relaxed italic text-lg">
-                &ldquo;{t.content}&rdquo;
-              </p>
-              <div className="mt-6 flex text-yellow-500">
-                {"★★★★★".split("").map((s, i) => (
-                  <span key={i}>{s}</span>
-                ))}
-              </div>
-            </div>
+            <TestimonialCard key={i} testimonial={t} />
           ))}
         </div>
       </div>

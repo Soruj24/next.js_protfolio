@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import ParticleBackground from "@/components/background/ParticleBackground";
 import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/layout/LoadingScreen";
@@ -13,7 +13,7 @@ import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-   const [activeSection, setActiveSection] = useState("home");
+  const [activeSection, setActiveSection] = useState("home");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

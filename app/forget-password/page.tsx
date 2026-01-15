@@ -6,7 +6,11 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import Link from "next/link";
 import { gsap } from "gsap";
-import { Mail, ArrowRight, Sparkles, KeyRound, ArrowLeft } from "lucide-react";
+import { Mail, KeyRound, ArrowLeft } from "lucide-react";
+import AuthBackground from "@/components/auth/AuthBackground";
+import AuthHeader from "@/components/auth/AuthHeader";
+import AuthInput from "@/components/auth/AuthInput";
+import AuthSubmitButton from "@/components/auth/AuthSubmitButton";
 
 export default function ForgetPasswordPage() {
   const [email, setEmail] = useState("");
@@ -83,67 +87,37 @@ export default function ForgetPasswordPage() {
       ref={containerRef}
       className="min-h-screen flex items-center justify-center bg-[#050505] px-4 overflow-hidden relative"
     >
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="shape-1 absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px]" />
-        <div className="shape-2 absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px]" />
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
-      </div>
+      <AuthBackground variant="forgot-password" />
 
       <div className="auth-card w-full max-w-[450px] relative z-10">
         <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-500 to-amber-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
 
         <div className="relative bg-black/40 backdrop-blur-2xl border border-white/10 p-8 rounded-2xl shadow-2xl">
-          <div className="text-center mb-8">
-            <div className="inline-flex p-3 rounded-xl bg-orange-500/10 text-orange-400 mb-4 animate-item">
-              <KeyRound size={32} />
-            </div>
-            <h1 className="text-3xl font-bold text-white animate-item tracking-tight">
-              Password Recovery
-            </h1>
-            <p className="text-gray-400 mt-2 animate-item">
-              {isSent
-                ? "Check your inbox for instructions"
-                : "Enter your email to reset access"}
-            </p>
-          </div>
+          <AuthHeader 
+            icon={KeyRound}
+            title="Password Recovery"
+            subtitle={isSent ? "Check your inbox for instructions" : "Enter your email to reset access"}
+            iconClassName="bg-orange-500/10 text-orange-400"
+          />
 
           {!isSent ? (
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="space-y-2 animate-item">
-                <label className="text-sm font-medium text-gray-300 ml-1">
-                  Email Protocol
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 size-5" />
-                  <Input
-                    type="email"
-                    placeholder="commander@nexus.ai"
-                    className="pl-10 bg-white/5 border-white/10 text-white focus:border-orange-500/50 h-12 rounded-xl transition-all"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
+              <AuthInput 
+                label="Email Protocol"
+                icon={Mail}
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="commander@nexus.ai"
+                accentColor="orange"
+              />
 
-              <Button
-                type="submit"
-                className="w-full h-12 bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold rounded-xl transition-all duration-300 shadow-lg shadow-orange-500/20 animate-item group"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    Initializing...
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-2">
-                    Send Reset Link{" "}
-                    <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                )}
-              </Button>
+              <AuthSubmitButton 
+                isLoading={isLoading}
+                loadingText="Initializing..."
+                buttonText="Send Reset Link"
+                variant="orange"
+              />
             </form>
           ) : (
             <div className="space-y-6 text-center animate-item">
@@ -154,13 +128,12 @@ export default function ForgetPasswordPage() {
                   check your spam folder if you don&apos;t see it.
                 </p>
               </div>
-              <Button
+              <button
                 onClick={() => setIsSent(false)}
-                variant="ghost"
-                className="text-gray-400 hover:text-white transition-colors"
+                className="text-gray-400 hover:text-white transition-colors text-sm font-medium underline underline-offset-4"
               >
                 Didn&apos;t receive it? Try again
-              </Button>
+              </button>
             </div>
           )}
 

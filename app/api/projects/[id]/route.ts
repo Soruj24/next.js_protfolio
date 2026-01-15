@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { Project } from "@/models/Project";
 import { auth } from "@/auth";
+import mongoose from "mongoose";
+
+const isValidObjectId = (id: string) => mongoose.Types.ObjectId.isValid(id);
 
 export async function GET(
   req: Request,
@@ -10,7 +13,11 @@ export async function GET(
   try {
     const { id } = await params;
     await connectDB();
-    const project = await Project.findById(id);
+    
+    // Search by _id or slug id
+    const query = isValidObjectId(id) ? { _id: id } : { id: id };
+    const project = await Project.findOne(query);
+    
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
@@ -36,13 +43,16 @@ export async function PUT(
 
     const data = await req.json();
     await connectDB();
-    const project = await Project.findByIdAndUpdate(id, data, {
+    
+    // Search by _id or slug id
+    const query = isValidObjectId(id) ? { _id: id } : { id: id };
+    
+    const project = await Project.findOneAndUpdate(query, data, {
       new: true,
       runValidators: true,
+      upsert: true, // Create if doesn't exist (useful for local projects being edited)
     });
-    if (!project) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
-    }
+
     return NextResponse.json(project);
   } catch (error: unknown) {
     if (error instanceof Error) {
@@ -64,7 +74,11 @@ export async function DELETE(
     }
 
     await connectDB();
-    const project = await Project.findByIdAndDelete(id);
+    
+    // Search by _id or slug id
+    const query = isValidObjectId(id) ? { _id: id } : { id: id };
+    const project = await Project.findOneAndDelete(query);
+    
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }

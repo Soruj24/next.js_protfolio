@@ -52,4 +52,39 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    ...authConfig.callbacks,
+    async signIn({ user, account, profile }) {
+      if (account?.provider === "google" || account?.provider === "github") {
+        try {
+          await connectDB();
+          const existingUser = await User.findOne({ email: user.email });
+
+          if (!existingUser) {
+            // Create new user if they don't exist
+            const userCount = await User.countDocuments();
+            const role = userCount === 0 ? "admin" : "editor";
+            
+            await User.create({
+              name: user.name,
+              email: user.email,
+              password: await bcrypt.hash(Math.random().toString(36).slice(-8), 12),
+              role: role,
+              isVerified: true, // OAuth users are verified
+            });
+          }
+          
+          // Add role to the user object so it can be picked up by the jwt callback
+          const dbUser = await User.findOne({ email: user.email });
+          if (dbUser) {
+            (user as any).role = dbUser.role;
+          }
+        } catch (error) {
+          console.error("Error during OAuth sign in:", error);
+          return false;
+        }
+      }
+      return true;
+    },
+  },
 });
