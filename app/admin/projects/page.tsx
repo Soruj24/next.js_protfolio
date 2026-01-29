@@ -85,13 +85,13 @@ export default function AdminProjects() {
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-10">
         <div>
-          <h1 className="text-4xl font-black text-white tracking-tight mb-2">Project Intelligence</h1>
-          <p className="text-gray-400 font-medium">Manage and deploy your technical portfolio</p>
+          <h1 className="text-4xl font-black text-white tracking-tight mb-2">Project Portfolio</h1>
+          <p className="text-gray-400 font-medium">Manage and deploy your technical projects</p>
         </div>
         <Button asChild className="bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white px-8 py-6 rounded-2xl font-bold shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-105">
           <Link href="/admin/projects/new">
             <Plus className="mr-2" size={20} />
-            Deploy New Intelligence
+            Add New Project
           </Link>
         </Button>
       </div>

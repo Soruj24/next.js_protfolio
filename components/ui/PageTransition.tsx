@@ -46,7 +46,7 @@ export default function PageTransition() {
       </div>
       <div ref={textRef} className="relative">
         <span className="text-4xl font-bold text-white tracking-[0.2em] uppercase">
-          <span className="text-cyan-500">Neural</span> Link
+          <span className="text-cyan-500">Soruj</span>.Dev
         </span>
         <div className="mt-4 h-1 w-full bg-white/10 rounded-full overflow-hidden">
           <div className="h-full bg-cyan-500 w-1/2 animate-shimmer"></div>

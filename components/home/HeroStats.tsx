@@ -3,23 +3,23 @@ import React from "react";
 const HeroStats: React.FC = () => {
   const stats = [
     {
-      label: "Neural Models",
-      value: "15+",
+      label: "Projects Done",
+      value: "20+",
       color: "group-hover:text-cyan-400",
     },
     {
-      label: "Accuracy Rate",
-      value: "99%",
+      label: "UI Components",
+      value: "500+",
       color: "group-hover:text-purple-400",
     },
     {
-      label: "Agent Workflows",
-      value: "50+",
+      label: "Performance",
+      value: "95%+",
       color: "group-hover:text-blue-400",
     },
     {
-      label: "Active R&D",
-      value: "24/7",
+      label: "Happy Clients",
+      value: "10+",
       color: "group-hover:text-pink-400",
     },
   ];

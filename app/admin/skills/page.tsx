@@ -83,13 +83,13 @@ export default function AdminSkills() {
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-10">
         <div>
-          <h1 className="text-4xl font-black text-white tracking-tight mb-2">Skill Matrix</h1>
-          <p className="text-gray-400 font-medium">Synchronize your technical expertise categories</p>
+          <h1 className="text-4xl font-black text-white tracking-tight mb-2">Technical Skills</h1>
+          <p className="text-gray-400 font-medium">Manage your technical expertise categories</p>
         </div>
         <Button asChild className="bg-gradient-to-r from-purple-600 to-pink-700 hover:from-purple-500 hover:to-pink-600 text-white px-8 py-6 rounded-2xl font-bold shadow-lg shadow-purple-500/20 transition-all duration-300 hover:scale-105">
           <Link href="/admin/skills/new">
             <Plus className="mr-2" size={20} />
-            Initialize New Category
+            Add New Category
           </Link>
         </Button>
       </div>
@@ -124,7 +124,7 @@ export default function AdminSkills() {
                     </h2>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] font-black uppercase tracking-widest text-purple-400">
-                        {category.skills.length} Neural Nodes
+                        {category.skills.length} Technical Nodes
                       </span>
                       {(category as any).isLocal && (
                         <span className="text-[8px] px-2 py-0.5 bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 rounded-full font-black uppercase tracking-tighter">

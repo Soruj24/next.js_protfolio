@@ -1,1329 +1,187 @@
 [
   {
-    "id": "ai-nexus-orchestrator",
-    "title": "AI-Nexus: Agentic Workflow Orchestrator",
-    "description": "Enterprise-grade multi-agent orchestration platform for complex task automation and cognitive workflows.",
-    "fullDescription": "AI-Nexus is a cutting-edge orchestration platform that leverages multiple autonomous AI agents to solve complex, multi-step tasks. Built with LangChain and integrated with MCP (Model Context Protocol) servers, it allows agents to interact with external tools, databases, and APIs in a secure, context-aware environment. The mobile experience is powered by React Native, providing real-time monitoring and control of agentic workflows from anywhere.",
-    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "FastAPI",
-      "PostgreSQL",
-      "Redis",
-      "Docker",
-      "OpenAI GPT-4o",
-      "Anthropic Claude 3.5 Sonnet",
-      "Tailwind CSS",
-      "GraphQL"
-    ],
-    "features": [
-      "Multi-Agent Collaboration",
-      "Dynamic Tool Discovery via MCP",
-      "Real-time Workflow Visualization",
-      "Context-Aware Memory Management",
-      "Autonomous Task Decomposition",
-      "Human-in-the-loop Verification",
-      "Advanced Error Recovery",
-      "Enterprise Security & RBAC",
-      "Cross-Platform Mobile Support",
-      "Streaming Agent Thoughts"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/ai-nexus",
-    "liveUrl": "https://ai-nexus.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1676299081847-824916de030a?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Managing race conditions in multi-agent communication",
-      "Ensuring low-latency tool execution via MCP servers",
-      "Optimizing context window usage for long-running tasks"
-    ],
-    "solutions": [
-      "Implemented a centralized event bus for agent coordination",
-      "Developed a custom MCP server bridge for optimized data fetching",
-      "Built a hierarchical memory system with vector embeddings"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "6 months",
-    "teamSize": "5 developers",
-    "completionDate": "2024-12-15",
-    "createdAt": "2024-06-01",
-    "updatedAt": "2024-12-20",
-    "tags": ["ai", "agents", "langchain", "mcp", "automation"],
-    "emoji": "🧠",
-    "stats": {
-      "completionTime": "6 months",
-      "teamSize": "5 developers",
-      "complexity": "Extremely High",
-      "views": 4500,
-      "likes": 890
-    },
-    "architecture": "Micro-agent architecture with React Native frontend, LangChain orchestration layer, and MCP-based tool ecosystem.",
-    "developmentHighlights": [
-      {
-        "title": "Agent Orchestration",
-        "description": "Built a custom orchestrator using LangChain for seamless agent handoffs."
-      },
-      {
-        "title": "MCP Integration",
-        "description": "Standardized tool access using Model Context Protocol for high interoperability."
-      }
-    ],
-    "lessonsLearned": [
-      "Agent reliability increases significantly with structured output parsing",
-      "MCP simplifies the integration of disparate data sources"
-    ],
-    "futureImprovements": [
-      "Self-healing agent workflows",
-      "Integration with local LLMs via Ollama"
-    ],
-    "metaDescription": "Advanced AI agent orchestration platform using LangChain and MCP.",
-    "seoTitle": "AI-Nexus | Enterprise Multi-Agent Orchestrator",
-    "performance": {
-      "loadTime": 92,
-      "accessibility": 98,
-      "bestPractices": 96,
-      "seo": 95
-    }
-  },
-  {
-    "id": "healthguard-ai",
-    "title": "HealthGuard AI: Real-time Patient Intelligence",
-    "description": "AI-powered medical assistant for real-time patient monitoring and diagnostic support.",
-    "fullDescription": "HealthGuard AI is a comprehensive medical intelligence platform that assists healthcare providers with real-time patient data analysis. Using React Native for a seamless mobile experience, it integrates with hospital MCP servers to access patient records and IoT vitals. LangChain powers the diagnostic reasoning engine, providing doctors with evidence-based suggestions and automated report generation.",
-    "image": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "PyTorch",
-      "FHIR API",
-      "PostgreSQL",
-      "Redis",
-      "Docker",
-      "AWS HealthLake"
-    ],
-    "features": [
-      "Real-time Vitals Monitoring",
-      "AI-Driven Diagnostic Support",
-      "Automated Medical Scribing",
-      "FHIR Data Integration via MCP",
-      "Predictive Health Analytics",
-      "Secure HIPAA-Compliant Messaging",
-      "Patient Risk Stratification",
-      "Automated Lab Result Analysis",
-      "Drug Interaction Checker",
-      "Voice-to-Report Transcription"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/healthguard-ai",
-    "liveUrl": "https://healthguard.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Ensuring 99.9% accuracy for medical recommendations",
-      "Managing complex FHIR data structures in real-time",
-      "Implementing zero-trust security for patient data"
-    ],
-    "solutions": [
-      "Implemented a multi-stage validation pipeline for AI suggestions",
-      "Built a specialized MCP connector for FHIR resources",
-      "Utilized end-to-end encryption with hardware security modules"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "8 months",
-    "teamSize": "10 developers",
-    "completionDate": "2024-11-10",
-    "createdAt": "2024-03-01",
-    "updatedAt": "2024-11-15",
-    "tags": ["healthcare", "ai", "mcp", "diagnostics", "mobile"],
-    "emoji": "🏥",
-    "stats": {
-      "completionTime": "8 months",
-      "teamSize": "10 developers",
-      "complexity": "Critical",
-      "views": 3200,
-      "likes": 640
-    },
-    "architecture": "HIPAA-compliant cloud architecture with React Native mobile app and LangChain-based medical reasoning engine.",
-    "developmentHighlights": [
-      {
-        "title": "Diagnostic Engine",
-        "description": "Developed a RAG-based diagnostic engine using medical literature."
-      }
-    ],
-    "lessonsLearned": [
-      "Domain-specific fine-tuning is essential for medical AI",
-      "Human-in-the-loop is mandatory for healthcare applications"
-    ],
-    "futureImprovements": [
-      "Integration with wearable devices for remote monitoring",
-      "Advanced medical imaging analysis"
-    ],
-    "metaDescription": "AI-powered medical assistant for patient monitoring and diagnostic support.",
-    "seoTitle": "HealthGuard AI | Medical Intelligence Platform",
-    "performance": {
-      "loadTime": 88,
-      "accessibility": 99,
-      "bestPractices": 97,
-      "seo": 94
-    }
-  },
-  {
-    "id": "codeminds-ide-companion",
-    "title": "CodeMinds: AI-Powered IDE Companion",
-    "description": "Intelligent coding assistant that understands your entire codebase via MCP servers.",
-    "fullDescription": "CodeMinds is a revolutionary developer tool that goes beyond simple autocompletion. It uses MCP servers to index and understand your entire repository's context, providing deep insights, refactoring suggestions, and automated documentation. The React Native mobile app allows developers to review PRs, run tests, and manage deployments with natural language commands powered by LangChain.",
-    "image": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Node.js",
-      "Rust",
-      "Tree-sitter",
-      "Vector DB",
-      "GitHub API",
-      "Docker",
-      "VS Code Extension API"
-    ],
-    "features": [
-      "Full-Repo Context Awareness",
-      "Natural Language PR Reviews",
-      "Automated Unit Test Generation",
-      "Intelligent Code Refactoring",
-      "Real-time Bug Detection",
-      "Mobile DevOps Dashboard",
-      "Custom MCP for Local Files",
-      "Interactive Architecture Maps",
-      "Semantic Code Search",
-      "Documentation Auto-Sync"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/codeminds",
-    "liveUrl": "https://codeminds.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Indexing large repositories efficiently without high CPU usage",
-      "Maintaining privacy of local codebases during AI processing",
-      "Cross-platform synchronization of developer settings"
-    ],
-    "solutions": [
-      "Developed a Rust-based indexing engine for ultra-fast performance",
-      "Implemented local-first AI processing for sensitive code sections",
-      "Built a cloud-sync engine with end-to-end encryption"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "5 months",
-    "teamSize": "4 developers",
-    "completionDate": "2024-10-05",
-    "createdAt": "2024-05-15",
-    "updatedAt": "2024-10-10",
-    "tags": ["devtools", "ai", "mcp", "coding", "mobile"],
-    "emoji": "💻",
-    "stats": {
-      "completionTime": "5 months",
-      "teamSize": "4 developers",
-      "complexity": "High",
-      "views": 5600,
-      "likes": 1200
-    },
-    "architecture": "Distributed architecture with local MCP servers, a central LangChain orchestrator, and a React Native mobile client.",
-    "developmentHighlights": [
-      {
-        "title": "Semantic Indexing",
-        "description": "Built a high-performance vector search engine for code."
-      }
-    ],
-    "lessonsLearned": [
-      "Developers value context more than raw code generation",
-      "Local MCP servers are the best way to handle private data"
-    ],
-    "futureImprovements": [
-      "Support for more IDEs beyond VS Code",
-      "AI-driven technical debt analysis"
-    ],
-    "metaDescription": "AI coding assistant with full-repo context awareness via MCP.",
-    "seoTitle": "CodeMinds | Advanced AI Coding Companion",
-    "performance": {
-      "loadTime": 95,
-      "accessibility": 95,
-      "bestPractices": 98,
-      "seo": 92
-    }
-  },
-  {
-    "id": "finedge-ai-finance",
-    "title": "FinEdge AI: Intelligent Wealth Management",
-    "description": "AI-driven financial advisor for real-time market analysis and portfolio optimization.",
-    "fullDescription": "FinEdge AI is an advanced financial intelligence platform that provides users with real-time market insights and automated wealth management. Using LangChain for sophisticated financial reasoning and MCP servers to connect with global market data, it offers personalized investment strategies. The React Native app provides a premium mobile experience for high-net-worth individuals to manage their portfolios with AI-backed confidence.",
-    "image": "https://images.unsplash.com/photo-1611974714851-483321591f8b?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "Pandas",
-      "Scikit-learn",
-      "Kafka",
-      "PostgreSQL",
-      "Redis",
-      "Bloomberg API"
-    ],
-    "features": [
-      "Real-time Market Sentiment",
-      "Automated Portfolio Balancing",
-      "Predictive Stock Analytics",
-      "Tax-Loss Harvesting AI",
-      "Global Market Data via MCP",
-      "Personalized Financial Goals",
-      "Risk Assessment Engine",
-      "Fraud Detection Alerts",
-      "Natural Language Portfolio Queries",
-      "Multi-Currency Support"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/finedge-ai",
-    "liveUrl": "https://finedge.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1611974714851-483321591f8b?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Processing millions of market events per second",
-      "Ensuring financial advice meets regulatory standards",
-      "Integrating with legacy banking systems"
-    ],
-    "solutions": [
-      "Utilized Apache Kafka for high-throughput stream processing",
-      "Implemented a rigorous compliance-checking layer in LangChain",
-      "Developed custom MCP adapters for various financial APIs"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "7 months",
-    "teamSize": "6 developers",
-    "completionDate": "2024-09-20",
-    "createdAt": "2024-02-10",
-    "updatedAt": "2024-09-25",
-    "tags": ["finance", "ai", "mcp", "investing", "mobile"],
-    "emoji": "💰",
-    "stats": {
-      "completionTime": "7 months",
-      "teamSize": "6 developers",
-      "complexity": "High",
-      "views": 2800,
-      "likes": 450
-    },
-    "architecture": "Event-driven architecture with React Native frontend, LangChain financial logic, and MCP market data integration.",
-    "developmentHighlights": [
-      {
-        "title": "Predictive Models",
-        "description": "Built advanced LSTM models for short-term market predictions."
-      }
-    ],
-    "lessonsLearned": [
-      "Market data latency is the biggest challenge in fintech AI",
-      "Users prefer explainable AI in financial contexts"
-    ],
-    "futureImprovements": [
-      "Integration with crypto exchanges",
-      "AI-powered estate planning"
-    ],
-    "metaDescription": "AI wealth management and financial intelligence platform.",
-    "seoTitle": "FinEdge AI | Intelligent Financial Advisor",
-    "performance": {
-      "loadTime": 90,
-      "accessibility": 96,
-      "bestPractices": 95,
-      "seo": 94
-    }
-  },
-  {
-    "id": "edupath-adaptive-learning",
-    "title": "EduPath AI: Personalized Learning Ecosystem",
-    "description": "Adaptive education platform that tailors curriculum to individual student needs using AI.",
-    "fullDescription": "EduPath AI transforms education by creating a personalized learning path for every student. It uses LangChain to analyze student performance and generate custom learning materials, quizzes, and explanations. MCP servers connect to vast educational databases and LMS systems, while the React Native app provides an engaging, gamified learning experience for students on the go.",
-    "image": "https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "Django",
-      "PostgreSQL",
-      "OpenAI API",
-      "Supabase",
-      "Redis",
-      "LTI Protocol"
-    ],
-    "features": [
-      "Personalized Learning Paths",
-      "AI-Generated Study Guides",
-      "Real-time Socratic Tutoring",
-      "Content Enrichment via MCP",
-      "Student Progress Analytics",
-      "Automated Grading & Feedback",
-      "Collaborative Study Groups",
-      "Gamified Achievement System",
-      "Multi-language Support",
-      "Offline Learning Mode"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/edupath-ai",
-    "liveUrl": "https://edupath.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Maintaining student engagement over long periods",
-      "Generating high-quality educational content consistently",
-      "Integrating with diverse school management systems"
-    ],
-    "solutions": [
-      "Implemented advanced gamification mechanics with AI rewards",
-      "Built a multi-step content verification system with expert LLMs",
-      "Developed a universal MCP bridge for LTI-compliant systems"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "6 months",
-    "teamSize": "5 developers",
-    "completionDate": "2024-08-15",
-    "createdAt": "2024-02-15",
-    "updatedAt": "2024-08-20",
-    "tags": ["education", "ai", "mcp", "learning", "mobile"],
-    "emoji": "🎓",
-    "stats": {
-      "completionTime": "6 months",
-      "teamSize": "5 developers",
-      "complexity": "Medium-High",
-      "views": 3900,
-      "likes": 720
-    },
-    "architecture": "Cloud-native architecture with React Native mobile app and LangChain-powered educational engine.",
-    "developmentHighlights": [
-      {
-        "title": "Adaptive Engine",
-        "description": "Built a sophisticated recommendation engine for educational content."
-      }
-    ],
-    "lessonsLearned": [
-      "Personalization significantly improves learning outcomes",
-      "AI-generated content requires strict pedagogical guidelines"
-    ],
-    "futureImprovements": [
-      "VR-based immersive learning experiences",
-      "AI career counseling integration"
-    ],
-    "metaDescription": "AI-powered adaptive learning platform for personalized education.",
-    "seoTitle": "EduPath AI | Personalized Learning Ecosystem",
-    "performance": {
-      "loadTime": 87,
-      "accessibility": 98,
-      "bestPractices": 94,
-      "seo": 96
-    }
-  },
-  {
-    "id": "ecovision-sustainability-tracker",
-    "title": "EcoVision: AI-Driven Sustainability Tracker",
-    "description": "Intelligent platform for tracking and reducing carbon footprint for businesses and individuals.",
-    "fullDescription": "EcoVision is an AI-powered sustainability platform that helps users monitor, analyze, and reduce their environmental impact. It uses MCP servers to pull data from utility providers, IoT sensors, and supply chain logs. LangChain processes this data to provide actionable insights and automated sustainability reports. The React Native app empowers users to make eco-friendly decisions in real-time.",
-    "image": "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "FastAPI",
-      "InfluxDB",
-      "Grafana",
-      "Docker",
-      "AWS IoT Core",
-      "OpenAI API"
-    ],
-    "features": [
-      "Real-time Carbon Tracking",
-      "AI Sustainability Insights",
-      "Automated ESG Reporting",
-      "IoT Data Integration via MCP",
-      "Eco-friendly Recommendation Engine",
-      "Supply Chain Impact Analysis",
-      "Community Green Challenges",
-      "Dynamic Energy Optimization",
-      "Waste Management Analytics",
-      "Renewable Energy Monitoring"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/ecovision",
-    "liveUrl": "https://ecovision.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Normalizing data from hundreds of different IoT sensors",
-      "Accurately calculating indirect (Scope 3) emissions",
-      "Scaling real-time data processing for enterprise clients"
-    ],
-    "solutions": [
-      "Developed an AI-based data normalization layer using LangChain",
-      "Built a complex supply chain graph for emission tracking",
-      "Utilized time-series databases for efficient sensor data storage"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "5 months",
-    "teamSize": "4 developers",
-    "completionDate": "2024-07-10",
-    "createdAt": "2024-02-01",
-    "updatedAt": "2024-07-15",
-    "tags": ["sustainability", "ai", "mcp", "iot", "green-tech"],
-    "emoji": "🌿",
-    "stats": {
-      "completionTime": "5 months",
-      "teamSize": "4 developers",
-      "complexity": "Medium",
-      "views": 2100,
-      "likes": 380
-    },
-    "architecture": "IoT-centric architecture with React Native frontend, LangChain insights, and MCP-based data ingestion.",
-    "developmentHighlights": [
-      {
-        "title": "ESG Engine",
-        "description": "Built an automated reporting engine for sustainability compliance."
-      }
-    ],
-    "lessonsLearned": [
-      "Data transparency is key to driving environmental change",
-      "MCP is perfect for standardizing fragmented IoT data"
-    ],
-    "futureImprovements": [
-      "Carbon credit marketplace integration",
-      "AI-powered predictive maintenance for energy efficiency"
-    ],
-    "metaDescription": "AI platform for carbon footprint tracking and sustainability optimization.",
-    "seoTitle": "EcoVision | AI Sustainability Tracker",
-    "performance": {
-      "loadTime": 89,
-      "accessibility": 97,
-      "bestPractices": 96,
-      "seo": 93
-    }
-  },
-  {
-    "id": "legalmind-ai-research",
-    "title": "LegalMind: AI Legal Research & Analysis",
-    "description": "Advanced AI assistant for legal professionals, automating research and document review.",
-    "fullDescription": "LegalMind is a specialized AI platform designed for lawyers and legal researchers. It utilizes LangChain for complex legal reasoning and MCP servers to securely access law libraries, court records, and internal case files. The React Native app allows attorneys to review documents and get case insights directly from their mobile devices, ensuring high productivity and accuracy.",
-    "image": "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "FastAPI",
-      "PostgreSQL",
-      "Elasticsearch",
-      "OpenAI GPT-4",
-      "Azure AI",
-      "Docker"
-    ],
-    "features": [
-      "AI-Powered Case Research",
-      "Automated Document Review",
-      "Legal Precedent Search via MCP",
-      "Case Outcome Prediction",
-      "Contract Analysis & Comparison",
-      "Automated Citation Checking",
-      "Secure Collaborative Workspace",
-      "Natural Language Legal Queries",
-      "Compliance Monitoring AI",
-      "Multi-Jurisdictional Support"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/legalmind",
-    "liveUrl": "https://legalmind.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Ensuring 100% data privacy and attorney-client privilege",
-      "Handling the extreme nuances of legal terminology",
-      "Searching through massive volumes of unstructured legal text"
-    ],
-    "solutions": [
-      "Implemented strict on-premise MCP server options",
-      "Fine-tuned LLMs on vast datasets of verified legal documents",
-      "Used Elasticsearch for high-performance hybrid search"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "9 months",
-    "teamSize": "8 developers",
-    "completionDate": "2024-06-25",
-    "createdAt": "2023-10-01",
-    "updatedAt": "2024-07-01",
-    "tags": ["legal", "ai", "mcp", "compliance", "research"],
-    "emoji": "⚖️",
-    "stats": {
-      "completionTime": "9 months",
-      "teamSize": "8 developers",
-      "complexity": "Very High",
-      "views": 1800,
-      "likes": 290
-    },
-    "architecture": "Security-first architecture with React Native mobile client and LangChain-based legal intelligence engine.",
-    "developmentHighlights": [
-      {
-        "title": "Legal Reasoning",
-        "description": "Developed a specialized chain for logical legal analysis."
-      }
-    ],
-    "lessonsLearned": [
-      "Accuracy in legal AI is non-negotiable",
-      "Hybrid search (semantic + keyword) is essential for legal documents"
-    ],
-    "futureImprovements": [
-      "Integration with court filing systems",
-      "AI-powered deposition preparation"
-    ],
-    "metaDescription": "AI platform for legal research, document review, and case analysis.",
-    "seoTitle": "LegalMind | AI Legal Research Assistant",
-    "performance": {
-      "loadTime": 85,
-      "accessibility": 96,
-      "bestPractices": 95,
-      "seo": 92
-    }
-  },
-  {
-    "id": "agrismart-precision-farming",
-    "title": "AgriSmart: AI-Powered Precision Farming",
-    "description": "Intelligent agricultural platform for crop monitoring and yield optimization using AI and IoT.",
-    "fullDescription": "AgriSmart brings the power of AI to the field. Using MCP servers to integrate data from soil sensors, weather stations, and satellite imagery, it provides farmers with real-time insights into crop health. LangChain powers a conversational advisor that helps farmers make decisions on irrigation, fertilization, and pest control. The React Native app provides an intuitive interface for managing farm operations on the go.",
-    "image": "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "TensorFlow",
-      "FastAPI",
-      "MongoDB",
-      "AWS IoT",
-      "OpenAI API",
-      "Google Earth Engine"
-    ],
-    "features": [
-      "Real-time Crop Health Monitoring",
-      "AI Yield Prediction",
-      "Smart Irrigation Control",
-      "Satellite Imagery Analysis via MCP",
-      "Pest & Disease Detection",
-      "Automated Weather Alerts",
-      "Soil Nutrient Mapping",
-      "Conversational Farm Advisor",
-      "Inventory & Resource Tracking",
-      "Multi-Farm Management"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/agrismart",
-    "liveUrl": "https://agrismart.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Operating in areas with limited internet connectivity",
-      "Integrating disparate data from satellites and local sensors",
-      "Developing accurate models for various crop types"
-    ],
-    "solutions": [
-      "Implemented offline-first mobile features with local AI sync",
-      "Built a data fusion layer in the MCP server for multi-source analysis",
-      "Utilized transfer learning to adapt models to different regions"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "7 months",
-    "teamSize": "5 developers",
-    "completionDate": "2024-05-15",
-    "createdAt": "2023-10-15",
-    "updatedAt": "2024-05-20",
-    "tags": ["agriculture", "ai", "mcp", "iot", "precision-farming"],
-    "emoji": "🚜",
-    "stats": {
-      "completionTime": "7 months",
-      "teamSize": "5 developers",
-      "complexity": "Medium-High",
-      "views": 2400,
-      "likes": 410
-    },
-    "architecture": "Distributed IoT architecture with React Native mobile app and LangChain-based agricultural reasoning.",
-    "developmentHighlights": [
-      {
-        "title": "Yield Modeling",
-        "description": "Built advanced neural networks for highly accurate yield forecasting."
-      }
-    ],
-    "lessonsLearned": [
-      "User experience for non-technical users is crucial in agritech",
-      "Real-time sensor data is the backbone of precision farming"
-    ],
-    "futureImprovements": [
-      "Autonomous drone integration for field scouting",
-      "Blockchain-based supply chain transparency"
-    ],
-    "metaDescription": "AI platform for precision agriculture and crop management.",
-    "seoTitle": "AgriSmart | AI-Powered Precision Farming",
-    "performance": {
-      "loadTime": 91,
-      "accessibility": 97,
-      "bestPractices": 94,
-      "seo": 95
-    }
-  },
-  {
-    "id": "supplysync-logistics-optimization",
-    "title": "SupplySync: AI-Driven Logistics Optimization",
-    "description": "Intelligent supply chain platform for real-time tracking and autonomous logistics management.",
-    "fullDescription": "SupplySync optimizes global logistics using advanced AI. It uses MCP servers to connect with shipping carriers, warehouse systems, and inventory logs. LangChain orchestrates autonomous agents that handle route optimization, demand forecasting, and automated reordering. The React Native app provides supply chain managers with a powerful mobile control center to oversee global operations in real-time.",
-    "image": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "FastAPI",
-      "PostgreSQL",
-      "Redis",
-      "Kafka",
-      "Docker",
-      "OpenAI GPT-4"
-    ],
-    "features": [
-      "Autonomous Route Optimization",
-      "Predictive Demand Forecasting",
-      "Real-time Shipment Tracking via MCP",
-      "Automated Inventory Management",
-      "Warehouse Operation AI",
-      "Supplier Risk Assessment",
-      "Dynamic Pricing Strategy",
-      "Natural Language Supply Queries",
-      "Automated Customs Documentation",
-      "Global Logistics Dashboard"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/supplysync",
-    "liveUrl": "https://supplysync.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Coordinating complex movements across multiple global carriers",
-      "Predicting supply chain disruptions from external events",
-      "Handling massive real-time data streams from GPS and IoT"
-    ],
-    "solutions": [
-      "Developed a multi-agent system in LangChain for carrier coordination",
-      "Built a global event monitor that triggers AI risk assessments",
-      "Utilized stream processing for real-time tracking updates"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "8 months",
-    "teamSize": "7 developers",
-    "completionDate": "2024-04-10",
-    "createdAt": "2023-08-01",
-    "updatedAt": "2024-04-15",
-    "tags": ["logistics", "ai", "mcp", "supply-chain", "optimization"],
-    "emoji": "📦",
-    "stats": {
-      "completionTime": "8 months",
-      "teamSize": "7 developers",
-      "complexity": "Very High",
-      "views": 3100,
-      "likes": 520
-    },
-    "architecture": "Cloud-native event-driven architecture with React Native mobile client and LangChain logistics engine.",
-    "developmentHighlights": [
-      {
-        "title": "Route Optimization",
-        "description": "Developed a genetic algorithm-based route optimizer integrated with AI."
-      }
-    ],
-    "lessonsLearned": [
-      "Real-time visibility is the most requested feature in logistics",
-      "AI agents can significantly reduce manual coordination effort"
-    ],
-    "futureImprovements": [
-      "Integration with autonomous vehicle fleets",
-      "Advanced predictive maintenance for transport assets"
-    ],
-    "metaDescription": "AI platform for autonomous logistics and supply chain optimization.",
-    "seoTitle": "SupplySync | AI-Driven Logistics Optimization",
-    "performance": {
-      "loadTime": 88,
-      "accessibility": 95,
-      "bestPractices": 96,
-      "seo": 94
-    }
-  },
-  {
-    "id": "mindwell-mental-health-companion",
-    "title": "MindWell: AI-Powered Mental Health Companion",
-    "description": "Empathetic AI companion for mental health support, providing therapeutic insights and real-time care.",
-    "fullDescription": "MindWell is a privacy-focused mental health platform that provides users with a 24/7 empathetic companion. Using LangChain for sophisticated emotional reasoning and MCP servers to securely store user data and connect with professional care networks, it offers personalized therapeutic exercises. The React Native app provides a calm and secure mobile environment for users to manage their mental well-being.",
-    "image": "https://images.unsplash.com/photo-1527137342181-19aab11a8ee8?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "FastAPI",
-      "PostgreSQL",
-      "OpenAI API",
-      "Anthropic Claude",
-      "Redis",
-      "Supabase"
-    ],
-    "features": [
-      "24/7 Empathetic Conversational AI",
-      "Personalized Therapeutic Exercises",
-      "Secure Data Vault via MCP",
-      "Real-time Sentiment Analysis",
-      "Crisis Detection & Intervention",
-      "Mood Tracking & Analytics",
-      "Guided Meditation & Breathwork",
-      "Integration with Care Providers",
-      "Cognitive Behavioral Tools",
-      "Privacy-First Design"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/mindwell",
-    "liveUrl": "https://mindwell.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1527137342181-19aab11a8ee8?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Ensuring AI responses are consistently safe and empathetic",
-      "Protecting sensitive mental health data with extreme security",
-      "Detecting subtle changes in user mood over time"
-    ],
-    "solutions": [
-      "Implemented a multi-layered safety guardrail system for LLMs",
-      "Used local-first MCP servers for user-controlled data storage",
-      "Built a longitudinal mood analysis engine using LangChain"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "6 months",
-    "teamSize": "4 developers",
-    "completionDate": "2024-03-20",
-    "createdAt": "2023-09-15",
-    "updatedAt": "2024-03-25",
-    "tags": ["mental-health", "ai", "mcp", "wellness", "mobile"],
-    "emoji": "🧠",
-    "stats": {
-      "completionTime": "6 months",
-      "teamSize": "4 developers",
-      "complexity": "Medium-High",
-      "views": 4200,
-      "likes": 950
-    },
-    "architecture": "Privacy-focused architecture with React Native frontend and LangChain-based empathetic reasoning.",
-    "developmentHighlights": [
-      {
-        "title": "Sentiment Engine",
-        "description": "Built a highly sensitive sentiment analysis engine for emotional support."
-      }
-    ],
-    "lessonsLearned": [
-      "User trust is the most important factor in mental health apps",
-      "AI should complement, not replace, professional therapy"
-    ],
-    "futureImprovements": [
-      "Voice-based empathetic interaction",
-      "Integration with biometric wearables for stress detection"
-    ],
-    "metaDescription": "Empathetic AI platform for mental health support and wellness.",
-    "seoTitle": "MindWell | AI Mental Health Companion",
-    "performance": {
-      "loadTime": 93,
-      "accessibility": 99,
-      "bestPractices": 98,
-      "seo": 96
-    }
-  },
-  {
-    "id": "urbansense-smart-city-management",
-    "title": "UrbanSense: AI-Driven Smart City Management",
-    "description": "Intelligent urban infrastructure platform for traffic management and public safety using AI.",
-    "fullDescription": "UrbanSense optimizes city life through data-driven intelligence. It uses MCP servers to ingest data from traffic cameras, air quality sensors, and emergency service logs. LangChain powers an urban planning assistant that helps city officials optimize traffic flow, reduce pollution, and improve public safety. The React Native app provides city workers with real-time alerts and management tools in the palm of their hands.",
-    "image": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "PyTorch",
-      "FastAPI",
-      "InfluxDB",
-      "Kafka",
-      "Docker",
-      "OpenCV"
-    ],
-    "features": [
-      "Real-time Traffic Flow Optimization",
-      "Public Safety Anomaly Detection",
-      "IoT Infrastructure Monitoring via MCP",
-      "Air Quality & Noise Analytics",
-      "Emergency Response Coordination",
-      "Predictive Maintenance for Assets",
-      "Urban Planning AI Assistant",
-      "Smart Lighting & Energy Control",
-      "Public Transport Optimization",
-      "Citizen Engagement Portal"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/urbansense",
-    "liveUrl": "https://urbansense.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Processing massive video and sensor data streams in real-time",
-      "Ensuring public safety systems are resilient to cyber attacks",
-      "Coordinating across multiple disparate city departments"
-    ],
-    "solutions": [
-      "Utilized edge computing for initial video processing with OpenCV",
-      "Implemented a zero-trust security architecture for all city IoT",
-      "Built a unified MCP dashboard for cross-departmental data sharing"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "10 months",
-    "teamSize": "12 developers",
-    "completionDate": "2024-02-15",
-    "createdAt": "2023-04-01",
-    "updatedAt": "2024-02-20",
-    "tags": ["smart-city", "ai", "mcp", "iot", "infrastructure"],
-    "emoji": "🏙️",
-    "stats": {
-      "completionTime": "10 months",
-      "teamSize": "12 developers",
-      "complexity": "Extremely High",
-      "views": 2600,
-      "likes": 340
-    },
-    "architecture": "Distributed edge-cloud architecture with React Native mobile client and LangChain urban reasoning.",
-    "developmentHighlights": [
-      {
-        "title": "Traffic AI",
-        "description": "Developed a deep reinforcement learning model for traffic light optimization."
-      }
-    ],
-    "lessonsLearned": [
-      "Data silos are the biggest hurdle to smart city initiatives",
-      "Public transparency is essential for urban AI projects"
-    ],
-    "futureImprovements": [
-      "Autonomous public transport integration",
-      "AI-driven disaster response simulation"
-    ],
-    "metaDescription": "AI platform for urban infrastructure management and smart city optimization.",
-    "seoTitle": "UrbanSense | AI-Driven Smart City Platform",
-    "performance": {
-      "loadTime": 86,
-      "accessibility": 94,
-      "bestPractices": 95,
-      "seo": 91
-    }
-  },
-  {
-    "id": "mediagenie-creative-studio",
-    "title": "MediaGenie: AI Creative Content Studio",
-    "description": "All-in-one AI platform for creative content generation, editing, and distribution.",
-    "fullDescription": "MediaGenie empowers creators with advanced AI tools. Using LangChain to orchestrate multi-modal generation and MCP servers to connect with media libraries and social platforms, it automates content creation. The React Native app allows creators to generate scripts, edit images, and publish videos directly from their mobile devices, revolutionizing the creative workflow.",
-    "image": "https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "FastAPI",
-      "OpenAI DALL-E 3",
-      "Stable Diffusion",
-      "FFmpeg",
-      "AWS S3",
-      "Redis"
-    ],
-    "features": [
-      "Multi-modal AI Generation",
-      "AI Script & Storyboard Creator",
-      "Media Asset Management via MCP",
-      "Automated Video Editing AI",
-      "Real-time Creative Collaboration",
-      "Social Media Auto-Distribution",
-      "Voice-over & Subtitle Generation",
-      "Brand Style Enforcement AI",
-      "Performance Analytics for Content",
-      "Interactive Creative Assistant"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/mediagenie",
-    "liveUrl": "https://mediagenie.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Coordinating complex multi-modal AI generation tasks",
-      "Processing large video and image files on mobile devices",
-      "Maintaining consistent brand voice across AI-generated content"
-    ],
-    "solutions": [
-      "Implemented a sophisticated task queue system for AI generation",
-      "Used cloud-based FFmpeg processing for mobile video editing",
-      "Developed custom brand-voice chains using LangChain"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "5 months",
-    "teamSize": "4 developers",
-    "completionDate": "2024-01-10",
-    "createdAt": "2023-08-15",
-    "updatedAt": "2024-01-15",
-    "tags": ["media", "ai", "mcp", "content-creation", "mobile"],
-    "emoji": "🎨",
-    "stats": {
-      "completionTime": "5 months",
-      "teamSize": "4 developers",
-      "complexity": "Medium-High",
-      "views": 5800,
-      "likes": 1450
-    },
-    "architecture": "Serverless architecture with React Native frontend and LangChain-powered creative engine.",
-    "developmentHighlights": [
-      {
-        "title": "Multi-modal Sync",
-        "description": "Built a system to synchronize text, image, and video generation."
-      }
-    ],
-    "lessonsLearned": [
-      "Creativity is enhanced, not replaced, by AI tools",
-      "Mobile-first creative tools are the future of content production"
-    ],
-    "futureImprovements": [
-      "3D model generation integration",
-      "AI-powered interactive storytelling"
-    ],
-    "metaDescription": "AI creative studio for multi-modal content generation and editing.",
-    "seoTitle": "MediaGenie | AI Creative Content Studio",
-    "performance": {
-      "loadTime": 92,
-      "accessibility": 96,
-      "bestPractices": 97,
-      "seo": 94
-    }
-  },
-  {
-    "id": "devopsmate-cloud-manager",
-    "title": "DevOpsMate: AI-Powered Cloud Infrastructure",
-    "description": "Intelligent DevOps platform for autonomous cloud management and infrastructure optimization.",
-    "fullDescription": "DevOpsMate automates the complexities of cloud infrastructure. Using MCP servers to connect with AWS, Azure, and Kubernetes, it provides real-time monitoring and autonomous scaling. LangChain powers an infrastructure-as-code assistant that helps developers deploy and optimize cloud resources using natural language. The React Native app provides a powerful mobile NOC for managing global infrastructure on the go.",
-    "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
-    "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
-      "TypeScript",
-      "Python",
-      "FastAPI",
-      "Terraform",
-      "Kubernetes",
-      "Prometheus",
-      "Docker",
-      "OpenAI API"
-    ],
-    "features": [
-      "Autonomous Cloud Scaling",
-      "AI Infrastructure-as-Code",
-      "Cloud Provider Integration via MCP",
-      "Predictive Cost Optimization",
-      "Self-healing Infrastructure",
-      "Security Vulnerability Scanning",
-      "Real-time Deployment Monitoring",
-      "Natural Language DevOps Commands",
-      "Automated Incident Response",
-      "Multi-Cloud Management Console"
-    ],
-    "githubUrl": "https://github.com/sorujmahmud/devopsmate",
-    "liveUrl": "https://devopsmate.soruj.dev",
-    "category": "AI",
-    "status": "completed",
-    "screenshots": [
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
-    ],
-    "challenges": [
-      "Safely automating changes to critical production infrastructure",
-      "Integrating with complex and varied cloud provider APIs",
-      "Detecting subtle performance anomalies in real-time"
-    ],
-    "solutions": [
-      "Implemented a multi-stage approval workflow for AI actions",
-      "Built a standardized MCP bridge for major cloud providers",
-      "Used advanced anomaly detection models in the monitoring layer"
-    ],
-    "featured": true,
-    "difficulty": "advanced",
-    "duration": "7 months",
-    "teamSize": "6 developers",
-    "completionDate": "2023-12-15",
-    "createdAt": "2023-05-01",
-    "updatedAt": "2023-12-20",
-    "tags": ["devops", "ai", "mcp", "cloud", "infrastructure"],
-    "emoji": "☁️",
-    "stats": {
-      "completionTime": "7 months",
-      "teamSize": "6 developers",
-      "complexity": "High",
-      "views": 3400,
-      "likes": 610
-    },
-    "architecture": "Distributed cloud-native architecture with React Native mobile client and LangChain-based DevOps intelligence.",
-    "developmentHighlights": [
-      {
-        "title": "Auto-IaC",
-        "description": "Built an LLM-based engine for generating valid Terraform code."
-      }
-    ],
-    "lessonsLearned": [
-      "Infrastructure automation requires high levels of observability",
-      "AI can significantly reduce the complexity of multi-cloud management"
-    ],
-    "futureImprovements": [
-      "Integration with serverless platforms",
-      "AI-driven chaos engineering"
-    ],
-    "metaDescription": "AI platform for autonomous cloud infrastructure management and optimization.",
-    "seoTitle": "DevOpsMate | AI-Powered Cloud Management",
-    "performance": {
-      "loadTime": 90,
-      "accessibility": 95,
-      "bestPractices": 98,
-      "seo": 93
-    }
-  },
-  {
-    "id": "retailpulse-customer-insights",
-    "title": "RetailPulse: AI-Driven Customer Insights",
-    "description": "Intelligent retail platform for customer behavior analysis and personalized shopping experiences.",
-    "fullDescription": "RetailPulse revolutionizes the retail experience using AI. It uses MCP servers to ingest data from POS systems, e-commerce platforms, and in-store IoT sensors. LangChain powers a marketing assistant that helps retailers create personalized campaigns and optimize inventory. The React Native app provides store managers with real-time insights into customer behavior and store performance.",
+    "id": "luxe-ecommerce-experience",
+    "title": "Luxe: Immersive E-Commerce Storefront",
+    "description": "A high-performance, visually stunning e-commerce frontend focused on premium user experience and seamless animations.",
+    "fullDescription": "Luxe is a flagship frontend project that pushes the boundaries of modern web design. Built with Next.js 14 and GSAP, it features smooth page transitions, high-resolution image optimization, and a fluid mobile-first interface. The project emphasizes pixel-perfect execution, accessibility (A11y), and core web vitals optimization to ensure a premium shopping experience.",
     "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
     "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
+      "Next.js 14",
+      "React",
       "TypeScript",
-      "Python",
-      "FastAPI",
-      "PostgreSQL",
-      "Redis",
-      "TensorFlow",
-      "OpenAI API",
-      "Shopify API"
+      "GSAP",
+      "Framer Motion",
+      "Tailwind CSS",
+      "Redux Toolkit",
+      "TanStack Query",
+      "Shadcn UI",
+      "Radix UI",
+      "Stripe SDK",
+      "Cloudinary"
     ],
     "features": [
-      "Real-time Customer Behavior Tracking",
-      "AI-Driven Personalized Marketing",
-      "Inventory & POS Integration via MCP",
-      "Predictive Sales Analytics",
-      "In-store IoT Heatmaps",
-      "Dynamic Pricing Optimization",
-      "Automated Customer Segmentation",
-      "Retail Planning AI Assistant",
-      "Loyalty Program Management",
-      "Omni-channel Performance Dashboard"
+      "Smooth GSAP Page Transitions",
+      "Responsive Product Carousels",
+      "Interactive Filter & Search System",
+      "Micro-interactions with Framer Motion",
+      "Dynamic Cart & Checkout Flow",
+      "SEO Optimized Metadata",
+      "Advanced Image Lazy Loading",
+      "Dark/Light Mode Support",
+      "Skeleton Loading States",
+      "Accessibility Compliant (WCAG)"
     ],
-    "githubUrl": "https://github.com/sorujmahmud/retailpulse",
-    "liveUrl": "https://retailpulse.soruj.dev",
-    "category": "AI",
+    "githubUrl": "https://github.com/soruj-mahmud/luxe-frontend",
+    "liveUrl": "https://luxe.soruj.dev",
+    "category": "E-Commerce",
     "status": "completed",
     "screenshots": [
-      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
+      "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
     ],
     "challenges": [
-      "Merging data from online and offline retail channels",
-      "Protecting customer privacy while providing personalization",
-      "Processing high-volume transaction data in real-time"
+      "Implementing complex GSAP timelines without performance lag",
+      "Synchronizing server-side data with client-side state transitions",
+      "Maintaining high SEO scores with heavy animation usage"
     ],
     "solutions": [
-      "Developed a unified customer identity graph in the MCP server",
-      "Implemented differential privacy techniques for data analysis",
-      "Utilized high-performance caching for real-time retail insights"
+      "Utilized GSAP context for efficient cleanup and React integration",
+      "Implemented optimistic UI updates with TanStack Query",
+      "Leveraged Next.js App Router and Server Components for critical path CSS"
     ],
     "featured": true,
     "difficulty": "advanced",
-    "duration": "6 months",
-    "teamSize": "5 developers",
-    "completionDate": "2023-11-10",
-    "createdAt": "2023-05-15",
-    "updatedAt": "2023-11-15",
-    "tags": ["retail", "ai", "mcp", "marketing", "analytics"],
+    "duration": "3 months",
+    "teamSize": "Solo Developer",
+    "completionDate": "2024-11-20",
+    "createdAt": "2024-08-15",
+    "updatedAt": "2024-11-25",
+    "tags": ["frontend", "nextjs", "gsap", "ecommerce", "ux"],
     "emoji": "🛍️",
     "stats": {
-      "completionTime": "6 months",
-      "teamSize": "5 developers",
-      "complexity": "Medium-High",
-      "views": 2900,
-      "likes": 480
+      "completionTime": "3 months",
+      "teamSize": "Solo",
+      "complexity": "High (UI Focus)",
+      "views": 3200,
+      "likes": 650
     },
-    "architecture": "Cloud-native retail architecture with React Native mobile app and LangChain retail intelligence.",
+    "architecture": "Modern Next.js 14 architecture using the App Router, centralized state with Redux, and specialized animation layers with GSAP.",
     "developmentHighlights": [
       {
-        "title": "Personalization Engine",
-        "description": "Built a sophisticated recommendation engine for retail products."
+        "title": "Immersive Animations",
+        "description": "Developed a custom animation hook system for reusable GSAP transitions."
+      },
+      {
+        "title": "Component Architecture",
+        "description": "Built a robust, reusable component library based on Atomic Design principles."
       }
     ],
     "lessonsLearned": [
-      "Personalization is the key to customer loyalty in retail",
-      "Real-time data from physical stores is a game-changer"
+      "Performance and animations can coexist with proper optimization",
+      "Server Components significantly improve Initial Page Load even in heavy UI apps"
     ],
     "futureImprovements": [
-      "AR-based in-store navigation",
-      "AI-powered visual search for products"
+      "Integration with 3D models using Three.js",
+      "PWA support for offline shopping"
     ],
-    "metaDescription": "AI platform for customer insights and personalized retail experiences.",
-    "seoTitle": "RetailPulse | AI-Driven Customer Insights",
+    "metaDescription": "Premium e-commerce frontend built with Next.js 14, GSAP, and Tailwind CSS.",
+    "seoTitle": "Luxe | Immersive E-Commerce Frontend Experience",
     "performance": {
-      "loadTime": 89,
-      "accessibility": 96,
-      "bestPractices": 95,
-      "seo": 94
+      "loadTime": 98,
+      "accessibility": 99,
+      "bestPractices": 98,
+      "seo": 100
     }
   },
   {
-    "id": "securesafe-cybersecurity-shield",
-    "title": "SecureSafe: AI-Powered Cybersecurity Shield",
-    "description": "Intelligent cybersecurity platform for autonomous threat detection and incident response.",
-    "fullDescription": "SecureSafe protects enterprises with proactive AI-driven security. It uses MCP servers to ingest data from firewalls, endpoint monitors, and cloud logs. LangChain orchestrates autonomous security agents that detect anomalies, analyze threats, and initiate automated responses. The React Native app provides security teams with a powerful mobile SOC for managing threats in real-time from anywhere.",
-    "image": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
+    "id": "nova-dashboard-system",
+    "title": "Nova: Real-time Analytics Dashboard",
+    "description": "A high-performance data visualization platform with real-time updates and interactive charts.",
+    "fullDescription": "Nova is a sophisticated dashboard system designed for high-density data visualization. It features custom D3.js integrations, real-time WebSocket updates, and a highly modular widget system. The project focuses on data accuracy, rendering performance, and intuitive user workflows for complex analytical tasks.",
+    "image": "https://images.unsplash.com/photo-1551288049-bbda38a5f85d?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
     "technologies": [
-      "React Native",
-      "LangChain",
-      "MCP Server",
+      "React",
       "TypeScript",
-      "Python",
-      "FastAPI",
-      "Elasticsearch",
-      "Kafka",
-      "Docker",
-      "OpenAI GPT-4",
-      "Suricata"
+      "D3.js",
+      "Recharts",
+      "WebSockets",
+      "TanStack Query",
+      "Tailwind CSS",
+      "Zustand",
+      "Express.js"
     ],
     "features": [
-      "Autonomous Threat Detection",
-      "Real-time Security Log Analysis",
-      "Infrastructure Security via MCP",
-      "Automated Incident Response",
-      "Vulnerability Management AI",
-      "Phishing & Malware Analysis",
-      "Zero-Trust Architecture Control",
-      "Natural Language Security Queries",
-      "Compliance & Audit Automation",
-      "Global Threat Intelligence Feed"
+      "Real-time Data Streaming",
+      "Custom Interactive Charts",
+      "Draggable Widget Layout",
+      "Advanced Data Filtering",
+      "Export to PDF/CSV Functionality",
+      "Multi-dimensional Data Drill-down",
+      "Role-based Dashboard Views",
+      "High-performance Rendering",
+      "Collaborative Annotations",
+      "Theming Engine"
     ],
-    "githubUrl": "https://github.com/sorujmahmud/securesafe",
-    "liveUrl": "https://securesafe.soruj.dev",
-    "category": "AI",
+    "githubUrl": "https://github.com/soruj-mahmud/nova-dashboard",
+    "liveUrl": "https://nova.soruj.dev",
+    "category": "Analytics",
     "status": "completed",
     "screenshots": [
-      "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
+      "https://images.unsplash.com/photo-1551288049-bbda38a5f85d?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&w=600&h=400&fit=crop"
     ],
     "challenges": [
-      "Detecting sophisticated zero-day attacks in real-time",
-      "Reducing false positives in security alerts",
-      "Maintaining system performance under high log volume"
+      "Optimizing React re-renders with frequent WebSocket updates",
+      "Handling large datasets in the browser without UI blocking",
+      "Creating accessible complex data visualizations"
     ],
     "solutions": [
-      "Developed multi-stage AI detection models using LangChain",
-      "Implemented a context-aware alert scoring system",
-      "Utilized distributed stream processing for log analysis"
+      "Implemented selective state updates using Zustand selectors",
+      "Utilized Web Workers for heavy data processing",
+      "Applied ARIA labels and keyboard navigation to interactive charts"
     ],
     "featured": true,
     "difficulty": "advanced",
-    "duration": "9 months",
-    "teamSize": "8 developers",
-    "completionDate": "2023-10-05",
-    "createdAt": "2023-01-15",
-    "updatedAt": "2023-10-10",
-    "tags": ["cybersecurity", "ai", "mcp", "security", "threat-detection"],
-    "emoji": "🛡️",
+    "duration": "4 months",
+    "teamSize": "2 Developers",
+    "completionDate": "2024-09-10",
+    "createdAt": "2024-05-15",
+    "updatedAt": "2024-09-15",
+    "tags": ["dashboard", "analytics", "d3js", "realtime", "typescript"],
+    "emoji": "📊",
     "stats": {
-      "completionTime": "9 months",
-      "teamSize": "8 developers",
-      "complexity": "Extremely High",
-      "views": 3800,
-      "likes": 740
+      "completionTime": "4 months",
+      "teamSize": "2",
+      "complexity": "Very High (Data Focus)",
+      "views": 2800,
+      "likes": 520
     },
-    "architecture": "Zero-trust security architecture with React Native mobile client and LangChain security intelligence.",
+    "architecture": "React-based micro-frontend architecture with a centralized data store and specialized visualization components.",
     "developmentHighlights": [
       {
-        "title": "Threat AI",
-        "description": "Developed a custom transformer model for detecting anomalous network behavior."
+        "title": "Real-time Engine",
+        "description": "Built a custom WebSocket abstraction layer for reliable data streaming."
+      },
+      {
+        "title": "Data Visualization",
+        "description": "Developed a library of reusable, accessible D3.js chart components."
       }
     ],
     "lessonsLearned": [
-      "Proactive threat detection is essential in modern cybersecurity",
-      "AI agents can significantly reduce incident response times"
+      "Zustand is highly effective for managing frequent updates in complex dashboards",
+      "Web Workers are essential for maintaining 60FPS with large datasets"
     ],
     "futureImprovements": [
-      "Integration with blockchain for immutable security logs",
-      "AI-driven security awareness training for employees"
+      "Smart data insights and trend forecasting",
+      "Customizable user-defined dashboards"
     ],
-    "metaDescription": "AI platform for autonomous cybersecurity and threat detection.",
-    "seoTitle": "SecureSafe | AI-Powered Cybersecurity Shield",
+    "metaDescription": "Real-time analytics dashboard with D3.js and WebSocket integration.",
+    "seoTitle": "Nova | Real-time Data Visualization Dashboard",
     "performance": {
-      "loadTime": 94,
-      "accessibility": 95,
-      "bestPractices": 99,
-      "seo": 92
+      "loadTime": 95,
+      "accessibility": 96,
+      "bestPractices": 97,
+      "seo": 98
     }
   }
 ]

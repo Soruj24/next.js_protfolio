@@ -94,7 +94,7 @@ function SectionTitle({ title, subtitle }: SectionTitleProps) {
         ))}
       </h2>
       
-      {/* AI Decorative Element */}
+      {/* Decorative Element */}
       <div className="flex items-center justify-center gap-4 mb-8">
         <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-cyan-500/50"></div>
         <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(34,211,238,0.8)] animate-pulse"></div>

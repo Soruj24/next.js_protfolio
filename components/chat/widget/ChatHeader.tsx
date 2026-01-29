@@ -13,7 +13,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ onClose, onMinimize }) => {
     <CardHeader className="bg-cyan-900/50 border-b border-gray-700 p-4 flex flex-row items-center justify-between shrink-0">
       <CardTitle className="text-white text-lg flex items-center gap-2">
         <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
-        Neural Chat Link
+        Connect With Me
       </CardTitle>
       <div className="flex gap-1">
         <Button

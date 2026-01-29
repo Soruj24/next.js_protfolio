@@ -90,14 +90,14 @@ function ProjectsShowcase() {
     <>
       <section
         id="projects"
-        className="min-h-screen py-32 relative overflow-hidden bg-[#020617]"
+        className="min-h-screen py-20 md:py-32 relative overflow-hidden bg-[#020617]"
       >
         <ProjectsBackground />
 
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <SectionTitle
             title="Project Arsenal"
-            subtitle={`${projects.length}+ production-ready AI solutions and intelligent ecosystems architected with precision.`}
+            subtitle={`${projects.length}+ production-ready frontend applications and digital experiences architected with precision.`}
           />
 
           <ProjectFilters

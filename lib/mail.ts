@@ -41,13 +41,13 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
 
   try {
     await resend.emails.send({
-      from: "Next AI Portfolio <onboarding@resend.dev>",
+      from: "Soruj.Dev Portfolio <onboarding@resend.dev>",
       to: email,
       subject: "Reset your password",
       html: `
         <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #0891b2;">Password Reset Request</h2>
-          <p>You requested to reset your password for your Next AI Portfolio account.</p>
+          <p>You requested to reset your password for your Soruj.Dev Portfolio account.</p>
           <p>Click the button below to set a new password. This link will expire in 1 hour.</p>
           <a href="${resetLink}" style="display: inline-block; padding: 12px 24px; background-color: #0891b2; color: white; text-decoration: none; border-radius: 8px; margin: 20px 0;">Reset Password</a>
           <p>If you didn't request this, you can safely ignore this email.</p>
@@ -66,7 +66,7 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
 export const sendVerificationEmail = async (email: string, otp: string) => {
   const emailHtml = `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background-color: #050505; color: white; padding: 40px; border-radius: 20px; border: 1px solid #333;">
-      <h2 style="color: #0891b2; text-align: center; font-size: 28px;">Welcome to Next AI</h2>
+      <h2 style="color: #0891b2; text-align: center; font-size: 28px;">Welcome to Soruj.Dev</h2>
       <p style="text-align: center; color: #999;">Please use the following code to verify your account.</p>
       <div style="background-color: #111; padding: 20px; border-radius: 12px; text-align: center; margin: 30px 0; border: 1px dashed #0891b2;">
         <span style="font-size: 36px; font-weight: bold; letter-spacing: 10px; color: #0891b2;">${otp}</span>
@@ -83,7 +83,7 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
     try {
       console.log("Attempting to send via Resend...");
       const data = await resend.emails.send({
-        from: "Next AI Portfolio <onboarding@resend.dev>",
+        from: "Soruj.Dev Portfolio <onboarding@resend.dev>",
         to: email,
         subject: "Verify your email",
         html: emailHtml,
@@ -105,7 +105,7 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
     try {
       console.log("Attempting to send via Nodemailer...");
       await transporter.sendMail({
-        from: `"Next AI Portfolio" <${process.env.EMAIL_USER}>`,
+        from: '"Soruj.Dev" <sorujmahmudb2h@gmail.com>',
         to: email,
         subject: "Verify your email",
         html: emailHtml,

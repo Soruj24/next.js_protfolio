@@ -43,7 +43,7 @@ function parseAIResponse(text: string) {
       console.error("Aggressive JSON cleanup failed too");
     }
     throw new Error(
-      `Failed to parse AI response: ${error instanceof Error ? error.message : String(error)}`
+      `Failed to parse system response: ${error instanceof Error ? error.message : String(error)}`
     );
   }
 }
@@ -71,14 +71,14 @@ export async function POST() {
       .join("\n\n");
 
     const prompt = PromptTemplate.fromTemplate(`
-      You are an expert Executive Resume Writer specializing in Silicon Valley tech roles (AI Architect, Senior Software Engineer). 
+      You are an expert Executive Resume Writer specializing in high-end tech roles (Senior Frontend Developer, UI/UX Architect). 
       Your task is to transform raw project and skill data into a high-impact, ATS-optimized professional resume.
 
       GUIDELINES:
-      1. Professional Summary: Write a compelling 3-sentence narrative. Focus on solving business problems with AI and scalable architecture. Use strong action verbs.
-      2. Key Highlights: Identify 3 unique value propositions (e.g., "Architected multi-agent systems", "Reduced latency by 40%").
+      1. Professional Summary: Write a compelling 3-sentence narrative. Focus on solving business problems with modern frontend technologies, performant UI architecture, and seamless user experiences. Use strong action verbs.
+      2. Key Highlights: Identify 3 unique value propositions (e.g., "Architected immersive web experiences", "Optimized core web vitals for 40% performance gain").
       3. Suggested Projects: For each project, write a 1-sentence description that follows the Google XYZ formula: "Accomplished [X] as measured by [Y], by doing [Z]".
-      4. Optimized Skills: Categorize and select the most relevant high-level technologies.
+      4. Optimized Skills: Categorize and select the most relevant frontend technologies.
 
       USER DATA:
       SKILLS DATABASE:
@@ -107,9 +107,9 @@ export async function POST() {
     let resumeContent;
     let lastError;
 
-    // --- Strategy 1: Try Ollama (Local Llama 3.2) ---
+    // --- Strategy 1: Try Local Engine (llama3.2) ---
     try {
-      console.log("Attempting Ollama (llama3.2)...");
+      console.log("Attempting local engine (llama3.2)...");
       const model = new ChatOllama({
         baseUrl: "http://localhost:11434", // Default Ollama URL
         model: "llama3.2",
@@ -121,19 +121,19 @@ export async function POST() {
       });
       const response = await model.invoke(formattedPrompt);
       resumeContent = parseAIResponse(response.content as string);
-      console.log("Success with Ollama!");
+      console.log("Success with local engine!");
     } catch (error: unknown) {
       console.warn(
-        "Ollama failed (Make sure Ollama is running):",
+        "Local engine failed (Make sure Ollama is running):",
         error instanceof Error ? error.message : String(error)
       );
       lastError = error;
     }
 
-    // --- Strategy 2: Try Groq (Cloud Fallback) ---
+    // --- Strategy 2: Try Cloud Engine (Llama-3.3-70b) ---
     if (!resumeContent && groqKey) {
       try {
-        console.log("Attempting Groq (Llama-3.3-70b)...");
+        console.log("Attempting cloud engine (Llama-3.3-70b)...");
         const model = new ChatGroq({
           apiKey: groqKey,
           model: "llama-3.3-70b-versatile",
@@ -145,13 +145,13 @@ export async function POST() {
         });
         const response = await model.invoke(formattedPrompt);
         resumeContent = parseAIResponse(response.content as string);
-        console.log("Success with Groq!");
+        console.log("Success with cloud engine!");
       } catch (error: unknown) {
         if (error instanceof Error && error.message?.includes("401")) {
-          console.error("Groq Authentication Error: Invalid API Key.");
+          console.error("Cloud Authentication Error: Invalid API Key.");
         } else {
           console.error(
-            "Groq failed:",
+            "Cloud engine failed:",
             error instanceof Error ? error.message : String(error)
           );
         }
@@ -161,7 +161,7 @@ export async function POST() {
 
     if (!resumeContent) {
       throw new Error(
-        "AI models failed. Please ensure Ollama is running locally or check your Groq API key."
+        "Resume generation engines failed. Please ensure the local service is running or check your cloud API key."
       );
     }
 

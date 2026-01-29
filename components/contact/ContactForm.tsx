@@ -41,61 +41,61 @@ const ContactForm = forwardRef<HTMLDivElement, ContactFormProps>(
 
         <form
           onSubmit={handleSubmit}
-          className="relative space-y-6 bg-[#030712]/80 backdrop-blur-2xl p-8 lg:p-10 rounded-[2rem] border border-white/10 shadow-2xl"
+          className="relative space-y-4 md:space-y-6 bg-[#030712]/80 backdrop-blur-2xl p-6 md:p-8 lg:p-10 rounded-[1.5rem] md:rounded-[2rem] border border-white/10 shadow-2xl"
         >
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-cyan-400/80 uppercase tracking-widest ml-1">
-              Agent Name
+          <div className="space-y-1 md:space-y-2">
+            <label className="text-[10px] md:text-sm font-medium text-cyan-400/80 uppercase tracking-widest md:ml-1">
+              Full Name
             </label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-white transition-all duration-300 placeholder:text-gray-600"
+              className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600"
               required
-              placeholder="Identity identifier"
+              placeholder="Enter your name"
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-cyan-400/80 uppercase tracking-widest ml-1">
-              Neural Address
+          <div className="space-y-1 md:space-y-2">
+            <label className="text-[10px] md:text-sm font-medium text-cyan-400/80 uppercase tracking-widest md:ml-1">
+              Email Address
             </label>
             <input
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-white transition-all duration-300 placeholder:text-gray-600"
+              className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600"
               required
-              placeholder="communication@channel.io"
+              placeholder="Enter your email"
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-cyan-400/80 uppercase tracking-widest ml-1">
-              Subject Protocol
+          <div className="space-y-1 md:space-y-2">
+            <label className="text-[10px] md:text-sm font-medium text-cyan-400/80 uppercase tracking-widest md:ml-1">
+              Subject
             </label>
             <input
               type="text"
               value={formData.subject}
               onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-              className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-white transition-all duration-300 placeholder:text-gray-600"
+              className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600"
               required
-              placeholder="Reason for connection"
+              placeholder="Enter subject"
             />
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-cyan-400/80 uppercase tracking-widest ml-1">
-              Transmission Data
+          <div className="space-y-1 md:space-y-2">
+            <label className="text-[10px] md:text-sm font-medium text-cyan-400/80 uppercase tracking-widest md:ml-1">
+              Message
             </label>
             <textarea
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               rows={4}
-              className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-white transition-all duration-300 placeholder:text-gray-600 resize-none"
+              className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600 resize-none"
               required
-              placeholder="Encrypt your message here..."
+              placeholder="Enter your message"
             />
           </div>
 
@@ -106,7 +106,7 @@ const ContactForm = forwardRef<HTMLDivElement, ContactFormProps>(
               className="w-full relative group overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-all duration-500 group-hover:scale-105"></div>
-              <div className="relative px-8 py-5 flex items-center justify-center font-bold text-lg text-white">
+              <div className="relative px-6 py-4 md:px-8 md:py-5 flex items-center justify-center font-bold text-base md:text-lg text-white">
                 {isSubmitting ? (
                   <span className="flex items-center">
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-3"></div>

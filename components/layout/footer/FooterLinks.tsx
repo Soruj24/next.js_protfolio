@@ -2,6 +2,7 @@ import React from "react";
 
 const FooterLinks: React.FC = () => {
   const links = [
+    { label: "Resume", link: "/resume" },
     { label: "Privacy", link: "#" },
     { label: "Terms", link: "#" },
     { label: "Contact", link: "#contact" },

@@ -6,17 +6,34 @@ import NavBar from "@/components/layout/NavBar";
 import AboutSection from "@/components/sections/AboutSection";
 import ContactSection from "@/components/sections/ContactSection";
 import HomeSection from "@/components/sections/HomeSection";
-import LearningJourney from "@/components/sections/LearningJourney";
+import TechInnovation from "@/components/sections/TechInnovation";
+import EngineeringStandards from "@/components/sections/EngineeringStandards";
+import TechnicalCaseStudies from "@/components/sections/TechnicalCaseStudies";
 import ProjectsShowcase from "@/components/sections/ProjectsShowcase";
 import SkillsShowcase from "@/components/sections/SkillsShowcase";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import personalData from "@/data/Parsonal.json";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [isLoading, setIsLoading] = useState(true);
+  const [settings, setSettings] = useState<any>(personalData);
 
   useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const response = await fetch("/api/settings");
+        if (response.ok) {
+          const data = await response.json();
+          if (data && Object.keys(data).length > 0) {
+            setSettings(data);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch settings:", error);
+      }
+    };
+    fetchSettings();
     const timer = setTimeout(() => setIsLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
@@ -32,14 +49,15 @@ export default function Home() {
           activeSection={activeSection}
           setActiveSection={setActiveSection}
         />
-        <HomeSection />
-        <AboutSection />
+        <HomeSection data={settings} />
+        <AboutSection data={settings} />
         <SkillsShowcase />
-        <LearningJourney />
+        <TechInnovation data={settings.innovation} />
+        <EngineeringStandards data={settings.standards} />
+        <TechnicalCaseStudies data={settings.case_studies} />
         <ProjectsShowcase />
-        <TestimonialsSection />
-        <ContactSection />
-        <Footer />
+        <ContactSection data={settings.personal_info} />
+        <Footer data={settings} />
       </div>
     </>
   );

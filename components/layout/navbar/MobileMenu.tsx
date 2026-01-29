@@ -7,9 +7,9 @@ import { signOut } from "next-auth/react";
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  navItems: Array<{ id: string; label: string; icon: string }>;
+  navItems: Array<{ id: string; label: string; icon: string; isLink?: boolean }>;
   activeSection: string;
-  handleNavClick: (id: string) => void;
+  handleNavClick: (id: string, isLink?: boolean) => void;
   session: any;
   backdropRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -50,7 +50,7 @@ const MobileMenu = forwardRef<HTMLDivElement, MobileMenuProps>(
             {navItems.map((item) => (
               <button
                 key={item.id}
-                onClick={() => handleNavClick(item.id)}
+                onClick={() => handleNavClick(item.id, item.isLink)}
                 className={`mobile-nav-item w-full flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 ${
                   activeSection === item.id
                     ? "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 text-cyan-400"

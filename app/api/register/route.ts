@@ -59,9 +59,9 @@ export async function POST(req: Request) {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
-    // Create new user (Setting first user as admin, others as editor for security)
+    // Create new user (Setting first user as admin, others as user for security)
     const userCount = await User.countDocuments();
-    const role = userCount === 0 ? "admin" : "editor";
+    const role = userCount === 0 ? "admin" : "user";
 
     const user = await User.create({
       name,

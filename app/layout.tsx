@@ -17,37 +17,39 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Soruj Mahmud | AI Software Architect & LangChain Specialist",
+  title: "Soruj Mahmud | Professional Frontend Developer & UI/UX Specialist",
   description:
-    "AI Software Architect specializing in LangChain, MCP Servers, and Autonomous Agentic Workflows. Building the future of intelligent systems.",
+    "Professional Frontend Developer specializing in React, Next.js, and immersive UI/UX experiences. Building high-performance, accessible web applications.",
   keywords: [
-    "AI",
-    "LangChain",
-    "MCP Server",
-    "Autonomous Agents",
-    "Software Architect",
+    "Frontend Developer",
+    "React",
+    "Next.js",
+    "UI/UX Specialist",
+    "Web Development",
+    "TypeScript",
+    "Tailwind CSS",
+    "GSAP",
+    "Framer Motion",
     "Soruj Mahmud",
     "Portfolio",
-    "Next.js",
-    "React",
   ],
   authors: [{ name: "Soruj Mahmud" }],
   creator: "Soruj Mahmud",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://sorujmahmud.com", // You should update this with your actual domain
-    title: "Soruj Mahmud | AI Software Architect & LangChain Specialist",
+    url: "https://sorujmahmud.com",
+    title: "Soruj Mahmud | Professional Frontend Developer & UI/UX Specialist",
     description:
-      "AI Software Architect specializing in LangChain, MCP Servers, and Autonomous Agentic Workflows.",
+      "Professional Frontend Developer specializing in React, Next.js, and immersive UI/UX experiences.",
     siteName: "Soruj Mahmud Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Soruj Mahmud | AI Software Architect & LangChain Specialist",
+    title: "Soruj Mahmud | Professional Frontend Developer & UI/UX Specialist",
     description:
-      "AI Software Architect specializing in LangChain, MCP Servers, and Autonomous Agentic Workflows.",
-    creator: "@sorujmahmud", // Update with your actual twitter handle
+      "Professional Frontend Developer specializing in React, Next.js, and immersive UI/UX experiences.",
+    creator: "@sorujmahmud",
   },
 };
 

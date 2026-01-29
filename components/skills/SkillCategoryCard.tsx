@@ -77,7 +77,7 @@ const SkillCategoryCard = forwardRef<HTMLDivElement, SkillCategoryCardProps>(
 
           <div className="space-y-8 relative z-10">
             {category.skills.map((skill, skillIndex) => (
-              <div key={skill.name} className="group/skill">
+              <div key={`${skill.name}-${skillIndex}`} className="group/skill">
                 <div className="flex justify-between items-center mb-3">
                   <div className="flex items-center space-x-3">
                     <span className="text-xl group-hover/skill:scale-125 transition-transform duration-300">

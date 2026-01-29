@@ -33,7 +33,7 @@ function SkillsShowcase() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        categoriesRef.current,
+        categoriesRef.current.filter(Boolean),
         {
           opacity: 0,
           y: 100,
@@ -57,12 +57,13 @@ function SkillsShowcase() {
 
       skillsRef.current.forEach((skillArray, categoryIndex) => {
         skillArray?.forEach((skill, skillIndex) => {
-          if (skill) {
+          const skillData = categories[categoryIndex]?.skills[skillIndex];
+          if (skill && skillData) {
             gsap.fromTo(
               skill,
               { width: "0%", opacity: 0 },
               {
-                width: `${categories[categoryIndex].skills[skillIndex].level}%`,
+                width: `${skillData.level}%`,
                 opacity: 1,
                 duration: 2,
                 delay: categoryIndex * 0.3 + skillIndex * 0.1,
@@ -102,7 +103,7 @@ function SkillsShowcase() {
     if (!skillsRef.current[categoryIndex]) {
       skillsRef.current[categoryIndex] = [];
     }
-    if (el && !skillsRef.current[categoryIndex][skillIndex]) {
+    if (el) {
       skillsRef.current[categoryIndex][skillIndex] = el;
     }
   };
@@ -119,16 +120,16 @@ function SkillsShowcase() {
     >
       <SkillsBackground />
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <SectionTitle
           title="Technical Expertise"
-          subtitle="Mastering the tools and technologies that power modern AI applications"
+          subtitle="Mastering the tools and technologies that power modern frontend applications"
         />
 
-        <div className="grid lg:grid-cols-3 gap-8 mt-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
           {categories.map((category, categoryIndex) => (
             <SkillCategoryCard
-              key={category.title}
+              key={category._id || `category-${categoryIndex}`}
               ref={(el) => addCategoryRef(el, categoryIndex)}
               category={category}
               categoryIndex={categoryIndex}

@@ -30,9 +30,10 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
     { id: "home", label: "Home", icon: "🏠" },
     { id: "about", label: "About", icon: "👨‍💻" },
     { id: "skills", label: "Skills", icon: "⚡" },
-    { id: "journey", label: "Journey", icon: "📈" },
+    { id: "innovation", label: "Innovation", icon: "💡" },
     { id: "projects", label: "Projects", icon: "🚀" },
     { id: "contact", label: "Contact", icon: "📞" },
+    { id: "resume", label: "CV", icon: "📄", isLink: true },
   ];
 
   // Scroll logic
@@ -148,7 +149,11 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
     }
   };
 
-  const handleNavClick = (id: string) => {
+  const handleNavClick = (id: string, isLink?: boolean) => {
+    if (isLink) {
+      window.location.href = `/${id}`;
+      return;
+    }
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setActiveSection(id);
     setIsMobileMenuOpen(false);

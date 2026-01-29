@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useImperativeHandle, forwardRef } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { toast } from "sonner";
@@ -101,7 +101,7 @@ const STYLES = {
   },
 } as const;
 
-export default function DynamicResume() {
+const DynamicResume = forwardRef((props, ref) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const resumeRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -139,29 +139,30 @@ export default function DynamicResume() {
     } else if (technicalSkills.core_technologies?.length > 0) {
       finalSkillCategories = [
         {
-          title: "AI & LangChain",
+          title: "Core Frontend",
           skills: (
             technicalSkills.specializations || [
-              "LangChain Framework",
-              "MCP Server Development",
-              "Custom Tool Integration",
-              "Vector Databases & Embeddings",
+              "React & Next.js",
+              "TypeScript",
+              "Modern CSS & Tailwind",
+              "State Management",
             ]
           ).map((s: string) => ({ name: s })),
         },
         {
-          title: "Frontend Development",
+          title: "UI/UX & Design",
           skills: (
             technicalSkills.core_technologies || [
-              "Next.js + React",
-              "TypeScript",
-              "Tailwind CSS",
+              "Framer Motion",
+              "GSAP Animations",
+              "Responsive Design",
+              "Design Systems",
             ]
           ).map((s: string) => ({ name: s })),
         },
         {
-          title: "Backend & Database",
-          skills: ["Node.js", "Express.js", "MongoDB", "RESTful APIs"].map(
+          title: "Tooling & Optimization",
+          skills: ["Vite / Webpack", "Git & GitHub", "Performance SEO", "Unit Testing"].map(
             (s) => ({ name: s })
           ),
         },
@@ -184,14 +185,6 @@ export default function DynamicResume() {
     if (featuredProjects.length < 4) {
       const defaultProjects: Project[] = [
         {
-          title: "AI-Powered Chatbot Platform",
-          description:
-            "Intelligent chatbot platform with natural language processing, multi-channel support, and analytics.",
-          technologies: ["AI", "TypeScript", "Python", "TensorFlow"],
-          featured: true,
-          id: "ai-chatbot",
-        },
-        {
           title: "Modern E-Commerce Platform",
           description:
             "Full-featured e-commerce solution with admin dashboard, payment integration, and inventory management.",
@@ -200,20 +193,28 @@ export default function DynamicResume() {
           id: "ecommerce",
         },
         {
-          title: "AI Fitness Tracker & Coach",
+          title: "Real-time Dashboard",
           description:
-            "Intelligent fitness tracking application with AI-powered workout plans, progress analytics, and virtual coaching.",
-          technologies: ["React Native", "TypeScript", "Node.js", "Express"],
+            "High-performance analytics dashboard with real-time data visualization and interactive charts.",
+          technologies: ["React", "D3.js", "WebSockets", "TanStack Query"],
           featured: true,
-          id: "fitness-tracker",
+          id: "dashboard",
         },
         {
-          title: "Task Orchestrator with Agentic AI",
+          title: "Design System Library",
           description:
-            "Autonomous task decomposition and execution platform using multi-agent systems and real-time monitoring.",
-          technologies: ["LangChain", "Python", "React", "MCP Server"],
+            "Atomic design based UI library with Radix UI primitives and comprehensive Storybook documentation.",
+          technologies: ["React", "Radix UI", "Tailwind CSS", "Storybook"],
           featured: true,
-          id: "task-orchestrator",
+          id: "design-system",
+        },
+        {
+          title: "SaaS Landing Page",
+          description:
+            "Modern, high-converting SaaS landing page with advanced GSAP animations and responsive layout.",
+          technologies: ["Next.js", "GSAP", "Framer Motion", "Tailwind"],
+          featured: true,
+          id: "saas-landing",
         },
       ];
       featuredProjects = [...featuredProjects, ...defaultProjects].slice(0, 4);
@@ -230,7 +231,7 @@ export default function DynamicResume() {
     return {
       fullName: personalInfo.full_name || "SORUJ MAHMUD",
       professionalTitle:
-        personalInfo.professional_title || "ASPIRING FULL-STACK DEVELOPER",
+        personalInfo.professional_title || "PROFESSIONAL FRONTEND DEVELOPER",
       email: personalInfo.email || "soujmahmudb2h@gmail.com",
       phone: personalInfo.phone || "+8807755397598",
       location: personalInfo.location || "Tengali, Dhaka, Bangladesh",
@@ -238,10 +239,10 @@ export default function DynamicResume() {
       linkedin: getContactValue("LinkedIn") || "/in/soruj-mahmud",
       portfolio: getContactValue("Portfolio") || "soruj-mahmud.dev",
       professionalSummary:
-        "Full-stack development with AI integration through project work.",
+        "Passionate Frontend Developer with expertise in building high-performance, accessible, and visually stunning web applications using the React ecosystem.",
       education: "HSC Science",
       additionalEducation:
-        "Self-taught developer with comprehensive project-based learning in modern web technologies and AI applications",
+        "Self-taught developer with comprehensive project-based learning in modern frontend technologies and UI/UX design.",
       skillCategories: finalSkillCategories,
       suggestedProjects: featuredProjects,
       experience:
@@ -249,45 +250,45 @@ export default function DynamicResume() {
           ? finalExperience
           : [
               {
-                role: "AI & LangChain Specialist",
+                role: "Senior Frontend Developer",
                 company: "Self-Directed Learning & Projects",
                 year: "2023-PRESENT",
                 description:
-                  "Focused on mastering LangChain framework, MCP server development, and building AI-powered applications through hands-on projects",
-                technologies: [
-                  "LangChain",
-                  "MCP Server",
-                  "OpenAI",
-                  "Vector Databases",
-                  "Custom Tools",
-                ],
-              },
-              {
-                role: "Full Stack Development",
-                company: "Personal Projects & Open Source",
-                year: "2022-2023",
-                description:
-                  "Built multiple full-stack applications, mastering modern web technologies and backend development",
+                  "Specializing in Next.js 14, React 18, and advanced frontend architecture. Focused on performance optimization and immersive UI.",
                 technologies: [
                   "Next.js",
                   "React",
-                  "Node.js",
-                  "MongoDB",
                   "TypeScript",
+                  "Tailwind CSS",
+                  "GSAP",
                 ],
               },
               {
-                role: "Frontend Development",
+                role: "Frontend Engineer",
+                company: "Personal Projects & Open Source",
+                year: "2022-2023",
+                description:
+                  "Built multiple complex frontend applications, mastering state management and component design patterns.",
+                technologies: [
+                  "React",
+                  "Redux Toolkit",
+                  "Zustand",
+                  "TanStack Query",
+                  "CSS Modules",
+                ],
+              },
+              {
+                role: "Web Developer",
                 company: "Learning & Skill Building",
                 year: "2021-2022",
                 description:
-                  "Focused on frontend technologies, UI/UX principles, and responsive design",
+                  "Developed foundational skills in responsive design, accessibility, and modern JavaScript.",
                 technologies: [
-                  "React",
                   "JavaScript",
-                  "CSS",
-                  "HTML",
-                  "Tailwind",
+                  "HTML5",
+                  "CSS3",
+                  "Sass",
+                  "Bootstrap",
                 ],
               },
             ],
@@ -379,6 +380,12 @@ export default function DynamicResume() {
       setIsGenerating(false);
     }
   }, [resumeData.fullName]);
+
+  // Expose generatePDF to parent components
+  useImperativeHandle(ref, () => ({
+    generatePDF,
+    isGenerating
+  }));
 
   // GSAP animations with cleanup
   const handleMouseMove = useCallback(
@@ -512,7 +519,7 @@ export default function DynamicResume() {
         onMouseLeave={handleMouseLeave}
         onClick={generatePDF}
         disabled={isGenerating}
-        className="group relative px-6 py-3 bg-white/5 backdrop-blur-xl text-white rounded-xl font-medium transition-all duration-500 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-3 overflow-hidden border border-white/10 hover:border-cyan-500/50 hover:bg-white/10"
+        className="group relative w-full sm:w-auto px-6 py-4 md:py-3 bg-white/5 backdrop-blur-xl text-white rounded-2xl sm:rounded-xl font-medium transition-all duration-500 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 overflow-hidden border border-white/10 hover:border-cyan-500/50 hover:bg-white/10"
         aria-label="Download Resume as PDF"
         title="Download Professional CV"
       >
@@ -924,4 +931,7 @@ export default function DynamicResume() {
       </div>
     </>
   );
-}
+});
+
+DynamicResume.displayName = "DynamicResume";
+export default DynamicResume;

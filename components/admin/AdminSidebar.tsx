@@ -67,7 +67,7 @@ export default function AdminSidebar() {
         <div className="p-8 relative">
           <h1 className="text-2xl font-black tracking-tighter">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">
-              NEXT AI
+              NEXT DEV
             </span>
             <span className="text-[10px] ml-1 px-1.5 py-0.5 rounded border border-cyan-500/30 text-cyan-400 align-top">
               ADMIN

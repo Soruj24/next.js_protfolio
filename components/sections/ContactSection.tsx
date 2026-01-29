@@ -7,13 +7,17 @@ import ContactBackground from "../contact/ContactBackground";
 import ContactContent from "../contact/ContactContent";
 import ContactForm from "../contact/ContactForm";
 
-function ContactSection() {
+interface ContactSectionProps {
+  data?: any;
+}
+
+function ContactSection({ data }: ContactSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const contactCardRef = useRef<HTMLDivElement>(null);
-  const personalInfo = personalData.personal_info || {};
-  const email = personalInfo.email || "sorujmahmudb2h@gmail.com";
+  const displayData = data || personalData.personal_info || {};
+  const email = displayData.email || "sorujmahmudb2h@gmail.com";
   const focus =
-    personalData.experience?.focus || "Specializing in AI and Web Development.";
+    personalData.experience?.focus || "Specializing in Frontend Development and UI/UX Design.";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -169,33 +173,38 @@ function ContactSection() {
     <section
       id="contact"
       ref={containerRef}
-      className="min-h-screen py-24 flex items-center relative overflow-hidden"
+      className="min-h-screen py-20 md:py-32 flex items-center relative overflow-hidden"
     >
       <ContactBackground />
 
-      <div className="max-w-6xl mx-auto px-4 w-full relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full relative z-10">
         <SectionTitle
-          title="Initiate Neural Link"
+          title="Connect With Me"
           subtitle="Ready to transform the future? Let's bridge the gap between imagination and reality."
         />
 
-        <div className="grid lg:grid-cols-2 gap-12 mt-20 items-center">
-          <ContactContent
-            focus={focus}
-            contactInfo={contactInfo}
-            email={email}
-          />
+        <div className="flex flex-col lg:flex-row gap-10 md:gap-16 lg:gap-12 mt-12 md:mt-20 items-center">
+          <div className="w-full lg:w-1/2">
+            <ContactContent
+              focus={focus}
+              contactInfo={contactInfo}
+              email={email}
+              personalInfo={displayData}
+            />
+          </div>
 
-          <ContactForm
-            ref={contactCardRef}
-            formData={formData}
-            setFormData={setFormData}
-            handleSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
-            submitStatus={submitStatus}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-          />
+          <div className="w-full lg:w-1/2">
+            <ContactForm
+              ref={contactCardRef}
+              formData={formData}
+              setFormData={setFormData}
+              handleSubmit={handleSubmit}
+              isSubmitting={isSubmitting}
+              submitStatus={submitStatus}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            />
+          </div>
         </div>
       </div>
     </section>

@@ -1,95 +1,103 @@
 export const skillCategories = [
   {
-    title: "AI & LangChain Specialist",
-    icon: "🤖",
+    title: "Core Frontend Expertise",
+    icon: "⚛️",
     skills: [
       {
-        name: "LangChain Framework",
+        name: "React & Next.js",
         level: 95,
-        icon: "🔗",
-        color: "from-red-500 to-pink-500",
-        description: "Expert in LangChain components, chains, and agents"
-      },
-      {
-        name: "MCP Server Development",
-        level: 90,
-        icon: "⚙️",
-        color: "from-purple-500 to-indigo-500",
-        description: "Building and managing MCP servers for AI tooling"
-      },
-      {
-        name: "Custom Tool Integration",
-        level: 88,
-        icon: "🛠️",
-        color: "from-green-500 to-emerald-500",
-        description: "Creating custom tools for AI applications"
-      },
-      {
-        name: "Vector Databases & Embeddings",
-        level: 85,
-        icon: "🗄️",
-        color: "from-blue-500 to-cyan-500",
-        description: "Working with vector stores and semantic search"
-      },
-    ],
-  },
-  {
-    title: "Frontend Development",
-    icon: "🎨",
-    skills: [
-      {
-        name: "Next.js",
-        level: 92,
         icon: "⚡",
-        color: "from-gray-500 to-gray-700",
-      },
-      {
-        name: "React",
-        level: 90,
-        icon: "⚛️",
         color: "from-cyan-500 to-blue-500",
+        description: "Building scalable SPAs and SSR applications with deep focus on performance"
       },
       {
         name: "TypeScript",
-        level: 88,
+        level: 92,
         icon: "📘",
-        color: "from-blue-500 to-indigo-500",
+        color: "from-blue-600 to-indigo-600",
+        description: "Type-safe development with complex interfaces and advanced patterns"
       },
       {
-        name: "Tailwind CSS",
-        level: 85,
+        name: "Modern CSS & Tailwind",
+        level: 94,
         icon: "💨",
-        color: "from-cyan-400 to-blue-400",
+        color: "from-cyan-400 to-teal-400",
+        description: "Expert in responsive design, utility-first CSS, and custom design systems"
+      },
+      {
+        name: "State Management",
+        level: 90,
+        icon: "🔄",
+        color: "from-purple-500 to-pink-500",
+        description: "Redux Toolkit, Context API, and TanStack Query for data fetching"
       },
     ],
   },
   {
-    title: "Backend & Database",
+    title: "UI/UX & Animations",
+    icon: "🎨",
+    skills: [
+      {
+        name: "Framer Motion",
+        level: 88,
+        icon: "✨",
+        color: "from-pink-500 to-rose-500",
+        description: "Creating smooth, physics-based interactions and page transitions"
+      },
+      {
+        name: "GSAP (GreenSock)",
+        level: 85,
+        icon: "🦖",
+        color: "from-green-500 to-emerald-500",
+        description: "Complex timeline-based animations and scroll-triggered effects"
+      },
+      {
+        name: "UI Components Library",
+        level: 92,
+        icon: "🧩",
+        color: "from-orange-500 to-amber-500",
+        description: "Shadcn UI, Radix UI, and Headless UI for accessible components"
+      },
+      {
+        name: "Responsive Layouts",
+        level: 96,
+        icon: "📱",
+        color: "from-blue-400 to-cyan-400",
+        description: "Pixel-perfect implementations for mobile, tablet, and desktop"
+      },
+    ],
+  },
+  {
+    title: "Tooling & Integration",
     icon: "⚙️",
     skills: [
       {
-        name: "Node.js",
+        name: "Frontend Tooling",
         level: 89,
-        icon: "🟢",
-        color: "from-green-500 to-emerald-500",
+        icon: "🛠️",
+        color: "from-gray-600 to-gray-800",
+        description: "Vite, Webpack, ESLint, and Prettier for optimized workflow"
       },
       {
-        name: "Express.js",
+        name: "API Integration",
+        level: 91,
+        icon: "🌐",
+        color: "from-indigo-500 to-blue-500",
+        description: "Connecting complex frontends with RESTful and GraphQL services"
+      },
+      {
+        name: "Performance & SEO",
         level: 87,
         icon: "🚀",
-        color: "from-yellow-500 to-amber-500",
+        color: "from-yellow-500 to-orange-500",
+        description: "Core Web Vitals optimization and metadata management"
       },
       {
-        name: "MongoDB",
-        level: 85,
-        icon: "🍃",
-        color: "from-green-400 to-green-600",
-      },
-      {
-        name: "RESTful APIs",
-        level: 90,
-        icon: "🌐",
-        color: "from-orange-500 to-red-500",
+        name: "Version Control (Git)",
+        level: 93,
+        icon: "🌿",
+        color: "from-red-500 to-orange-500",
+        description: "Advanced Git workflows and collaborative development"
       },
     ],
   },

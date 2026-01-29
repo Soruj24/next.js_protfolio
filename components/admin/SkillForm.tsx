@@ -18,7 +18,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { ISkillCategory } from "@/models/Skill";
 
 const skillSchema = z.object({
-  title: z.string().min(2, "Title is required"),
+  title: z.string().min(1, "Title is required"),
   icon: z.string().min(1, "Icon is required"),
   skills: z
     .array(
@@ -87,7 +87,7 @@ export default function SkillForm({ category, onSuccess }: SkillFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-xl">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 bg-white/5 p-4 sm:p-8 rounded-3xl border border-white/10 backdrop-blur-xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <FormField
             control={form.control}
@@ -157,7 +157,7 @@ export default function SkillForm({ category, onSuccess }: SkillFormProps) {
                 key={field.id}
                 className="p-6 bg-black/40 border border-white/5 rounded-2xl space-y-6 relative group transition-all duration-300 hover:border-purple-500/20"
               >
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 text-xs font-bold border border-purple-500/20">
                       {index + 1}
@@ -169,11 +169,12 @@ export default function SkillForm({ category, onSuccess }: SkillFormProps) {
                   <Button
                     type="button"
                     variant="ghost"
-                    size="icon"
+                    size="sm"
                     onClick={() => remove(index)}
-                    className="text-red-400/50 hover:text-red-400 hover:bg-red-400/10 rounded-full transition-colors"
+                    className="text-red-400/50 hover:text-red-400 hover:bg-red-400/10 rounded-full transition-colors self-end sm:self-auto"
                   >
                     <Trash2 size={18} />
+                    <span className="ml-2 sm:hidden">Remove</span>
                   </Button>
                 </div>
 

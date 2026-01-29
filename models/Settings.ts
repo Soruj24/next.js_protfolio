@@ -12,6 +12,8 @@ export interface ISettings extends Document {
     phone: string;
     location: string;
     professional_title: string;
+    linkedin?: string;
+    github?: string;
   };
   technical_skills: {
     specializations: string[];
@@ -40,6 +42,42 @@ export interface ISettings extends Document {
     redirect_uncertain_queries: string;
     language: string;
   };
+  innovation: {
+    title: string;
+    description: string;
+    icon: string;
+    color: string;
+  }[];
+  expertise: {
+    title: string;
+    description: string;
+    icon: string;
+    skills: string[];
+    color: string;
+  }[];
+  standards: {
+    title: string;
+    description: string;
+    icon: string;
+    metrics: string;
+    features: string[];
+  }[];
+  testimonials: {
+    name: string;
+    role: string;
+    content: string;
+    avatar: string;
+    color: string;
+  }[];
+  case_studies: {
+    title: string;
+    description: string;
+    challenge: string;
+    solution: string;
+    impact: string;
+    technologies: string[];
+    image: string;
+  }[];
 }
 
 const SettingsSchema = new Schema<ISettings>(
@@ -55,6 +93,8 @@ const SettingsSchema = new Schema<ISettings>(
       phone: String,
       location: String,
       professional_title: String,
+      linkedin: String,
+      github: String,
     },
     technical_skills: {
       specializations: [String],
@@ -85,6 +125,52 @@ const SettingsSchema = new Schema<ISettings>(
       redirect_uncertain_queries: String,
       language: String,
     },
+    innovation: [
+      {
+        title: String,
+        description: String,
+        icon: String,
+        color: String,
+      },
+    ],
+    expertise: [
+      {
+        title: String,
+        description: String,
+        icon: String,
+        skills: [String],
+        color: String,
+      },
+    ],
+    standards: [
+      {
+        title: String,
+        description: String,
+        icon: String,
+        metrics: String,
+        features: [String],
+      },
+    ],
+    testimonials: [
+      {
+        name: String,
+        role: String,
+        content: String,
+        avatar: String,
+        color: String,
+      },
+    ],
+    case_studies: [
+      {
+        title: String,
+        description: String,
+        challenge: String,
+        solution: String,
+        impact: String,
+        technologies: [String],
+        image: String,
+      },
+    ],
   },
   { timestamps: true }
 );

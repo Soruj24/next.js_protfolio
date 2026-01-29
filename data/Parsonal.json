@@ -1,7 +1,7 @@
 {
   "assistant": {
     "name": "Soruj Mahmud's",
-    "purpose": "Provide professional information about Soruj Mahmud's skills and projects",
+    "purpose": "Provide professional information about Soruj Mahmud's frontend development skills and UI/UX projects",
     "contact_recommendation": "For specific details or direct inquiries, please contact Soruj directly"
   },
   
@@ -9,70 +9,71 @@
     "full_name": "Soruj Mahmud",
     "email": "sorujmahmudb2h@gmail.com",
     "phone": "+8801795397598",
-    "location": " Tangail, Dhaka, Bangladesh",
-    "professional_title": "Aspiring Full-Stack Developer"
+    "location": "Tangail, Dhaka, Bangladesh",
+    "professional_title": "Professional Frontend Developer",
+    "linkedin": "https://linkedin.com/in/soruj-mahmud",
+    "github": "https://github.com/soruj-mahmud"
   },
   
   "technical_skills": {
     "specializations": [
-      "LangChain and AI Applications",
-      "MCP Server Development", 
-      "Next.js, React, TypeScript",
-      "MongoDB, Node.js",
-      "Modern Web Technologies"
+      "Advanced React & Next.js Development",
+      "Modern UI/UX Implementation", 
+      "Responsive & Adaptive Web Design",
+      "State Management (Redux, Context API)",
+      "Performance Optimization & SEO"
     ],
     "core_technologies": [
-      "JavaScript",
-      "TypeScript",
-      "React",
+      "React.js",
       "Next.js",
-      "Node.js",
-      "MongoDB",
-      "Express.js",
-      "HTML5",
-      "CSS3",
+      "TypeScript",
+      "JavaScript (ES6+)",
       "Tailwind CSS",
-      "Git",
-      "REST APIs",
-      "AI Integration",
-      "LangChain",
-      "MCP Servers",
-      "Python",
-      "WebSocket",
-      "JWT",
-      "OAuth"
+      "Framer Motion",
+      "GSAP (GreenSock)",
+      "HTML5",
+      "CSS3 / SCSS",
+      "Responsive Design",
+      "Git & GitHub",
+      "RESTful API Integration",
+      "UI/UX Design Principles",
+      "Radix UI / Shadcn UI",
+      "Storybook",
+      "Vite",
+      "Unit Testing (Jest)",
+      "Frontend Performance"
     ]
   },
   
   "experience": {
-    "professional_experience": "Currently seeking entry-level opportunities",
-    "project_experience": "Strong portfolio of personal projects demonstrating technical capabilities",
-    "focus": "Full-stack development with AI integration through project work"
+    "professional_experience": "Seeking Frontend Developer opportunities to build immersive web experiences",
+    "project_experience": "Extensive portfolio of frontend-focused projects showcasing modern UI/UX and clean code",
+    "focus": "Building high-performance, accessible, and visually stunning user interfaces"
   },
   
   "education": {
     "background": "HSC Science",
-    "additional_info": "Self-taught developer with comprehensive project-based learning in modern web technologies and AI applications"
+    "additional_info": "Self-taught Frontend Developer specializing in the React ecosystem and modern styling solutions"
   },
   
   "project_expertise": {
-    "ai_applications": "LangChain integration and AI-powered solutions",
-    "full_stack": "End-to-end web application development",
-    "mcp_development": "MCP Server development and implementation", 
-    "modern_web": "Responsive and scalable web applications",
+    "frontend_architecture": "Scalable React components and application structures",
+    "ui_animation": "Immersive animations using GSAP and Framer Motion",
+    "responsive_layouts": "Mobile-first approach for all screen sizes", 
+    "modern_styling": "Efficient styling with Tailwind CSS and CSS modules",
     "project_types": [
-      "Personal Projects",
-      "Learning Projects", 
-      "Demo Applications",
-      "Prototype Development",
-      "Open Source Contributions"
+      "SaaS Dashboards",
+      "E-commerce Frontends", 
+      "Creative Portfolios",
+      "Interactive Web Apps",
+      "Landing Page Optimization"
     ]
   },
   
   "projects": {
-    "status": "Multiple completed projects demonstrating full-stack capabilities",
-    "focus": "Practical implementation of modern technologies and AI integration",
-    "scope": "Comprehensive projects covering frontend, backend, database, and AI components"
+    "status": "Diverse frontend projects demonstrating UI excellence",
+    "focus": "Visual impact, user accessibility, and seamless interactions",
+    "scope": "Complex frontend solutions with state management and API integration"
   },
   
   "response_guidelines": {

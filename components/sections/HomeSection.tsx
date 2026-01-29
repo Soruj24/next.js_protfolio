@@ -10,13 +10,18 @@ import HeroStats from "../home/HeroStats";
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-function HomeSection() {
+interface HomeSectionProps {
+  data?: any;
+}
+
+function HomeSection({ data }: HomeSectionProps) {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const personalInfo = personalData.personal_info || {};
-  const expFocus = personalData.experience?.focus || "Specializing in LangChain, MCP Servers, and Autonomous Agentic Workflows.";
+  const displayData = data || personalData;
+  const personalInfo = displayData.personal_info || {};
+  const expFocus = displayData.experience?.focus || "Specializing in Next.js, React, and crafting high-performance user interfaces.";
   const firstName = personalInfo.full_name?.split(" ")[0] || "SORUJ";
   const lastName = personalInfo.full_name?.split(" ").slice(1).join(" ") || "MAHMUD";
 
@@ -124,11 +129,11 @@ function HomeSection() {
     <section
       id="home"
       ref={containerRef}
-      className="min-h-[110vh] flex items-center justify-center relative overflow-hidden bg-[#020617]"
+      className="min-h-screen md:min-h-[110vh] flex items-center justify-center relative overflow-hidden bg-[#020617] py-20 md:py-0"
     >
       <HeroBackground />
 
-      <div className="text-center max-w-7xl mx-auto px-4 relative z-10 pt-20">
+      <div className="text-center max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-10 md:pt-20">
         <HeroTitle
           ref={titleRef}
           firstName={firstName}

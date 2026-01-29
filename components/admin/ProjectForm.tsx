@@ -27,7 +27,7 @@ import { IProject } from "@/models/Project";
 
 const projectSchema = z.object({
   id: z.string().min(1, "ID is required"),
-  title: z.string().min(2, "Title is required"),
+  title: z.string().min(1, "Title is required"),
   description: z.string().min(10, "Description is required"),
   fullDescription: z.string().min(20, "Full description is required"),
   image: z.string().url("Valid image URL is required"),
@@ -169,7 +169,7 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-xl"
+        className="space-y-8 bg-white/5 p-4 sm:p-8 rounded-3xl border border-white/10 backdrop-blur-xl"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <FormField
@@ -183,7 +183,7 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="e.g. Neural Link Dashboard"
+                    placeholder="e.g. Luxe E-Commerce Platform"
                     className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
                     onChange={(e) => {
                       field.onChange(e);
@@ -212,7 +212,7 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="neural-link-dashboard"
+                    placeholder="luxe-ecommerce-platform"
                     className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
                   />
                 </FormControl>
@@ -260,7 +260,7 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent className="bg-[#030712] border-white/10 text-white">
-                    <SelectItem value="AI">AI / Machine Learning</SelectItem>
+                    <SelectItem value="SaaS">SaaS / Product</SelectItem>
                     <SelectItem value="Fullstack">
                       Fullstack Development
                     </SelectItem>
@@ -407,7 +407,7 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
                 <FormControl>
                   <Input
                     {...field}
-                    placeholder="Neural Processing, Real-time Analysis, Multi-agent support"
+                    placeholder="Responsive Design, Real-time Data, Interactive UI"
                     className="bg-black/40 border-white/10 text-white focus:border-cyan-500/50 transition-colors h-12"
                   />
                 </FormControl>
@@ -546,7 +546,7 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
                 <span>Processing...</span>
               </div>
             ) : project ? (
-              "Update Intelligence"
+              "Update Project"
             ) : (
               "Deploy Project"
             )}

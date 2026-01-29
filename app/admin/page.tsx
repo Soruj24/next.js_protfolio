@@ -70,12 +70,12 @@ export default async function AdminDashboard() {
       value: data.projectCount,
       icon: FolderKanban,
       color: "from-cyan-500 to-blue-600",
-      description: "Deployed nodes",
+      description: "Deployed projects",
       trend: "+2",
       href: "/admin/projects",
     },
     {
-      title: "Neural Nodes",
+      title: "Core Skills",
       value: data.skillCount,
       icon: Zap,
       color: "from-purple-500 to-pink-600",
@@ -88,7 +88,7 @@ export default async function AdminDashboard() {
       value: data.messageCount,
       icon: MessageSquare,
       color: "from-green-500 to-emerald-600",
-      description: "Total transmissions",
+      description: "Total messages",
       trend: data.unreadMessageCount > 0 ? `${data.unreadMessageCount} new` : "All read",
       href: "/admin/inquiries",
     },
@@ -109,12 +109,12 @@ export default async function AdminDashboard() {
         <h1 className="text-4xl font-black text-white tracking-tight mb-2">
           System{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-500">
-            Intelligence
+            Command Center
           </span>
         </h1>
         <p className="text-gray-400 font-medium max-w-2xl">
           Central command for your technical portfolio. Monitor deployments,
-          manage skill matrices, and analyze engagement.
+          manage skill sets, and analyze engagement.
         </p>
       </div>
 
@@ -210,7 +210,7 @@ export default async function AdminDashboard() {
                   <MessageSquare className="text-gray-600" size={24} />
                 </div>
                 <p className="text-gray-500 font-medium">
-                  No recent transmissions
+                  No recent messages
                 </p>
               </div>
             )}
@@ -227,7 +227,7 @@ export default async function AdminDashboard() {
                 Quick Deployment
               </h2>
               <p className="text-sm text-purple-200/60 font-medium mb-8">
-                Instantly push new technical nodes or projects to your production matrix.
+                Instantly push new technical skills or projects to your production matrix.
               </p>
 
               <div className="space-y-3">

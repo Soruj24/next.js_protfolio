@@ -16,7 +16,7 @@ const AboutContent = forwardRef<HTMLDivElement, AboutContentProps>(
 
         <div className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
           <span className="text-white">I build </span>
-          <span className="text-gradient">Intelligent Systems</span>
+          <span className="text-gradient">Modern Web Interfaces</span>
           <span className="text-white">
             {" "}
             that bridge the gap between imagination and reality.
@@ -29,16 +29,16 @@ const AboutContent = forwardRef<HTMLDivElement, AboutContentProps>(
             <span className="text-white font-medium underline decoration-cyan-500/30 decoration-2 underline-offset-4">
               {fullName}
             </span>
-            , a developer obsessed with the frontier of AI technology. I
-            specialize in the
-            <span className="text-cyan-400"> LangChain ecosystem</span> and
-            <span className="text-purple-400"> MCP Server architecture</span>.
+            , a developer obsessed with creating beautiful, high-performance
+            user interfaces. I specialize in the
+            <span className="text-cyan-400"> React ecosystem</span> and
+            <span className="text-purple-400"> Modern CSS/Animations</span>.
           </p>
 
           <p>
-            {expProfessional} Whether it&apos;s custom AI agents or
-            sophisticated data pipelines, I focus on creating seamless,
-            high-performance solutions.
+            {expProfessional} Whether it&apos;s pixel-perfect UI or
+            sophisticated frontend architecture, I focus on creating seamless,
+            intuitive user experiences.
           </p>
         </div>
       </div>

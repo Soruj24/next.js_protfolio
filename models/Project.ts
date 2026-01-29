@@ -8,8 +8,9 @@ export interface IDevelopmentHighlight {
 
 export interface IPerformanceStats {
   loadTime: number;
-  accessibility: number;
-  bestPractices: number;
+  accessibility?: number;
+  bestPractices?: number;
+  interactivity?: number;
   seo: number;
 }
 
@@ -32,13 +33,13 @@ export interface IProject {
   features: string[];
   githubUrl?: string;
   liveUrl?: string;
-  category: 'AI' | 'Fullstack' | 'Mobile' | 'Frontend' | 'Backend' | 'Blockchain' | 'IOT';
+  category: 'SaaS' | 'Fullstack' | 'Mobile' | 'Frontend' | 'Backend' | 'Blockchain' | 'IOT' | 'E-Commerce' | 'Portfolio' | 'Analytics';
   status: 'completed' | 'in-progress' | 'planned';
   screenshots: string[];
   challenges: string[];
   solutions: string[];
   featured: boolean;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  difficulty: 'beginner' | 'medium' | 'intermediate' | 'advanced';
   duration: string;
   teamSize: string;
   completionDate: Date | string;
@@ -67,8 +68,9 @@ const DevelopmentHighlightSchema = new Schema<IDevelopmentHighlight>({
 
 const PerformanceStatsSchema = new Schema<IPerformanceStats>({
   loadTime: { type: Number, required: true, min: 0, max: 100 },
-  accessibility: { type: Number, required: true, min: 0, max: 100 },
-  bestPractices: { type: Number, required: true, min: 0, max: 100 },
+  accessibility: { type: Number, min: 0, max: 100 },
+  bestPractices: { type: Number, min: 0, max: 100 },
+  interactivity: { type: Number, min: 0, max: 100 },
   seo: { type: Number, required: true, min: 0, max: 100 }
 }, { _id: false });
 
@@ -98,7 +100,7 @@ const ProjectSchema = new Schema<IProjectDocument>({
   category: { 
     type: String, 
     required: true,
-    enum: ['AI', 'Fullstack', 'Mobile', 'Frontend'] 
+    enum: ['SaaS', 'Fullstack', 'Mobile', 'Frontend', 'Backend', 'Blockchain', 'IOT', 'E-Commerce', 'Portfolio', 'Analytics'] 
   },
   status: { 
     type: String, 
@@ -113,7 +115,7 @@ const ProjectSchema = new Schema<IProjectDocument>({
   difficulty: { 
     type: String, 
     required: true,
-    enum: ['beginner', 'intermediate', 'advanced'] 
+    enum: ['beginner', 'medium', 'intermediate', 'advanced'] 
   },
   duration: { type: String, required: true },
   teamSize: { type: String, required: true },

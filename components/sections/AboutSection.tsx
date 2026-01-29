@@ -11,11 +11,16 @@ import AboutImage from "../about/AboutImage";
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-function AboutSection() {
-  const personalInfo = personalData.personal_info || {};
-  const expProfessional = personalData.experience?.professional_experience || "AI Software Architect";
+interface AboutSectionProps {
+  data?: any;
+}
+
+function AboutSection({ data }: AboutSectionProps) {
+  const displayData = data || personalData;
+  const personalInfo = displayData.personal_info || {};
+  const expProfessional = displayData.experience?.professional_experience || "Professional Frontend Developer";
   const fullName = personalInfo.full_name || "Soruj Mahmud";
-  const professionalTitle = personalInfo.professional_title || "Full Stack Developer";
+  const professionalTitle = personalInfo.professional_title || "Frontend Developer";
   
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -108,17 +113,17 @@ function AboutSection() {
 
   const stats = [
     {
-      value: "LangChain",
+      value: "React/Next.js",
       label: "Specialist",
       color: "from-cyan-500 to-blue-500",
     },
     {
-      value: "MCP Server",
+      value: "UI/UX Design",
       label: "Expert",
       color: "from-purple-500 to-pink-500",
     },
     {
-      value: "AI Tools",
+      value: "Tailwind CSS",
       label: "Developer",
       color: "from-green-500 to-emerald-500",
     },
@@ -128,17 +133,17 @@ function AboutSection() {
     <section
       id="about"
       ref={sectionRef}
-      className="min-h-screen py-32 flex items-center relative overflow-hidden"
+      className="min-h-screen py-20 md:py-32 flex items-center relative overflow-hidden"
     >
       <AboutBackground />
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <SectionTitle
           title="The Story"
-          subtitle="Merging Human Creativity with Artificial Intelligence"
+          subtitle="Crafting Immersive Digital Experiences with Modern Frontend Technologies"
         />
 
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 md:gap-20 items-center">
           <div className="space-y-8 order-2 lg:order-1">
             <AboutContent
               ref={textRef}

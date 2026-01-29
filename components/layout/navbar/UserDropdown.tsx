@@ -34,8 +34,8 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ session }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none">
-        <div className="nav-item group flex items-center space-x-3 bg-white/5 hover:bg-white/10 p-1.5 pr-4 rounded-2xl border border-white/10 transition-all duration-300">
-          <Avatar className="h-9 w-9 border-2 border-cyan-500/50 group-hover:border-cyan-400 transition-colors">
+        <div className="nav-item group flex items-center space-x-3 bg-white/5 hover:bg-white/10 p-1.5 sm:pr-4 rounded-2xl border border-white/10 transition-all duration-300">
+          <Avatar className="h-8 w-8 sm:h-9 sm:w-9 border-2 border-cyan-500/50 group-hover:border-cyan-400 transition-colors">
             <AvatarImage src={session.user?.image || ""} />
             <AvatarFallback className="bg-cyan-900 text-cyan-100">
               {session.user?.name?.charAt(0) || "U"}
@@ -68,7 +68,7 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ session }) => {
               className="flex items-center px-3 py-2.5 rounded-xl hover:bg-cyan-500/10 group transition-colors cursor-pointer"
             >
               <LayoutDashboard className="w-4 h-4 mr-3 text-cyan-400 group-hover:text-cyan-300" />
-              <span className="text-sm font-medium">Admin Dashboard</span>
+              <span className="text-sm font-medium">Dashboard</span>
             </Link>
           </DropdownMenuItem>
         )}

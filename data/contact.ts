@@ -18,7 +18,7 @@ export const contactInfo = [
     link: "https://github.com/Soruj24",
   },
   {
-    icon: "🤖",
+    icon: "🌐",
     label: "Portfolio",
     value: "soruj-mahmud.dev",
     link: "https://soruj-mahmud.dev",

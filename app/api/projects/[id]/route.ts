@@ -37,7 +37,8 @@ export async function PUT(
   try {
     const { id } = await params;
     const session = await auth();
-    if (!session || (session.user as { role?: string }).role !== "admin") {
+    const userRole = (session?.user as { role?: string })?.role;
+    if (!session || userRole !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -69,7 +70,8 @@ export async function DELETE(
   try {
     const { id } = await params;
     const session = await auth();
-    if (!session || (session.user as { role?: string }).role !== "admin") {
+    const userRole = (session?.user as { role?: string })?.role;
+    if (!session || userRole !== "admin") {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 

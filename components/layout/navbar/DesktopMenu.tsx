@@ -2,9 +2,9 @@ import React from "react";
 import NavItem from "../../ui/NavItem";
 
 interface DesktopMenuProps {
-  navItems: Array<{ id: string; label: string; icon: string }>;
+  navItems: Array<{ id: string; label: string; icon: string; isLink?: boolean }>;
   activeSection: string;
-  handleNavClick: (id: string) => void;
+  handleNavClick: (id: string, isLink?: boolean) => void;
   underlineRef: React.RefObject<HTMLDivElement | null>;
   updateUnderline: (element: HTMLElement) => void;
 }
@@ -23,7 +23,7 @@ const DesktopMenu: React.FC<DesktopMenuProps> = ({
           key={item.id}
           item={item}
           isActive={activeSection === item.id}
-          onClick={() => handleNavClick(item.id)}
+          onClick={() => handleNavClick(item.id, item.isLink)}
           onHover={updateUnderline}
         />
       ))}

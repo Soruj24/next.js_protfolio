@@ -7,7 +7,7 @@ interface ProjectStatsProps {
 const ProjectStats: React.FC<ProjectStatsProps> = ({ projects }) => {
   const stats = [
     {
-      label: "Total Intelligence",
+      label: "Total Projects",
       value: projects.length,
       color: "text-cyan-400",
     },

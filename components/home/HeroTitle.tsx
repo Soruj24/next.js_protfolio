@@ -17,13 +17,13 @@ const HeroTitle = forwardRef<HTMLHeadingElement, HeroTitleProps>(
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
           </span>
           <span className="text-xs font-mono text-cyan-400 tracking-widest uppercase">
-            Available for new AI ventures
+            Available for Frontend Roles
           </span>
         </div>
 
         <h1
           ref={ref}
-          className="text-[clamp(3rem,10vw,8rem)] font-black mb-8 leading-[0.9] tracking-tight text-white"
+          className="text-[clamp(2.5rem,12vw,8rem)] font-black mb-6 md:mb-8 leading-[0.9] tracking-tight text-white"
         >
           <span className="block opacity-40">{firstName}</span>
           <span className="text-gradient block drop-shadow-[0_0_50px_rgba(6,182,212,0.3)]">

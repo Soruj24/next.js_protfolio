@@ -33,7 +33,7 @@ const ProjectFilters: React.FC<ProjectFiltersProps> = ({
           <div className="absolute right-6 top-1/2 -translate-y-1/2 flex items-center gap-3 z-20">
             <div className="h-8 w-px bg-white/10 mx-2" />
             <div className="bg-cyan-500/10 text-cyan-400 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border border-cyan-500/20">
-              AI Powered Search
+              Smart Search
             </div>
           </div>
         </div>

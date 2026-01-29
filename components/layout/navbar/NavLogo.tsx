@@ -11,7 +11,7 @@ const NavLogo: React.FC = () => {
         </div>
       </div>
       <span className="hidden sm:block text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400 group-hover:from-cyan-400 group-hover:to-blue-500 transition-all duration-500">
-        Soruj<span className="text-cyan-500">.</span>AI
+        Soruj<span className="text-cyan-500">.</span>Dev
       </span>
     </Link>
   );
