@@ -38,7 +38,7 @@ const projectSchema = z.object({
   category: z.string(),
   status: z.enum(["completed", "in-progress", "planned"]),
   featured: z.boolean().default(false),
-  difficulty: z.enum(["beginner", "intermediate", "advanced"]),
+  difficulty: z.enum(["beginner", "medium", "intermediate", "advanced"]),
   duration: z.string().min(1),
   teamSize: z.string().min(1),
   emoji: z.string().optional(),
@@ -70,10 +70,10 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
           features: project.features.join(", "),
           githubUrl: project.githubUrl || "",
           liveUrl: project.liveUrl || "",
-          category: project.category,
+          category: project.category as string,
           status: project.status,
           featured: project.featured,
-          difficulty: project.difficulty,
+          difficulty: project.difficulty as any,
           duration: project.duration,
           teamSize: project.teamSize,
           emoji: project.emoji || "🚀",
@@ -266,6 +266,9 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
                     </SelectItem>
                     <SelectItem value="Mobile">Mobile Application</SelectItem>
                     <SelectItem value="Frontend">Frontend / UI/UX</SelectItem>
+                    <SelectItem value="E-Commerce">E-Commerce</SelectItem>
+                    <SelectItem value="Portfolio">Portfolio</SelectItem>
+                    <SelectItem value="Analytics">Analytics</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -464,6 +467,7 @@ export default function ProjectForm({ project, onSuccess }: ProjectFormProps) {
                   </FormControl>
                   <SelectContent className="bg-[#030712] border-white/10 text-white">
                     <SelectItem value="beginner">Foundational</SelectItem>
+                    <SelectItem value="medium">Intermediate</SelectItem>
                     <SelectItem value="intermediate">Advanced Logic</SelectItem>
                     <SelectItem value="advanced">Expert Systems</SelectItem>
                   </SelectContent>
