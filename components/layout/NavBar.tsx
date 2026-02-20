@@ -7,7 +7,6 @@ import personalData from "../../data/Parsonal.json";
 import NavLogo from "./navbar/NavLogo";
 import DesktopMenu from "./navbar/DesktopMenu";
 import MobileMenu from "./navbar/MobileMenu";
-import UserDropdown from "./navbar/UserDropdown";
 import ScrollProgressBar from "./navbar/ScrollProgressBar";
 
 interface NavBarProps {
@@ -33,7 +32,6 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
     { id: "innovation", label: "Innovation", icon: "💡" },
     { id: "projects", label: "Projects", icon: "🚀" },
     { id: "contact", label: "Contact", icon: "📞" },
-    { id: "resume", label: "CV", icon: "📄", isLink: true },
   ];
 
   // Scroll logic
@@ -183,7 +181,6 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
           />
 
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <UserDropdown session={session} />
 
             {/* Mobile Menu Toggle */}
             <button
