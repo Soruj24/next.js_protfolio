@@ -73,7 +73,21 @@ export async function POST(req: Request) {
       isVerified: false,
     });
 
-    // Send verification email
+    if (process.env.SKIP_EMAIL_VERIFICATION === "true") {
+      user.isVerified = true;
+      user.otp = undefined;
+      user.otpExpires = undefined;
+      await user.save();
+      return NextResponse.json(
+        { 
+          message: "Registration successful. Email verification skipped in dev.",
+          user: { name: user.name, email: user.email, role: user.role },
+          verificationRequired: false
+        },
+        { status: 201 }
+      );
+    }
+
     const emailResult = await sendVerificationEmail(email, otp);
 
     if (!emailResult.success) {

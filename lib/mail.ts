@@ -33,6 +33,7 @@ const getTransporter = () => {
 export const sendResetPasswordEmail = async (email: string, token: string) => {
   const resetLink = `${process.env.NEXTAUTH_URL}/reset-password/${token}`;
   const resend = getResend();
+  const from = process.env.RESEND_FROM || "Soruj.Dev Portfolio <onboarding@resend.dev>";
 
   if (!resend) {
     console.warn("Resend API key missing. Cannot send reset email.");
@@ -41,7 +42,7 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
 
   try {
     await resend.emails.send({
-      from: "Soruj.Dev Portfolio <onboarding@resend.dev>",
+      from,
       to: email,
       subject: "Reset your password",
       html: `
@@ -82,8 +83,9 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
   if (resend) {
     try {
       console.log("Attempting to send via Resend...");
+      const from = process.env.RESEND_FROM || "Soruj.Dev Portfolio <onboarding@resend.dev>";
       const data = await resend.emails.send({
-        from: "Soruj.Dev Portfolio <onboarding@resend.dev>",
+        from,
         to: email,
         subject: "Verify your email",
         html: emailHtml,
