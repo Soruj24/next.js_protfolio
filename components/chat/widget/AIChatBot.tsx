@@ -276,7 +276,9 @@ export function AIChatBot() {
   }, [messages]);
 
   useEffect(() => {
-    const opened = typeof window !== "undefined" && sessionStorage.getItem("nexusAutoOpen") === "1";
+    const opened =
+      typeof window !== "undefined" &&
+      sessionStorage.getItem("nexusAutoOpen") === "1";
     if (!opened && messages.length <= 1) {
       const t = setTimeout(() => {
         setIsOpen(true);
@@ -474,18 +476,12 @@ export function AIChatBot() {
             <div className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-purple-600 p-5 text-white">
               <div className="flex items-center gap-4">
                 <div className="rounded-2xl bg-white/20 p-3">
-                  <Bot className="h-8 w-8" />
+                  <Bot className="h-4 w-4" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold flex items-center gap-2">
                     Soruj AI
-                    <span className="inline-flex items-center rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">
-                      Recruiter-ready
-                    </span>
                   </h3>
-                  <p className="text-sm opacity-90">
-                    Soruj's friendly assistant · Optimized for hiring teams
-                  </p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -601,19 +597,34 @@ export function AIChatBot() {
                               <ReactMarkdown
                                 components={{
                                   h2: (props) => (
-                                    <h2 className="text-lg font-bold mb-2" {...props} />
+                                    <h2
+                                      className="text-lg font-bold mb-2"
+                                      {...props}
+                                    />
                                   ),
                                   h3: (props) => (
-                                    <h3 className="text-base font-bold mb-1" {...props} />
+                                    <h3
+                                      className="text-base font-bold mb-1"
+                                      {...props}
+                                    />
                                   ),
                                   p: (props) => (
-                                    <p className="leading-relaxed mb-2" {...props} />
+                                    <p
+                                      className="leading-relaxed mb-2"
+                                      {...props}
+                                    />
                                   ),
                                   ul: (props) => (
-                                    <ul className="list-disc pl-5 space-y-1" {...props} />
+                                    <ul
+                                      className="list-disc pl-5 space-y-1"
+                                      {...props}
+                                    />
                                   ),
                                   ol: (props) => (
-                                    <ol className="list-decimal pl-5 space-y-1" {...props} />
+                                    <ol
+                                      className="list-decimal pl-5 space-y-1"
+                                      {...props}
+                                    />
                                   ),
                                   a: (props) => (
                                     <a
@@ -622,7 +633,10 @@ export function AIChatBot() {
                                     />
                                   ),
                                   strong: (props) => (
-                                    <strong className="font-semibold" {...props} />
+                                    <strong
+                                      className="font-semibold"
+                                      {...props}
+                                    />
                                   ),
                                   code: (props) => (
                                     <code
@@ -691,8 +705,6 @@ export function AIChatBot() {
                       <div ref={bottomRef} className="h-px w-full" />
                     </div>
                   </ScrollArea>
-
-                  
                 </div>
 
                 {/* Input Area */}
