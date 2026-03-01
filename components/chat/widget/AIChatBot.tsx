@@ -416,7 +416,7 @@ export function AIChatBot() {
 
   return (
     <div
-      className="fixed bottom-6 right-6 z-[12000] flex flex-col items-end gap-4"
+      className="fixed bottom-4  right-6 z-[12000] flex flex-col items-end gap-1"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <AnimatePresence>
@@ -438,11 +438,12 @@ export function AIChatBot() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className={cn(
-              "flex flex-col overflow-hidden rounded-3xl bg-white/95 shadow-2xl backdrop-blur-xl dark:bg-slate-900/95",
-              "border border-gray-200/50 dark:border-slate-700/50",
+              "dark flex flex-col overflow-hidden rounded-3xl shadow-[0_10px_40px_rgba(6,182,212,0.25)] backdrop-blur-2xl",
+              "bg-gradient-to-br from-[#0b1220]/95 via-[#0d1627]/90 to-[#0b1220]/95 border border-white/10",
+              "ring-1 ring-inset ring-cyan-500/20",
               isMinimized
                 ? "w-72 sm:w-80"
-                : "w-[95vw] sm:w-[440px] h-[70vh] sm:h-[720px]"
+                : "w-[95vw] sm:w-[440px] h-[70vh] sm:h-[720px]",
             )}
           >
             <ChatHeader

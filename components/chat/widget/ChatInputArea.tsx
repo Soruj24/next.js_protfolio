@@ -22,7 +22,7 @@ export default function ChatInputArea({
   inputRef,
 }: ChatInputAreaProps) {
   return (
-    <div className="border-t border-gray-200 bg-gray-50 p-6 dark:border-slate-700 dark:bg-slate-900">
+    <div className="border-t border-white/30 bg-white/60 p-6 backdrop-blur-xl dark:border-slate-800/60 dark:bg-slate-900/70">
       <div className="flex gap-3">
         <Input
           ref={inputRef}
@@ -35,13 +35,13 @@ export default function ChatInputArea({
             }
           }}
           placeholder="Ask about projects, impact, or experience…"
-          className="h-14 rounded-2xl border border-gray-200 bg-white px-5 text-base shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-900"
+          className="h-14 rounded-2xl border border-white/40 bg-white/90 px-5 text-base shadow focus:ring-2 focus:ring-cyan-400/40 dark:border-slate-700/60 dark:bg-slate-900/80"
           disabled={isLoading}
         />
         <Button
           onClick={onSend}
           disabled={disabled}
-          className="h-14 w-14 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 p-0 shadow-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-60"
+          className="h-14 w-14 rounded-2xl bg-gradient-to-r from-cyan-600 to-indigo-600 p-0 shadow-lg hover:from-cyan-700 hover:to-indigo-700 disabled:opacity-60"
         >
           {isLoading ? (
             <motion.div

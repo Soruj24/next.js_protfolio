@@ -45,18 +45,22 @@ function ParticleBackground() {
     let viewportW = window.innerWidth;
     let viewportH = window.innerHeight;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rmQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let reducedMotion = rmQuery.matches;
+    let running = true;
 
-    const getSettings = (w: number) => {
-      if (w < 640) {
-        return { layer0Count: 25, layer1Count: 20, connectDist: 140, gridSize: 90 };
-      } else if (w < 1024) {
-        return { layer0Count: 40, layer1Count: 30, connectDist: 170, gridSize: 110 };
-      } else {
-        return { layer0Count: 50, layer1Count: 40, connectDist: 200, gridSize: 120 };
+    const getSettings = (w: number, rm: boolean) => {
+      if (rm) {
+        if (w < 640) return { layer0Count: 8, layer1Count: 6, connectDist: 0, gridSize: 140 };
+        if (w < 1024) return { layer0Count: 12, layer1Count: 8, connectDist: 0, gridSize: 160 };
+        return { layer0Count: 16, layer1Count: 10, connectDist: 0, gridSize: 180 };
       }
+      if (w < 640) return { layer0Count: 25, layer1Count: 20, connectDist: 140, gridSize: 90 };
+      if (w < 1024) return { layer0Count: 40, layer1Count: 30, connectDist: 170, gridSize: 110 };
+      return { layer0Count: 50, layer1Count: 40, connectDist: 200, gridSize: 120 };
     };
 
-    let settings = getSettings(viewportW);
+    let settings = getSettings(viewportW, reducedMotion);
 
     let particles: ParticleImpl[] = [];
     let canRebuild = false;
@@ -71,12 +75,17 @@ function ParticleBackground() {
       canvas.style.height = `${viewportH}px`;
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(dpr, dpr);
-      settings = getSettings(viewportW);
+      settings = getSettings(viewportW, reducedMotion);
       if (canRebuild) rebuildParticles();
     };
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
+    rmQuery.addEventListener?.("change", (e) => {
+      reducedMotion = e.matches;
+      settings = getSettings(viewportW, reducedMotion);
+      rebuildParticles();
+    });
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
@@ -84,6 +93,7 @@ function ParticleBackground() {
     };
 
     const handleClick = (e: MouseEvent) => {
+      if (reducedMotion) return;
       bursts.push({
         x: e.clientX,
         y: e.clientY,
@@ -96,6 +106,14 @@ function ParticleBackground() {
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("click", handleClick);
+    const handleVisibility = () => {
+      running = !document.hidden;
+      if (running) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
 
     class ParticleImpl implements Particle {
       x: number;
@@ -116,13 +134,13 @@ function ParticleBackground() {
         
         if (layer === 1) {
           this.originalSize = Math.random() * 2 + 1.5;
-          this.speedX = (Math.random() * 1 - 0.5) * 0.8;
-          this.speedY = (Math.random() * 1 - 0.5) * 0.8;
+          this.speedX = ((Math.random() * 1 - 0.5) * 0.8) * (reducedMotion ? 0.6 : 1);
+          this.speedY = ((Math.random() * 1 - 0.5) * 0.8) * (reducedMotion ? 0.6 : 1);
           this.opacity = Math.random() * 0.5 + 0.3;
         } else {
           this.originalSize = Math.random() * 1 + 0.5;
-          this.speedX = (Math.random() * 0.5 - 0.25) * 0.5;
-          this.speedY = (Math.random() * 0.5 - 0.25) * 0.5;
+          this.speedX = ((Math.random() * 0.5 - 0.25) * 0.5) * (reducedMotion ? 0.6 : 1);
+          this.speedY = ((Math.random() * 0.5 - 0.25) * 0.5) * (reducedMotion ? 0.6 : 1);
           this.opacity = Math.random() * 0.2 + 0.1;
         }
 
@@ -135,7 +153,7 @@ function ParticleBackground() {
       }
 
       update(mX: number, mY: number, width: number, height: number) {
-        this.pulse += 0.02;
+        this.pulse += reducedMotion ? 0.01 : 0.02;
         const waveX = Math.sin(this.pulse) * 0.2;
         const waveY = Math.cos(this.pulse) * 0.2;
         
@@ -145,12 +163,12 @@ function ParticleBackground() {
         const dx = mX - this.x;
         const dy = mY - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        const maxDist = 200;
+        const maxDist = reducedMotion ? 120 : 200;
 
         if (distance < maxDist) {
           const force = (maxDist - distance) / maxDist;
-          this.x -= dx * force * 0.05;
-          this.y -= dy * force * 0.05;
+          this.x -= dx * force * (reducedMotion ? 0.03 : 0.05);
+          this.y -= dy * force * (reducedMotion ? 0.03 : 0.05);
           this.size = this.originalSize * (1 + force * 2);
           if (this.layer === 1) this.opacity = Math.min(0.9, this.opacity + 0.05);
         } else {
@@ -193,6 +211,7 @@ function ParticleBackground() {
     rebuildParticles();
 
     const drawConnections = () => {
+      if (reducedMotion || settings.connectDist <= 0) return;
       ctx.lineWidth = 0.5;
       for (let i = 0; i < particles.length; i++) {
         if (particles[i].layer === 0) continue;
@@ -221,6 +240,7 @@ function ParticleBackground() {
     };
 
     const drawScanningLine = () => {
+      if (reducedMotion) return;
       const scanY = (time * 100) % viewportH;
       const gradient = ctx.createLinearGradient(0, scanY - 50, 0, scanY + 50);
       gradient.addColorStop(0, "rgba(6, 182, 212, 0)");
@@ -238,6 +258,7 @@ function ParticleBackground() {
     };
 
     const updateBursts = () => {
+      if (reducedMotion) return;
       for (let i = bursts.length - 1; i >= 0; i--) {
         const b = bursts[i];
         b.radius += 4;
@@ -257,13 +278,13 @@ function ParticleBackground() {
     };
 
     const animate = () => {
-      time += 0.01;
-      ctx.fillStyle = "#020617";
+      if (!running) return;
+      time += reducedMotion ? 0.004 : 0.01;
+      ctx.fillStyle = "#0b1220";
       ctx.fillRect(0, 0, viewportW, viewportH);
 
-      // Cyberpunk Grid
       ctx.strokeStyle = "rgba(30, 41, 59, 0.3)";
-      ctx.lineWidth = 1;
+      ctx.lineWidth = reducedMotion ? 0.5 : 1;
       const gridSize = settings.gridSize;
       const offsetX = (mouseX * 0.05) % gridSize;
       const offsetY = (mouseY * 0.05) % gridSize;
@@ -301,11 +322,12 @@ function ParticleBackground() {
       window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("click", handleClick);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, []);
 
   return (
-    <div ref={containerRef} className="fixed inset-0 pointer-events-none z-0 bg-[#020617]">
+    <div ref={containerRef} className="fixed inset-0 pointer-events-none z-0 bg-[#0b1220]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.05),transparent_70%)]" />
       <canvas ref={canvasRef} className="absolute inset-0" />
     </div>

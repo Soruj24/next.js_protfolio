@@ -21,12 +21,12 @@ export default function WelcomeSection({
       <motion.div
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
-        className="mb-6 rounded-full bg-white/60 dark:bg-slate-800/60 p-6 sm:p-8"
+        className="mb-6 rounded-full bg-gradient-to-br from-white/70 to-white/40 dark:from-slate-800/70 dark:to-slate-800/40 p-6 sm:p-8 ring-1 ring-white/30 dark:ring-slate-700/50 backdrop-blur"
       >
-        <Bot className="h-16 w-16 sm:h-20 sm:w-20 text-blue-600 dark:text-blue-400" />
+        <Bot className="h-16 w-16 sm:h-20 sm:w-20 text-cyan-600 dark:text-cyan-400" />
       </motion.div>
 
-      <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
+      <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-cyan-700 to-slate-900 dark:from-white dark:via-cyan-400 dark:to-white">
         Hello! I'm Soruj AI
       </h2>
       <p className="mb-8 sm:mb-12 max-w-md text-base sm:text-lg leading-relaxed text-gray-600 dark:text-slate-300">

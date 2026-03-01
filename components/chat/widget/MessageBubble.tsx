@@ -13,10 +13,10 @@ export default function MessageBubble({ role, content, onCopy }: MessageBubblePr
   return (
     <div
       className={cn(
-        "max-w-[85%] rounded-3xl px-6 py-5 text-base leading-relaxed",
+        "max-w-[85%] rounded-3xl px-6 py-5 text-base leading-relaxed transition-all",
         role === "user"
-          ? "rounded-br-none bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-          : "rounded-bl-none bg-white text-gray-800 shadow-md border border-gray-200/60 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-700/60"
+          ? "rounded-br-none bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-lg"
+          : "rounded-bl-none bg-white/90 text-gray-800 shadow-xl border border-white/30 backdrop-blur md:backdrop-blur-lg dark:bg-slate-900/80 dark:text-slate-200 dark:border-slate-700/60"
       )}
     >
       <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none">

@@ -18,8 +18,8 @@ export default function FloatingToggleButton({
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
       className={cn(
-        "flex h-16 w-16 items-center justify-center rounded-full shadow-2xl transition-all duration-300",
-        isOpen ? "bg-white text-blue-600 dark:bg-slate-800" : "bg-gradient-to-r from-blue-600 to-purple-600 text-white",
+        "relative flex h-16 w-16 items-center justify-center rounded-full shadow-[0_10px_30px_rgba(6,182,212,0.45)] transition-all duration-300 ring-2 ring-cyan-400/30",
+        isOpen ? "bg-white text-blue-600 dark:bg-slate-800" : "bg-gradient-to-r from-cyan-600 to-indigo-600 text-white"
       )}
       aria-label={isOpen ? "Close chat" : "Open chat with Soruj AI"}
     >
