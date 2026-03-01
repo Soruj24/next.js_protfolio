@@ -1,4 +1,3 @@
-// src/components/AdminMessageCard.tsx
 import { format } from "date-fns";
 
 type Message = {

@@ -1,5 +1,11 @@
 import React, { forwardRef } from "react";
-import { LogOut, User as UserIcon, LayoutDashboard, LogIn, X } from "lucide-react";
+import {
+  LogOut,
+  User as UserIcon,
+  LayoutDashboard,
+  LogIn,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { signOut } from "next-auth/react";
@@ -7,7 +13,12 @@ import { signOut } from "next-auth/react";
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  navItems: Array<{ id: string; label: string; icon: string; isLink?: boolean }>;
+  navItems: Array<{
+    id: string;
+    label: string;
+    icon: string;
+    isLink?: boolean;
+  }>;
   activeSection: string;
   handleNavClick: (id: string, isLink?: boolean) => void;
   session: any;
@@ -15,7 +26,18 @@ interface MobileMenuProps {
 }
 
 const MobileMenu = forwardRef<HTMLDivElement, MobileMenuProps>(
-  ({ isOpen, onClose, navItems, activeSection, handleNavClick, session, backdropRef }, ref) => {
+  (
+    {
+      isOpen,
+      onClose,
+      navItems,
+      activeSection,
+      handleNavClick,
+      session,
+      backdropRef,
+    },
+    ref,
+  ) => {
     return (
       <>
         {/* Mobile Menu Backdrop */}
@@ -36,9 +58,6 @@ const MobileMenu = forwardRef<HTMLDivElement, MobileMenuProps>(
           style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         >
           <div className="flex justify-between items-center mb-8 sm:mb-12">
-            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
-              Navigation
-            </span>
             <button
               onClick={onClose}
               className="p-2 hover:bg-white/5 rounded-full transition-colors"
@@ -62,9 +81,13 @@ const MobileMenu = forwardRef<HTMLDivElement, MobileMenuProps>(
                   <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-xl sm:text-2xl">
                     {item.icon}
                   </div>
-                  <span className="text-base sm:text-lg font-semibold">{item.label}</span>
+                  <span className="text-base sm:text-lg font-semibold">
+                    {item.label}
+                  </span>
                 </div>
-                <div className={`h-6 w-1 rounded-full ${activeSection === item.id ? "bg-gradient-to-b from-cyan-500 to-blue-500" : "bg-transparent"}`} />
+                <div
+                  className={`h-6 w-1 rounded-full ${activeSection === item.id ? "bg-gradient-to-b from-cyan-500 to-blue-500" : "bg-transparent"}`}
+                />
               </button>
             ))}
           </div>
@@ -125,7 +148,7 @@ const MobileMenu = forwardRef<HTMLDivElement, MobileMenuProps>(
         </div>
       </>
     );
-  }
+  },
 );
 
 MobileMenu.displayName = "MobileMenu";

@@ -10,9 +10,9 @@ interface ChatHeaderProps {
 
 const ChatHeader: React.FC<ChatHeaderProps> = ({ onClose, onMinimize }) => {
   return (
-    <CardHeader className="bg-cyan-900/50 border-b border-gray-700 p-4 flex flex-row items-center justify-between shrink-0">
-      <CardTitle className="text-white text-lg flex items-center gap-2">
-        <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse" />
+    <CardHeader className="bg-white/90 dark:bg-slate-900/90 border-b border-white/10 p-3 sm:p-4 flex flex-row items-center justify-between shrink-0">
+      <CardTitle className="text-slate-900 dark:text-white text-sm sm:text-base font-semibold flex items-center gap-2">
+        <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500" />
         Connect With Me
       </CardTitle>
       <div className="flex gap-1">
@@ -20,7 +20,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ onClose, onMinimize }) => {
           variant="ghost"
           size="icon"
           onClick={onMinimize}
-          className="h-8 w-8 text-gray-400 hover:text-white transition-colors"
+          className="h-8 w-8 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
         >
           <Minus className="h-4 w-4" />
         </Button>
@@ -28,7 +28,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({ onClose, onMinimize }) => {
           variant="ghost"
           size="icon"
           onClick={onClose}
-          className="h-8 w-8 text-gray-400 hover:text-red-500 transition-colors"
+          className="h-8 w-8 text-slate-500 hover:text-rose-600 dark:text-slate-400 dark:hover:text-rose-500 transition-colors"
         >
           <X className="h-4 w-4" />
         </Button>

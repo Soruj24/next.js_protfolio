@@ -305,7 +305,7 @@ function ParticleBackground() {
   }, []);
 
   return (
-    <div ref={containerRef} className="fixed inset-0 pointer-events-none z-0">
+    <div ref={containerRef} className="fixed inset-0 pointer-events-none z-0 bg-[#020617]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(6,182,212,0.05),transparent_70%)]" />
       <canvas ref={canvasRef} className="absolute inset-0" />
     </div>
