@@ -247,7 +247,7 @@ export function AIChatBot() {
     const welcome: Message = {
       id: "welcome",
       role: "assistant",
-      content: `${greeting}! 👋\n\nI'm **Nexus**, Soruj's friendly AI assistant.\n\nI can help you explore his experience, projects, and skills. You can also send a direct message through the **Contact Form** below or ask me how to get in touch!`,
+      content: `${greeting}! 👋\n\n## Introduction\nHello! I'm **Nexus**, a portfolio assistant for **Soruj Mahmud**, a professional frontend developer. I'm here to provide information about Soruj's skills, experience, and projects.\n\n## Skills and Expertise\n- **Core Frontend Expertise**: React, Next.js, TypeScript, Modern CSS, State Management\n- **UI/UX & Animations**: Framer Motion, GSAP, UI Components Library, Responsive Layouts\n- **Tooling & Integration**: Frontend Tooling, API Integration, Performance & SEO, Version Control (Git)\n\n## Projects and Experience\n- **Luxe**: Immersive E-Commerce Storefront\n- **Vivid**: Creative Developer Portfolio\n- **Nova**: Real-time Analytics Dashboard\n- **AI-Powered Chatbot Platform**\n- **AI Fitness Tracker & Coach**\n- **Cryptocurrency Trading Dashboard**\n- **Interactive Learning Management System**\n- **Real-time Chat Application**\n\n## Contact Information\n- Email: sorujmahmudb2h@gmail.com\n- Phone: +8801795397598\n- LinkedIn: [linkedin.com/in/soruj-mahmud](https://linkedin.com/in/soruj-mahmud)\n- GitHub: [github.com/soruj-mahmud](https://github.com/soruj-mahmud)\n\nAsk me anything about projects, impact, or experience, and I'll help!`,
       timestamp: new Date(),
     };
 
@@ -443,7 +443,7 @@ export function AIChatBot() {
             <Sparkles className="h-6 w-6" />
             <div>
               <p className="font-bold">Hi there!</p>
-              <p className="text-sm opacity-90">Tap to chat with Nexus 😊</p>
+              <p className="text-sm opacity-90">Tap to chat with Soruj 😊</p>
             </div>
             <button
               onClick={(e) => {
@@ -478,7 +478,7 @@ export function AIChatBot() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold flex items-center gap-2">
-                    Nexus AI
+                    Soruj AI
                     <span className="inline-flex items-center rounded-full bg-white/20 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest">
                       Recruiter-ready
                     </span>
@@ -532,7 +532,7 @@ export function AIChatBot() {
                           </motion.div>
 
                           <h2 className="mb-4 text-3xl font-black text-gray-900 dark:text-white">
-                            Hello! I'm Nexus
+                            Hello! I'm Soruj AI
                           </h2>
                           <p className="mb-12 max-w-md text-lg leading-relaxed text-gray-600 dark:text-slate-300">
                             I'm here to help you explore Soruj's portfolio. Ask
@@ -680,7 +680,7 @@ export function AIChatBot() {
                                 className="h-3 w-3 rounded-full bg-blue-500"
                               />
                               <span className="ml-2 text-gray-600 dark:text-slate-400">
-                                Nexus is typing...
+                                Soruj AI is typing...
                               </span>
                             </div>
                           </div>
@@ -692,31 +692,7 @@ export function AIChatBot() {
                     </div>
                   </ScrollArea>
 
-                  {/* Scroll to bottom button */}
-                  <AnimatePresence>
-                    {showScrollButton && (
-                      <motion.button
-                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                        onClick={handleScrollToBottom}
-                        className="absolute bottom-20 right-6 flex items-center gap-2 rounded-full border border-gray-200 bg-white/90 px-4 py-2.5 shadow-xl backdrop-blur-md hover:bg-white dark:border-slate-700 dark:bg-slate-800/90 dark:hover:bg-slate-800"
-                      >
-                        <div className="relative">
-                          <ArrowDown className="h-4 w-4 text-blue-600" />
-                          {hasNewMessages && (
-                            <span className="absolute -right-1 -top-1 flex h-2 w-2">
-                              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"></span>
-                              <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-500"></span>
-                            </span>
-                          )}
-                        </div>
-                        <span className="text-sm font-semibold text-gray-700 dark:text-slate-200">
-                          {hasNewMessages ? "New messages" : "Scroll to bottom"}
-                        </span>
-                      </motion.button>
-                    )}
-                  </AnimatePresence>
+                  
                 </div>
 
                 {/* Input Area */}
@@ -794,7 +770,7 @@ export function AIChatBot() {
             ? "bg-white text-blue-600 dark:bg-slate-800"
             : "bg-gradient-to-r from-blue-600 to-purple-600 text-white",
         )}
-        aria-label={isOpen ? "Close chat" : "Open chat with Nexus AI"}
+        aria-label={isOpen ? "Close chat" : "Open chat with Soruj AI"}
       >
         {isOpen ? (
           <X className="h-9 w-9" />
