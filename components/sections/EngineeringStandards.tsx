@@ -104,8 +104,12 @@ export default function EngineeringStandards({ data }: EngineeringStandardsProps
                   {std.metrics}
                 </span>
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">{std.title}</h3>
-              <p className="text-zinc-400 mb-6 leading-relaxed">{std.description}</p>
+              <h3 className="text-2xl font-bold text-white mb-4">
+                  {std.title}
+              </h3>
+              <p className="text-zinc-400 mb-6 leading-relaxed">
+                  {std.description}
+              </p>
               <div className="flex flex-wrap gap-3">
                 {std.features.map((feature: string, fIndex: number) => (
                   <div key={fIndex} className="flex items-center text-xs text-zinc-500">

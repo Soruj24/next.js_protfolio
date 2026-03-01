@@ -172,7 +172,7 @@ const SettingsSchema = new Schema<ISettings>(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true, strict: false, minimize: false }
 );
 
 export const Settings =

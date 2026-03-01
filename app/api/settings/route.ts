@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { Settings } from "@/models/Settings";
 import { auth } from "@/auth";
+import personalData from "@/data/Parsonal.json";
 
 export async function GET() {
   try {
@@ -9,18 +10,13 @@ export async function GET() {
     const settings = await Settings.findOne();
 
     if (!settings) {
-      // Return empty settings or some default structure if needed
-      return NextResponse.json({});
+      return NextResponse.json(personalData);
     }
 
     return NextResponse.json(settings);
   } catch (error: unknown) {
-    return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : "Internal Server Error",
-      },
-      { status: 500 }
-    );
+    // Fallback to local data so the editor still shows content
+    return NextResponse.json(personalData);
   }
 }
 
@@ -41,6 +37,7 @@ export async function POST(req: Request) {
       settings = await Settings.findByIdAndUpdate(settings._id, data, {
         new: true,
         runValidators: true,
+        overwrite: true,
       });
     } else {
       settings = await Settings.create(data);

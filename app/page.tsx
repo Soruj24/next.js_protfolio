@@ -35,7 +35,14 @@ export default function Home() {
     };
     fetchSettings();
     const timer = setTimeout(() => setIsLoading(false), 3000);
-    return () => clearTimeout(timer);
+    const onUpdated = (e: any) => {
+      if (e?.detail) setSettings(e.detail);
+    };
+    window.addEventListener("settings-updated", onUpdated as EventListener);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("settings-updated", onUpdated as EventListener);
+    };
   }, []);
 
   if (isLoading) {
