@@ -5,6 +5,7 @@ import CustomCursor from "@/components/ui/CustomCursor";
 import PageTransition from "@/components/ui/PageTransition";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import { Toaster } from "sonner";
+import ChatBotWrapper from "@/components/chat/widget/ChatBotWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -66,6 +67,7 @@ export default function RootLayout({
         <NextAuthProvider>
           <CustomCursor />
           <PageTransition />
+          <ChatBotWrapper />
           <div className="relative z-10 content-wrapper">{children}</div>
           <Toaster position="top-right" />
         </NextAuthProvider>
