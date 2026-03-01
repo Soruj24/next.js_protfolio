@@ -8,6 +8,7 @@ import NavLogo from "./navbar/NavLogo";
 import DesktopMenu from "./navbar/DesktopMenu";
 import MobileMenu from "./navbar/MobileMenu";
 import ScrollProgressBar from "./navbar/ScrollProgressBar";
+import UserDropdown from "./navbar/UserDropdown";
 
 interface NavBarProps {
   activeSection: string;
@@ -194,6 +195,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
           />
 
           <div className="flex items-center space-x-2 sm:space-x-4">
+            <UserDropdown session={session} />
 
             {/* Mobile Menu Toggle */}
             <button
@@ -232,6 +234,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
         session={session}
         backdropRef={backdropRef}
       />
+      
     </nav>
   );
 }
