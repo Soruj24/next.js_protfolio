@@ -415,7 +415,10 @@ export function AIChatBot() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[12000] flex flex-col items-end gap-4">
+    <div
+      className="fixed bottom-6 right-6 z-[12000] flex flex-col items-end gap-4"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
       <AnimatePresence>
         {/* Friendly nudge */}
         {!isOpen && showNudge && (
@@ -437,9 +440,10 @@ export function AIChatBot() {
             className={cn(
               "flex flex-col overflow-hidden rounded-3xl bg-white/95 shadow-2xl backdrop-blur-xl dark:bg-slate-900/95",
               "border border-gray-200/50 dark:border-slate-700/50",
-              isMinimized ? "w-80" : "w-[440px] max-w-[95vw]",
+              isMinimized
+                ? "w-72 sm:w-80"
+                : "w-[95vw] sm:w-[440px] h-[70vh] sm:h-[720px]"
             )}
-            style={{ height: isMinimized ? "auto" : "720px" }}
           >
             <ChatHeader
               onClose={() => setIsOpen(false)}

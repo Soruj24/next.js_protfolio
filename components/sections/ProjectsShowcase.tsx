@@ -43,7 +43,7 @@ function ProjectsShowcase() {
     <>
       <section
         id="projects"
-        className="min-h-screen py-20 md:py-32 relative overflow-hidden bg-[#020617]"
+        className="min-h-screen py-20 md:py-32 relative overflow-hidden bg-[#020617] scroll-mt-20 sm:scroll-mt-28"
       >
         <ProjectsBackground />
 

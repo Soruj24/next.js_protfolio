@@ -133,7 +133,7 @@ function AboutSection({ data }: AboutSectionProps) {
     <section
       id="about"
       ref={sectionRef}
-      className="min-h-screen py-20 md:py-32 flex items-center relative overflow-hidden"
+      className="min-h-screen py-16 sm:py-24 md:py-32 flex items-center relative overflow-hidden scroll-mt-20 sm:scroll-mt-28"
     >
       <AboutBackground />
 
@@ -143,7 +143,7 @@ function AboutSection({ data }: AboutSectionProps) {
           subtitle="Crafting Immersive Digital Experiences with Modern Frontend Technologies"
         />
 
-        <div className="grid lg:grid-cols-2 gap-10 md:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 md:gap-20 items-center">
           <div className="space-y-8 order-2 lg:order-1">
             <AboutContent
               ref={textRef}

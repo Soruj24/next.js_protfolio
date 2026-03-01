@@ -25,13 +25,13 @@ const HeroStats: React.FC = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-5xl mx-auto border-t border-white/5 pt-12">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-8 max-w-5xl mx-auto border-t border-white/5 pt-8 sm:pt-12">
       {stats.map((stat, i) => (
         <div
           key={i}
           className="stat-card group p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.05] transition-colors"
         >
-          <div className={`text-4xl font-black text-white mb-1 ${stat.color} transition-colors`}>
+          <div className={`text-3xl sm:text-4xl font-black text-white mb-1 ${stat.color} transition-colors`}>
             {stat.value}
           </div>
           <div className="text-xs font-mono text-gray-500 uppercase tracking-widest">

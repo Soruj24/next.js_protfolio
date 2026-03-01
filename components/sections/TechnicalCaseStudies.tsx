@@ -89,7 +89,7 @@ export default function TechnicalCaseStudies({ data }: CaseStudyProps) {
           />
         </div>
 
-        <div className="mt-16 md:mt-24 space-y-20 md:space-y-32">
+        <div className="mt-12 sm:mt-16 md:mt-24 space-y-14 sm:space-y-20 md:space-y-32">
           {displayData.map((study, index) => (
             <div 
               key={index}

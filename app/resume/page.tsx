@@ -67,12 +67,12 @@ export default function ResumePage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <h1 className="text-4xl sm:text-5xl font-black mb-4 tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-black mb-3 sm:mb-4 tracking-tight">
             Professional <span className="text-gradient">Curriculum Vitae</span>
           </h1>
-          <p className="text-gray-400 max-w-xl mx-auto">
+          <p className="text-gray-400 max-w-lg sm:max-w-xl mx-auto text-sm sm:text-base">
             A comprehensive overview of my technical expertise, professional journey, and key contributions in frontend engineering.
           </p>
         </motion.div>

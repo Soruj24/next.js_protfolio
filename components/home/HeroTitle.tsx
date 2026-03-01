@@ -31,7 +31,7 @@ const HeroTitle = forwardRef<HTMLHeadingElement, HeroTitleProps>(
           </span>
         </h1>
 
-        <div className="text-xl md:text-2xl text-gray-400 mb-12 font-medium tracking-wide max-w-3xl mx-auto leading-relaxed">
+        <div className="text-base sm:text-lg md:text-2xl text-gray-400 mb-10 sm:mb-12 font-medium tracking-wide max-w-2xl sm:max-w-3xl mx-auto leading-relaxed">
           {splitText(subtitle)}
         </div>
       </>

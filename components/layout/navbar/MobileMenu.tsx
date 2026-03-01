@@ -30,13 +30,14 @@ const MobileMenu = forwardRef<HTMLDivElement, MobileMenuProps>(
         {/* Mobile Menu Drawer */}
         <div
           ref={ref}
-          className={`fixed top-0 right-0 h-full w-[280px] sm:w-[320px] bg-[#0a0a0a] border-l border-white/10 z-[70] lg:hidden p-6 sm:p-8 flex flex-col shadow-2xl ${
+          className={`fixed top-0 right-0 h-full w-screen sm:w-[360px] bg-[#0a0a0a] border-l border-white/10 z-[70] lg:hidden p-6 sm:p-8 flex flex-col shadow-2xl overflow-y-auto overscroll-contain ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } transition-transform duration-500`}
+          style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         >
           <div className="flex justify-between items-center mb-8 sm:mb-12">
             <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
-              Menu
+              Navigation
             </span>
             <button
               onClick={onClose}
@@ -51,14 +52,19 @@ const MobileMenu = forwardRef<HTMLDivElement, MobileMenuProps>(
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id, item.isLink)}
-                className={`mobile-nav-item w-full flex items-center space-x-4 p-4 rounded-2xl transition-all duration-300 ${
+                className={`mobile-nav-item w-full flex items-center justify-between p-3 sm:p-4 rounded-xl border transition-all duration-300 ${
                   activeSection === item.id
-                    ? "bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 text-cyan-400"
-                    : "hover:bg-white/5 text-gray-400"
+                    ? "bg-white/5 border-cyan-500/30 text-white"
+                    : "bg-transparent border-white/10 hover:bg-white/5 text-gray-300"
                 }`}
               >
-                <span className="text-2xl">{item.icon}</span>
-                <span className="text-lg font-medium">{item.label}</span>
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-xl sm:text-2xl">
+                    {item.icon}
+                  </div>
+                  <span className="text-base sm:text-lg font-semibold">{item.label}</span>
+                </div>
+                <div className={`h-6 w-1 rounded-full ${activeSection === item.id ? "bg-gradient-to-b from-cyan-500 to-blue-500" : "bg-transparent"}`} />
               </button>
             ))}
           </div>

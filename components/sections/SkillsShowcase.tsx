@@ -41,7 +41,7 @@ function SkillsShowcase() {
     <section
       id="skills"
       ref={sectionRef}
-      className="min-h-screen py-20 relative overflow-hidden"
+      className="min-h-screen py-20 relative overflow-hidden scroll-mt-20 sm:scroll-mt-28"
     >
       <SkillsBackground />
 
@@ -51,7 +51,7 @@ function SkillsShowcase() {
           subtitle="Mastering the tools and technologies that power modern frontend applications"
         />
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-10 sm:mt-16">
           {categories.map((category, categoryIndex) => (
             <SkillCategoryCard
               key={category._id || `category-${categoryIndex}`}

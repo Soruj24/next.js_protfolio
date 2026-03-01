@@ -77,7 +77,7 @@ function SectionTitle({ title, subtitle }: SectionTitleProps) {
       
       <h2
         ref={titleRef}
-        className="text-5xl md:text-7xl font-black mb-8 tracking-tight leading-tight flex flex-wrap justify-center gap-x-[0.2em]"
+        className="text-4xl sm:text-5xl md:text-7xl font-black mb-8 tracking-tight leading-tight flex flex-wrap justify-center gap-x-[0.2em]"
       >
         {title.split(" ").map((word, wordIndex) => (
           <span key={wordIndex} className="whitespace-nowrap inline-flex">

@@ -134,6 +134,19 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
     return () => ctx.revert();
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    try {
+      document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
+      document.documentElement.style.overscrollBehavior = isMobileMenuOpen ? "none" : "";
+    } catch {}
+    return () => {
+      try {
+        document.body.style.overflow = "";
+        document.documentElement.style.overscrollBehavior = "";
+      } catch {}
+    };
+  }, [isMobileMenuOpen]);
+
   const updateUnderline = (element: HTMLElement) => {
     if (underlineRef.current && navRef.current) {
       const { left, width } = element.getBoundingClientRect();

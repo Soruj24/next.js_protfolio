@@ -29,13 +29,13 @@ const ProjectStats: React.FC<ProjectStatsProps> = ({ projects }) => {
   ];
 
   return (
-    <div className="mt-32 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+    <div className="mt-16 sm:mt-24 md:mt-32 grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-8">
       {stats.map((stat, i) => (
         <div
           key={i}
-          className="bg-white/[0.02] rounded-[2rem] p-8 border border-white/5 backdrop-blur-xl"
+          className="bg-white/[0.02] rounded-[1.5rem] sm:rounded-[2rem] p-6 sm:p-8 border border-white/5 backdrop-blur-xl"
         >
-          <div className={`text-4xl font-black mb-1 ${stat.color}`}>
+          <div className={`text-3xl sm:text-4xl font-black mb-1 ${stat.color}`}>
             {stat.value}
           </div>
           <div className="text-xs font-mono text-gray-500 uppercase tracking-widest">

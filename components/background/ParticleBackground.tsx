@@ -42,11 +42,37 @@ function ParticleBackground() {
     let time = 0;
     const bursts: Burst[] = [];
 
-    const resizeCanvas = () => {
-      if (canvas) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    let viewportW = window.innerWidth;
+    let viewportH = window.innerHeight;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const getSettings = (w: number) => {
+      if (w < 640) {
+        return { layer0Count: 25, layer1Count: 20, connectDist: 140, gridSize: 90 };
+      } else if (w < 1024) {
+        return { layer0Count: 40, layer1Count: 30, connectDist: 170, gridSize: 110 };
+      } else {
+        return { layer0Count: 50, layer1Count: 40, connectDist: 200, gridSize: 120 };
       }
+    };
+
+    let settings = getSettings(viewportW);
+
+    let particles: ParticleImpl[] = [];
+    let canRebuild = false;
+
+    const resizeCanvas = () => {
+      viewportW = window.innerWidth;
+      viewportH = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(viewportW * dpr);
+      canvas.height = Math.floor(viewportH * dpr);
+      canvas.style.width = `${viewportW}px`;
+      canvas.style.height = `${viewportH}px`;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      settings = getSettings(viewportW);
+      if (canRebuild) rebuildParticles();
     };
 
     resizeCanvas();
@@ -153,12 +179,18 @@ function ParticleBackground() {
       }
     }
 
-    const particles: ParticleImpl[] = [];
-    const layer0Count = 50;
-    const layer1Count = 40;
+    function rebuildParticles() {
+      particles = [];
+      for (let i = 0; i < settings.layer0Count; i++) {
+        particles.push(new ParticleImpl(viewportW, viewportH, 0));
+      }
+      for (let i = 0; i < settings.layer1Count; i++) {
+        particles.push(new ParticleImpl(viewportW, viewportH, 1));
+      }
+    }
 
-    for (let i = 0; i < layer0Count; i++) particles.push(new ParticleImpl(canvas.width, canvas.height, 0));
-    for (let i = 0; i < layer1Count; i++) particles.push(new ParticleImpl(canvas.width, canvas.height, 1));
+    canRebuild = true;
+    rebuildParticles();
 
     const drawConnections = () => {
       ctx.lineWidth = 0.5;
@@ -169,7 +201,7 @@ function ParticleBackground() {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          const connectDist = 200;
+          const connectDist = settings.connectDist;
 
           if (distance < connectDist) {
             const opacity = (1 - distance / connectDist) * 0.2;
@@ -189,19 +221,19 @@ function ParticleBackground() {
     };
 
     const drawScanningLine = () => {
-      const scanY = (time * 100) % canvas.height;
+      const scanY = (time * 100) % viewportH;
       const gradient = ctx.createLinearGradient(0, scanY - 50, 0, scanY + 50);
       gradient.addColorStop(0, "rgba(6, 182, 212, 0)");
       gradient.addColorStop(0.5, "rgba(6, 182, 212, 0.05)");
       gradient.addColorStop(1, "rgba(6, 182, 212, 0)");
       
       ctx.fillStyle = gradient;
-      ctx.fillRect(0, scanY - 50, canvas.width, 100);
+      ctx.fillRect(0, scanY - 50, viewportW, 100);
       
       ctx.strokeStyle = "rgba(6, 182, 212, 0.1)";
       ctx.beginPath();
       ctx.moveTo(0, scanY);
-      ctx.lineTo(canvas.width, scanY);
+      ctx.lineTo(viewportW, scanY);
       ctx.stroke();
     };
 
@@ -227,32 +259,32 @@ function ParticleBackground() {
     const animate = () => {
       time += 0.01;
       ctx.fillStyle = "#020617";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, viewportW, viewportH);
 
       // Cyberpunk Grid
       ctx.strokeStyle = "rgba(30, 41, 59, 0.3)";
       ctx.lineWidth = 1;
-      const gridSize = 120;
+      const gridSize = settings.gridSize;
       const offsetX = (mouseX * 0.05) % gridSize;
       const offsetY = (mouseY * 0.05) % gridSize;
       
-      for(let x = offsetX; x < canvas.width; x += gridSize) {
+      for(let x = offsetX; x < viewportW; x += gridSize) {
         ctx.beginPath();
         ctx.moveTo(x, 0);
-        ctx.lineTo(x, canvas.height);
+        ctx.lineTo(x, viewportH);
         ctx.stroke();
       }
-      for(let y = offsetY; y < canvas.height; y += gridSize) {
+      for(let y = offsetY; y < viewportH; y += gridSize) {
         ctx.beginPath();
         ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
+        ctx.lineTo(viewportW, y);
         ctx.stroke();
       }
 
       drawScanningLine();
 
       particles.forEach((particle) => {
-        particle.update(mouseX, mouseY, canvas.width, canvas.height);
+        particle.update(mouseX, mouseY, viewportW, viewportH);
         particle.draw(ctx);
       });
 

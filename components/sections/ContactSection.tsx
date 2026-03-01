@@ -173,7 +173,7 @@ function ContactSection({ data }: ContactSectionProps) {
     <section
       id="contact"
       ref={containerRef}
-      className="min-h-screen py-20 md:py-32 flex items-center relative overflow-hidden"
+      className="min-h-screen py-16 sm:py-24 md:py-32 flex items-center relative overflow-hidden scroll-mt-20 sm:scroll-mt-28"
     >
       <ContactBackground />
 
@@ -183,7 +183,7 @@ function ContactSection({ data }: ContactSectionProps) {
           subtitle="Ready to transform the future? Let's bridge the gap between imagination and reality."
         />
 
-        <div className="flex flex-col lg:flex-row gap-10 md:gap-16 lg:gap-12 mt-12 md:mt-20 items-center">
+        <div className="flex flex-col lg:flex-row gap-8 sm:gap-10 md:gap-16 lg:gap-12 mt-10 md:mt-20 items-center">
           <div className="w-full lg:w-1/2">
             <ContactContent
               focus={focus}

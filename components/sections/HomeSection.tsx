@@ -129,11 +129,11 @@ function HomeSection({ data }: HomeSectionProps) {
     <section
       id="home"
       ref={containerRef}
-      className="min-h-screen md:min-h-[110vh] flex items-center justify-center relative overflow-hidden bg-[#020617] py-20 md:py-0"
+      className="min-h-screen md:min-h-[110vh] flex items-center justify-center relative overflow-hidden bg-[#020617] py-16 md:py-0 scroll-mt-20 sm:scroll-mt-28"
     >
       <HeroBackground />
 
-      <div className="text-center max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-10 md:pt-20">
+      <div className="text-center max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-8 md:pt-20">
         <HeroTitle
           ref={titleRef}
           firstName={firstName}
@@ -156,4 +156,3 @@ function HomeSection({ data }: HomeSectionProps) {
 }
 
 export default HomeSection;
-
