@@ -3,32 +3,24 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  MessageCircle,
-  X,
-  Send,
-  Sparkles,
   User as UserIcon,
-  Bot,
-  Minimize2,
-  Maximize2,
-  Trash2,
-  Copy,
   HelpCircle,
   Briefcase,
-  FileText,
   Mail,
-  Github,
-  ArrowDown,
+  Sparkles,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import ReactMarkdown from "react-markdown";
+
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
+import ChatHeader from "./ChatHeader";
+import ChatInputArea from "./ChatInputArea";
+import NudgeBanner from "./NudgeBanner";
+import ChatActionBar from "./ChatActionBar";
+import MessagesList from "./MessagesList";
+import FloatingToggleButton from "./FloatingToggleButton";
 
 interface Message {
   id: string;
@@ -422,41 +414,18 @@ export function AIChatBot() {
     }
   };
 
-  const handleScrollToBottom = () => {
-    scrollToBottom("smooth");
-    isUserScrolledUp.current = false;
-  };
-
   return (
     <div className="fixed bottom-6 right-6 z-[12000] flex flex-col items-end gap-4">
       <AnimatePresence>
         {/* Friendly nudge */}
         {!isOpen && showNudge && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            onClick={() => {
+          <NudgeBanner
+            onOpen={() => {
               setIsOpen(true);
               setShowNudge(false);
             }}
-            className="cursor-pointer select-none mb-2 flex max-w-[240px] items-center gap-3 rounded-3xl bg-gradient-to-r from-blue-600 to-purple-600 px-5 py-4 text-white shadow-2xl"
-          >
-            <Sparkles className="h-6 w-6" />
-            <div>
-              <p className="font-bold">Hi there!</p>
-              <p className="text-sm opacity-90">Tap to chat with Soruj 😊</p>
-            </div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowNudge(false);
-              }}
-              className="ml-auto"
-            >
-              <X className="h-5 w-5 opacity-70" />
-            </button>
-          </motion.div>
+            onDismiss={() => setShowNudge(false)}
+          />
         )}
 
         {/* Main Chat Window */}
@@ -472,331 +441,54 @@ export function AIChatBot() {
             )}
             style={{ height: isMinimized ? "auto" : "720px" }}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between bg-gradient-to-r from-blue-600 to-purple-600 p-5 text-white">
-              <div className="flex items-center gap-4">
-                <div className="rounded-2xl bg-white/20 p-3">
-                  <Bot className="h-4 w-4" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold flex items-center gap-2">
-                    Soruj AI
-                  </h3>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-10 w-10 text-white hover:bg-white/20"
-                  onClick={() => setIsMinimized(!isMinimized)}
-                >
-                  {isMinimized ? (
-                    <Maximize2 className="h-5 w-5" />
-                  ) : (
-                    <Minimize2 className="h-5 w-5" />
-                  )}
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-10 w-10 text-white hover:bg-white/20"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-            </div>
+            <ChatHeader
+              onClose={() => setIsOpen(false)}
+              onMinimize={() => setIsMinimized(!isMinimized)}
+            />
 
             {!isMinimized && (
               <>
-                <div className="relative flex-1 overflow-hidden">
-                  <ScrollArea className="h-full" viewportRef={viewportRef}>
-                    <div
-                      className="space-y-8 p-6 pb-24"
-                      ref={messagesContainerRef}
-                    >
-                      {/* Welcome Screen */}
-                      {messages.length <= 1 && (
-                        <div className="flex flex-col items-center text-center">
-                          <motion.div
-                            initial={{ scale: 0.8 }}
-                            animate={{ scale: 1 }}
-                            className="mb-8 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 p-10 dark:from-blue-900/30 dark:to-purple-900/30"
-                          >
-                            <Bot className="h-24 w-24 text-blue-600 dark:text-blue-400" />
-                          </motion.div>
-
-                          <h2 className="mb-4 text-3xl font-black text-gray-900 dark:text-white">
-                            Hello! I'm Soruj AI
-                          </h2>
-                          <p className="mb-12 max-w-md text-lg leading-relaxed text-gray-600 dark:text-slate-300">
-                            I'm here to help you explore Soruj's portfolio. Ask
-                            me about his projects, experience, skills, or how to
-                            get in touch!
-                          </p>
-
-                          <div className="w-full">
-                            <p className="mb-5 text-left text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-slate-500">
-                              Get started quickly
-                            </p>
-                            <div className="grid grid-cols-2 gap-4">
-                              {QUICK_ACTIONS.map((action) => (
-                                <button
-                                  key={action.label}
-                                  onClick={() => sendQuick(action.prompt)}
-                                  className="flex flex-col items-center gap-4 rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 p-8 text-center transition-all hover:border-blue-500 hover:bg-blue-50 dark:border-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700"
-                                >
-                                  <action.icon className="h-12 w-12 text-blue-600 dark:text-blue-400" />
-                                  <span className="font-bold text-gray-800 dark:text-slate-200">
-                                    {action.label}
-                                  </span>
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Messages */}
-                      {messages.map((msg) => (
-                        <motion.div
-                          key={msg.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className={cn(
-                            "flex gap-4",
-                            msg.role === "user" && "flex-row-reverse",
-                          )}
-                        >
-                          <div
-                            className={cn(
-                              "flex h-12 w-12 shrink-0 items-center justify-center rounded-full",
-                              msg.role === "user"
-                                ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-                                : "bg-gradient-to-br from-blue-100 to-purple-100 text-blue-600 dark:from-blue-900/50 dark:to-purple-900/50",
-                            )}
-                          >
-                            {msg.role === "user" ? (
-                              <UserIcon className="h-6 w-6" />
-                            ) : (
-                              <Bot className="h-6 w-6" />
-                            )}
-                          </div>
-
-                          <div
-                            className={cn(
-                              "max-w-[85%] rounded-3xl px-6 py-5 text-base leading-relaxed",
-                              msg.role === "user"
-                                ? "rounded-br-none bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-                                : "rounded-bl-none bg-white text-gray-800 shadow-md border border-gray-200/60 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-700/60",
-                            )}
-                          >
-                            <div className="prose prose-sm md:prose-base dark:prose-invert max-w-none">
-                              <ReactMarkdown
-                                components={{
-                                  h2: (props) => (
-                                    <h2
-                                      className="text-lg font-bold mb-2"
-                                      {...props}
-                                    />
-                                  ),
-                                  h3: (props) => (
-                                    <h3
-                                      className="text-base font-bold mb-1"
-                                      {...props}
-                                    />
-                                  ),
-                                  p: (props) => (
-                                    <p
-                                      className="leading-relaxed mb-2"
-                                      {...props}
-                                    />
-                                  ),
-                                  ul: (props) => (
-                                    <ul
-                                      className="list-disc pl-5 space-y-1"
-                                      {...props}
-                                    />
-                                  ),
-                                  ol: (props) => (
-                                    <ol
-                                      className="list-decimal pl-5 space-y-1"
-                                      {...props}
-                                    />
-                                  ),
-                                  a: (props) => (
-                                    <a
-                                      className="text-blue-600 hover:underline dark:text-blue-400"
-                                      {...props}
-                                    />
-                                  ),
-                                  strong: (props) => (
-                                    <strong
-                                      className="font-semibold"
-                                      {...props}
-                                    />
-                                  ),
-                                  code: (props) => (
-                                    <code
-                                      className="px-1 py-0.5 rounded bg-gray-100 dark:bg-slate-800"
-                                      {...props}
-                                    />
-                                  ),
-                                }}
-                              >
-                                {msg.content}
-                              </ReactMarkdown>
-                            </div>
-
-                            {msg.role === "assistant" && (
-                              <button
-                                onClick={() => copyMessage(msg.content)}
-                                className="mt-4 inline-flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-gray-900 transition-colors dark:text-slate-400 dark:hover:text-white"
-                              >
-                                <Copy className="h-4 w-4" /> Copy
-                              </button>
-                            )}
-                          </div>
-                        </motion.div>
-                      ))}
-
-                      {/* Typing Indicator */}
-                      {isLoading && (
-                        <div className="flex gap-4">
-                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-100 to-purple-100">
-                            <Bot className="h-6 w-6 text-blue-600" />
-                          </div>
-                          <div className="rounded-3xl bg-gray-100 px-6 py-4 dark:bg-slate-800">
-                            <div className="flex items-center gap-3">
-                              <motion.div
-                                animate={{ y: [0, -8, 0] }}
-                                transition={{ repeat: Infinity, duration: 0.8 }}
-                                className="h-3 w-3 rounded-full bg-blue-500"
-                              />
-                              <motion.div
-                                animate={{ y: [0, -8, 0] }}
-                                transition={{
-                                  repeat: Infinity,
-                                  duration: 0.8,
-                                  delay: 0.2,
-                                }}
-                                className="h-3 w-3 rounded-full bg-blue-500"
-                              />
-                              <motion.div
-                                animate={{ y: [0, -8, 0] }}
-                                transition={{
-                                  repeat: Infinity,
-                                  duration: 0.8,
-                                  delay: 0.4,
-                                }}
-                                className="h-3 w-3 rounded-full bg-blue-500"
-                              />
-                              <span className="ml-2 text-gray-600 dark:text-slate-400">
-                                Soruj AI is typing...
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Anchor for scrolling */}
-                      <div ref={bottomRef} className="h-px w-full" />
-                    </div>
-                  </ScrollArea>
-                </div>
+                <MessagesList
+                  messages={messages}
+                  isLoading={isLoading}
+                  showWelcome={messages.length <= 1}
+                  actions={QUICK_ACTIONS}
+                  onSelect={sendQuick}
+                  viewportRef={viewportRef}
+                  containerRef={messagesContainerRef}
+                  bottomRef={bottomRef}
+                  onCopy={copyMessage}
+                />
 
                 {/* Input Area */}
-                <div className="border-t border-gray-200 bg-gray-50 p-6 dark:border-slate-700 dark:bg-slate-900">
-                  <div className="flex gap-3">
-                    <Input
-                      ref={inputRef}
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault();
-                          sendMessage();
-                        }
-                      }}
-                      placeholder="Ask about projects, impact, or experience…"
-                      className="h-14 rounded-2xl border border-gray-200 bg-white px-5 text-base shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 dark:border-slate-700 dark:bg-slate-900"
-                      disabled={isLoading}
-                    />
-                    <Button
-                      onClick={sendMessage}
-                      disabled={!input.trim() || isLoading}
-                      className="h-14 w-14 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 p-0 shadow-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-60"
-                    >
-                      {isLoading ? (
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            repeat: Infinity,
-                            duration: 1,
-                            ease: "linear",
-                          }}
-                        >
-                          <Send className="h-6 w-6" />
-                        </motion.div>
-                      ) : (
-                        <Send className="h-6 w-6" />
-                      )}
-                    </Button>
-                  </div>
+                <ChatInputArea
+                  input={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onSend={sendMessage}
+                  isLoading={isLoading}
+                  disabled={!input.trim() || isLoading}
+                  inputRef={inputRef}
+                />
 
-                  <div className="mt-5 flex items-center justify-between text-sm text-gray-500">
-                    <button
-                      onClick={clearChat}
-                      className="flex items-center gap-2 hover:text-red-600 transition-colors"
-                    >
-                      <Trash2 className="h-4 w-4" /> Clear chat
-                    </button>
-                    <button
-                      onClick={() => sendQuick("How does this chat work?")}
-                      className="flex items-center gap-2 hover:text-blue-600 transition-colors"
-                    >
-                      <HelpCircle className="h-4 w-4" /> Help
-                    </button>
-                  </div>
-                </div>
+                <ChatActionBar
+                  onClear={clearChat}
+                  onHelp={() => sendQuick("How does this chat work?")}
+                />
               </>
             )}
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Toggle Button */}
-      <motion.button
-        whileHover={{ scale: 1.15 }}
-        whileTap={{ scale: 0.95 }}
+      <FloatingToggleButton
+        isOpen={isOpen}
+        unreadCount={Math.max(0, messages.length - 1)}
         onClick={() => {
           setIsOpen(!isOpen);
           setIsMinimized(false);
           setShowNudge(false);
         }}
-        className={cn(
-          "flex h-16 w-16 items-center justify-center rounded-full shadow-2xl transition-all duration-300",
-          isOpen
-            ? "bg-white text-blue-600 dark:bg-slate-800"
-            : "bg-gradient-to-r from-blue-600 to-purple-600 text-white",
-        )}
-        aria-label={isOpen ? "Close chat" : "Open chat with Soruj AI"}
-      >
-        {isOpen ? (
-          <X className="h-9 w-9" />
-        ) : (
-          <MessageCircle className="h-9 w-9" />
-        )}
-
-        {/* Unread badge */}
-        {!isOpen && messages.length > 1 && (
-          <span className="absolute -right-2 -top-2 flex h-8 w-8 items-center justify-center rounded-full bg-red-500 text-sm font-bold text-white shadow-lg">
-            {messages.length - 1 > 99 ? "99+" : messages.length - 1}
-          </span>
-        )}
-      </motion.button>
+      />
     </div>
   );
 }
