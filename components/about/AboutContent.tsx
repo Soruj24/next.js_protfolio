@@ -15,7 +15,7 @@ const AboutContent = forwardRef<HTMLDivElement, AboutContentProps>(
         </div>
 
         <div className="text-3xl sm:text-4xl font-bold leading-tight tracking-tight">
-          <span className="text-white">I build </span>
+          <span className="text-white">I Build </span>
           <span className="text-gradient">Modern Web Interfaces</span>
           <span className="text-white">
             {" "}
