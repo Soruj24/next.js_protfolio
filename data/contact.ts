@@ -9,7 +9,7 @@ export const contactInfo = [
     icon: "💼",
     label: "LinkedIn",
     value: "/in/soruj-mahmud",
-    link: "https://linkedin.com/in/soruj-mahmud",
+    link: "https://www.linkedin.com/in/soruj-mahmud-387941297/",
   },
   {
     icon: "🐙",
