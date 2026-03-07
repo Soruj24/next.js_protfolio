@@ -239,7 +239,72 @@ export function AIChatBot() {
     const welcome: Message = {
       id: "welcome",
       role: "assistant",
-      content: `${greeting}! 👋\n\n## Introduction\nHello! I'm **Nexus**, a portfolio assistant for **Soruj Mahmud**, a professional frontend developer. I'm here to provide information about Soruj's skills, experience, and projects.\n\n## Skills and Expertise\n- **Core Frontend Expertise**: React, Next.js, TypeScript, Modern CSS, State Management\n- **UI/UX & Animations**: Framer Motion, GSAP, UI Components Library, Responsive Layouts\n- **Tooling & Integration**: Frontend Tooling, API Integration, Performance & SEO, Version Control (Git)\n\n## Projects and Experience\n- **Luxe**: Immersive E-Commerce Storefront\n- **Vivid**: Creative Developer Portfolio\n- **Nova**: Real-time Analytics Dashboard\n- **AI-Powered Chatbot Platform**\n- **AI Fitness Tracker & Coach**\n- **Cryptocurrency Trading Dashboard**\n- **Interactive Learning Management System**\n- **Real-time Chat Application**\n\n## Contact Information\n- Email: sorujmahmudb2h@gmail.com\n- Phone: +8801795397598\n- LinkedIn: [linkedin.com/in/soruj-mahmud](https://linkedin.com/in/soruj-mahmud)\n- GitHub: [github.com/soruj-mahmud](https://github.com/soruj-mahmud)\n\nAsk me anything about projects, impact, or experience, and I'll help!`,
+      content: `
+# 👋 Welcome!
+
+${greeting}!
+
+I'm **Soruj**, the AI portfolio assistant for **Soruj Mahmud**, a professional **Frontend Developer**.  
+I’m here to help you explore Soruj’s **skills, projects, experience, and contact details**.
+
+---
+
+## 🚀 Core Skills
+
+### Frontend Development
+- React
+- Next.js
+- TypeScript
+- Modern CSS (Tailwind, Responsive Design)
+- State Management (Redux Toolkit, Context API)
+
+### UI/UX & Animations
+- Framer Motion
+- GSAP Animations
+- Custom UI Components
+- Responsive & Accessible Layouts
+
+### Tooling & Integration
+- API Integration (REST / GraphQL)
+- Performance Optimization
+- SEO Best Practices
+- Git & Version Control
+- Modern Frontend Tooling (Vite, Webpack)
+
+---
+
+## 💼 Featured Projects
+
+- **Luxe** – Immersive E-Commerce Storefront  
+- **Vivid** – Creative Developer Portfolio  
+- **Nova** – Real-time Analytics Dashboard  
+- **AI-Powered Chatbot Platform**  
+- **AI Fitness Tracker & Coach**  
+- **Cryptocurrency Trading Dashboard**  
+- **Interactive Learning Management System**  
+- **Real-time Chat Application**
+
+---
+
+## 📬 Contact Information
+
+- 📧 Email: sorujmahmudb2h@gmail.com  
+- 📱 Phone: +8801795397598  
+- 💼 LinkedIn: https://linkedin.com/in/soruj-mahmud  
+- 💻 GitHub: https://github.com/soruj-mahmud  
+
+---
+
+💡 **You can ask me about:**
+
+- Projects & case studies
+- Technical skills
+- Development process
+- Work experience
+- Collaboration opportunities
+
+Just type your question and I’ll help you explore Soruj’s portfolio.
+`,
       timestamp: new Date(),
     };
 

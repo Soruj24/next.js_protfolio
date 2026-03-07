@@ -74,10 +74,10 @@ export async function POST(req: Request) {
     const normalize = (s: unknown) =>
       typeof s === "string" ? s : Array.isArray(s) ? s.join(", ") : ""
 
-    const inputTerms = message
-      .toLowerCase()
-      .split(/[^a-z0-9]+/g)
-      .filter(Boolean)
+    const inputTerms =
+      (message || "")
+        .toLocaleLowerCase()
+        .match(/[\p{L}\p{N}]+/gu) || []
 
     const scoreText = (text: string) =>
       inputTerms.reduce((acc, t) => (text.toLowerCase().includes(t) ? acc + 1 : acc), 0)
@@ -178,7 +178,7 @@ export async function POST(req: Request) {
       : ""
 
     const system =
-      "You are Soruj AI, a portfolio assistant for Soruj Mahmud, optimized for recruiter and hiring manager audiences. Use ONLY the site content context (especially data from /data). Produce concise, professional answers with: 1) quantified impact, 2) architecture and performance rationale, 3) leadership/collaboration highlights, 4) technologies aligned to enterprise stacks. Avoid speculation. If context is insufficient, say you’re unsure and suggest contacting directly. Use clear markdown sections and bullet points."
+      "You are Soruj AI, a portfolio assistant for Soruj Mahmud. Respond in a formal, professional tone. Match the user's language; when the input is in Bengali, answer in professional Bengali. Use clear section headers and bullet points. Focus on quantified impact, architecture/performance rationale, and leadership/collaboration. Align technologies to enterprise stacks. Avoid speculation, emojis, and filler. If context is insufficient, state uncertainty and suggest contacting directly."
     const docsSection =
       siteDocs
         .map((d) => {
@@ -211,7 +211,7 @@ export async function POST(req: Request) {
     const model = new ChatGroq({
       apiKey,
       model: "llama-3.3-70b-versatile",
-      temperature: 0.3,
+      temperature: 0.1,
     })
 
     try {
@@ -236,23 +236,26 @@ export async function POST(req: Request) {
         },
       })
     } catch {
-      const fallback =
-        [
-          "## Featured Projects",
-          scoredProjects
-            .map(
-              (p: any) =>
-                `- ${p.title}\n  ${p.description}\n  Tech: ${(Array.isArray(p.technologies) ? p.technologies.join(", ") : "")}`,
-            )
-            .join("\n\n") || "No projects available",
-          "",
-          "## Core Skills",
-          scoredSkills
-            .map((c: any) => `- ${c.title}: ${(Array.isArray(c.skills) ? c.skills.join(", ") : "")}`)
-            .join("\n") || "No skills available",
-          "",
-          contactSection ? `Contact: ${contactSection}` : "",
-        ].join("\n")
+      const isBangla = /[\u0980-\u09FF]/.test(message)
+      const featuredProjects = scoredProjects
+        .map(
+          (p: any) =>
+            `- ${p.title}\n  ${p.description}\n  Tech: ${(Array.isArray(p.technologies) ? p.technologies.join(", ") : "")}`,
+        )
+        .join("\n\n") || (isBangla ? "কোন প্রকল্প পাওয়া যায়নি" : "No projects available")
+      const coreSkills = scoredSkills
+        .map((c: any) => `- ${c.title}: ${(Array.isArray(c.skills) ? c.skills.join(", ") : "")}`)
+        .join("\n") || (isBangla ? "কোন দক্ষতা পাওয়া যায়নি" : "No skills available")
+      const contactLine = contactSection ? (isBangla ? `যোগাযোগ: ${contactSection}` : `Contact: ${contactSection}`) : ""
+      const fallback = [
+        isBangla ? "## বাছাই করা প্রোজেক্ট" : "## Featured Projects",
+        featuredProjects,
+        "",
+        isBangla ? "## মূল দক্ষতা" : "## Core Skills",
+        coreSkills,
+        "",
+        contactLine,
+      ].join("\n")
       return new Response(fallback, {
         headers: { "Content-Type": "text/plain; charset=utf-8" },
       })
