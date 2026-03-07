@@ -41,7 +41,10 @@ export default function Home() {
     window.addEventListener("settings-updated", onUpdated as EventListener);
     return () => {
       clearTimeout(timer);
-      window.removeEventListener("settings-updated", onUpdated as EventListener);
+      window.removeEventListener(
+        "settings-updated",
+        onUpdated as EventListener,
+      );
     };
   }, []);
 

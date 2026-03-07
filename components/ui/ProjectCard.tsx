@@ -11,10 +11,9 @@ gsap.registerPlugin(ScrollTrigger);
 interface ProjectCardProps {
   project: IProject;
   index: number;
-  onProjectClick: (project: IProject) => void;
 }
 
-function ProjectCard({ project, index, onProjectClick }: ProjectCardProps) {
+function ProjectCard({ project, index }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 

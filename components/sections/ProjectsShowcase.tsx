@@ -1,6 +1,4 @@
-import { useState } from "react";
 import SectionTitle from "../ui/SectionTitle";
-import ProjectModal from "../ui/ProjectModal";
 import ProfessionalPagination from "@/components/admin/Pagination";
 import ProjectFilters from "../projects/ProjectFilters";
 import ProjectStats from "../projects/ProjectStats";
@@ -8,7 +6,6 @@ import ProjectEmptyState from "../projects/ProjectEmptyState";
 import ProjectsBackground from "../projects/ProjectsBackground";
 import ProjectsGrid from "../projects/ProjectsGrid";
 import { useProjects } from "../projects/useProjects";
-import { IProject } from "@/types";
 
 function ProjectsShowcase() {
   const {
@@ -24,20 +21,7 @@ function ProjectsShowcase() {
     setSearchTerm,
     ITEMS_PER_PAGE,
   } = useProjects();
-  const [selectedProject, setSelectedProject] = useState<IProject | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
-
-  const handleProjectClick = (project: IProject) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setTimeout(() => setSelectedProject(null), 300);
-  };
 
   return (
     <>
@@ -62,10 +46,7 @@ function ProjectsShowcase() {
             projects={projects}
           />
 
-          <ProjectsGrid
-            projects={projectsToShow}
-            onProjectClick={handleProjectClick}
-          />
+          <ProjectsGrid projects={projectsToShow} />
 
           <ProfessionalPagination
             currentPage={currentPage}
@@ -82,11 +63,6 @@ function ProjectsShowcase() {
         </div>
       </section>
 
-      <ProjectModal
-        project={selectedProject}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
     </>
   );
 }

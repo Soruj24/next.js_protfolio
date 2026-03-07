@@ -23,9 +23,12 @@ export async function connectDB() {
   if (!MONGODB_URI) {
     // During build, we might not have the URI, and that's okay if we don't actually query.
     // We return null to indicate no connection, and calling code should handle it.
-    if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.NODE_ENV === 'production') {
-       console.warn("MONGODB_URI is not defined. Skipping database connection.");
-       return null;
+    if (
+      process.env.NEXT_PHASE === "phase-production-build" ||
+      process.env.NODE_ENV === "production"
+    ) {
+      console.warn("MONGODB_URI is not defined. Skipping database connection.");
+      return null;
     }
     throw new Error("Please define MONGODB_URI in your .env file");
   }
