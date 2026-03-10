@@ -22,6 +22,8 @@ import Overview from "@/services/projectDetails/Overview";
 import Features from "@/services/projectDetails/Features";
 import ScreenshotsGallery from "@/services/projectDetails/ScreenshotsGallery";
 import Technologies from "@/services/projectDetails/Technologies";
+import ProjectStats from "@/services/projectDetails/ProjectStats";
+import PerformanceMetrics from "@/services/projectDetails/PerformanceMetrics";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -178,66 +180,10 @@ export default function ProjectDetails() {
             <Technologies project={project} />
 
             {/* Project Stats */}
-            <section className="project-section p-8 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-3xl border border-white/10 backdrop-blur-xl">
-              <h3 className="text-xl font-bold mb-6">Project Insights</h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-3 border-b border-white/5">
-                  <span className="text-gray-400">Duration</span>
-                  <span className="font-medium">
-                    {project.duration || project.stats?.completionTime}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-white/5">
-                  <span className="text-gray-400">Team Size</span>
-                  <span className="font-medium">
-                    {project.teamSize || project.stats?.teamSize}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-white/5">
-                  <span className="text-gray-400">Complexity</span>
-                  <span className="font-medium text-cyan-400">
-                    {project.stats?.complexity}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center py-3">
-                  <span className="text-gray-400">Completion</span>
-                  <span className="font-medium">
-                    {typeof project.completionDate === "string"
-                      ? project.completionDate
-                      : project.completionDate instanceof Date
-                        ? project.completionDate.toLocaleDateString()
-                        : ""}
-                  </span>
-                </div>
-              </div>
-            </section>
+            <ProjectStats project={project} />
 
             {/* Performance Metrics */}
-            {project.performance && (
-              <section className="project-section p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-xl">
-                <h3 className="text-xl font-bold mb-6">Performance</h3>
-                <div className="space-y-6">
-                  {Object.entries(project.performance).map(([key, value]) => (
-                    <div key={key}>
-                      <div className="flex justify-between text-sm mb-2">
-                        <span className="capitalize text-gray-400">
-                          {key.replace(/([A-Z])/g, " $1")}
-                        </span>
-                        <span className="text-cyan-400 font-bold">
-                          {value}%
-                        </span>
-                      </div>
-                      <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-cyan-500 to-purple-500"
-                          style={{ width: `${value}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
+            <PerformanceMetrics project={project} />
           </div>
         </div>
       </div>
