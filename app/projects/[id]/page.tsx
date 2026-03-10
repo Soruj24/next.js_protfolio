@@ -18,6 +18,7 @@ import {
 import { IProject } from "@/types";
 import Loading from "@/services/projectDetails/Loading";
 import HeaderSection from "@/services/projectDetails/HeaderSection";
+import Overview from "@/services/projectDetails/Overview";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -159,17 +160,7 @@ export default function ProjectDetails() {
           {/* Left Column - Detailed Info */}
           <div className="lg:col-span-2 space-y-16">
             {/* Overview */}
-            <section className="project-section">
-              <h2 className="text-3xl font-bold mb-6 flex items-center gap-3">
-                <FaLightbulb className="text-cyan-400" />
-                <span>Overview</span>
-              </h2>
-              <div className="prose prose-invert max-w-none">
-                <p className="text-gray-300 text-lg leading-relaxed whitespace-pre-line">
-                  {project.fullDescription}
-                </p>
-              </div>
-            </section>
+            <Overview project={project} />
 
             {/* Features */}
             <section className="project-section">
