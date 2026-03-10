@@ -25,6 +25,7 @@ import Technologies from "@/services/projectDetails/Technologies";
 import ProjectStats from "@/services/projectDetails/ProjectStats";
 import PerformanceMetrics from "@/services/projectDetails/PerformanceMetrics";
 import MainImage from "@/services/projectDetails/MainImage";
+import BackgroundEffects from "@/services/projectDetails/BackgroundEffects";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -125,11 +126,7 @@ export default function ProjectDetails() {
       className="min-h-screen bg-[#030014] text-white pt-24 pb-20 relative overflow-hidden"
     >
       {/* Background Effects */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-900/20 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/20 rounded-full blur-[120px] animate-pulse delay-700"></div>
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-20"></div>
-      </div>
+      <BackgroundEffects />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Back Button */}
