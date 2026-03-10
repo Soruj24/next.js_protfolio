@@ -21,6 +21,7 @@ import HeaderSection from "@/services/projectDetails/HeaderSection";
 import Overview from "@/services/projectDetails/Overview";
 import Features from "@/services/projectDetails/Features";
 import ScreenshotsGallery from "@/services/projectDetails/ScreenshotsGallery";
+import Technologies from "@/services/projectDetails/Technologies";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -174,22 +175,7 @@ export default function ProjectDetails() {
           {/* Right Column - Sidebar */}
           <div className="space-y-8">
             {/* Technologies */}
-            <section className="project-section p-8 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-xl">
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                <FaCode className="text-cyan-400" />
-                <span>Technologies</span>
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="px-3 py-1.5 bg-white/5 hover:bg-white/10 text-gray-300 rounded-lg text-sm border border-white/10 transition-colors"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </section>
+            <Technologies project={project} />
 
             {/* Project Stats */}
             <section className="project-section p-8 bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-3xl border border-white/10 backdrop-blur-xl">
