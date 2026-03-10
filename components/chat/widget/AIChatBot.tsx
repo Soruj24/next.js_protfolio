@@ -239,72 +239,8 @@ export function AIChatBot() {
     const welcome: Message = {
       id: "welcome",
       role: "assistant",
-      content: `
-# 👋 Welcome!
-
-${greeting}!
-
-I'm **Soruj**, the AI portfolio assistant for **Soruj Mahmud**, a professional **Frontend Developer**.  
-I’m here to help you explore Soruj’s **skills, projects, experience, and contact details**.
-
----
-
-## 🚀 Core Skills
-
-### Frontend Development
-- React
-- Next.js
-- TypeScript
-- Modern CSS (Tailwind, Responsive Design)
-- State Management (Redux Toolkit, Context API)
-
-### UI/UX & Animations
-- Framer Motion
-- GSAP Animations
-- Custom UI Components
-- Responsive & Accessible Layouts
-
-### Tooling & Integration
-- API Integration (REST / GraphQL)
-- Performance Optimization
-- SEO Best Practices
-- Git & Version Control
-- Modern Frontend Tooling (Vite, Webpack)
-
----
-
-## 💼 Featured Projects
-
-- **Luxe** – Immersive E-Commerce Storefront  
-- **Vivid** – Creative Developer Portfolio  
-- **Nova** – Real-time Analytics Dashboard  
-- **AI-Powered Chatbot Platform**  
-- **AI Fitness Tracker & Coach**  
-- **Cryptocurrency Trading Dashboard**  
-- **Interactive Learning Management System**  
-- **Real-time Chat Application**
-
----
-
-## 📬 Contact Information
-
-- 📧 Email: sorujmahmudb2h@gmail.com  
-- 📱 Phone: +8801795397598  
-- 💼 LinkedIn: https://linkedin.com/in/soruj-mahmud  
-- 💻 GitHub: https://github.com/soruj-mahmud  
-
----
-
-💡 **You can ask me about:**
-
-- Projects & case studies
-- Technical skills
-- Development process
-- Work experience
-- Collaboration opportunities
-
-Just type your question and I’ll help you explore Soruj’s portfolio.
-`,
+      content:
+        "Hello! I am Soruj Mahmud, a Frontend Developer. How can I help you?",
       timestamp: new Date(),
     };
 
