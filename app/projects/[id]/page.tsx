@@ -16,6 +16,7 @@ import {
   FaLightbulb,
 } from "react-icons/fa";
 import { IProject } from "@/types";
+import Loading from "@/services/projectDetails/Loading";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -48,7 +49,7 @@ export default function ProjectDetails() {
         if (res.ok) {
           const allProjects = await res.json();
           const foundProject = allProjects.find(
-            (p: IProject) => p.id === id || p._id === id
+            (p: IProject) => p.id === id || p._id === id,
           );
           if (foundProject) {
             setProject(foundProject);
@@ -105,11 +106,7 @@ export default function ProjectDetails() {
   }, [project, loading]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#030014] flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin"></div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (!project) return null;
