@@ -24,6 +24,7 @@ import ScreenshotsGallery from "@/services/projectDetails/ScreenshotsGallery";
 import Technologies from "@/services/projectDetails/Technologies";
 import ProjectStats from "@/services/projectDetails/ProjectStats";
 import PerformanceMetrics from "@/services/projectDetails/PerformanceMetrics";
+import MainImage from "@/services/projectDetails/MainImage";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -146,16 +147,7 @@ export default function ProjectDetails() {
         </header>
 
         {/* Main Image */}
-        <div className="project-section relative aspect-video rounded-3xl overflow-hidden border border-white/10 mb-20 group">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#030014] via-transparent to-transparent opacity-60"></div>
-        </div>
+        <MainImage project={project} />
 
         {/* Content Grid */}
         <div
