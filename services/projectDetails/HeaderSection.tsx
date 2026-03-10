@@ -1,13 +1,8 @@
-"use client"
 import { IProject } from "@/types";
 import Link from "next/link";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 
-interface HeaderSectionProps {
-  project: IProject;
-}
-
-const HeaderSection = ({ project }: HeaderSectionProps) => {
+const HeaderSection = ({ project }: { project: IProject }) => {
   return (
     <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
       <div className="max-w-3xl">
@@ -29,7 +24,7 @@ const HeaderSection = ({ project }: HeaderSectionProps) => {
 
       <div className="flex gap-4">
         {project.githubUrl && (
-          <a
+          <Link
             href={project.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -37,7 +32,7 @@ const HeaderSection = ({ project }: HeaderSectionProps) => {
             title="View Source Code"
           >
             <FaGithub className="text-2xl group-hover:text-cyan-400" />
-          </a>
+          </Link>
         )}
         {project.liveUrl && (
           <Link
