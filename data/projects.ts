@@ -36,8 +36,8 @@ export const projects: IProject[] = [
       "Skeleton Loading States",
       "Accessibility Compliant (WCAG)",
     ],
-    githubUrl: "https://github.com/soruj-mahmud/luxe-frontend",
-    liveUrl: "https://luxe.soruj.dev",
+    githubUrl: "https://github.com/Soruj24/grocery-shop",
+    liveUrl: "https://grocery-shop-two-flax.vercel.app",
     category: "E-Commerce",
     status: "completed",
     screenshots: [
@@ -103,7 +103,7 @@ export const projects: IProject[] = [
   },
   {
     id: "creative-portfolio-v2",
-    title: "Vivid: Creative Developer Portfolio",
+    title: "Next.js Protfolio",
     description:
       "A high-impact personal portfolio featuring advanced interactive elements and scroll-based storytelling.",
     fullDescription:
@@ -128,8 +128,8 @@ export const projects: IProject[] = [
       "Mobile-Optimized Touch Interactions",
       "Custom Theme Engine",
     ],
-    githubUrl: "https://github.com/soruj-mahmud/vivid-portfolio",
-    liveUrl: "https://vivid.soruj.dev",
+    githubUrl: "https://github.com/Soruj24/next.js_protfolio",
+    liveUrl: "https://next-js-protfolio-zeta.vercel.app/",
     category: "Portfolio",
     status: "completed",
     screenshots: [
@@ -164,15 +164,14 @@ export const projects: IProject[] = [
     developmentHighlights: [
       {
         title: "WebGL Backgrounds",
-        description: "Custom shader implementation for unique visual backgrounds.",
+        description:
+          "Custom shader implementation for unique visual backgrounds.",
       },
     ],
     lessonsLearned: [
       "User experience is about the balance of aesthetics and usability",
     ],
-    futureImprovements: [
-      "Multi-language support (i18n)",
-    ],
+    futureImprovements: ["Multi-language support (i18n)"],
     metaDescription:
       "Creative developer portfolio with 3D interactions and smooth animations.",
     seoTitle: "Vivid | Creative Developer Portfolio Template",
@@ -183,8 +182,8 @@ export const projects: IProject[] = [
     },
   },
   {
-    id: "nova-dashboard-system",
-    title: "Nova: Real-time Analytics Dashboard",
+    id: "Voice-into-Flawless-Text",
+    title: "Voice into Flawless Text",
     description:
       "A high-performance data visualization platform with real-time updates and interactive charts.",
     fullDescription:
@@ -214,8 +213,8 @@ export const projects: IProject[] = [
       "Collaborative Annotations",
       "Theming Engine",
     ],
-    githubUrl: "https://github.com/soruj-mahmud/nova-dashboard",
-    liveUrl: "https://nova.soruj.dev",
+    githubUrl: "https://github.com/Soruj24/vicse_to_text",
+    liveUrl: "https://vicse-to-text-hmcsqguh7-soruj-mahmuds-projects.vercel.app/",
     category: "Analytics",
     status: "completed",
     screenshots: [
