@@ -18,7 +18,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { stats } from "@/services";
+import { getStats } from "@/services";
 
 export default function ProfilePage() {
   const { data: session, status, update } = useSession();
@@ -115,6 +115,8 @@ export default function ProfilePage() {
       setIsEditDialogOpen(true);
     }
   };
+
+  const stats = getStats(settings);
 
   return (
     <div className="min-h-screen bg-[#030712] text-white selection:bg-cyan-500/30">

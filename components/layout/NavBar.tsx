@@ -9,6 +9,7 @@ import DesktopMenu from "./navbar/DesktopMenu";
 import MobileMenu from "./navbar/MobileMenu";
 import ScrollProgressBar from "./navbar/ScrollProgressBar";
 import UserDropdown from "./navbar/UserDropdown";
+import { navItems } from "@/services";
 
 interface NavBarProps {
   activeSection: string;
@@ -25,15 +26,6 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-
-  const navItems = [
-    { id: "home", label: "Home", icon: "🏠" },
-    { id: "about", label: "About", icon: "👨‍💻" },
-    { id: "skills", label: "Skills", icon: "⚡" },
-    { id: "innovation", label: "Innovation", icon: "💡" },
-    { id: "projects", label: "Projects", icon: "🚀" },
-    { id: "contact", label: "Contact", icon: "📞" },
-  ];
 
   // Scroll logic
   useEffect(() => {
@@ -62,19 +54,19 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
           stagger: 0.1,
           ease: "back.out(1.7)",
           delay: 0.5,
-        }
+        },
       );
 
       gsap.fromTo(
         ".nav-logo",
         { scale: 0, rotation: -180 },
-        { scale: 1, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.8)" }
+        { scale: 1, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.8)" },
       );
 
       gsap.fromTo(
         ".hamburger-line",
         { opacity: 0, scaleX: 0 },
-        { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, delay: 1 }
+        { opacity: 1, scaleX: 1, duration: 0.6, stagger: 0.1, delay: 1 },
       );
     });
     return () => ctx.revert();
@@ -87,13 +79,13 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
         gsap.fromTo(
           backdropRef.current,
           { opacity: 0 },
-          { opacity: 1, duration: 0.4, ease: "power2.out" }
+          { opacity: 1, duration: 0.4, ease: "power2.out" },
         );
 
         gsap.fromTo(
           mobileMenuRef.current,
           { x: "100%", scale: 0.95 },
-          { x: 0, scale: 1, duration: 0.6, ease: "back.out(1.4)" }
+          { x: 0, scale: 1, duration: 0.6, ease: "back.out(1.4)" },
         );
 
         gsap.fromTo(
@@ -107,7 +99,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
             stagger: 0.08,
             delay: 0.3,
             ease: "elastic.out(1, 0.7)",
-          }
+          },
         );
 
         gsap.fromTo(
@@ -120,7 +112,7 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
             stagger: 0.12,
             delay: 0.9,
             ease: "power4.out",
-          }
+          },
         );
       } else {
         gsap.to(backdropRef.current, { opacity: 0, duration: 0.3 });
@@ -138,7 +130,9 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
   useEffect(() => {
     try {
       document.body.style.overflow = isMobileMenuOpen ? "hidden" : "";
-      document.documentElement.style.overscrollBehavior = isMobileMenuOpen ? "none" : "";
+      document.documentElement.style.overscrollBehavior = isMobileMenuOpen
+        ? "none"
+        : "";
     } catch {}
     return () => {
       try {
@@ -234,7 +228,6 @@ function NavBar({ activeSection, setActiveSection }: NavBarProps) {
         session={session}
         backdropRef={backdropRef}
       />
-      
     </nav>
   );
 }
