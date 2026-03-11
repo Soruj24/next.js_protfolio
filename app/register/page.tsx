@@ -2,11 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import Link from "next/link";
-import { FaGithub, FaGoogle } from "react-icons/fa";
-import { signIn } from "next-auth/react";
 import { gsap } from "gsap";
 import { UserPlus, User, Mail, Lock, ShieldCheck, Zap } from "lucide-react";
 import AuthBackground from "@/components/auth/AuthBackground";
