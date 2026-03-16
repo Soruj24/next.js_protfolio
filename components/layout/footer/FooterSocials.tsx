@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 interface FooterSocialsProps {
@@ -14,7 +15,7 @@ const FooterSocials: React.FC<FooterSocialsProps> = ({ email }) => {
   return (
     <div className="flex space-x-6">
       {socials.map((social) => (
-        <a
+        <Link
           key={social.label}
           href={social.link}
           target="_blank"
@@ -23,7 +24,7 @@ const FooterSocials: React.FC<FooterSocialsProps> = ({ email }) => {
           title={social.label}
         >
           <span className="text-2xl">{social.icon}</span>
-        </a>
+        </Link>
       ))}
     </div>
   );
