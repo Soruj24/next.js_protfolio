@@ -1,41 +1,65 @@
 import React, { forwardRef } from "react";
-import DynamicResume from "../ui/DynamicResume";
+import { Button } from "../ui/button";
 
-const HeroCTA = forwardRef<HTMLDivElement, {}>(({}, ref) => {
+const HeroCTA = forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <div
       ref={ref}
-      className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-16 md:mb-24"
+      className="flex flex-col sm:flex-row gap-5 md:gap-8 justify-center items-center mb-20"
     >
-      <button
+      {/* Explore Projects */}
+      <Button
         onClick={() =>
           document
             .getElementById("projects")
             ?.scrollIntoView({ behavior: "smooth" })
         }
-        className="group relative w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-white text-black rounded-2xl font-bold text-base md:text-lg transition-all duration-300 hover:scale-105 active:scale-95"
+        className="relative group px-8 py-4 text-lg font-semibold rounded-2xl 
+        bg-gradient-to-r from-cyan-500 to-blue-600 text-white 
+        shadow-lg hover:shadow-cyan-500/40 transition-all duration-300 
+        overflow-hidden"
       >
-        <div className="absolute inset-0 bg-cyan-400 rounded-2xl blur-lg opacity-0 group-hover:opacity-40 transition-opacity" />
-        <span className="relative flex items-center justify-center">
+        {/* glow effect */}
+        <span
+          className="absolute inset-0 bg-white/20 opacity-0 
+          group-hover:opacity-100 blur-xl transition duration-500"
+        />
+
+        <span className="relative flex items-center">
           Explore Projects
-          <span className="ml-2 group-hover:translate-x-1 transition-transform">
+          <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-2">
             →
           </span>
         </span>
-      </button>
+      </Button>
 
-      <DynamicResume />
+      {/* Resume */}
+      <Button
+        className="relative group px-8 py-4 text-lg font-semibold rounded-2xl
+        border border-gray-300 bg-white text-gray-900
+        hover:bg-gray-100 transition-all duration-300 shadow-sm"
+      >
+        Download Resume
+      </Button>
 
-      <button
+      {/* Contact */}
+      <Button
         onClick={() =>
           document
             .getElementById("contact")
             ?.scrollIntoView({ behavior: "smooth" })
         }
-        className="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-white/5 backdrop-blur-xl border border-white/10 text-white rounded-2xl font-bold text-base md:text-lg hover:bg-white/10 transition-all duration-300 hover:scale-105 active:scale-95"
+        className="relative group px-8 py-4 text-lg font-semibold rounded-2xl
+        bg-black text-white shadow-lg
+        hover:shadow-white/30 transition-all duration-300 overflow-hidden"
       >
-        Get In Touch
-      </button>
+        <span
+          className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent
+          opacity-0 group-hover:opacity-100 transition"
+        />
+
+        <span className="relative">Get In Touch</span>
+      </Button>
     </div>
   );
 });
