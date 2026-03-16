@@ -21,7 +21,6 @@ const menuItems = [
   { name: "Projects", href: "/admin/projects", icon: FolderKanban },
   { name: "Skills", href: "/admin/skills", icon: Code2 },
   { name: "Inquiries", href: "/admin/inquiries", icon: Mail },
-  { name: "Messages", href: "/admin/messages", icon: MessageSquare },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
