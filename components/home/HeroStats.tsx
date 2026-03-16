@@ -4,12 +4,12 @@ const HeroStats: React.FC = () => {
   const stats = [
     {
       label: "Projects Done",
-      value: "20+",
+      value: "5+",
       color: "group-hover:text-cyan-400",
     },
     {
       label: "UI Components",
-      value: "500+",
+      value: "100+",
       color: "group-hover:text-purple-400",
     },
     {
@@ -19,7 +19,7 @@ const HeroStats: React.FC = () => {
     },
     {
       label: "Happy Clients",
-      value: "10+",
+      value: "5+",
       color: "group-hover:text-pink-400",
     },
   ];

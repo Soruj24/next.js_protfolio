@@ -23,7 +23,7 @@ function SkillsShowcase() {
   const addToRefs = (
     el: HTMLDivElement | null,
     categoryIndex: number,
-    skillIndex: number
+    skillIndex: number,
   ) => {
     if (!skillsRef.current[categoryIndex]) {
       skillsRef.current[categoryIndex] = [];

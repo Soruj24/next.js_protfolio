@@ -43,7 +43,7 @@ const AboutContent = forwardRef<HTMLDivElement, AboutContentProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 AboutContent.displayName = "AboutContent";

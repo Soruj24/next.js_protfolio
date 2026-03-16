@@ -17,7 +17,8 @@ function ContactSection({ data }: ContactSectionProps) {
   const displayData = data || personalData.personal_info || {};
   const email = displayData.email || "sorujmahmudb2h@gmail.com";
   const focus =
-    personalData.experience?.focus || "Specializing in Frontend Development and UI/UX Design.";
+    personalData.experience?.focus ||
+    "Specializing in Frontend Development and UI/UX Design.";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -87,7 +88,7 @@ function ContactSection({ data }: ContactSectionProps) {
             end: "bottom 20%",
             toggleActions: "play none none reverse",
           },
-        }
+        },
       );
 
       gsap.to(".floating-bg-element", {

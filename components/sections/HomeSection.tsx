@@ -21,9 +21,12 @@ function HomeSection({ data }: HomeSectionProps) {
 
   const displayData = data || personalData;
   const personalInfo = displayData.personal_info || {};
-  const expFocus = displayData.experience?.focus || "Specializing in Next.js, React, and crafting high-performance user interfaces.";
+  const expFocus =
+    displayData.experience?.focus ||
+    "Specializing in Next.js, React, and crafting high-performance user interfaces.";
   const firstName = personalInfo.full_name?.split(" ")[0] || "SORUJ";
-  const lastName = personalInfo.full_name?.split(" ").slice(1).join(" ") || "MAHMUD";
+  const lastName =
+    personalInfo.full_name?.split(" ").slice(1).join(" ") || "MAHMUD";
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -45,7 +48,7 @@ function HomeSection({ data }: HomeSectionProps) {
           filter: "blur(0px)",
           duration: 1.5,
           ease: "expo.out",
-        }
+        },
       );
 
       // Char Animation for Subtitle
@@ -64,7 +67,7 @@ function HomeSection({ data }: HomeSectionProps) {
           stagger: 0.02,
           ease: "power2.out",
           delay: 0.5,
-        }
+        },
       );
 
       // CTA buttons animation
@@ -84,7 +87,7 @@ function HomeSection({ data }: HomeSectionProps) {
             stagger: 0.2,
             ease: "power3.out",
             delay: 1,
-          }
+          },
         );
       }
 
@@ -99,7 +102,7 @@ function HomeSection({ data }: HomeSectionProps) {
           stagger: 0.1,
           delay: 1.2,
           ease: "power3.out",
-        }
+        },
       );
 
       // Continuous slow float for background elements

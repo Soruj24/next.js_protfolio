@@ -18,10 +18,13 @@ interface AboutSectionProps {
 function AboutSection({ data }: AboutSectionProps) {
   const displayData = data || personalData;
   const personalInfo = displayData.personal_info || {};
-  const expProfessional = displayData.experience?.professional_experience || "Professional Frontend Developer";
+  const expProfessional =
+    displayData.experience?.professional_experience ||
+    "Professional Frontend Developer";
   const fullName = personalInfo.full_name || "Soruj Mahmud";
-  const professionalTitle = personalInfo.professional_title || "Frontend Developer";
-  
+  const professionalTitle =
+    personalInfo.professional_title || "Frontend Developer";
+
   const sectionRef = useRef<HTMLElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -32,7 +35,9 @@ function AboutSection({ data }: AboutSectionProps) {
       // Animation for content
       if (textRef.current) {
         gsap.fromTo(
-          textRef.current.querySelectorAll(".text-white, .text-gradient, .text-lg"),
+          textRef.current.querySelectorAll(
+            ".text-white, .text-gradient, .text-lg",
+          ),
           {
             opacity: 0,
             y: 50,
@@ -48,7 +53,7 @@ function AboutSection({ data }: AboutSectionProps) {
               start: "top 80%",
               toggleActions: "play none none reverse",
             },
-          }
+          },
         );
       }
 
@@ -73,7 +78,7 @@ function AboutSection({ data }: AboutSectionProps) {
             start: "top 80%",
             toggleActions: "play none none reverse",
           },
-        }
+        },
       );
 
       // Animation for stats cards
@@ -98,7 +103,7 @@ function AboutSection({ data }: AboutSectionProps) {
                 start: "top 85%",
                 toggleActions: "play none none reverse",
               },
-            }
+            },
           );
         }
       });
@@ -151,7 +156,7 @@ function AboutSection({ data }: AboutSectionProps) {
               fullName={fullName}
               expProfessional={expProfessional}
             />
-            
+
             <AboutStats stats={stats} addCardRef={addCardRef} />
           </div>
 

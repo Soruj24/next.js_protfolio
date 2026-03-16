@@ -11,22 +11,36 @@ gsap.registerPlugin(ScrollTrigger);
 const defaultCaseStudies = [
   {
     title: "High-Performance E-commerce Platform",
-    description: "Built a modern e-commerce storefront using Next.js 14, focusing on speed and user experience.",
-    challenge: "Managing complex state across multiple filters while maintaining under 200ms TTFB and perfect Lighthouse scores.",
-    solution: "Leveraged Next.js Server Components for data fetching, implemented optimistic updates for cart actions, and used edge caching.",
-    impact: "Achieved 100/100 Lighthouse score, 40% increase in mobile conversion, and 50% faster page loads.",
-    technologies: ["Next.js 14", "TypeScript", "Tailwind CSS", "Redux Toolkit", "Stripe"],
-    image: "/case-studies/ecommerce-platform.jpg"
+    description:
+      "Built a modern e-commerce storefront using Next.js 14, focusing on speed and user experience.",
+    challenge:
+      "Managing complex state across multiple filters while maintaining under 200ms TTFB and perfect Lighthouse scores.",
+    solution:
+      "Leveraged Next.js Server Components for data fetching, implemented optimistic updates for cart actions, and used edge caching.",
+    impact:
+      "Achieved 100/100 Lighthouse score, 40% increase in mobile conversion, and 50% faster page loads.",
+    technologies: [
+      "Next.js 14",
+      "TypeScript",
+      "Tailwind CSS",
+      "Redux Toolkit",
+      "Stripe",
+    ],
+    image: "/case-studies/ecommerce-platform.jpg",
   },
   {
     title: "Enterprise Design System",
-    description: "Architected and implemented a scalable UI component library for a large-scale enterprise application.",
-    challenge: "Ensuring design consistency across 50+ internal tools while maintaining accessibility and developer flexibility.",
-    solution: "Developed an Atomic Design based library with Radix UI primitives, documented using Storybook and TSDoc.",
-    impact: "Reduced UI development time by 60%, ensured 100% WCAG compliance, and unified brand identity across all platforms.",
+    description:
+      "Architected and implemented a scalable UI component library for a large-scale enterprise application.",
+    challenge:
+      "Ensuring design consistency across 50+ internal tools while maintaining accessibility and developer flexibility.",
+    solution:
+      "Developed an Atomic Design based library with Radix UI primitives, documented using Storybook and TSDoc.",
+    impact:
+      "Reduced UI development time by 60%, ensured 100% WCAG compliance, and unified brand identity across all platforms.",
     technologies: ["React", "Radix UI", "Tailwind CSS", "Storybook", "Jest"],
-    image: "/case-studies/design-system.jpg"
-  }
+    image: "/case-studies/design-system.jpg",
+  },
 ];
 
 interface CaseStudyProps {
@@ -36,7 +50,7 @@ interface CaseStudyProps {
 export default function TechnicalCaseStudies({ data }: CaseStudyProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  
+
   const displayData = data && data.length > 0 ? data : defaultCaseStudies;
 
   useEffect(() => {
@@ -49,7 +63,7 @@ export default function TechnicalCaseStudies({ data }: CaseStudyProps) {
         scrollTrigger: {
           trigger: ".case-studies-header",
           start: "top 80%",
-        }
+        },
       });
 
       // Cards animation
@@ -64,7 +78,7 @@ export default function TechnicalCaseStudies({ data }: CaseStudyProps) {
               trigger: card,
               start: "top 80%",
               toggleActions: "play none none reverse",
-            }
+            },
           });
         }
       });
@@ -74,7 +88,11 @@ export default function TechnicalCaseStudies({ data }: CaseStudyProps) {
   }, [displayData]);
 
   return (
-    <section id="case-studies" ref={containerRef} className="py-20 md:py-32 relative overflow-hidden bg-slate-950">
+    <section
+      id="case-studies"
+      ref={containerRef}
+      className="py-20 md:py-32 relative overflow-hidden bg-slate-950"
+    >
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px]" />
@@ -83,18 +101,20 @@ export default function TechnicalCaseStudies({ data }: CaseStudyProps) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="case-studies-header">
-          <SectionTitle 
-            title="Technical Case Studies" 
+          <SectionTitle
+            title="Technical Case Studies"
             subtitle="Deep dives into complex architectural solutions and high-performance frontend systems."
           />
         </div>
 
         <div className="mt-12 sm:mt-16 md:mt-24 space-y-14 sm:space-y-20 md:space-y-32">
           {displayData.map((study, index) => (
-            <div 
+            <div
               key={index}
-              ref={(el) => { cardsRef.current[index] = el; }}
-              className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 md:gap-12 items-center`}
+              ref={(el) => {
+                cardsRef.current[index] = el;
+              }}
+              className={`flex flex-col ${index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"} gap-8 md:gap-12 items-center`}
             >
               {/* Image Container */}
               <div className="w-full lg:w-1/2 relative group">
@@ -108,7 +128,10 @@ export default function TechnicalCaseStudies({ data }: CaseStudyProps) {
                   <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-20">
                     <div className="flex flex-wrap gap-2">
                       {study.technologies.map((tech: string, i: number) => (
-                        <span key={i} className="px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-medium bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-cyan-400">
+                        <span
+                          key={i}
+                          className="px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-medium bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-cyan-400"
+                        >
                           {tech}
                         </span>
                       ))}
@@ -158,7 +181,11 @@ export default function TechnicalCaseStudies({ data }: CaseStudyProps) {
 
                 <div className="pt-6 md:pt-8">
                   <button className="group flex items-center gap-2 text-white text-sm md:text-base font-semibold hover:text-cyan-400 transition-colors">
-                    View Full Architecture Details <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    View Full Architecture Details{" "}
+                    <ArrowRight
+                      size={18}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
                   </button>
                 </div>
               </div>

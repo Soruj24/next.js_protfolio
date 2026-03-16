@@ -62,7 +62,6 @@ function ProjectsShowcase() {
           <ProjectStats projects={projects} />
         </div>
       </section>
-
     </>
   );
 }

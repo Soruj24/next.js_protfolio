@@ -17,52 +17,73 @@ const iconMap: Record<string, any> = {
   "💡": <Lightbulb className="w-8 h-8 text-red-400" />,
 };
 
-const colorMap: Record<string, { color: string, border: string }> = {
-  cyan: { color: "from-cyan-500/20 to-blue-500/20", border: "border-cyan-500/30" },
-  purple: { color: "from-purple-500/20 to-pink-500/20", border: "border-purple-500/30" },
-  yellow: { color: "from-yellow-500/20 to-orange-500/20", border: "border-yellow-500/30" },
-  green: { color: "from-green-500/20 to-emerald-500/20", border: "border-green-500/30" },
-  blue: { color: "from-blue-500/20 to-indigo-500/20", border: "border-blue-500/30" },
+const colorMap: Record<string, { color: string; border: string }> = {
+  cyan: {
+    color: "from-cyan-500/20 to-blue-500/20",
+    border: "border-cyan-500/30",
+  },
+  purple: {
+    color: "from-purple-500/20 to-pink-500/20",
+    border: "border-purple-500/30",
+  },
+  yellow: {
+    color: "from-yellow-500/20 to-orange-500/20",
+    border: "border-yellow-500/30",
+  },
+  green: {
+    color: "from-green-500/20 to-emerald-500/20",
+    border: "border-green-500/30",
+  },
+  blue: {
+    color: "from-blue-500/20 to-indigo-500/20",
+    border: "border-blue-500/30",
+  },
   red: { color: "from-red-500/20 to-rose-500/20", border: "border-red-500/30" },
 };
 
 const defaultInnovationData = [
   {
     title: "Modern Frontend Stack",
-    description: "Leveraging the power of Next.js 14, React 18, and TypeScript to build type-safe, high-performance web applications.",
+    description:
+      "Leveraging the power of Next.js 14, React 18, and TypeScript to build type-safe, high-performance web applications.",
     icon: "🤖",
     color: "cyan",
   },
   {
     title: "Immersive UI/UX",
-    description: "Creating captivating digital experiences using GSAP, Framer Motion, and Three.js for smooth, meaningful interactions.",
+    description:
+      "Creating captivating digital experiences using GSAP, Framer Motion, and Three.js for smooth, meaningful interactions.",
     icon: "🚀",
     color: "purple",
   },
   {
     title: "Performance Engineering",
-    description: "Deep-diving into Core Web Vitals and edge computing to deliver lightning-fast, SEO-optimized user experiences globally.",
+    description:
+      "Deep-diving into Core Web Vitals and edge computing to deliver lightning-fast, SEO-optimized user experiences globally.",
     icon: "⚡",
     color: "yellow",
   },
   {
     title: "Accessible Design",
-    description: "Implementing WCAG 2.1 standards and semantic HTML to ensure inclusive digital products for all users.",
+    description:
+      "Implementing WCAG 2.1 standards and semantic HTML to ensure inclusive digital products for all users.",
     icon: "🛡️",
     color: "green",
   },
   {
     title: "Atomic Architecture",
-    description: "Building scalable design systems and reusable component libraries that speed up development and maintain consistency.",
+    description:
+      "Building scalable design systems and reusable component libraries that speed up development and maintain consistency.",
     icon: "🌐",
     color: "blue",
   },
   {
     title: "Future of Web",
-    description: "Exploring the potential of WebGL, WebAssembly, and PWAs to push the boundaries of what's possible in the browser.",
+    description:
+      "Exploring the potential of WebGL, WebAssembly, and PWAs to push the boundaries of what's possible in the browser.",
     icon: "💡",
     color: "red",
-  }
+  },
 ];
 
 interface TechInnovationProps {
@@ -85,7 +106,7 @@ export default function TechInnovation({ data }: TechInnovationProps) {
         scrollTrigger: {
           trigger: ".innovation-header",
           start: "top 80%",
-        }
+        },
       });
 
       // Cards animation
@@ -102,7 +123,7 @@ export default function TechInnovation({ data }: TechInnovationProps) {
               trigger: card,
               start: "top 85%",
               toggleActions: "play none none reverse",
-            }
+            },
           });
 
           // Hover effect setup
@@ -112,7 +133,7 @@ export default function TechInnovation({ data }: TechInnovationProps) {
               scale: 1.02,
               duration: 0.3,
               ease: "power2.out",
-              boxShadow: "0 20px 40px rgba(0,0,0,0.3)"
+              boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
             });
           });
 
@@ -122,7 +143,7 @@ export default function TechInnovation({ data }: TechInnovationProps) {
               scale: 1,
               duration: 0.3,
               ease: "power2.in",
-              boxShadow: "0 0px 0px rgba(0,0,0,0)"
+              boxShadow: "0 0px 0px rgba(0,0,0,0)",
             });
           });
         }
@@ -136,7 +157,7 @@ export default function TechInnovation({ data }: TechInnovationProps) {
         repeat: -1,
         yoyo: true,
         ease: "sine.inOut",
-        stagger: 0.2
+        stagger: 0.2,
       });
     }, containerRef);
 
@@ -177,7 +198,9 @@ export default function TechInnovation({ data }: TechInnovationProps) {
             return (
               <div
                 key={index}
-                ref={(el) => { cardsRef.current[index] = el; }}
+                ref={(el) => {
+                  cardsRef.current[index] = el;
+                }}
                 onClick={() => {
                   const el = document.getElementById("case-studies");
                   if (el) el.scrollIntoView({ behavior: "smooth" });
@@ -185,7 +208,9 @@ export default function TechInnovation({ data }: TechInnovationProps) {
                 className={`p-8 rounded-2xl bg-gradient-to-br ${theme.color} border ${theme.border} backdrop-blur-xl transition-all duration-300 group cursor-pointer`}
               >
                 <div className="mb-6 p-4 rounded-xl bg-gray-900/50 w-fit group-hover:scale-110 transition-transform duration-300">
-                  {iconMap[item.icon] || <Lightbulb className="w-8 h-8 text-cyan-400" />}
+                  {iconMap[item.icon] || (
+                    <Lightbulb className="w-8 h-8 text-cyan-400" />
+                  )}
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-cyan-400 transition-colors">
                   {item.title}
@@ -193,10 +218,8 @@ export default function TechInnovation({ data }: TechInnovationProps) {
                 <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">
                   {item.description}
                 </p>
-                
-                <div 
-                  className="mt-8 flex items-center text-sm font-semibold text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity hover:text-cyan-400"
-                >
+
+                <div className="mt-8 flex items-center text-sm font-semibold text-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity hover:text-cyan-400">
                   <span>Explore More</span>
                   <svg
                     className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform"
