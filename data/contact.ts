@@ -21,6 +21,6 @@ export const contactInfo = [
     icon: "🌐",
     label: "Portfolio",
     value: "soruj-mahmud.dev",
-    link: "https://soruj-mahmud.dev",
+    link: "https://next-js-protfolio-zeta.vercel.app/",
   },
 ];
