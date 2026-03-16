@@ -53,6 +53,7 @@ const ContactForm = forwardRef<HTMLDivElement, ContactFormProps>(
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600"
               required
+              minLength={2}
               placeholder="Enter your name"
             />
           </div>
@@ -81,6 +82,7 @@ const ContactForm = forwardRef<HTMLDivElement, ContactFormProps>(
               onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
               className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600"
               required
+              minLength={5}
               placeholder="Enter subject"
             />
           </div>
@@ -95,6 +97,7 @@ const ContactForm = forwardRef<HTMLDivElement, ContactFormProps>(
               rows={4}
               className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600 resize-none"
               required
+              minLength={10}
               placeholder="Enter your message"
             />
           </div>

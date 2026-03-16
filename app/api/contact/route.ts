@@ -17,42 +17,81 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    let body;
+    try {
+      body = await request.json();
+    } catch (e) {
+      return NextResponse.json(
+        { success: false, message: "Invalid JSON body" },
+        { status: 400 },
+      );
+    }
 
     // Validate data
     const validation = contactFormSchema.safeParse(body);
     if (!validation.success) {
+      const errorMessages = validation.error.issues
+        .map((err: any) => err.message)
+        .join(", ");
       return NextResponse.json(
-        { success: false, errors: validation.error.format() },
-        { status: 400 }
+        {
+          success: false,
+          message: errorMessages,
+          errors: validation.error.format(),
+        },
+        { status: 400 },
       );
     }
 
-    await connectDB();
+    try {
+      await connectDB();
+    } catch (dbError: any) {
+      console.error("Database connection error in Contact API:", dbError);
+      return NextResponse.json(
+        { success: false, message: `Database connection failed: ${dbError.message}` },
+        { status: 500 },
+      );
+    }
 
-    const contact = await Contact.create({
-      ...validation.data,
-      ipAddress: request.headers.get("x-forwarded-for") || "unknown",
-      userAgent: request.headers.get("user-agent") || "unknown",
-    });
+    try {
+      const contact = await Contact.create({
+        ...validation.data,
+        ipAddress: request.headers.get("x-forwarded-for") || "unknown",
+        userAgent: request.headers.get("user-agent") || "unknown",
+      });
 
-    return NextResponse.json({
-      success: true,
-      message: "Message sent successfully!",
-      id: contact._id,
+      return NextResponse.json({
+        success: true,
+        message: "Message sent successfully!",
+        id: contact._id,
+      });
+    } catch (saveError: any) {
+      console.error("Data save error in Contact API:", saveError);
+      return NextResponse.json(
+        { success: false, message: `Failed to save message: ${saveError.message}` },
+        { status: 500 },
+      );
+    }
+  } catch (error: any) {
+    console.error("Contact API error details:", {
+      message: error.message,
+      stack: error.stack,
+      error
     });
-  } catch (error) {
-    console.error("Contact API error:", error);
     return NextResponse.json(
-      { success: false, message: "Internal server error" },
-      { status: 500 }
+      { 
+        success: false, 
+        message: error.message || "Internal server error",
+        stack: process.env.NODE_ENV === "development" ? error.stack : undefined
+      },
+      { status: 500 },
     );
   }
 }
@@ -82,7 +121,7 @@ export async function DELETE(request: NextRequest) {
   } catch (error) {
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
