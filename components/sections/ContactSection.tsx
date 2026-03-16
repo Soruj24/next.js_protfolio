@@ -122,8 +122,9 @@ function ContactSection({ data }: ContactSectionProps) {
       if (data.success) {
         setSubmitStatus({
           success: true,
-          message: "Thank you! Your message has been sent.",
+          message: "Thank you! Your message has been sent successfully.",
         });
+
         setFormData({ name: "", email: "", subject: "", message: "" });
 
         // Success animation

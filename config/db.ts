@@ -46,8 +46,12 @@ export async function connectDB() {
 
   try {
     cached!.conn = await cached!.promise;
-  } catch (e) {
+  } catch (e: any) {
     cached!.promise = null;
+    if (e.message.includes("querySrv ECONNREFUSED")) {
+      console.error("MongoDB Connection Error: DNS resolution failed for SRV record.");
+      console.error("Hint: Try using a standard connection string (mongodb://) instead of the SRV one (mongodb+srv://) in your .env file.");
+    }
     throw e;
   }
 
