@@ -49,8 +49,8 @@
         "User authentication and authorization",
         "Responsive and modern UI design"
       ],
-      "live_link": "",
-      "github_link": ""
+      "live_link": "https://grocery-shop-two-flax.vercel.app/",
+      "github_link": "https://github.com/Soruj24/grocery-shop"
     },
     {
       "title": "Real-time Chat Application",
@@ -62,8 +62,8 @@
         "Typing indicators and message timestamps",
         "Scalable backend with Redis"
       ],
-      "live_link": "",
-      "github_link": ""
+      "live_link": "https://chat-app-nine-neon-38.vercel.app/",
+      "github_link": "https://github.com/Soruj24/chat-app"
     }
   ],
   "experience": [

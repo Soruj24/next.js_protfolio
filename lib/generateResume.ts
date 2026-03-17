@@ -1,19 +1,25 @@
 import jsPDF from "jspdf";
+import fallbackResumeData from "@/data/Resume.json";
 
-// This function now fetches the data from the API endpoint
+// This function now fetches the data from the API endpoint, with a local fallback
 export const generateResumePDF = async () => {
   let resumeData;
   try {
     const res = await fetch("/api/resume");
     if (!res.ok) {
-      throw new Error(`Failed to fetch resume data: ${res.statusText}`);
+      throw new Error(`API request failed: ${res.statusText}`);
     }
     resumeData = await res.json();
+    console.log("Successfully fetched live resume data from API.");
   } catch (error) {
-    console.error(error);
-    // Inform the user that the download failed
-    alert("Failed to download resume data. Please try again later.");
-    return; // Stop execution if data fetching fails
+    console.warn("Live resume data fetch failed. Using local backup.", error);
+    resumeData = fallbackResumeData;
+    alert("Could not fetch the latest resume. A backup version will be downloaded.");
+  }
+
+  if (!resumeData) {
+    alert("Sorry, the resume could not be generated at this time. No data available.");
+    return;
   }
   const doc = new jsPDF("p", "pt", "a4");
   const margin = 40;
