@@ -12,6 +12,7 @@ import {
   Menu,
   X,
   Mail,
+  BookOpen,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,8 @@ const menuItems = [
   { name: "Projects", href: "/admin/projects", icon: FolderKanban },
   { name: "Skills", href: "/admin/skills", icon: Code2 },
   { name: "Inquiries", href: "/admin/inquiries", icon: Mail },
+  { name: "Resume", href: "/admin/resume", icon: MessageSquare },
+  { name: "Blog", href: "/admin/blog", icon: BookOpen },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

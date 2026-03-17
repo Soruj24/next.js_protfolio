@@ -1,7 +1,22 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import { Button } from "../ui/button";
+import { Download, Loader2 } from "lucide-react";
+import { generateResumePDF } from "@/lib/generateResume";
 
 const HeroCTA = forwardRef<HTMLDivElement>((props, ref) => {
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleDownloadClick = async () => {
+    setIsGenerating(true);
+    try {
+      await generateResumePDF();
+    } catch (error) {
+      console.error("PDF generation failed:", error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   return (
     <div
       ref={ref}
@@ -35,11 +50,19 @@ const HeroCTA = forwardRef<HTMLDivElement>((props, ref) => {
 
       {/* Resume */}
       <Button
+        onClick={handleDownloadClick}
+        disabled={isGenerating}
         className="relative group px-8 py-4 text-lg font-semibold rounded-2xl
         border border-gray-300 bg-white text-gray-900
-        hover:bg-gray-100 transition-all duration-300 shadow-sm"
+        hover:bg-gray-100 transition-all duration-300 shadow-sm flex items-center gap-2
+        disabled:opacity-70 disabled:cursor-not-allowed"
       >
-        Download Resume
+        {isGenerating ? (
+          <Loader2 className="w-5 h-5 animate-spin" />
+        ) : (
+          <Download className="w-5 h-5 group-hover:animate-bounce" />
+        )}
+        {isGenerating ? "Generating..." : "Download Resume"}
       </Button>
 
       {/* Contact */}
