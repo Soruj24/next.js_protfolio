@@ -390,7 +390,7 @@ export function AIChatBot() {
       {
         id: "welcome",
         role: "assistant",
-        content: `${greeting}! 👋\n\nI'm Nexus, ready for a new chat!`,
+        content: `${greeting}! 👋\n\nI'm Soruj AI, ready for a new chat!`,
         timestamp: new Date(),
       },
     ]);
