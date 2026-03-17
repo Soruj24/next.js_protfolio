@@ -119,7 +119,25 @@ export const generateResumePDF = () => {
       doc.setTextColor(secondaryTextColor);
       doc.setFont("helvetica", "italic");
       doc.text(`Technologies: ${proj.technologies.join(", ")}`, rightColumnX, currentY);
-      currentY += 11;
+      currentY += 12;
+
+      let linkX = rightColumnX;
+      if (proj.live_link) {
+        doc.setFontSize(9);
+        doc.setTextColor(primaryColor);
+        doc.textWithLink("Live Demo", linkX, currentY, { url: proj.live_link });
+        linkX += doc.getTextWidth("Live Demo") + 20;
+      }
+
+      if (proj.github_link) {
+        doc.setFontSize(9);
+        doc.setTextColor(primaryColor);
+        doc.textWithLink("GitHub", linkX, currentY, { url: proj.github_link });
+      }
+      
+      if(proj.live_link || proj.github_link) {
+        currentY += 11;
+      }
     });
     yPos = currentY;
   }, projectsY);
