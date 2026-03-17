@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import DynamicResume from "@/components/ui/DynamicResume";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ISettings } from "@/models/Settings";
 import {
@@ -33,7 +32,10 @@ const MainContentArea = ({
   isAdmin: boolean;
   setting: ISettings;
   session: Session | null;
-  resumeRef: React.RefObject<{ generatePDF: () => void; isGenerating: boolean } | null>;
+  resumeRef: React.RefObject<{
+    generatePDF: () => void;
+    isGenerating: boolean;
+  } | null>;
 }) => {
   return (
     <div className="lg:col-span-3">
@@ -81,7 +83,9 @@ const MainContentArea = ({
                   <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
                     Display Name
                   </p>
-                  <p className="text-white font-medium">{session?.user?.name}</p>
+                  <p className="text-white font-medium">
+                    {session?.user?.name}
+                  </p>
                 </div>
                 <div className="space-y-1">
                   <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
@@ -155,12 +159,7 @@ const MainContentArea = ({
                   )}
                   Download CV
                 </Button>
-              </CardHeader>
-              <CardContent className="p-0 bg-gray-900/40">
-                <div className="max-h-[800px] overflow-y-auto custom-scrollbar p-8 md:p-12 flex justify-center">
-                  <DynamicResume ref={resumeRef} />
-                </div>
-              </CardContent>
+              </CardHeader> 
             </Card>
           </TabsContent>
         )}
