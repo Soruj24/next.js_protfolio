@@ -40,6 +40,5 @@ export function getStats(settings?: ISettings | null) {
   { id: "skills", label: "Skills", icon: "⚡" },
   { id: "innovation", label: "Innovation", icon: "💡" },
   { id: "projects", label: "Projects", icon: "🚀" },
-  { id: "blog", label: "Blog", icon: "✍️", isLink: true },
   { id: "contact", label: "Contact", icon: "📞" },
 ];
