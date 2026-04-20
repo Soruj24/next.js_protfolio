@@ -6,6 +6,7 @@ import PageTransition from "@/components/ui/PageTransition";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import { Toaster } from "sonner";
 import ChatBotWrapper from "@/components/chat/widget/ChatBotWrapper";
+import { RecentlyViewedProvider } from "@/context/RecentlyViewedContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -65,11 +66,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased mesh-gradient noise-bg min-h-screen`}
       >
         <NextAuthProvider>
-          <CustomCursor />
-          <PageTransition />
-          <ChatBotWrapper />
-          <div className="relative z-10 content-wrapper">{children}</div>
-          <Toaster position="top-right" />
+          <RecentlyViewedProvider>
+            <CustomCursor />
+            {/* <PageTransition /> */}
+            <ChatBotWrapper />
+            <div className="relative z-10 content-wrapper">{children}</div>
+            <Toaster position="top-right" />
+          </RecentlyViewedProvider>
         </NextAuthProvider>
       </body>
     </html>

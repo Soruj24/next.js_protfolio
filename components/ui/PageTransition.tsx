@@ -27,8 +27,14 @@ export default function PageTransition() {
       .fromTo(
         ".content-wrapper",
         { opacity: 0, scale: 0.98, filter: "blur(10px)" },
-        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1, ease: "power4.out" },
-        "-=0.8"
+        {
+          opacity: 1,
+          scale: 1,
+          filter: "blur(0px)",
+          duration: 1,
+          ease: "power4.out",
+        },
+        "-=0.8",
       );
 
     return () => {
@@ -52,11 +58,15 @@ export default function PageTransition() {
           <div className="h-full bg-cyan-500 w-1/2 animate-shimmer"></div>
         </div>
       </div>
-      
+
       <style jsx>{`
         @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(200%); }
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(200%);
+          }
         }
         .animate-shimmer {
           animation: shimmer 2s infinite linear;

@@ -6,7 +6,7 @@ import { auth } from "@/auth";
 export async function PUT(req: Request) {
   try {
     const session = await auth();
-    
+
     if (!session || !session.user || !session.user.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -23,7 +23,7 @@ export async function PUT(req: Request) {
     const updatedUser = await User.findOneAndUpdate(
       { email: session.user.email },
       { name },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     if (!updatedUser) {
@@ -42,7 +42,7 @@ export async function PUT(req: Request) {
     console.error("Profile update error:", error);
     return NextResponse.json(
       { error: error.message || "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

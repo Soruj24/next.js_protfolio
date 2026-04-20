@@ -9,15 +9,17 @@ const isValidObjectId = (id: string) => mongoose.Types.ObjectId.isValid(id);
 
 export async function GET(
   req: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
-    
+
     // Check if it's a local ID
-    if (id.startsWith('local-')) {
-      const title = id.replace('local-', '').replace(/-/g, ' ');
-      const localCategory = localSkills.find(c => c.title.toLowerCase() === title.toLowerCase());
+    if (id.startsWith("local-")) {
+      const title = id.replace("local-", "").replace(/-/g, " ");
+      const localCategory = localSkills.find(
+        (c) => c.title.toLowerCase() === title.toLowerCase(),
+      );
       if (localCategory) {
         return NextResponse.json({ ...localCategory, _id: id, isLocal: true });
       }
@@ -25,21 +27,29 @@ export async function GET(
 
     await connectDB();
     // Search by _id or title (slug)
-    const query = isValidObjectId(id) ? { _id: id } : { title: new RegExp(`^${id.replace(/-/g, ' ')}$`, 'i') };
+    const query = isValidObjectId(id)
+      ? { _id: id }
+      : { title: new RegExp(`^${id.replace(/-/g, " ")}$`, "i") };
     const category = await SkillCategory.findOne(query);
-    
+
     if (!category) {
-      return NextResponse.json({ error: "Category not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Category not found" },
+        { status: 404 },
+      );
     }
     return NextResponse.json(category);
   } catch (error: unknown) {
-    return NextResponse.json({ error: (error as Error).message || "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as Error).message || "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
 
 export async function PUT(
   req: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -53,30 +63,35 @@ export async function PUT(
     await connectDB();
 
     // If it's a local ID, we create a new entry in DB instead of updating
-    if (id.startsWith('local-')) {
+    if (id.startsWith("local-")) {
       const { _id, isLocal, ...rest } = data;
       const category = await SkillCategory.create(rest);
       return NextResponse.json(category);
     }
 
     // Search by _id or title (slug)
-    const query = isValidObjectId(id) ? { _id: id } : { title: new RegExp(`^${id.replace(/-/g, ' ')}$`, 'i') };
-    
+    const query = isValidObjectId(id)
+      ? { _id: id }
+      : { title: new RegExp(`^${id.replace(/-/g, " ")}$`, "i") };
+
     const category = await SkillCategory.findOneAndUpdate(query, data, {
       new: true,
       runValidators: true,
-      upsert: true
+      upsert: true,
     });
 
     return NextResponse.json(category);
   } catch (error: unknown) {
-    return NextResponse.json({ error: (error as Error).message || "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as Error).message || "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
@@ -87,16 +102,24 @@ export async function DELETE(
     }
 
     await connectDB();
-    
+
     // Search by _id or title (slug)
-    const query = isValidObjectId(id) ? { _id: id } : { title: new RegExp(`^${id.replace(/-/g, ' ')}$`, 'i') };
+    const query = isValidObjectId(id)
+      ? { _id: id }
+      : { title: new RegExp(`^${id.replace(/-/g, " ")}$`, "i") };
     const category = await SkillCategory.findOneAndDelete(query);
-    
+
     if (!category) {
-      return NextResponse.json({ error: "Category not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Category not found" },
+        { status: 404 },
+      );
     }
     return NextResponse.json({ message: "Category deleted successfully" });
   } catch (error: unknown) {
-    return NextResponse.json({ error: (error as Error).message || "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: (error as Error).message || "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }

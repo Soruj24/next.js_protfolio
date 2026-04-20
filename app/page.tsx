@@ -13,11 +13,14 @@ import ProjectsShowcase from "@/components/sections/ProjectsShowcase";
 import SkillsShowcase from "@/components/sections/SkillsShowcase";
 import personalData from "@/data/Parsonal.json";
 import { useEffect, useState } from "react";
+import RecentlyViewedProducts from "@/components/products/RecentlyViewedProducts";
+import { useRecentlyViewed } from "@/context/RecentlyViewedContext";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [isLoading, setIsLoading] = useState(true);
   const [settings, setSettings] = useState<any>(personalData);
+  const { addRecentlyViewed } = useRecentlyViewed();
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -67,6 +70,15 @@ export default function Home() {
         <TechnicalCaseStudies data={settings.case_studies} />
         <ProjectsShowcase />
         <ContactSection data={settings.personal_info} />
+        <div className="p-8">
+          <RecentlyViewedProducts />
+          <button 
+            onClick={() => addRecentlyViewed(`Product ${Date.now()}`)} 
+            className="mt-4 p-2 bg-blue-500 text-white rounded"
+          >
+            Add to Recently Viewed
+          </button>
+        </div>
         <Footer data={settings} />
       </div>
     </>
