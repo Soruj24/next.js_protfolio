@@ -9,27 +9,22 @@
   "summary": "Frontend Developer specializing in React and modern CSS. Passionate about building high-performance, visually appealing user interfaces and seamless user experiences.",
   "education": [
     {
-      "institution": "Nagarpur govt college",
+      "institution": "Nagarpur Govt College",
       "degree": "HSC",
       "group": "Science",
       "year": "2019"
-    },
-    {
-      "institution": "Some High School",
-      "degree": "SSC",
-      "group": "Science",
-      "year": "2017"
     }
   ],
   "skills": [
     "React.js",
     "JavaScript",
     "Tailwind CSS",
-    "HTML5",
-    "CSS3",
+    "Next.js",
     "Redux Toolkit",
     "API Integration",
-    "Git & GitHub"
+    "Git & GitHub",
+    "Express.js",
+    "MongoDB"
   ],
   "projects": [
     {
@@ -64,6 +59,32 @@
       ],
       "live_link": "https://chat-app-nine-neon-38.vercel.app/",
       "github_link": "https://github.com/Soruj24/chat-app"
+    },
+    {
+      "title": "Task Manager (Kanban Board)",
+      "description": "Trello-inspired drag-and-drop task manager with boards, columns, and cards — powered by real-time Firebase sync.",
+      "technologies": ["React", "React DnD", "Firebase", "Tailwind CSS"],
+      "features": [
+        "Drag-and-drop cards across columns",
+        "Real-time sync across multiple devices",
+        "Card labels, due dates, and priority levels",
+        "Google OAuth login integration"
+      ],
+      "live_link": "#",
+      "github_link": "#"
+    },
+    {
+      "title": "Movie Discovery App",
+      "description": "Browse, search, and save favourite movies and TV shows using TMDB API with infinite scroll and watchlist management.",
+      "technologies": ["React", "TMDB API", "Redux Toolkit", "Tailwind CSS"],
+      "features": [
+        "Search by title, genre, or release year",
+        "Infinite scroll with lazy image loading",
+        "Personal watchlist stored in localStorage",
+        "Trailer previews via YouTube embed"
+      ],
+      "live_link": "#",
+      "github_link": "#"
     }
   ],
   "experience": [

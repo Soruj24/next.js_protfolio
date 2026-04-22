@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import resumeData from "@/data/Resume.json";
 
-export const generateResumePDF = () => {
+export const generatePDF = () => {
   const doc = new jsPDF("p", "pt", "a4");
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 40;

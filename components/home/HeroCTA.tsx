@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { Button } from "../ui/button";
 import { Download } from "lucide-react";
-import { generateResumePDF } from "@/lib/generateResume";
+import { generatePDF } from "@/lib/generateResume";
 
 const HeroCTA = forwardRef<HTMLDivElement>((props, ref) => {
   return (
@@ -37,7 +37,7 @@ const HeroCTA = forwardRef<HTMLDivElement>((props, ref) => {
 
       {/* Resume */}
       <Button
-        onClick={generateResumePDF}
+        onClick={generatePDF}
         className="relative group px-8 py-4 text-lg font-semibold rounded-2xl
         border border-gray-300 bg-white text-gray-900
         hover:bg-gray-100 transition-all duration-300 shadow-sm flex items-center gap-2"
