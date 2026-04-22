@@ -188,8 +188,7 @@ export const projects: IProject[] = [
       "A high-performance data visualization platform with real-time updates and interactive charts.",
     fullDescription:
       "Nova is a sophisticated dashboard system designed for high-density data visualization. It features custom D3.js integrations, real-time WebSocket updates, and a highly modular widget system. The project focuses on data accuracy, rendering performance, and intuitive user workflows for complex analytical tasks.",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bbda38a5f85d?ixlib=rb-4.0.3&w=800&h=600&fit=crop",
+    image: "https://ibb.co.com/WWFLCNZ0",
     technologies: [
       "React",
       "TypeScript",
@@ -214,13 +213,12 @@ export const projects: IProject[] = [
       "Theming Engine",
     ],
     githubUrl: "https://github.com/Soruj24/vicse_to_text",
-    liveUrl: "https://vicse-to-text-hmcsqguh7-soruj-mahmuds-projects.vercel.app/",
+    liveUrl:
+      "https://vicse-to-text-hmcsqguh7-soruj-mahmuds-projects.vercel.app/",
     category: "Analytics",
     status: "completed",
-    screenshots: [
-      "https://images.unsplash.com/photo-1551288049-bbda38a5f85d?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&w=600&h=400&fit=crop",
-    ],
+    screenshots: ["https://ibb.co.com/WWFLCNZ0",
+       "https://ibb.co.com/WWFLCNZ0"],
     challenges: [
       "Optimizing React re-renders with frequent WebSocket updates",
       "Handling large datasets in the browser without UI blocking",
