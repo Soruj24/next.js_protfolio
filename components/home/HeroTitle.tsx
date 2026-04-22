@@ -11,7 +11,18 @@ interface HeroTitleProps {
 }
 
 const HeroTitle = forwardRef<HTMLHeadingElement, HeroTitleProps>(
-  ({ firstName, lastName, subtitle, splitText, nameNode, subtitleNode, badgeNode }, ref) => {
+  (
+    {
+      firstName,
+      lastName,
+      subtitle,
+      splitText,
+      nameNode,
+      subtitleNode,
+      badgeNode,
+    },
+    ref,
+  ) => {
     return (
       <>
         <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md animate-fade-in">
@@ -43,7 +54,7 @@ const HeroTitle = forwardRef<HTMLHeadingElement, HeroTitleProps>(
         </div>
       </>
     );
-  }
+  },
 );
 
 HeroTitle.displayName = "HeroTitle";

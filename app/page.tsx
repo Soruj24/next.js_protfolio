@@ -70,15 +70,6 @@ export default function Home() {
         <TechnicalCaseStudies data={settings.case_studies} />
         <ProjectsShowcase />
         <ContactSection data={settings.personal_info} />
-        <div className="p-8">
-          <RecentlyViewedProducts />
-          <button 
-            onClick={() => addRecentlyViewed(`Product ${Date.now()}`)} 
-            className="mt-4 p-2 bg-blue-500 text-white rounded"
-          >
-            Add to Recently Viewed
-          </button>
-        </div>
         <Footer data={settings} />
       </div>
     </>
