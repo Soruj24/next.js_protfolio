@@ -3,15 +3,15 @@ import SectionTitle from "../ui/SectionTitle";
 import SkillCategoryCard from "../skills/SkillCategoryCard";
 import TechStackGrid from "../skills/TechStackGrid";
 import SkillsBackground from "../skills/SkillsBackground";
-import { useSkills } from "../skills/useSkills";
-import { useSkillsAnimation } from "../skills/useSkillsAnimation";
+import { usePublicSkills } from "@/hooks/usePublicSkills";
+import { useSkillsAnimation } from "@/hooks/useSkillsAnimation";
 
 function SkillsShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const skillsRef = useRef<(HTMLDivElement | null)[][]>([]);
   const categoriesRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  const { categories } = useSkills();
+  const { categories } = usePublicSkills();
 
   useSkillsAnimation({
     sectionRef,

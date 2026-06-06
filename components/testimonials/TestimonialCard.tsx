@@ -1,12 +1,5 @@
 import React from "react";
-
-interface Testimonial {
-  name: string;
-  role: string;
-  content: string;
-  avatar: string;
-  color: string;
-}
+import type { Testimonial } from "@/types/testimonial";
 
 interface TestimonialCardProps {
   testimonial: Testimonial;

@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import personalData from "@/data/Parsonal.json";
+import personalData from "@/data/Personal.json";
 import HeroBackground from "../home/HeroBackground";
 import HeroTitle from "../home/HeroTitle";
 import HeroCTA from "../home/HeroCTA";

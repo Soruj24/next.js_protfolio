@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "../ui/SectionTitle";
 import { contactInfo } from "@/data/contact";
-import personalData from "@/data/Parsonal.json";
+import personalData from "@/data/Personal.json";
 import ContactBackground from "../contact/ContactBackground";
 import ContactContent from "../contact/ContactContent";
 import ContactForm from "../contact/ContactForm";

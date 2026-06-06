@@ -2,13 +2,7 @@
 
 import { useState, useEffect, useCallback, RefObject } from "react";
 import { toast } from "sonner";
-
-export interface Message {
-  id: string;
-  role: "user" | "assistant";
-  content: string;
-  timestamp: Date;
-}
+import type { Message } from "@/types/chat";
 
 const WELCOME_MESSAGE: Message = {
   id: "welcome",

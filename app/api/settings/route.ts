@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { Settings } from "@/models/Settings";
 import { auth } from "@/auth";
-import personalData from "@/data/Parsonal.json";
+import personalData from "@/data/Personal.json";
 
 export async function GET() {
   try {

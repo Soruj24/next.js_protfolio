@@ -1,5 +1,4 @@
 "use client";
-import { Lightbulb } from "lucide-react";
 import { iconMap, colorMap } from "@/lib/sections/tech-innovation";
 
 interface InnovationCardProps {
@@ -18,7 +17,11 @@ export default function InnovationCard({ item, index, cardRef }: InnovationCardP
       className={`p-8 rounded-2xl bg-gradient-to-br ${theme.color} border ${theme.border} backdrop-blur-xl transition-all duration-300 group cursor-pointer`}
     >
       <div className="mb-6 p-4 rounded-xl bg-gray-900/50 w-fit group-hover:scale-110 transition-transform duration-300">
-        {iconMap[item.icon] || <Lightbulb className="w-8 h-8 text-cyan-400" />}
+        {(() => {
+            const def = iconMap[item.icon];
+            const Icon = def?.icon;
+            return Icon ? <Icon className={def.className} /> : null;
+          })()}
       </div>
       <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-cyan-400 transition-colors">{item.title}</h3>
       <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">{item.description}</p>

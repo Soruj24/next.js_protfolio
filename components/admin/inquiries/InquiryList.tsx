@@ -2,7 +2,7 @@
 import { Mail, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import type { Inquiry } from "@/hooks/admin/useInquiries";
+import type { Inquiry } from "@/types/admin";
 
 interface InquiryListProps {
   inquiries: Inquiry[];

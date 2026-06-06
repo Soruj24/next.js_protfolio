@@ -6,7 +6,7 @@ import { connectDB } from "@/config/db"
 import { SkillCategory } from "@/models/Skill"
 import { Project } from "@/models/Project"
 import { Settings } from "@/models/Settings"
-import personalData from "@/data/Parsonal.json"
+import personalData from "@/data/Personal.json"
 import { skillCategories as localSkillCategories } from "@/data/skills"
 import { projects as localProjects } from "@/data/projects"
 import { contactInfo } from "@/data/contact"
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
     const manualDocs: Document[] = [
       new Document({
         pageContent: JSON.stringify(personalData),
-        metadata: { source: "data/Parsonal.json" },
+        metadata: { source: "data/Personal.json" },
       }),
       new Document({
         pageContent: JSON.stringify(localSkillCategories),

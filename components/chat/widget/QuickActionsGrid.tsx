@@ -1,11 +1,6 @@
 import React from "react"
 import { cn } from "@/lib/utils"
-
-interface Action {
-  label: string
-  icon: React.ComponentType<{ className?: string }>
-  prompt: string
-}
+import type { Action } from "@/types/chat"
 
 interface QuickActionsGridProps {
   actions: Action[]

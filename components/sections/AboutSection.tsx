@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "../ui/SectionTitle";
-import personalData from "@/data/Parsonal.json";
+import personalData from "@/data/Personal.json";
 import AboutBackground from "../about/AboutBackground";
 import AboutContent from "../about/AboutContent";
 import AboutStats from "../about/AboutStats";

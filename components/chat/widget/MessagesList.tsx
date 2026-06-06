@@ -6,17 +6,12 @@ import MessageAvatar from "./MessageAvatar"
 import MessageBubble from "./MessageBubble"
 import WelcomeSection from "./WelcomeSection"
 import TypingIndicator from "./TypingIndicator"
+import type { Action } from "@/types/chat"
 
 interface Msg {
   id: string
   role: "user" | "assistant"
   content: string
-}
-
-interface Action {
-  label: string
-  icon: React.ComponentType<{ className?: string }>
-  prompt: string
 }
 
 export default function MessagesList({

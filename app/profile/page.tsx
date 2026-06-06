@@ -53,13 +53,13 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { getStats } from "@/services";
-import Loading from "@/services/profile/Loading";
-import EditProfileDialogforNormalUsers from "@/services/profile/EditProfileDialogforNormalUsers";
-import HeaderProfileSection from "@/services/profile/HeaderProfileSection";
-import ProfessionalSummary from "@/services/profile/ProfessionalSummary";
-import StatsGrid from "@/services/profile/StatsGrid";
-import Sidebar from "@/services/profile/Sidebar";
-import MainContentArea from "@/services/profile/MainContentArea";
+import Loading from "@/components/profile/Loading";
+import EditProfileDialogForNormalUsers from "@/components/profile/EditProfileDialogForNormalUsers";
+import HeaderProfileSection from "@/components/profile/HeaderProfileSection";
+import ProfessionalSummary from "@/components/profile/ProfessionalSummary";
+import StatsGrid from "@/components/profile/StatsGrid";
+import Sidebar from "@/components/profile/Sidebar";
+import MainContentArea from "@/components/profile/MainContentArea";
 
 export default function ProfilePage() {
   const { data: session, status, update } = useSession();
@@ -159,7 +159,7 @@ export default function ProfilePage() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
         {/* Edit Profile Dialog for Normal Users */}
-        <EditProfileDialogforNormalUsers
+        <EditProfileDialogForNormalUsers
           isOpen={isEditDialogOpen}
           onClose={() => setIsEditDialogOpen(false)}
           handleProfileUpdate={handleProfileUpdate}

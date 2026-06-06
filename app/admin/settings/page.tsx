@@ -1,7 +1,7 @@
 import { connectDB } from "@/config/db";
 import { Settings } from "@/models/Settings";
 import SettingsForm from "@/components/admin/SettingsForm";
-import personalData from "@/data/Parsonal.json";
+import personalData from "@/data/Personal.json";
 
 export const dynamic = 'force-dynamic';
 

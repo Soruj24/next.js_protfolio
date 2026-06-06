@@ -16,16 +16,16 @@ import {
   FaLightbulb,
 } from "react-icons/fa";
 import { IProject } from "@/types";
-import Loading from "@/services/projectDetails/Loading";
-import HeaderSection from "@/services/projectDetails/HeaderSection";
-import Overview from "@/services/projectDetails/Overview";
-import Features from "@/services/projectDetails/Features";
-import ScreenshotsGallery from "@/services/projectDetails/ScreenshotsGallery";
-import Technologies from "@/services/projectDetails/Technologies";
-import ProjectStats from "@/services/projectDetails/ProjectStats";
-import PerformanceMetrics from "@/services/projectDetails/PerformanceMetrics";
-import MainImage from "@/services/projectDetails/MainImage";
-import BackgroundEffects from "@/services/projectDetails/BackgroundEffects";
+import Loading from "@/components/project-details/Loading";
+import HeaderSection from "@/components/project-details/HeaderSection";
+import Overview from "@/components/project-details/Overview";
+import Features from "@/components/project-details/Features";
+import ScreenshotsGallery from "@/components/project-details/ScreenshotsGallery";
+import Technologies from "@/components/project-details/Technologies";
+import ProjectStats from "@/components/project-details/ProjectStats";
+import PerformanceMetrics from "@/components/project-details/PerformanceMetrics";
+import MainImage from "@/components/project-details/MainImage";
+import BackgroundEffects from "@/components/project-details/BackgroundEffects";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);

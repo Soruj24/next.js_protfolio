@@ -2,12 +2,7 @@ import React from "react"
 import { motion } from "framer-motion"
 import { Bot } from "lucide-react"
 import QuickActionsGrid from "./QuickActionsGrid"
-
-interface Action {
-  label: string
-  icon: React.ComponentType<{ className?: string }>
-  prompt: string
-}
+import type { Action } from "@/types/chat"
 
 export default function WelcomeSection({
   actions,

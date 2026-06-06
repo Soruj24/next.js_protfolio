@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { skillCategories as localSkills } from "@/data/skills";
 import type { ISkillCategory } from "@/models/Skill";
 
-export function useSkills() {
+export function usePublicSkills() {
   const [categories, setCategories] = useState<ISkillCategory[]>(
     localSkills as ISkillCategory[],
   );

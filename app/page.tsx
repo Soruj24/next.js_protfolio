@@ -11,7 +11,7 @@ import EngineeringStandards from "@/components/sections/EngineeringStandards";
 import TechnicalCaseStudies from "@/components/sections/TechnicalCaseStudies";
 import ProjectsShowcase from "@/components/sections/ProjectsShowcase";
 import SkillsShowcase from "@/components/sections/SkillsShowcase";
-import personalData from "@/data/Parsonal.json";
+import personalData from "@/data/Personal.json";
 import { useEffect, useState } from "react";
 import RecentlyViewedProducts from "@/components/products/RecentlyViewedProducts";
 import { useRecentlyViewed } from "@/context/RecentlyViewedContext";

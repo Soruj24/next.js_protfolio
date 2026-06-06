@@ -1,7 +1,7 @@
 "use client";
 import { Trash2, User, Clock, AlertCircle, MessageSquare, Mail as MailIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import type { Inquiry } from "@/hooks/admin/useInquiries";
+import type { Inquiry } from "@/types/admin";
 
 interface InquiryDetailProps {
   inquiry: Inquiry;

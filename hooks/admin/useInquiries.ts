@@ -1,16 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-
-export interface Inquiry {
-  _id: string;
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-  status: string;
-  createdAt: string;
-}
+import type { Inquiry } from "@/types/admin";
 
 export function useInquiries() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);

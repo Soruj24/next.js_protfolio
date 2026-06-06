@@ -3,7 +3,7 @@ import type { IProject } from "@/types";
 
 const ITEMS_PER_PAGE = 6;
 
-export function useProjects() {
+export function usePublicProjects() {
   const [projects, setProjects] = useState<IProject[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);

@@ -5,7 +5,7 @@ import ProjectStats from "../projects/ProjectStats";
 import ProjectEmptyState from "../projects/ProjectEmptyState";
 import ProjectsBackground from "../projects/ProjectsBackground";
 import ProjectsGrid from "../projects/ProjectsGrid";
-import { useProjects } from "../projects/useProjects";
+import { usePublicProjects } from "@/hooks/usePublicProjects";
 
 function ProjectsShowcase() {
   const {
@@ -20,7 +20,7 @@ function ProjectsShowcase() {
     searchTerm,
     setSearchTerm,
     ITEMS_PER_PAGE,
-  } = useProjects();
+  } = usePublicProjects();
   const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
 
   return (
