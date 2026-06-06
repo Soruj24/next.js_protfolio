@@ -2,9 +2,10 @@ import { useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-import type { IProject } from "../../types";
+import type { IProject } from "@/types";
 import Image from "next/image";
+import { useTiltEffect } from "@/hooks/useTiltEffect";
+import ProjectLinks from "./ProjectLinks";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,76 +17,18 @@ interface ProjectCardProps {
 function ProjectCard({ project, index }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-
-  const handleLinkClick = (e: React.MouseEvent, url: string) => {
-    e.stopPropagation();
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = (y - centerY) / 15;
-    const rotateY = (centerX - x) / 15;
-
-    gsap.to(card, {
-      rotateX: rotateX,
-      rotateY: rotateY,
-      duration: 0.5,
-      ease: "power2.out",
-      transformPerspective: 1000,
-    });
-  };
-
-  const handleMouseLeave = () => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    gsap.to(card, {
-      rotateX: 0,
-      rotateY: 0,
-      duration: 0.5,
-      ease: "power2.out",
-    });
-  };
+  const { handleMouseMove, handleMouseLeave } = useTiltEffect(cardRef);
 
   const handleClick = () => {
-    // Navigate to dynamic project page
     const projectId = project.id || (project as { _id?: string })._id;
-    if (projectId) {
-      router.push(`/projects/${projectId}`);
-    }
+    if (projectId) router.push(`/projects/${projectId}`);
   };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        cardRef.current,
-        {
-          opacity: 0,
-          y: 50,
-          scale: 0.9,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.8,
-          delay: index * 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: cardRef.current,
-            start: "top 90%",
-          },
-        },
+      gsap.fromTo(cardRef.current,
+        { opacity: 0, y: 50, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, delay: index * 0.1, ease: "power3.out", scrollTrigger: { trigger: cardRef.current, start: "top 90%" } },
       );
     });
     return () => ctx.revert();
@@ -115,31 +58,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
               {project.category}
             </span>
           </div>
-          <div className="flex gap-2">
-            {project.githubUrl && (
-              <button
-                onClick={(e) => handleLinkClick(e, project.githubUrl!)}
-                className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 hover:border-cyan-500/50 transition-all group/link"
-                title="View Source Code"
-              >
-                <FaGithub className="text-white group-hover/link:text-cyan-400" />
-              </button>
-            )}
-            {project.liveUrl && (
-              <button
-                onClick={(e) => handleLinkClick(e, project.liveUrl!)}
-                className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 hover:bg-white/20 hover:border-cyan-500/50 transition-all group/link"
-                title="Live Demo"
-              >
-                <FaExternalLinkAlt className="text-white text-xs group-hover/link:text-cyan-400" />
-              </button>
-            )}
-            {!project.githubUrl && !project.liveUrl && (
-              <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20">
-                <span className="text-white">↗</span>
-              </div>
-            )}
-          </div>
+          <ProjectLinks githubUrl={project.githubUrl} liveUrl={project.liveUrl} />
         </div>
       </div>
 

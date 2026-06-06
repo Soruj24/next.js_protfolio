@@ -1,0 +1,208 @@
+﻿auth -> imported by: app/admin/layout.tsx, app/api/admin/setup/route.ts, app/api/auth/[...nextauth]/route.ts, app/api/contact/route.ts, app/api/projects/[id]/route.ts, app/api/projects/route.ts, app/api/resume/route.ts, app/api/settings/route.ts, app/api/skills/[id]/route.ts, app/api/skills/route.ts, app/api/user/profile/route.ts
+components/about/AboutBackground -> imported by: components/sections/AboutSection.tsx
+components/about/AboutContent -> imported by: components/sections/AboutSection.tsx
+components/about/AboutImage -> imported by: components/sections/AboutSection.tsx
+components/about/AboutStats -> imported by: components/sections/AboutSection.tsx
+components/admin/AdminCategoryFilter -> imported by: app/admin/projects/page.tsx
+components/admin/AdminEmptyState -> imported by: app/admin/projects/page.tsx, app/admin/skills/page.tsx
+components/admin/AdminSearchBar -> imported by: app/admin/projects/page.tsx, app/admin/skills/page.tsx
+components/admin/AdminSidebar -> imported by: app/admin/layout.tsx
+components/admin/dashboard/DashboardStatsGrid -> imported by: app/admin/page.tsx
+components/admin/dashboard/RecentInquiries -> imported by: app/admin/page.tsx
+components/admin/dashboard/SideWidgets -> imported by: app/admin/page.tsx
+components/admin/inquiries/InquiryDetail -> imported by: app/admin/inquiries/page.tsx
+components/admin/inquiries/InquiryEmptyState -> imported by: app/admin/inquiries/page.tsx
+components/admin/inquiries/InquiryList -> imported by: app/admin/inquiries/page.tsx
+components/admin/Pagination -> imported by: app/admin/projects/page.tsx, app/admin/skills/page.tsx, components/sections/ProjectsShowcase.tsx
+components/admin/project/AdminProjectCard -> imported by: app/admin/projects/page.tsx
+components/admin/project/ProjectBasicFields -> imported by: components/admin/ProjectForm.tsx
+components/admin/project/ProjectMediaLinks -> imported by: components/admin/ProjectForm.tsx
+components/admin/project/ProjectTechMeta -> imported by: components/admin/ProjectForm.tsx
+components/admin/ProjectForm -> imported by: app/admin/projects/edit/[id]/page.tsx, app/admin/projects/new/page.tsx
+components/admin/resume/ResumeBasicInfo -> imported by: app/admin/resume/page.tsx
+components/admin/resume/ResumeEducationSection -> imported by: app/admin/resume/page.tsx
+components/admin/resume/ResumeExperienceSection -> imported by: app/admin/resume/page.tsx
+components/admin/resume/ResumeFieldSet -> imported by: components/admin/resume/ResumeEducationSection.tsx, components/admin/resume/ResumeExperienceSection.tsx, components/admin/resume/ResumeProjectsSection.tsx
+components/admin/resume/ResumeFormSection -> imported by: components/admin/resume/ResumeEducationSection.tsx, components/admin/resume/ResumeExperienceSection.tsx, components/admin/resume/ResumeProjectsSection.tsx
+components/admin/resume/ResumeProjectsSection -> imported by: app/admin/resume/page.tsx
+components/admin/resume/ResumeSkillsSection -> imported by: app/admin/resume/page.tsx
+components/admin/settings/AssistantTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/settings/CaseStudiesTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/settings/ExperiencesTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/settings/ExpertiseTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/settings/GuidelinesTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/settings/InnovationTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/settings/PersonalInfoTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/settings/SkillsTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/settings/StandardsTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/settings/TestimonialsTab -> imported by: components/admin/SettingsForm.tsx
+components/admin/SettingsForm -> imported by: app/admin/settings/page.tsx
+components/admin/skill/SkillBasicFields -> imported by: components/admin/SkillForm.tsx
+components/admin/skill/SkillCategoryCard -> imported by: app/admin/skills/page.tsx
+components/admin/skill/SkillNodesArray -> imported by: components/admin/SkillForm.tsx
+components/admin/SkillForm -> imported by: app/admin/skills/edit/[id]/page.tsx, app/admin/skills/new/page.tsx
+components/auth/AuthBackground -> imported by: app/forget-password/page.tsx, app/login/page.tsx, app/register/page.tsx, app/reset-password/[token]/page.tsx
+components/auth/AuthFooter -> imported by: app/login/page.tsx, app/register/page.tsx
+components/auth/AuthHeader -> imported by: app/forget-password/page.tsx, app/login/page.tsx, app/register/page.tsx, app/reset-password/[token]/page.tsx
+components/auth/AuthInput -> imported by: app/forget-password/page.tsx, app/login/page.tsx, app/register/page.tsx, app/reset-password/[token]/page.tsx
+components/auth/AuthOTPForm -> imported by: app/register/page.tsx
+components/auth/AuthSocialLinks -> imported by: app/login/page.tsx, app/register/page.tsx
+components/auth/AuthSubmitButton -> imported by: app/forget-password/page.tsx, app/login/page.tsx, app/register/page.tsx, app/reset-password/[token]/page.tsx
+components/background/ParticleBackground -> imported by: app/page.tsx
+components/chat/widget/ChatActionBar -> imported by: components/chat/widget/AIChatBot.tsx
+components/chat/widget/ChatBotWrapper -> imported by: app/layout.tsx
+components/chat/widget/ChatHeader -> imported by: components/chat/widget/AIChatBot.tsx
+components/chat/widget/ChatInputArea -> imported by: components/chat/widget/AIChatBot.tsx
+components/chat/widget/FloatingToggleButton -> imported by: components/chat/widget/AIChatBot.tsx
+components/chat/widget/MarkdownRenderer -> imported by: components/chat/widget/MessageBubble.tsx
+components/chat/widget/MessageAvatar -> imported by: components/chat/widget/MessagesList.tsx
+components/chat/widget/MessageBubble -> imported by: components/chat/widget/MessagesList.tsx
+components/chat/widget/MessagesList -> imported by: components/chat/widget/AIChatBot.tsx
+components/chat/widget/NudgeBanner -> imported by: components/chat/widget/AIChatBot.tsx
+components/chat/widget/QuickActionsGrid -> imported by: components/chat/widget/WelcomeSection.tsx
+components/chat/widget/TypingIndicator -> imported by: components/chat/widget/MessagesList.tsx
+components/chat/widget/WelcomeSection -> imported by: components/chat/widget/MessagesList.tsx
+components/contact/ContactBackground -> imported by: components/sections/ContactSection.tsx
+components/contact/ContactContent -> imported by: components/sections/ContactSection.tsx
+components/contact/ContactForm -> imported by: components/sections/ContactSection.tsx
+components/home/HeroBackground -> imported by: components/sections/HomeSection.tsx
+components/home/HeroCTA -> imported by: components/sections/HomeSection.tsx
+components/home/HeroStats -> imported by: components/sections/HomeSection.tsx
+components/home/HeroTitle -> imported by: components/sections/HomeSection.tsx
+components/layout/Footer -> imported by: app/profile/page.tsx, app/page.tsx
+components/layout/footer/FooterCopyright -> imported by: components/layout/Footer.tsx
+components/layout/footer/FooterLinks -> imported by: components/layout/Footer.tsx
+components/layout/footer/FooterScrollToTop -> imported by: components/layout/Footer.tsx
+components/layout/footer/FooterSocials -> imported by: components/layout/Footer.tsx
+components/layout/footer/FooterSpecialization -> imported by: components/layout/Footer.tsx
+components/layout/LoadingScreen -> imported by: app/page.tsx
+components/layout/NavBar -> imported by: app/profile/page.tsx, app/page.tsx
+components/layout/navbar/DesktopMenu -> imported by: components/layout/NavBar.tsx
+components/layout/navbar/MobileMenu -> imported by: components/layout/NavBar.tsx
+components/layout/navbar/NavLogo -> imported by: components/layout/NavBar.tsx
+components/layout/navbar/ScrollProgressBar -> imported by: components/layout/NavBar.tsx
+components/layout/navbar/UserDropdown -> imported by: components/layout/NavBar.tsx
+components/products/RecentlyViewedProducts -> imported by: app/page.tsx
+components/profile/EditProfileDialogForNormalUsers -> imported by: app/profile/page.tsx
+components/profile/HeaderProfileSection -> imported by: app/profile/page.tsx
+components/profile/Loading -> imported by: app/profile/page.tsx
+components/profile/MainContentArea -> imported by: app/profile/page.tsx
+components/profile/ProfessionalSummary -> imported by: app/profile/page.tsx
+components/profile/Sidebar -> imported by: app/profile/page.tsx
+components/profile/StatsGrid -> imported by: app/profile/page.tsx
+components/project-details/BackgroundEffects -> imported by: app/projects/[id]/page.tsx
+components/project-details/Features -> imported by: app/projects/[id]/page.tsx
+components/project-details/HeaderSection -> imported by: app/projects/[id]/page.tsx
+components/project-details/Loading -> imported by: app/projects/[id]/page.tsx
+components/project-details/MainImage -> imported by: app/projects/[id]/page.tsx
+components/project-details/Overview -> imported by: app/projects/[id]/page.tsx
+components/project-details/PerformanceMetrics -> imported by: app/projects/[id]/page.tsx
+components/project-details/ProjectStats -> imported by: app/projects/[id]/page.tsx
+components/project-details/ScreenshotsGallery -> imported by: app/projects/[id]/page.tsx
+components/project-details/Technologies -> imported by: app/projects/[id]/page.tsx
+components/projects/ProjectEmptyState -> imported by: components/sections/ProjectsShowcase.tsx
+components/projects/ProjectFilters -> imported by: components/sections/ProjectsShowcase.tsx
+components/projects/ProjectsBackground -> imported by: components/sections/ProjectsShowcase.tsx
+components/projects/ProjectsGrid -> imported by: components/sections/ProjectsShowcase.tsx
+components/projects/ProjectStats -> imported by: components/sections/ProjectsShowcase.tsx
+components/providers/NextAuthProvider -> imported by: app/layout.tsx
+components/sections/AboutSection -> imported by: app/page.tsx
+components/sections/case-studies/CaseStudyCard -> imported by: components/sections/TechnicalCaseStudies.tsx
+components/sections/ContactSection -> imported by: app/page.tsx
+components/sections/EngineeringStandards -> imported by: app/page.tsx
+components/sections/engineering-standards/StandardCard -> imported by: components/sections/EngineeringStandards.tsx
+components/sections/HomeSection -> imported by: app/page.tsx
+components/sections/ProjectsShowcase -> imported by: app/page.tsx
+components/sections/SkillsShowcase -> imported by: app/page.tsx
+components/sections/TechInnovation -> imported by: app/page.tsx
+components/sections/tech-innovation/InnovationCard -> imported by: components/sections/TechInnovation.tsx
+components/sections/TechnicalCaseStudies -> imported by: app/page.tsx
+components/skills/SkillCategoryCard -> imported by: components/sections/SkillsShowcase.tsx
+components/skills/SkillsBackground -> imported by: components/sections/SkillsShowcase.tsx
+components/skills/TechStackGrid -> imported by: components/sections/SkillsShowcase.tsx
+components/ui/avatar -> imported by: app/profile/page.tsx, components/layout/navbar/MobileMenu.tsx, components/layout/navbar/UserDropdown.tsx, components/profile/HeaderProfileSection.tsx
+components/ui/badge -> imported by: app/profile/page.tsx, components/profile/HeaderProfileSection.tsx, components/profile/ProfessionalSummary.tsx
+components/ui/button -> imported by: app/admin/projects/edit/[id]/page.tsx, app/admin/projects/new/page.tsx, app/admin/projects/page.tsx, app/admin/resume/page.tsx, app/admin/skills/edit/[id]/page.tsx, app/admin/skills/new/page.tsx, app/admin/skills/page.tsx, app/forget-password/page.tsx, app/profile/page.tsx, app/reset-password/[token]/page.tsx, components/admin/inquiries/InquiryDetail.tsx, components/admin/project/AdminProjectCard.tsx, components/admin/resume/ResumeFieldSet.tsx, components/admin/resume/ResumeFormSection.tsx, components/admin/settings/CaseStudiesTab.tsx, components/admin/settings/ExperiencesTab.tsx, components/admin/settings/ExpertiseTab.tsx, components/admin/settings/InnovationTab.tsx, components/admin/settings/StandardsTab.tsx, components/admin/settings/TestimonialsTab.tsx, components/admin/skill/SkillCategoryCard.tsx, components/admin/skill/SkillNodesArray.tsx, components/admin/AdminEmptyState.tsx, components/admin/ProjectForm.tsx, components/admin/SettingsForm.tsx, components/admin/SkillForm.tsx, components/chat/widget/ChatHeader.tsx, components/chat/widget/ChatInputArea.tsx, components/home/HeroCTA.tsx, components/profile/EditProfileDialogForNormalUsers.tsx, components/profile/HeaderProfileSection.tsx, components/profile/MainContentArea.tsx, components/profile/Sidebar.tsx, components/ui/pagination/PaginationNav.tsx, components/ui/calendar.tsx, components/ui/carousel.tsx
+components/ui/card -> imported by: app/profile/page.tsx, components/admin/settings/AssistantTab.tsx, components/admin/settings/CaseStudiesTab.tsx, components/admin/settings/ExperiencesTab.tsx, components/admin/settings/ExpertiseTab.tsx, components/admin/settings/InnovationTab.tsx, components/admin/settings/PersonalInfoTab.tsx, components/admin/settings/SkillsTab.tsx, components/admin/settings/StandardsTab.tsx, components/admin/settings/TestimonialsTab.tsx, components/chat/widget/ChatHeader.tsx, components/profile/MainContentArea.tsx, components/profile/ProfessionalSummary.tsx, components/profile/Sidebar.tsx, components/profile/StatsGrid.tsx
+components/ui/ContactInfo -> imported by: components/contact/ContactContent.tsx
+components/ui/CustomCursor -> imported by: app/layout.tsx
+components/ui/dialog -> imported by: app/profile/page.tsx, components/profile/EditProfileDialogForNormalUsers.tsx, components/ui/command.tsx
+components/ui/dropdown-menu -> imported by: components/layout/navbar/UserDropdown.tsx
+components/ui/DynamicResume -> imported by: app/profile/page.tsx
+components/ui/form -> imported by: components/admin/project/ProjectBasicFields.tsx, components/admin/project/ProjectMediaLinks.tsx, components/admin/project/ProjectTechMeta.tsx, components/admin/settings/AssistantTab.tsx, components/admin/settings/CaseStudiesTab.tsx, components/admin/settings/ExperiencesTab.tsx, components/admin/settings/ExpertiseTab.tsx, components/admin/settings/GuidelinesTab.tsx, components/admin/settings/InnovationTab.tsx, components/admin/settings/PersonalInfoTab.tsx, components/admin/settings/SkillsTab.tsx, components/admin/settings/StandardsTab.tsx, components/admin/settings/TestimonialsTab.tsx, components/admin/skill/SkillBasicFields.tsx, components/admin/skill/SkillNodesArray.tsx, components/admin/ProjectForm.tsx, components/admin/SettingsForm.tsx, components/admin/SkillForm.tsx
+components/ui/input -> imported by: app/forget-password/page.tsx, app/login/page.tsx, app/profile/page.tsx, app/reset-password/[token]/page.tsx, components/admin/inquiries/InquiryList.tsx, components/admin/project/ProjectBasicFields.tsx, components/admin/project/ProjectMediaLinks.tsx, components/admin/project/ProjectTechMeta.tsx, components/admin/resume/ResumeBasicInfo.tsx, components/admin/resume/ResumeEducationSection.tsx, components/admin/resume/ResumeExperienceSection.tsx, components/admin/resume/ResumeProjectsSection.tsx, components/admin/settings/AssistantTab.tsx, components/admin/settings/CaseStudiesTab.tsx, components/admin/settings/ExperiencesTab.tsx, components/admin/settings/ExpertiseTab.tsx, components/admin/settings/GuidelinesTab.tsx, components/admin/settings/InnovationTab.tsx, components/admin/settings/PersonalInfoTab.tsx, components/admin/settings/SkillsTab.tsx, components/admin/settings/StandardsTab.tsx, components/admin/settings/TestimonialsTab.tsx, components/admin/skill/SkillBasicFields.tsx, components/admin/skill/SkillNodesArray.tsx, components/admin/AdminSearchBar.tsx, components/auth/AuthInput.tsx, components/chat/widget/ChatInputArea.tsx, components/profile/EditProfileDialogForNormalUsers.tsx
+components/ui/input-otp -> imported by: components/auth/AuthOTPForm.tsx
+components/ui/label -> imported by: app/profile/page.tsx, components/profile/EditProfileDialogForNormalUsers.tsx, components/ui/form.tsx
+components/ui/MagneticButton -> imported by: components/contact/ContactForm.tsx
+components/ui/NavItem -> imported by: components/layout/navbar/DesktopMenu.tsx
+components/ui/PageTransition -> imported by: app/layout.tsx
+components/ui/pagination/PaginationInfo -> imported by: components/admin/Pagination.tsx
+components/ui/pagination/PaginationNav -> imported by: components/admin/Pagination.tsx
+components/ui/ProjectCard -> imported by: components/projects/ProjectsGrid.tsx
+components/ui/project-modal/ModalArchitectureHighlights -> imported by: components/ui/ProjectModal.tsx
+components/ui/project-modal/ModalChallenges -> imported by: components/ui/ProjectModal.tsx
+components/ui/project-modal/ModalFeatures -> imported by: components/ui/ProjectModal.tsx
+components/ui/project-modal/ModalHeader -> imported by: components/ui/ProjectModal.tsx
+components/ui/project-modal/ModalLessons -> imported by: components/ui/ProjectModal.tsx
+components/ui/project-modal/ModalLinks -> imported by: components/ui/ProjectModal.tsx
+components/ui/project-modal/ModalPerformance -> imported by: components/ui/ProjectModal.tsx
+components/ui/project-modal/ModalScreenshots -> imported by: components/ui/ProjectModal.tsx
+components/ui/project-modal/ModalTechnologies -> imported by: components/ui/ProjectModal.tsx
+components/ui/project-modal/utils -> imported by: components/ui/project-modal/ModalHeader.tsx
+components/ui/resume/icons -> imported by: components/ui/resume/ExperienceList.tsx, components/ui/resume/ResumeHeader.tsx
+components/ui/resume/styles -> imported by: components/ui/resume/EducationSection.tsx, components/ui/resume/ExperienceList.tsx, components/ui/resume/ProjectsGrid.tsx, components/ui/resume/ResumeHeader.tsx, components/ui/resume/ResumeSummary.tsx, components/ui/resume/SkillsGrid.tsx
+components/ui/scroll-area -> imported by: components/chat/widget/MessagesList.tsx
+components/ui/SectionTitle -> imported by: components/sections/AboutSection.tsx, components/sections/ContactSection.tsx, components/sections/EngineeringStandards.tsx, components/sections/ProjectsShowcase.tsx, components/sections/SkillsShowcase.tsx, components/sections/TechInnovation.tsx, components/sections/TechnicalCaseStudies.tsx
+components/ui/select -> imported by: components/admin/project/ProjectBasicFields.tsx, components/admin/project/ProjectTechMeta.tsx
+components/ui/switch -> imported by: components/admin/settings/GuidelinesTab.tsx
+components/ui/tabs -> imported by: app/profile/page.tsx, components/admin/SettingsForm.tsx, components/profile/MainContentArea.tsx
+components/ui/TechChip -> imported by: components/skills/TechStackGrid.tsx
+components/ui/textarea -> imported by: components/admin/project/ProjectBasicFields.tsx, components/admin/resume/ResumeBasicInfo.tsx, components/admin/resume/ResumeExperienceSection.tsx, components/admin/resume/ResumeProjectsSection.tsx, components/admin/resume/ResumeSkillsSection.tsx, components/admin/settings/AssistantTab.tsx, components/admin/settings/CaseStudiesTab.tsx, components/admin/settings/ExperiencesTab.tsx, components/admin/settings/ExpertiseTab.tsx, components/admin/settings/InnovationTab.tsx, components/admin/settings/PersonalInfoTab.tsx, components/admin/settings/StandardsTab.tsx, components/admin/settings/TestimonialsTab.tsx
+config/db -> imported by: app/admin/settings/page.tsx, app/api/admin/setup/route.ts, app/api/chat/portfolio/route.ts, app/api/contact/route.ts, app/api/forget-password/route.ts, app/api/projects/[id]/route.ts, app/api/projects/route.ts, app/api/register/route.ts, app/api/resend-otp/route.ts, app/api/reset-password/route.ts, app/api/resume/generate/route.ts, app/api/resume/route.ts, app/api/settings/route.ts, app/api/skills/[id]/route.ts, app/api/skills/route.ts, app/api/user/profile/route.ts, app/api/verify-otp/route.ts, lib/admin/dashboard.ts, auth.ts
+context/RecentlyViewedContext -> imported by: app/layout.tsx, app/page.tsx, components/products/RecentlyViewedProducts.tsx
+data/contact -> imported by: app/api/chat/portfolio/route.ts, components/sections/ContactSection.tsx
+data/Personal.json -> imported by: app/admin/settings/page.tsx, app/api/chat/portfolio/route.ts, app/api/settings/route.ts, app/page.tsx, components/layout/Footer.tsx, components/sections/AboutSection.tsx, components/sections/ContactSection.tsx, components/sections/HomeSection.tsx
+data/projects -> imported by: app/api/chat/portfolio/route.ts, app/api/projects/route.ts, app/projects/[id]/page.tsx
+data/Resume.json -> imported by: lib/generateResume.ts
+data/skills -> imported by: app/api/chat/portfolio/route.ts, app/api/skills/[id]/route.ts, app/api/skills/route.ts, hooks/usePublicSkills.ts
+hooks/admin/useInquiries -> imported by: app/admin/inquiries/page.tsx
+hooks/admin/useProjects -> imported by: app/admin/projects/page.tsx
+hooks/admin/useSkills -> imported by: app/admin/skills/page.tsx
+hooks/chat -> imported by: components/chat/widget/AIChatBot.tsx
+hooks/chat/useChatScroll -> imported by: hooks/chat/index.ts, auth.ts, proxy.ts
+hooks/chat/useChatState -> imported by: hooks/chat/index.ts
+hooks/useContactForm -> imported by: components/sections/ContactSection.tsx
+hooks/useLoadingAnimation -> imported by: components/layout/LoadingScreen.tsx
+hooks/useMobileMenu -> imported by: components/layout/NavBar.tsx
+hooks/useNavAnimation -> imported by: components/layout/NavBar.tsx
+hooks/useNavScroll -> imported by: components/layout/NavBar.tsx
+hooks/useParticleEngine -> imported by: components/background/ParticleBackground.tsx
+hooks/usePublicProjects -> imported by: components/sections/ProjectsShowcase.tsx
+hooks/usePublicSkills -> imported by: components/sections/SkillsShowcase.tsx
+hooks/useSkillsAnimation -> imported by: components/sections/SkillsShowcase.tsx
+hooks/useTiltEffect -> imported by: components/sections/ContactSection.tsx
+lib/admin/dashboard -> imported by: app/admin/page.tsx, components/admin/dashboard/DashboardStatsGrid.tsx, components/admin/dashboard/SideWidgets.tsx
+lib/generateResume -> imported by: components/home/HeroCTA.tsx
+lib/mail -> imported by: app/api/forget-password/route.ts, app/api/register/route.ts, app/api/resend-otp/route.ts
+lib/particle-engine/particle -> imported by: hooks/useParticleEngine.ts, hooks/useParticleEngine.ts
+lib/routes -> imported by: proxy.ts
+lib/schemas/project -> imported by: components/admin/project/ProjectBasicFields.tsx, components/admin/project/ProjectMediaLinks.tsx, components/admin/project/ProjectTechMeta.tsx, components/admin/ProjectForm.tsx
+lib/schemas/resume -> imported by: app/admin/resume/page.tsx, components/admin/resume/ResumeBasicInfo.tsx, components/admin/resume/ResumeEducationSection.tsx, components/admin/resume/ResumeExperienceSection.tsx, components/admin/resume/ResumeProjectsSection.tsx, components/admin/resume/ResumeSkillsSection.tsx
+lib/schemas/settings -> imported by: components/admin/settings/AssistantTab.tsx, components/admin/settings/CaseStudiesTab.tsx, components/admin/settings/ExperiencesTab.tsx, components/admin/settings/ExpertiseTab.tsx, components/admin/settings/GuidelinesTab.tsx, components/admin/settings/InnovationTab.tsx, components/admin/settings/PersonalInfoTab.tsx, components/admin/settings/SkillsTab.tsx, components/admin/settings/StandardsTab.tsx, components/admin/settings/TestimonialsTab.tsx, components/admin/SettingsForm.tsx
+lib/schemas/skill -> imported by: components/admin/skill/SkillBasicFields.tsx, components/admin/skill/SkillNodesArray.tsx, components/admin/SkillForm.tsx
+lib/sections/about-stats -> imported by: components/sections/AboutSection.tsx
+lib/sections/case-studies -> imported by: components/sections/TechnicalCaseStudies.tsx
+lib/sections/engineering-standards -> imported by: components/sections/engineering-standards/StandardCard.tsx, components/sections/EngineeringStandards.tsx
+lib/sections/tech-innovation -> imported by: components/sections/tech-innovation/InnovationCard.tsx, components/sections/TechInnovation.tsx
+lib/utils -> imported by: components/admin/inquiries/InquiryList.tsx, components/admin/AdminSidebar.tsx, components/chat/widget/AIChatBot.tsx, components/chat/widget/FloatingToggleButton.tsx, components/chat/widget/MessageAvatar.tsx, components/chat/widget/MessageBubble.tsx, components/chat/widget/MessagesList.tsx, components/chat/widget/QuickActionsGrid.tsx, components/ui/avatar.tsx, components/ui/badge.tsx, components/ui/breadcrumb.tsx, components/ui/button.tsx, components/ui/calendar.tsx, components/ui/card.tsx, components/ui/carousel.tsx, components/ui/checkbox.tsx, components/ui/command.tsx, components/ui/context-menu.tsx, components/ui/dialog.tsx, components/ui/drawer.tsx, components/ui/dropdown-menu.tsx, components/ui/form.tsx, components/ui/hover-card.tsx, components/ui/input-otp.tsx, components/ui/input.tsx, components/ui/label.tsx, components/ui/loading-spinner.tsx, components/ui/navigation-menu.tsx, components/ui/popover.tsx, components/ui/progress.tsx, components/ui/radio-group.tsx, components/ui/resizable.tsx, components/ui/scroll-area.tsx, components/ui/select.tsx, components/ui/separator.tsx, components/ui/sheet.tsx, components/ui/skeleton.tsx, components/ui/slider.tsx, components/ui/switch.tsx, components/ui/tabs.tsx, components/ui/textarea.tsx
+models/Contact -> imported by: app/api/contact/route.ts, lib/admin/dashboard.ts
+models/Project -> imported by: app/admin/projects/edit/[id]/page.tsx, app/api/chat/portfolio/route.ts, app/api/projects/[id]/route.ts, app/api/projects/route.ts, app/api/resume/generate/route.ts, components/admin/project/ProjectBasicFields.tsx, components/admin/ProjectForm.tsx, components/ui/project-modal/ModalPerformance.tsx, lib/admin/dashboard.ts, types/index.ts
+models/Resume -> imported by: app/api/resume/route.ts
+models/Settings -> imported by: app/admin/settings/page.tsx, app/api/chat/portfolio/route.ts, app/api/settings/route.ts, app/profile/page.tsx, components/admin/SettingsForm.tsx, components/profile/HeaderProfileSection.tsx, components/profile/MainContentArea.tsx, components/profile/ProfessionalSummary.tsx, components/profile/Sidebar.tsx, lib/schemas/settings.ts, services/index.ts
+models/Skill -> imported by: app/admin/skills/edit/[id]/page.tsx, app/api/chat/portfolio/route.ts, app/api/resume/generate/route.ts, app/api/skills/[id]/route.ts, app/api/skills/route.ts, components/admin/skill/SkillCategoryCard.tsx, components/admin/SkillForm.tsx, components/skills/SkillCategoryCard.tsx, hooks/admin/useSkills.ts, hooks/usePublicSkills.ts, lib/admin/dashboard.ts
+models/User -> imported by: app/api/admin/setup/route.ts, app/api/forget-password/route.ts, app/api/register/route.ts, app/api/resend-otp/route.ts, app/api/reset-password/route.ts, app/api/user/profile/route.ts, app/api/verify-otp/route.ts, auth.ts
+services -> imported by: app/profile/page.tsx, components/layout/NavBar.tsx
+types -> imported by: app/api/resume/generate/route.ts, app/projects/[id]/page.tsx, components/admin/project/AdminProjectCard.tsx, components/profile/StatsGrid.tsx, components/project-details/Features.tsx, components/project-details/HeaderSection.tsx, components/project-details/MainImage.tsx, components/project-details/Overview.tsx, components/project-details/PerformanceMetrics.tsx, components/project-details/ProjectStats.tsx, components/project-details/ScreenshotsGallery.tsx, components/project-details/Technologies.tsx, components/projects/ProjectsGrid.tsx, components/ui/project-modal/ModalArchitectureHighlights.tsx, components/ui/project-modal/ModalHeader.tsx, components/ui/ProjectCard.tsx, components/ui/ProjectModal.tsx, data/projects.ts, hooks/admin/useProjects.ts, hooks/usePublicProjects.ts
+types/admin -> imported by: components/admin/inquiries/InquiryDetail.tsx, components/admin/inquiries/InquiryList.tsx, hooks/admin/useInquiries.ts
+types/chat -> imported by: components/chat/widget/MessagesList.tsx, components/chat/widget/QuickActionsGrid.tsx, components/chat/widget/WelcomeSection.tsx, hooks/chat/index.ts, hooks/chat/useChatState.ts
+types/testimonial -> imported by: components/testimonials/TestimonialCard.tsx

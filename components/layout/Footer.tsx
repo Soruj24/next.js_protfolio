@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
-import personalData from "../../data/Personal.json";
+import personalData from "@/data/Personal.json";
 import FooterCopyright from "./footer/FooterCopyright";
 import FooterSocials from "./footer/FooterSocials";
 import FooterLinks from "./footer/FooterLinks";
