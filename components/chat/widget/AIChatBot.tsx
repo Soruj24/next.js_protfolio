@@ -34,13 +34,13 @@ export function AIChatBot() {
   const [showNudge, setShowNudge] = useState(false);
 
   const {
-    viewportRef, containerRef, bottomRef, showScrollButton, hasNewMessages,
-  } = useChatScroll({ isLoading, messagesLength: messages.length });
-
-  const {
     input, setInput, messages, isLoading,
     sendMessage, sendQuick, clearChat, copyMessage,
-  } = useChatState({ viewportRef, bottomRef });
+  } = useChatState();
+
+  const {
+    viewportRef, containerRef, bottomRef, showScrollButton, hasNewMessages,
+  } = useChatScroll({ isLoading, messagesLength: messages.length });
 
   const inputRef = useRef<HTMLInputElement>(null);
 
