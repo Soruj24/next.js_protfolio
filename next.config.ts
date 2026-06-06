@@ -14,8 +14,13 @@ const nextConfig = {
         hostname: 'images.unsplash.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'ibb.co.com',
+        pathname: '/**',
+      },
     ],
   },
-} 
+}
 
 export default nextConfig;
