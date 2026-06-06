@@ -1,15 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  HelpCircle,
-  Briefcase,
-  Mail,
-  Sparkles,
-} from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useChatState, Message, useChatScroll } from "@/hooks/chat";
+import { useChatState, useChatScroll } from "@/hooks/chat";
+import { useChatUI, QUICK_ACTIONS } from "@/hooks/useChatUI";
 import ChatHeader from "./ChatHeader";
 import ChatInputArea from "./ChatInputArea";
 import NudgeBanner from "./NudgeBanner";
@@ -17,94 +11,23 @@ import ChatActionBar from "./ChatActionBar";
 import MessagesList from "./MessagesList";
 import FloatingToggleButton from "./FloatingToggleButton";
 
-const QUICK_ACTIONS = [
-  { label: "Projects", icon: Briefcase, prompt: "Show me your best projects" },
-  {
-    label: "Hire Me",
-    icon: Sparkles,
-    prompt: "Create a recruiter-ready summary with key highlights and top 3 projects from Soruj's portfolio. Include quantified impact (metrics), architecture decisions, performance improvements, and enterprise-aligned tech stack. End with a clear contact CTA.",
-  },
-  { label: "Contact", icon: Mail, prompt: "How can I contact you directly?" },
-  { label: "Skills", icon: HelpCircle, prompt: "What technologies do you specialize in?" },
-];
-
 export function AIChatBot() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [showNudge, setShowNudge] = useState(false);
-
   const {
     input, setInput, messages, isLoading,
     sendMessage, sendQuick, clearChat, copyMessage,
   } = useChatState();
 
   const {
-    viewportRef, containerRef, bottomRef, showScrollButton, hasNewMessages,
+    viewportRef, containerRef, bottomRef,
   } = useChatScroll({ isLoading, messagesLength: messages.length });
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  // Nudge after 5s
-  useEffect(() => {
-    if (!isOpen && messages.length <= 1) {
-      const timer = setTimeout(() => setShowNudge(true), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen, messages.length]);
-
-  // Hide nudge after 10s
-  useEffect(() => {
-    if (showNudge) {
-      const timer = setTimeout(() => setShowNudge(false), 10000);
-      return () => clearTimeout(timer);
-    }
-  }, [showNudge]);
-
-  // Auto-focus
-  useEffect(() => {
-    if (isOpen && !isMinimized) {
-      setTimeout(() => inputRef.current?.focus(), 200);
-    }
-  }, [isOpen, isMinimized]);
-
-  // Keyboard shortcuts
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        if (isMinimized) setIsOpen(false);
-        else setIsMinimized(true);
-      }
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [isOpen, isMinimized]);
-
-  // Special open event from contact form
-  useEffect(() => {
-    const handleSpecialOpen = () => {
-      setIsOpen(true);
-      setIsMinimized(false);
-    };
-    window.addEventListener("openNexusChat", handleSpecialOpen);
-    return () => window.removeEventListener("openNexusChat", handleSpecialOpen);
-  }, []);
-
-  // Auto-open on first visit
-  useEffect(() => {
-    const opened = typeof window !== "undefined" && sessionStorage.getItem("nexusAutoOpen") === "1";
-    if (!opened && messages.length <= 1) {
-      const t = setTimeout(() => {
-        setIsOpen(true);
-        setIsMinimized(false);
-        try { sessionStorage.setItem("nexusAutoOpen", "1"); } catch {}
-      }, 1500);
-      return () => clearTimeout(t);
-    }
-  }, [messages.length]);
-
-  const handleSend = useCallback(() => {
-    sendMessage();
-  }, [sendMessage]);
+  const {
+    isOpen, setIsOpen,
+    isMinimized, setIsMinimized,
+    showNudge, setShowNudge,
+    inputRef,
+    handleSend,
+  } = useChatUI({ messagesLength: messages.length, sendMessage });
 
   return (
     <div
