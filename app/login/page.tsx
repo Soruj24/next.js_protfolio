@@ -1,14 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { Shield, Mail, Lock, Sparkles } from "lucide-react";
+import { useLoginForm } from "@/hooks/useLoginForm";
 import AuthBackground from "@/components/auth/AuthBackground";
 import AuthHeader from "@/components/auth/AuthHeader";
 import AuthInput from "@/components/auth/AuthInput";
@@ -17,11 +13,13 @@ import AuthSocialLinks from "@/components/auth/AuthSocialLinks";
 import AuthFooter from "@/components/auth/AuthFooter";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const {
+    email, setEmail,
+    password, setPassword,
+    showPassword, setShowPassword,
+    isLoading,
+    handleSubmit,
+  } = useLoginForm();
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -42,7 +40,6 @@ export default function LoginPage() {
         delay: 0.5,
       });
 
-      // Floating shapes animation
       gsap.to(".shape-1", {
         y: "random(-20, 20)",
         x: "random(-20, 20)",
@@ -62,34 +59,6 @@ export default function LoginPage() {
     }, containerRef);
     return () => ctx.revert();
   }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        if (result.error === "Email not verified") {
-          toast.error("Your email is not verified. Please verify your email to login.");
-        } else {
-          toast.error("Invalid credentials. Access Denied.");
-        }
-      } else {
-        toast.success("Welcome back, Commander!");
-        router.push("/admin");
-      }
-    } catch (error) {
-      toast.error("An error occurred during secure login");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div ref={containerRef} className="min-h-screen flex items-center justify-center bg-[#050505] px-4 overflow-hidden relative">

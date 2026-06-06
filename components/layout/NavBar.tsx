@@ -10,7 +10,7 @@ import DesktopMenu from "./navbar/DesktopMenu";
 import MobileMenu from "./navbar/MobileMenu";
 import ScrollProgressBar from "./navbar/ScrollProgressBar";
 import UserDropdown from "./navbar/UserDropdown";
-import { navItems } from "@/services";
+import { navItems } from "@/data/nav-items";
 
 interface NavBarProps {
   activeSection: string;

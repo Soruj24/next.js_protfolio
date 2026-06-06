@@ -1,21 +1,11 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import Image from "next/image";
+import { useEffect, useRef } from "react";
+import { useParams } from "next/navigation";
 import Link from "next/link";
-import { projects as localProjects } from "@/data/projects";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import {
-  FaGithub,
-  FaExternalLinkAlt,
-  FaArrowLeft,
-  FaCheckCircle,
-  FaRocket,
-  FaCode,
-  FaLightbulb,
-} from "react-icons/fa";
-import { IProject } from "@/types";
+import { FaArrowLeft } from "react-icons/fa";
+import { useProjectDetails } from "@/hooks/useProjectDetails";
 import Loading from "@/components/project-details/Loading";
 import HeaderSection from "@/components/project-details/HeaderSection";
 import Overview from "@/components/project-details/Overview";
@@ -33,59 +23,16 @@ if (typeof window !== "undefined") {
 
 export default function ProjectDetails() {
   const { id } = useParams();
-  const router = useRouter();
-  const [project, setProject] = useState<IProject | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { project, loading } = useProjectDetails(id);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchProject = async () => {
-      setLoading(true);
-      try {
-        // First try to find in local data
-        const localProject = localProjects.find((p) => p.id === id);
-        if (localProject) {
-          setProject(localProject);
-          setLoading(false);
-          return;
-        }
-
-        // If not in local, try to fetch from API
-        const res = await fetch("/api/projects");
-        if (res.ok) {
-          const allProjects = await res.json();
-          const foundProject = allProjects.find(
-            (p: IProject) => p.id === id || p._id === id,
-          );
-          if (foundProject) {
-            setProject(foundProject);
-          } else {
-            router.push("/#projects");
-          }
-        } else {
-          router.push("/#projects");
-        }
-      } catch (error) {
-        console.error("Failed to fetch project:", error);
-        router.push("/#projects");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (id) {
-      fetchProject();
-    }
-  }, [id, router]);
-
-  useEffect(() => {
     if (!project || loading) return;
 
     const ctx = gsap.context(() => {
-      // Header Animation
       gsap.from(headerRef.current, {
         opacity: 0,
         y: 50,
@@ -93,7 +40,6 @@ export default function ProjectDetails() {
         ease: "power3.out",
       });
 
-      // Content Sections Animation
       const sections = contentRef.current?.querySelectorAll(".project-section");
       if (sections) {
         sections.forEach((section) => {

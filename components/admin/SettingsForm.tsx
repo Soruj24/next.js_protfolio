@@ -12,6 +12,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ISettings } from "@/models/Settings";
 import { settingsSchema, SettingsFormInput, SettingsFormValues } from "@/lib/schemas/settings";
+import { getSettingsDefaultValues } from "@/lib/admin/settings-defaults";
 import AssistantTab from "@/components/admin/settings/AssistantTab";
 import PersonalInfoTab from "@/components/admin/settings/PersonalInfoTab";
 import SkillsTab from "@/components/admin/settings/SkillsTab";
@@ -30,51 +31,7 @@ interface SettingsFormProps {
 export default function SettingsForm({ initialData }: SettingsFormProps) {
   const [loading, setLoading] = useState(false);
 
-  const defaultValues = initialData
-    ? {
-        assistant: initialData.assistant || { name: "", purpose: "", contact_recommendation: "" },
-        personal_info: initialData.personal_info || { full_name: "", email: "", phone: "", location: "", professional_title: "" },
-        technical_skills: {
-          specializations: initialData.technical_skills?.specializations?.join(", ") || "",
-          core_technologies: initialData.technical_skills?.core_technologies?.join(", ") || "",
-        },
-        experience: initialData.experience || { professional_experience: "", project_experience: "", focus: "" },
-        experiences: initialData.experiences?.map((exp) => ({
-          year: exp.year || "",
-          role: exp.role || "",
-          company: exp.company || "",
-          description: exp.description || "",
-          technologies: Array.isArray(exp.technologies) ? exp.technologies.join(", ") : (exp.technologies as unknown as string) || "",
-        })) || [],
-        education: initialData.education || { background: "", additional_info: "" },
-        response_guidelines: initialData.response_guidelines || {
-          be_concise: true, be_informative: true, professional_tone: true,
-          redirect_uncertain_queries: "", language: "English",
-        },
-        innovation: (initialData.innovation || []).map(item => ({ title: item.title || "", description: item.description || "", icon: item.icon || "", color: item.color || "" })),
-        expertise: (initialData.expertise || []).map(exp => ({ title: exp.title || "", description: exp.description || "", icon: exp.icon || "", skills: Array.isArray(exp.skills) ? exp.skills.join(", ") : exp.skills || "", color: exp.color || "" })),
-        standards: (initialData.standards || []).map(std => ({ title: std.title || "", description: std.description || "", icon: std.icon || "", metrics: std.metrics || "", features: Array.isArray(std.features) ? std.features.join(", ") : std.features || "" })),
-        testimonials: (initialData.testimonials || []).map(t => ({ name: t.name || "", role: t.role || "", content: t.content || "", avatar: t.avatar || "", color: t.color || "" })),
-        case_studies: (initialData.case_studies || []).map((cs) => ({
-          title: cs.title || "", description: cs.description || "", challenge: cs.challenge || "", solution: cs.solution || "", impact: cs.impact || "",
-          technologies: Array.isArray(cs.technologies) ? cs.technologies.join(", ") : (cs.technologies as unknown as string) || "",
-          image: cs.image || "",
-        })),
-      }
-    : {
-        assistant: { name: "", purpose: "", contact_recommendation: "" },
-        personal_info: { full_name: "", email: "", phone: "", location: "", professional_title: "" },
-        technical_skills: { specializations: "", core_technologies: "" },
-        experience: { professional_experience: "", project_experience: "", focus: "" },
-        experiences: [],
-        education: { background: "", additional_info: "" },
-        response_guidelines: { be_concise: true, be_informative: true, professional_tone: true, redirect_uncertain_queries: "", language: "English" },
-        innovation: [],
-        expertise: [],
-        standards: [],
-        testimonials: [],
-        case_studies: [],
-      };
+  const defaultValues = getSettingsDefaultValues(initialData);
 
   const form = useForm<SettingsFormInput>({
     resolver: zodResolver(settingsSchema) as unknown as Resolver<SettingsFormInput>,

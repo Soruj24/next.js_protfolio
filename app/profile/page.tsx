@@ -52,7 +52,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { getStats } from "@/services";
+import { getStats } from "@/lib/stats";
 import Loading from "@/components/profile/Loading";
 import EditProfileDialogForNormalUsers from "@/components/profile/EditProfileDialogForNormalUsers";
 import HeaderProfileSection from "@/components/profile/HeaderProfileSection";
