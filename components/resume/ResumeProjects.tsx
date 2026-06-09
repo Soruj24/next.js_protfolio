@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ResumeProject } from "@/types/resume";
 
 interface ResumeProjectsProps {
@@ -26,6 +27,18 @@ export default function ResumeProjects({ projects }: ResumeProjectsProps) {
           </ul>
           <div className="text-[9pt] text-[#555555] mt-1 italic">
             <strong>Technologies Used:</strong> {project.technologies}
+            {project.liveUrl && (
+              <span className="ml-2">
+                <Link
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#0763ee] underline italic"
+                >
+                  Live Demo
+                </Link>
+              </span>
+            )}
           </div>
         </div>
       ))}

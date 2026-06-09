@@ -38,6 +38,7 @@ export const resumeData: ResumeData = {
         "Optimized rendering cycles and asset delivery, resulting in a 25% improvement in initial page-load performance metrics.",
       ],
       technologies: "Next.js, React, TypeScript, Tailwind CSS, Git",
+      liveUrl: "https://next-js-protfolio-zeta.vercel.app/",
     },
     {
       title: "Interactive E-Commerce Dashboard",
@@ -48,6 +49,7 @@ export const resumeData: ResumeData = {
         "Ensured strict compliance with cross-browser compatibility and accessibility guidelines (WCAG 2.1 AA).",
       ],
       technologies: "React.js, Redux Toolkit, Chart.js, CSS Modules, REST API",
+      liveUrl: "https://next-js-protfolio-zeta.vercel.app/",
     },
   ],
   education: [

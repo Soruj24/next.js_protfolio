@@ -22,6 +22,7 @@ export interface ResumeProject {
   type: string;
   bullets: string[];
   technologies: string;
+  liveUrl?: string;
 }
 
 export interface ResumeEducation {
