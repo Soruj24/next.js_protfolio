@@ -218,7 +218,7 @@ export default function Resume() {
                 Non-Traditional Bachelor of Science in Computer Science
               </div>
               <div className="text-right text-[9.5pt] text-[#666666] italic">
-                Graduated: May 2025
+                {/* Graduated: May 2025 */}
               </div>
             </div>
             <div className="italic text-[#555555] mb-1.25 text-[9.5pt]">
@@ -226,16 +226,16 @@ export default function Resume() {
             </div>
             <ul className="m-0 pl-[18px]">
               <li className="mb-0.75 text-justify">
-                Relevant Coursework: Data Structures & Algorithms, Web
-                Application Development, Software Engineering, Database
-                Management Systems, Human-Computer Interaction.
+                Relevant Coursework: Web
+                Application Development
+
               </li>
             </ul>
           </div>
         </div>
 
         {/* Certifications & Achievements */}
-        <div className="mb-4 break-inside-avoid">
+        {/* <div className="mb-4 break-inside-avoid">
           <div className="text-[12pt] font-bold text-[#2b4c7e] uppercase tracking-[0.5px] border-l-4 border-[#2b4c7e] pl-2 m-0 mb-2.5">
             Certifications & Achievements
           </div>
@@ -254,7 +254,7 @@ export default function Resume() {
               community resource portal within 36 hours.
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   );
