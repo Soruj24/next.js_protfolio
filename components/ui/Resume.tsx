@@ -5,7 +5,6 @@ import Link from "next/link";
 export default function Resume() {
   return (
     <div className="bg-white text-[#333333] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] text-[10pt] leading-relaxed max-w-[210mm] mx-auto">
-      {/* Print-specific styles remain as style tag since @page is not supported by Tailwind */}
       <style>{`
         @page {
           size: A4;
@@ -43,15 +42,18 @@ export default function Resume() {
           </div>
           <div className="w-full text-[9pt] text-[#666666]">
             <div className="flex flex-wrap gap-[15px]">
-              <div>sorujahmud@email.com</div>
-              <div>+1 (555) 019-2834</div>
-              <div>San Francisco, CA</div>
+              <div>sorujahmudb2h@email.com</div>
+              <div>01795397598</div>
+              <div> Dhaka, Bangladesh</div>
             </div>
             <div className="flex flex-wrap gap-[15px]">
               <div>
-                <a href="#" className="text-[#2b4c7e] no-underline">
-                  linkedin.com/in/alexmorgan
-                </a>
+                <Link
+                  href="https://www.linkedin.com/in/soruj-mahmud-ab9388298/"
+                  className="text-[#2b4c7e] no-underline"
+                >
+                  linkedin.com/in/soruj-mahmud
+                </Link>
               </div>
               <div>
                 <Link
@@ -62,9 +64,12 @@ export default function Resume() {
                 </Link>
               </div>
               <div>
-                <a href="#" className="text-[#2b4c7e] no-underline">
+                <Link
+                  href="https://next-js-protfolio-zeta.vercel.app/"
+                  className="text-[#2b4c7e] no-underline"
+                >
                   sorujahmud.dev
-                </a>
+                </Link>
               </div>
             </div>
           </div>
