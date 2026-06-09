@@ -65,9 +65,6 @@ export default function Home() {
         <HomeSection data={settings} />
         <AboutSection data={settings} />
         <SkillsShowcase />
-        <TechInnovation data={settings.innovation} />
-        <EngineeringStandards data={settings.standards} />
-        <TechnicalCaseStudies data={settings.case_studies} />
         <ProjectsShowcase />
         <ContactSection data={settings.personal_info} />
         <Footer data={settings} />
