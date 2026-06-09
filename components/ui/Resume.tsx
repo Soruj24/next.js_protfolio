@@ -50,7 +50,8 @@ export default function Resume() {
               <div>
                 <Link
                   href="https://www.linkedin.com/in/soruj-mahmud-ab9388298/"
-                  className="text-[#2b4c7e] no-underline" target="_blank"
+                  className="text-[#2b4c7e] no-underline"
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   linkedin.com/in/soruj-mahmud
@@ -59,7 +60,8 @@ export default function Resume() {
               <div>
                 <Link
                   href="https://github.com/Soruj24"
-                  className="text-[#2b4c7e] no-underline" target="_blank"
+                  className="text-[#2b4c7e] no-underline"
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   github.com/Soruj24
@@ -68,7 +70,8 @@ export default function Resume() {
               <div>
                 <Link
                   href="https://next-js-protfolio-zeta.vercel.app/"
-                  className="text-[#2b4c7e] no-underline" target="_blank"
+                  className="text-[#2b4c7e] no-underline"
+                  target="_blank"
                   rel="noopener noreferrer"
                 >
                   sorujahmud.dev
@@ -229,9 +232,7 @@ export default function Resume() {
             </div>
             <ul className="m-0 pl-[18px]">
               <li className="mb-0.75 text-justify">
-                Relevant Coursework: Web
-                Application Development
-
+                Relevant Coursework: Web Application Development
               </li>
             </ul>
           </div>
