@@ -215,14 +215,14 @@ export default function Resume() {
           <div className="mb-3 break-inside-avoid">
             <div className="flex justify-between items-baseline mb-1">
               <div className="font-bold text-[10.5pt] text-[#222222]">
-                Bachelor of Science in Computer Science
+                Non-Traditional Bachelor of Science in Computer Science
               </div>
               <div className="text-right text-[9.5pt] text-[#666666] italic">
                 Graduated: May 2025
               </div>
             </div>
             <div className="italic text-[#555555] mb-1.25 text-[9.5pt]">
-              State University, College of Engineering — GPA: 3.7/4.0
+              Dhaka Golden College of Science
             </div>
             <ul className="m-0 pl-[18px]">
               <li className="mb-0.75 text-justify">
