@@ -50,7 +50,8 @@ export default function Resume() {
               <div>
                 <Link
                   href="https://www.linkedin.com/in/soruj-mahmud-ab9388298/"
-                  className="text-[#2b4c7e] no-underline"
+                  className="text-[#2b4c7e] no-underline" target="_blank"
+                  rel="noopener noreferrer"
                 >
                   linkedin.com/in/soruj-mahmud
                 </Link>
@@ -58,7 +59,8 @@ export default function Resume() {
               <div>
                 <Link
                   href="https://github.com/Soruj24"
-                  className="text-[#2b4c7e] no-underline"
+                  className="text-[#2b4c7e] no-underline" target="_blank"
+                  rel="noopener noreferrer"
                 >
                   github.com/Soruj24
                 </Link>
@@ -66,7 +68,8 @@ export default function Resume() {
               <div>
                 <Link
                   href="https://next-js-protfolio-zeta.vercel.app/"
-                  className="text-[#2b4c7e] no-underline"
+                  className="text-[#2b4c7e] no-underline" target="_blank"
+                  rel="noopener noreferrer"
                 >
                   sorujahmud.dev
                 </Link>
