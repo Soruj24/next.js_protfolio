@@ -2,8 +2,7 @@
 
 import { signOut } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import DynamicResume from "@/components/ui/DynamicResume";
+import { useEffect, useState } from "react";
 import NavBar from "@/components/layout/NavBar";
 import Footer from "@/components/layout/Footer";
 import { ISettings } from "@/models/Settings";
@@ -28,9 +27,6 @@ export default function ProfilePage() {
   } = useProfile();
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("home");
-  const resumeRef = useRef<{ generatePDF: () => void; isGenerating: boolean }>(
-    null,
-  );
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -99,7 +95,7 @@ export default function ProfilePage() {
           <Sidebar isAdmin={isAdmin} settings={settings as ISettings} />
 
           {/* Main Content Area */}
-          <MainContentArea session={session} resumeRef={resumeRef} activeSection={activeSection} isAdmin={isAdmin} setting={settings as ISettings} />
+          <MainContentArea session={session} activeSection={activeSection} isAdmin={isAdmin} setting={settings as ISettings} />
         </div>
       </main>
 

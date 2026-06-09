@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   FolderKanban,
-  MessageSquare,
   Settings,
   LogOut,
   Code2,
@@ -22,7 +21,6 @@ const menuItems = [
   { name: "Projects", href: "/admin/projects", icon: FolderKanban },
   { name: "Skills", href: "/admin/skills", icon: Code2 },
   { name: "Inquiries", href: "/admin/inquiries", icon: Mail },
-  { name: "Resume", href: "/admin/resume", icon: MessageSquare },
   { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 

@@ -1,9 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calendar, FileText, User } from "lucide-react";
+import { Calendar, User } from "lucide-react";
 import { Session } from "next-auth";
 import ProfileDetailsCard from "./ProfileDetailsCard";
 import AccountStatsCard from "./AccountStatsCard";
-import ResumeDownloadSection from "./ResumeDownloadSection";
 import ActivityLogPanel from "./ActivityLogPanel";
 
 interface Props {
@@ -11,12 +10,11 @@ interface Props {
   isAdmin: boolean;
   setting: ISettings;
   session: Session | null;
-  resumeRef: React.RefObject<{ generatePDF: () => void; isGenerating: boolean } | null>;
 }
 
 import { ISettings } from "@/models/Settings";
 
-const MainContentArea = ({ activeSection, isAdmin, session, resumeRef }: Props) => {
+const MainContentArea = ({ activeSection, isAdmin, session }: Props) => {
   return (
     <div className="lg:col-span-3">
       <Tabs defaultValue="overview" className="w-full">
@@ -24,11 +22,6 @@ const MainContentArea = ({ activeSection, isAdmin, session, resumeRef }: Props) 
           <TabsTrigger value="overview" className="rounded-xl px-8 py-2.5 data-[state=active]:bg-cyan-500 data-[state=active]:text-white transition-all font-bold tracking-wide">
             <User className="w-4 h-4 mr-2" /> Overview
           </TabsTrigger>
-          {isAdmin && (
-            <TabsTrigger value="resume" className="rounded-xl px-8 py-2.5 data-[state=active]:bg-cyan-500 data-[state=active]:text-white transition-all font-bold tracking-wide">
-              <FileText className="w-4 h-4 mr-2" /> Professional CV
-            </TabsTrigger>
-          )}
           <TabsTrigger value="activity" className="rounded-xl px-8 py-2.5 data-[state=active]:bg-cyan-500 data-[state=active]:text-white transition-all font-bold tracking-wide">
             <Calendar className="w-4 h-4 mr-2" /> Activity Log
           </TabsTrigger>
@@ -40,12 +33,6 @@ const MainContentArea = ({ activeSection, isAdmin, session, resumeRef }: Props) 
             <AccountStatsCard />
           </div>
         </TabsContent>
-
-        {isAdmin && (
-          <TabsContent value="resume" className="mt-0 focus-visible:outline-none">
-            <ResumeDownloadSection resumeRef={resumeRef} />
-          </TabsContent>
-        )}
 
         <TabsContent value="activity" className="mt-0 focus-visible:outline-none">
           <ActivityLogPanel />
