@@ -43,24 +43,19 @@ export default function Resume() {
   }
 
   return (
-    <div className="bg-white text-[#333333] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] text-[10pt] leading-relaxed max-w-[210mm] mx-auto">
+    <div className="resume-outer bg-white text-[#333333] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] text-[10pt] leading-relaxed max-w-[210mm] mx-auto px-[16mm] py-[18mm]">
       <style>{`
-        @page {
-          size: A4;
-          margin: 18mm 16mm;
-        }
         @media print {
-          .resume-page {
-            padding: 0;
-            max-width: none;
+          .resume-outer {
+            max-width: none !important;
+            background: white !important;
+            padding: 0 !important;
           }
           .no-print {
             display: none !important;
           }
         }
       `}</style>
-
-      <div className="resume-page px-[16mm] py-[18mm]">
         <div className="no-print text-center mb-5">
           <button
             onClick={handleDownload}
@@ -88,7 +83,6 @@ export default function Resume() {
         <ResumeSection title="Education">
           <ResumeEducation education={education} />
         </ResumeSection>
-      </div>
     </div>
   );
 }

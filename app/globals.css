@@ -165,3 +165,48 @@
     50% { transform: translateY(-20px); }
   }
 }
+
+@media print {
+  body {
+    background: white !important;
+    background-color: white !important;
+  }
+  body::before {
+    display: none !important;
+  }
+  .mesh-gradient {
+    background: white !important;
+    background-color: white !important;
+    background-image: none !important;
+  }
+  .noise-bg::before {
+    display: none !important;
+  }
+  .custom-cursor,
+  #custom-cursor,
+  [class*="cursor"] {
+    display: none !important;
+  }
+  .content-wrapper {
+    position: static !important;
+    z-index: auto !important;
+  }
+  .fixed,
+  .sticky {
+    position: static !important;
+  }
+  nav,
+  footer,
+  .toaster,
+  [data-sonner-toaster],
+  [data-radix-popper-content-wrapper] {
+    display: none !important;
+  }
+  div:has(> .resume-page) {
+    background: white !important;
+  }
+  .resume-page {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+}
