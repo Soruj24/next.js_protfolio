@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/ui/CustomCursor";
-import PageTransition from "@/components/ui/PageTransition";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import { Toaster } from "sonner";
 import ChatBotWrapper from "@/components/chat/widget/ChatBotWrapper";
 import { RecentlyViewedProvider } from "@/context/RecentlyViewedContext";
+import ConditionalChatBot from "@/components/ConditionalChatBot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -68,8 +68,7 @@ export default function RootLayout({
         <NextAuthProvider>
           <RecentlyViewedProvider>
             <CustomCursor />
-            {/* <PageTransition /> */}
-            <ChatBotWrapper />
+            <ConditionalChatBot />
             <div className="relative z-10 content-wrapper">{children}</div>
             <Toaster position="top-right" />
           </RecentlyViewedProvider>

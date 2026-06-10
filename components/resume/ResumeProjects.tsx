@@ -28,14 +28,15 @@ export default function ResumeProjects({ projects }: ResumeProjectsProps) {
           <div className="text-[9pt] text-[#555555] mt-1 italic">
             <strong>Technologies Used:</strong> {project.technologies}
             {project.liveUrl && (
-              <span className="ml-2">
+              <span>
+                {" | "}
                 <Link
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#0763ee] underline italic"
+                  className="text-[#2b4c7e] no-underline not-italic"
                 >
-                  Live Demo
+                  {project.liveUrl}
                 </Link>
               </span>
             )}

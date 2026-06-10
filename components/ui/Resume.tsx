@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { resumeData } from "@/data/resume";
 import ResumeHeader from "@/components/resume/ResumeHeader";
 import ResumeSection from "@/components/resume/ResumeSection";
@@ -8,7 +9,38 @@ import ResumeProjects from "@/components/resume/ResumeProjects";
 import ResumeEducation from "@/components/resume/ResumeEducation";
 
 export default function Resume() {
+  const [downloading, setDownloading] = useState(false);
   const { personalInfo, summary, skills, projects, education } = resumeData;
+
+  async function handleDownload() {
+    setDownloading(true);
+    try {
+      const res = await fetch("/api/resume/pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: window.location.href }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to generate PDF");
+      }
+
+      const blob = await res.blob();
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "soruj-mahmud-resume.pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to generate PDF. Try using browser Print (Ctrl+P) instead.");
+    } finally {
+      setDownloading(false);
+    }
+  }
 
   return (
     <div className="bg-white text-[#333333] font-['Helvetica_Neue',Helvetica,Arial,sans-serif] text-[10pt] leading-relaxed max-w-[210mm] mx-auto">
@@ -31,10 +63,11 @@ export default function Resume() {
       <div className="resume-page px-[16mm] py-[18mm]">
         <div className="no-print text-center mb-5">
           <button
-            onClick={() => window.print()}
-            className="px-6 py-2.5 text-sm font-semibold bg-[#2b4c7e] text-white border-none rounded-md cursor-pointer hover:bg-[#1f3a5e] transition-colors"
+            onClick={handleDownload}
+            disabled={downloading}
+            className="px-6 py-2.5 text-sm font-semibold bg-[#2b4c7e] text-white border-none rounded-md cursor-pointer hover:bg-[#1f3a5e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Download as PDF
+            {downloading ? "Generating PDF..." : "Download as PDF"}
           </button>
         </div>
 
