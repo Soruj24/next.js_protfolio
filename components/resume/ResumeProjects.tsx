@@ -34,9 +34,9 @@ export default function ResumeProjects({ projects }: ResumeProjectsProps) {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#2b4c7e] no-underline not-italic"
+                  className="text-[#0c6af8] underline  italic"
                 >
-                  {project.liveUrl}
+                  Live Demo
                 </Link>
               </span>
             )}
