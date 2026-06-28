@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import SkillForm from "@/components/features/admin/SkillForm";
+import SkillForm from "@/features/admin/components/SkillForm";
 import { useRouter, useParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";

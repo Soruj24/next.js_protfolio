@@ -1,19 +1,19 @@
 "use client";
-import ParticleBackground from "@/components/background/ParticleBackground";
+import ParticleBackground from "@/components/shared/ParticleBackground";
 import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import NavBar from "@/components/layout/NavBar";
-import AboutSection from "@/components/features/about/AboutSection";
-import ContactSection from "@/components/features/contact/ContactSection";
-import HomeSection from "@/components/features/hero/HomeSection";
-import TechInnovation from "@/components/features/projects/TechInnovation";
-import EngineeringStandards from "@/components/features/projects/EngineeringStandards";
-import TechnicalCaseStudies from "@/components/features/projects/TechnicalCaseStudies";
-import ProjectsShowcase from "@/components/features/projects/ProjectsShowcase";
-import SkillsShowcase from "@/components/features/skills/SkillsShowcase";
+import AboutSection from "@/features/about/components/AboutSection";
+import ContactSection from "@/features/contact/components/ContactSection";
+import HomeSection from "@/features/hero/components/HomeSection";
+import TechInnovation from "@/features/projects/components/TechInnovation";
+import EngineeringStandards from "@/features/projects/components/EngineeringStandards";
+import TechnicalCaseStudies from "@/features/projects/components/TechnicalCaseStudies";
+import ProjectsShowcase from "@/features/projects/components/ProjectsShowcase";
+import SkillsShowcase from "@/features/skills/components/SkillsShowcase";
 import personalData from "@/data/Personal.json";
 import { useEffect, useState } from "react";
-import RecentlyViewedProducts from "@/components/features/projects/RecentlyViewedProducts";
+import RecentlyViewedProducts from "@/features/projects/components/RecentlyViewedProducts";
 import { useRecentlyViewed } from "@/components/providers/RecentlyViewedContext";
 
 export default function Home() {

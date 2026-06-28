@@ -3,14 +3,14 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { UserPlus, User, Mail, Lock, ShieldCheck, Zap } from "lucide-react";
-import { useRegisterForm } from "@/hooks/useRegisterForm";
-import AuthBackground from "@/components/features/auth/AuthBackground";
-import AuthHeader from "@/components/features/auth/AuthHeader";
-import AuthInput from "@/components/features/auth/AuthInput";
-import AuthSubmitButton from "@/components/features/auth/AuthSubmitButton";
-import AuthSocialLinks from "@/components/features/auth/AuthSocialLinks";
-import AuthFooter from "@/components/features/auth/AuthFooter";
-import AuthOTPForm from "@/components/features/auth/AuthOTPForm";
+import { useRegisterForm } from "@/features/auth/hooks/useRegisterForm";
+import AuthBackground from "@/features/auth/components/AuthBackground";
+import AuthHeader from "@/features/auth/components/AuthHeader";
+import AuthInput from "@/features/auth/components/AuthInput";
+import AuthSubmitButton from "@/features/auth/components/AuthSubmitButton";
+import AuthSocialLinks from "@/features/auth/components/AuthSocialLinks";
+import AuthFooter from "@/features/auth/components/AuthFooter";
+import AuthOTPForm from "@/features/auth/components/AuthOTPForm";
 
 export default function RegisterPage() {
   const {

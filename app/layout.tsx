@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import CustomCursor from "@/components/ui/CustomCursor";
+import CustomCursor from "@/components/shared/CustomCursor";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import { Toaster } from "sonner";
-import ChatBotWrapper from "@/components/features/chat/ChatBotWrapper";
+import ChatBotWrapper from "@/features/chat/components/ChatBotWrapper";
 import { RecentlyViewedProvider } from "@/components/providers/RecentlyViewedContext";
-import ConditionalChatBot from "@/components/shared/ConditionalChatBot";
+import ConditionalChatBot from "@/features/chat/components/ConditionalChatBot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

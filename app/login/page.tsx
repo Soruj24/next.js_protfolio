@@ -4,13 +4,13 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { Shield, Mail, Lock, Sparkles } from "lucide-react";
-import { useLoginForm } from "@/hooks/useLoginForm";
-import AuthBackground from "@/components/features/auth/AuthBackground";
-import AuthHeader from "@/components/features/auth/AuthHeader";
-import AuthInput from "@/components/features/auth/AuthInput";
-import AuthSubmitButton from "@/components/features/auth/AuthSubmitButton";
-import AuthSocialLinks from "@/components/features/auth/AuthSocialLinks";
-import AuthFooter from "@/components/features/auth/AuthFooter";
+import { useLoginForm } from "@/features/auth/hooks/useLoginForm";
+import AuthBackground from "@/features/auth/components/AuthBackground";
+import AuthHeader from "@/features/auth/components/AuthHeader";
+import AuthInput from "@/features/auth/components/AuthInput";
+import AuthSubmitButton from "@/features/auth/components/AuthSubmitButton";
+import AuthSocialLinks from "@/features/auth/components/AuthSocialLinks";
+import AuthFooter from "@/features/auth/components/AuthFooter";
 
 export default function LoginPage() {
   const {

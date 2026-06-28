@@ -1,4 +1,4 @@
-import Resume from "@/components/shared/Resume";
+import Resume from "@/features/resume/components/Resume";
 
 export const metadata = {
   title: "Resume - Soruj Mahmud",

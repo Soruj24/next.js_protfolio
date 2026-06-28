@@ -7,10 +7,10 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { Mail, KeyRound, ArrowLeft } from "lucide-react";
-import AuthBackground from "@/components/features/auth/AuthBackground";
-import AuthHeader from "@/components/features/auth/AuthHeader";
-import AuthInput from "@/components/features/auth/AuthInput";
-import AuthSubmitButton from "@/components/features/auth/AuthSubmitButton";
+import AuthBackground from "@/features/auth/components/AuthBackground";
+import AuthHeader from "@/features/auth/components/AuthHeader";
+import AuthInput from "@/features/auth/components/AuthInput";
+import AuthSubmitButton from "@/features/auth/components/AuthSubmitButton";
 
 export default function ForgetPasswordPage() {
   const [email, setEmail] = useState("");

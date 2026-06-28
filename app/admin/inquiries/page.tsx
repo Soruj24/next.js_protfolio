@@ -1,8 +1,8 @@
 "use client";
-import { useInquiries } from "@/hooks/admin/useInquiries";
-import InquiryList from "@/components/features/admin/InquiryList";
-import InquiryDetail from "@/components/features/admin/InquiryDetail";
-import InquiryEmptyState from "@/components/features/admin/InquiryEmptyState";
+import { useInquiries } from "@/features/admin/hooks/useInquiries";
+import InquiryList from "@/features/admin/components/InquiryList";
+import InquiryDetail from "@/features/admin/components/InquiryDetail";
+import InquiryEmptyState from "@/features/admin/components/InquiryEmptyState";
 
 export default function AdminInquiriesPage() {
   const {

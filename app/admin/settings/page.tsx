@@ -1,6 +1,6 @@
 import { connectDB } from "@/config/db";
 import { Settings } from "@/models/Settings";
-import SettingsForm from "@/components/features/admin/SettingsForm";
+import SettingsForm from "@/features/admin/components/SettingsForm";
 import personalData from "@/data/Personal.json";
 
 export const dynamic = 'force-dynamic';

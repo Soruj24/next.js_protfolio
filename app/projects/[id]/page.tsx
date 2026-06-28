@@ -5,17 +5,17 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaArrowLeft } from "react-icons/fa";
-import { useProjectDetails } from "@/hooks/useProjectDetails";
-import Loading from "@/components/features/projects/Loading";
-import HeaderSection from "@/components/features/projects/HeaderSection";
-import Overview from "@/components/features/projects/Overview";
-import Features from "@/components/features/projects/Features";
-import ScreenshotsGallery from "@/components/features/projects/ScreenshotsGallery";
-import Technologies from "@/components/features/projects/Technologies";
-import ProjectStats from "@/components/features/projects/ProjectStats";
-import PerformanceMetrics from "@/components/features/projects/PerformanceMetrics";
-import MainImage from "@/components/features/projects/MainImage";
-import BackgroundEffects from "@/components/features/projects/BackgroundEffects";
+import { useProjectDetails } from "@/features/projects/hooks/useProjectDetails";
+import Loading from "@/features/projects/components/Loading";
+import HeaderSection from "@/features/projects/components/HeaderSection";
+import Overview from "@/features/projects/components/Overview";
+import Features from "@/features/projects/components/Features";
+import ScreenshotsGallery from "@/features/projects/components/ScreenshotsGallery";
+import Technologies from "@/features/projects/components/Technologies";
+import ProjectStats from "@/features/projects/components/ProjectStats";
+import PerformanceMetrics from "@/features/projects/components/PerformanceMetrics";
+import MainImage from "@/features/projects/components/MainImage";
+import BackgroundEffects from "@/features/projects/components/BackgroundEffects";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);

@@ -20,8 +20,8 @@ import {
   formatProjectsSection,
   formatContactSection,
   formatDocsSection,
-} from "@/lib/chat/context"
-import { buildFallbackResponse } from "@/lib/chat/fallback"
+} from "@/features/chat/lib/context"
+import { buildFallbackResponse } from "@/features/chat/lib/fallback"
 
 export const runtime = "nodejs"
 
