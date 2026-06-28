@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { SkillCategory } from "@/models/Skill";
-import { auth } from "@/auth";
 import { skillCategories as localSkills } from "@/data/skills";
-import mongoose from "mongoose";
-
-const isValidObjectId = (id: string) => mongoose.Types.ObjectId.isValid(id);
+import { isValidObjectId } from "@/lib/utils/validation";
+import { requireAdmin } from "@/lib/auth/helpers";
 
 export async function GET(
   req: Request,
@@ -53,11 +51,8 @@ export async function PUT(
 ) {
   try {
     const { id } = await params;
-    const session = await auth();
-    const userRole = (session?.user as { role?: string })?.role;
-    if (!session || userRole !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const { session, error: authError } = await requireAdmin();
+    if (authError) return authError;
 
     const data = await req.json();
     await connectDB();
@@ -95,11 +90,8 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const session = await auth();
-    const userRole = (session?.user as { role?: string })?.role;
-    if (!session || userRole !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const { session, error: authError } = await requireAdmin();
+    if (authError) return authError;
 
     await connectDB();
 

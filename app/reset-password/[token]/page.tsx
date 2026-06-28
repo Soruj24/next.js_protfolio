@@ -8,10 +8,10 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { Lock, ShieldCheck, ArrowLeft } from "lucide-react";
-import AuthBackground from "@/components/auth/AuthBackground";
-import AuthHeader from "@/components/auth/AuthHeader";
-import AuthInput from "@/components/auth/AuthInput";
-import AuthSubmitButton from "@/components/auth/AuthSubmitButton";
+import AuthBackground from "@/components/features/auth/AuthBackground";
+import AuthHeader from "@/components/features/auth/AuthHeader";
+import AuthInput from "@/components/features/auth/AuthInput";
+import AuthSubmitButton from "@/components/features/auth/AuthSubmitButton";
 
 export default function ResetPasswordPage() {
   const [password, setPassword] = useState("");

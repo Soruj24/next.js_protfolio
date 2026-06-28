@@ -3,11 +3,11 @@ import Link from "next/link";
 import { Plus, Search as SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useProjects } from "@/hooks/admin/useProjects";
-import AdminSearchBar from "@/components/admin/AdminSearchBar";
-import AdminCategoryFilter from "@/components/admin/AdminCategoryFilter";
-import AdminEmptyState from "@/components/admin/AdminEmptyState";
-import AdminProjectCard from "@/components/admin/project/AdminProjectCard";
-import ProfessionalPagination from "@/components/admin/Pagination";
+import AdminSearchBar from "@/components/features/admin/AdminSearchBar";
+import AdminCategoryFilter from "@/components/features/admin/AdminCategoryFilter";
+import AdminEmptyState from "@/components/features/admin/AdminEmptyState";
+import AdminProjectCard from "@/components/features/admin/AdminProjectCard";
+import ProfessionalPagination from "@/components/features/admin/Pagination";
 
 export default function AdminProjects() {
   const {

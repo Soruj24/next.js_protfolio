@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { ISettings } from "@/models/Settings";
 
 export const settingsSchema = z.object({
   assistant: z.object({
@@ -97,8 +98,6 @@ export const settingsSchema = z.object({
 });
 
 export type SettingsFormInput = z.infer<typeof settingsSchema>;
-
-import { ISettings } from "@/models/Settings";
 
 export interface SettingsFormValues extends Omit<ISettings, "experiences" | "expertise" | "standards" | "testimonials" | "case_studies"> {
   experiences: {

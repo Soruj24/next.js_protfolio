@@ -5,12 +5,12 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { Shield, Mail, Lock, Sparkles } from "lucide-react";
 import { useLoginForm } from "@/hooks/useLoginForm";
-import AuthBackground from "@/components/auth/AuthBackground";
-import AuthHeader from "@/components/auth/AuthHeader";
-import AuthInput from "@/components/auth/AuthInput";
-import AuthSubmitButton from "@/components/auth/AuthSubmitButton";
-import AuthSocialLinks from "@/components/auth/AuthSocialLinks";
-import AuthFooter from "@/components/auth/AuthFooter";
+import AuthBackground from "@/components/features/auth/AuthBackground";
+import AuthHeader from "@/components/features/auth/AuthHeader";
+import AuthInput from "@/components/features/auth/AuthInput";
+import AuthSubmitButton from "@/components/features/auth/AuthSubmitButton";
+import AuthSocialLinks from "@/components/features/auth/AuthSocialLinks";
+import AuthFooter from "@/components/features/auth/AuthFooter";
 
 export default function LoginPage() {
   const {

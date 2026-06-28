@@ -1,4 +1,4 @@
-import { normalize } from "./context"
+import { normalize } from "@/lib/chat/context"
 
 export function buildFallbackResponse(
   message: string,

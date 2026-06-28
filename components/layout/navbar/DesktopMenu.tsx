@@ -1,5 +1,5 @@
 import React from "react";
-import NavItem from "../../ui/NavItem";
+import NavItem from "@/components/shared/NavItem";
 
 interface DesktopMenuProps {
   navItems: Array<{ id: string; label: string; icon: string; isLink?: boolean }>;

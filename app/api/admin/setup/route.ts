@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { User } from "@/models/User";
 import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/auth/helpers";
 
 export async function GET(request: NextRequest) {
   try {
@@ -51,8 +52,9 @@ export async function GET(request: NextRequest) {
       </body></html>`,
       { status: 403, headers: { "Content-Type": "text/html" } }
     );
-  } catch (error: any) {
-    return new NextResponse(`<h1>Error: ${error.message}</h1>`, {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return new NextResponse(`<h1>Error: ${message}</h1>`, {
       status: 500,
       headers: { "Content-Type": "text/html" },
     });
@@ -106,7 +108,8 @@ export async function POST(request: NextRequest) {
       },
       { status: 403 }
     );
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

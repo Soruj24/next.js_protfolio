@@ -4,9 +4,9 @@ import "./globals.css";
 import CustomCursor from "@/components/ui/CustomCursor";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import { Toaster } from "sonner";
-import ChatBotWrapper from "@/components/chat/widget/ChatBotWrapper";
-import { RecentlyViewedProvider } from "@/context/RecentlyViewedContext";
-import ConditionalChatBot from "@/components/ConditionalChatBot";
+import ChatBotWrapper from "@/components/features/chat/ChatBotWrapper";
+import { RecentlyViewedProvider } from "@/components/providers/RecentlyViewedContext";
+import ConditionalChatBot from "@/components/shared/ConditionalChatBot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -6,16 +6,16 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FaArrowLeft } from "react-icons/fa";
 import { useProjectDetails } from "@/hooks/useProjectDetails";
-import Loading from "@/components/project-details/Loading";
-import HeaderSection from "@/components/project-details/HeaderSection";
-import Overview from "@/components/project-details/Overview";
-import Features from "@/components/project-details/Features";
-import ScreenshotsGallery from "@/components/project-details/ScreenshotsGallery";
-import Technologies from "@/components/project-details/Technologies";
-import ProjectStats from "@/components/project-details/ProjectStats";
-import PerformanceMetrics from "@/components/project-details/PerformanceMetrics";
-import MainImage from "@/components/project-details/MainImage";
-import BackgroundEffects from "@/components/project-details/BackgroundEffects";
+import Loading from "@/components/features/projects/Loading";
+import HeaderSection from "@/components/features/projects/HeaderSection";
+import Overview from "@/components/features/projects/Overview";
+import Features from "@/components/features/projects/Features";
+import ScreenshotsGallery from "@/components/features/projects/ScreenshotsGallery";
+import Technologies from "@/components/features/projects/Technologies";
+import ProjectStats from "@/components/features/projects/ProjectStats";
+import PerformanceMetrics from "@/components/features/projects/PerformanceMetrics";
+import MainImage from "@/components/features/projects/MainImage";
+import BackgroundEffects from "@/components/features/projects/BackgroundEffects";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);

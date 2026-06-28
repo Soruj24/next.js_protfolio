@@ -1,28 +1,20 @@
-// models/Contact.ts
 import mongoose, { Schema, Document } from "mongoose";
-import { z } from "zod";
 
-export const contactFormSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  subject: z.string().min(5, "Subject must be at least 5 characters"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
-
-export type ContactFormData = z.infer<typeof contactFormSchema>;
-
-export interface IContact extends ContactFormData {
+export interface IContact {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
   status: "pending" | "read" | "replied";
   ipAddress?: string;
   userAgent?: string;
   reply?: string;
   _id: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export interface IContactDocument extends Omit<IContact, "_id">, Document {
-  createdAt: Date;
-  updatedAt: Date;
-}
+export interface IContactDocument extends Omit<IContact, "_id">, Document {}
 
 const ContactSchema = new Schema<IContactDocument>(
   {

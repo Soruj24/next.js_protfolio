@@ -1,5 +1,5 @@
 "use client";
-import SkillForm from "@/components/admin/SkillForm";
+import SkillForm from "@/components/features/admin/SkillForm";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";

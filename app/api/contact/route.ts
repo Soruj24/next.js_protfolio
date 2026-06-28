@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
-import { Contact, contactFormSchema } from "@/models/Contact";
+import { Contact } from "@/models/Contact";
+import { contactFormSchema } from "@/lib/schemas/contact";
 import { auth } from "@/auth";
 
 export async function GET(request: NextRequest) {
@@ -38,7 +39,7 @@ export async function POST(request: NextRequest) {
     const validation = contactFormSchema.safeParse(body);
     if (!validation.success) {
       const errorMessages = validation.error.issues
-        .map((err: any) => err.message)
+        .map((err: { message: string }) => err.message)
         .join(", ");
       return NextResponse.json(
         {
@@ -52,10 +53,11 @@ export async function POST(request: NextRequest) {
 
     try {
       await connectDB();
-    } catch (dbError: any) {
+    } catch (dbError: unknown) {
+      const message = dbError instanceof Error ? dbError.message : "Database connection failed";
       console.error("Database connection error in Contact API:", dbError);
       return NextResponse.json(
-        { success: false, message: `Database connection failed: ${dbError.message}` },
+        { success: false, message: `Database connection failed: ${message}` },
         { status: 500 },
       );
     }
@@ -72,24 +74,27 @@ export async function POST(request: NextRequest) {
         message: "Message sent successfully!",
         id: contact._id,
       });
-    } catch (saveError: any) {
+    } catch (saveError: unknown) {
+      const message = saveError instanceof Error ? saveError.message : "Failed to save message";
       console.error("Data save error in Contact API:", saveError);
       return NextResponse.json(
-        { success: false, message: `Failed to save message: ${saveError.message}` },
+        { success: false, message: `Failed to save message: ${message}` },
         { status: 500 },
       );
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal server error";
+    const stack = error instanceof Error ? error.stack : undefined;
     console.error("Contact API error details:", {
-      message: error.message,
-      stack: error.stack,
+      message,
+      stack,
       error
     });
     return NextResponse.json(
       { 
         success: false, 
-        message: error.message || "Internal server error",
-        stack: process.env.NODE_ENV === "development" ? error.stack : undefined
+        message: message || "Internal server error",
+        stack: process.env.NODE_ENV === "development" ? stack : undefined
       },
       { status: 500 },
     );

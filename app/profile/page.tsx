@@ -8,13 +8,13 @@ import Footer from "@/components/layout/Footer";
 import { ISettings } from "@/models/Settings";
 import { getStats } from "@/lib/stats";
 import { useProfile } from "@/hooks/useProfile";
-import Loading from "@/components/profile/Loading";
-import EditProfileDialogForNormalUsers from "@/components/profile/EditProfileDialogForNormalUsers";
-import HeaderProfileSection from "@/components/profile/HeaderProfileSection";
-import ProfessionalSummary from "@/components/profile/ProfessionalSummary";
-import StatsGrid from "@/components/profile/StatsGrid";
-import Sidebar from "@/components/profile/Sidebar";
-import MainContentArea from "@/components/profile/MainContentArea";
+import Loading from "@/components/features/profile/Loading";
+import EditProfileDialogForNormalUsers from "@/components/features/profile/EditProfileDialogForNormalUsers";
+import HeaderProfileSection from "@/components/features/profile/HeaderProfileSection";
+import ProfessionalSummary from "@/components/features/profile/ProfessionalSummary";
+import StatsGrid from "@/components/features/profile/StatsGrid";
+import Sidebar from "@/components/features/profile/Sidebar";
+import MainContentArea from "@/components/features/profile/MainContentArea";
 
 export default function ProfilePage() {
   const {

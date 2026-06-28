@@ -3,18 +3,18 @@ import ParticleBackground from "@/components/background/ParticleBackground";
 import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import NavBar from "@/components/layout/NavBar";
-import AboutSection from "@/components/sections/AboutSection";
-import ContactSection from "@/components/sections/ContactSection";
-import HomeSection from "@/components/sections/HomeSection";
-import TechInnovation from "@/components/sections/TechInnovation";
-import EngineeringStandards from "@/components/sections/EngineeringStandards";
-import TechnicalCaseStudies from "@/components/sections/TechnicalCaseStudies";
-import ProjectsShowcase from "@/components/sections/ProjectsShowcase";
-import SkillsShowcase from "@/components/sections/SkillsShowcase";
+import AboutSection from "@/components/features/about/AboutSection";
+import ContactSection from "@/components/features/contact/ContactSection";
+import HomeSection from "@/components/features/hero/HomeSection";
+import TechInnovation from "@/components/features/projects/TechInnovation";
+import EngineeringStandards from "@/components/features/projects/EngineeringStandards";
+import TechnicalCaseStudies from "@/components/features/projects/TechnicalCaseStudies";
+import ProjectsShowcase from "@/components/features/projects/ProjectsShowcase";
+import SkillsShowcase from "@/components/features/skills/SkillsShowcase";
 import personalData from "@/data/Personal.json";
 import { useEffect, useState } from "react";
-import RecentlyViewedProducts from "@/components/products/RecentlyViewedProducts";
-import { useRecentlyViewed } from "@/context/RecentlyViewedContext";
+import RecentlyViewedProducts from "@/components/features/projects/RecentlyViewedProducts";
+import { useRecentlyViewed } from "@/components/providers/RecentlyViewedContext";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");

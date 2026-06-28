@@ -1,0 +1,12 @@
+export { ContactInfo } from "./ContactInfo";
+export { MagneticButton } from "./MagneticButton";
+export { NavItem } from "./NavItem";
+export { PageTransition } from "./PageTransition";
+export { ProjectCard } from "./ProjectCard";
+export { ProjectLinks } from "./ProjectLinks";
+export { Resume } from "./Resume";
+export { SectionTitle } from "./SectionTitle";
+export { StatCard } from "./StatCard";
+export { TechChip } from "./TechChip";
+export { PaginationInfo } from "./PaginationInfo";
+export { PaginationNav } from "./PaginationNav";

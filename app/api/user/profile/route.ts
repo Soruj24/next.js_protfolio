@@ -38,10 +38,9 @@ export async function PUT(req: Request) {
         role: updatedUser.role,
       },
     });
-  } catch (error: any) {
-    console.error("Profile update error:", error);
+  } catch (error: unknown) {
     return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
+      { error: error instanceof Error ? error.message : "Internal Server Error" },
       { status: 500 },
     );
   }

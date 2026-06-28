@@ -3,10 +3,10 @@ import Link from "next/link";
 import { Plus, Search as SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSkills } from "@/hooks/admin/useSkills";
-import AdminSearchBar from "@/components/admin/AdminSearchBar";
-import AdminEmptyState from "@/components/admin/AdminEmptyState";
-import SkillCategoryCard from "@/components/admin/skill/SkillCategoryCard";
-import ProfessionalPagination from "@/components/admin/Pagination";
+import AdminSearchBar from "@/components/features/admin/AdminSearchBar";
+import AdminEmptyState from "@/components/features/admin/AdminEmptyState";
+import SkillCategoryCard from "@/components/features/admin/SkillCategoryCard";
+import ProfessionalPagination from "@/components/features/admin/Pagination";
 
 export default function AdminSkills() {
   const {

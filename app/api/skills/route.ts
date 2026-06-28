@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { SkillCategory } from "@/models/Skill";
-import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/auth/helpers";
 import { skillCategories as localSkills } from "@/data/skills";
 
 export async function GET() {
@@ -33,11 +33,8 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const session = await auth();
-    const userRole = (session?.user as { role?: string })?.role;
-    if (!session || userRole !== "admin") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const { session, error: authError } = await requireAdmin();
+    if (authError) return authError;
 
     const data = await req.json();
     await connectDB();

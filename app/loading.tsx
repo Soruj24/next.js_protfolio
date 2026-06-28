@@ -1,6 +1,6 @@
 "use client";
 import { useRef } from "react";
-import { useLoadingTypewriter } from "@/hooks/useLoadingTypewriter";
+import { useLoadingAnimation } from "@/hooks/useLoadingAnimation";
 import LoadingCubes from "@/components/layout/LoadingCubes";
 
 function LoadingScreen() {
@@ -10,7 +10,7 @@ function LoadingScreen() {
   const percentageRef = useRef<HTMLSpanElement>(null);
   const cubesRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  useLoadingTypewriter(textRef, cursorRef, percentageRef, cubesRef, loadingRef);
+  useLoadingAnimation(loadingRef, textRef, cursorRef, percentageRef, cubesRef);
 
   return (
     <div ref={loadingRef} className="fixed inset-0 z-50 loading-bg overflow-hidden">

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import ProjectForm from "@/components/admin/ProjectForm";
+import ProjectForm from "@/components/features/admin/ProjectForm";
 import { useRouter, useParams } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";

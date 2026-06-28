@@ -1,7 +1,7 @@
-import { getDashboardData } from "@/lib/admin/dashboard";
-import DashboardStatsGrid from "@/components/admin/dashboard/DashboardStatsGrid";
-import RecentInquiries from "@/components/admin/dashboard/RecentInquiries";
-import SideWidgets from "@/components/admin/dashboard/SideWidgets";
+import { getDashboardData } from "@/lib/services/dashboard";
+import DashboardStatsGrid from "@/components/features/admin/DashboardStatsGrid";
+import RecentInquiries from "@/components/features/admin/RecentInquiries";
+import SideWidgets from "@/components/features/admin/SideWidgets";
 
 export const dynamic = "force-dynamic";
 
