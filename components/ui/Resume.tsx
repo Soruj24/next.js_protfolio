@@ -36,7 +36,9 @@ export default function Resume() {
       URL.revokeObjectURL(a.href);
     } catch (err) {
       console.error(err);
-      alert("Failed to generate PDF. Try using browser Print (Ctrl+P) instead.");
+      alert(
+        "Failed to generate PDF. Try using browser Print (Ctrl+P) instead.",
+      );
     } finally {
       setDownloading(false);
     }
@@ -56,33 +58,33 @@ export default function Resume() {
           }
         }
       `}</style>
-        <div className="no-print text-center mb-5">
-          <button
-            onClick={handleDownload}
-            disabled={downloading}
-            className="px-6 py-2.5 text-sm font-semibold bg-[#2b4c7e] text-white border-none rounded-md cursor-pointer hover:bg-[#1f3a5e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {downloading ? "Generating PDF..." : "Download as PDF"}
-          </button>
-        </div>
+      <div className="no-print text-center mb-5">
+        <button
+          onClick={handleDownload}
+          disabled={downloading}
+          className="px-6 py-2.5 text-sm font-semibold bg-[#2b4c7e] text-white border-none rounded-md cursor-pointer hover:bg-[#1f3a5e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {downloading ? "Generating PDF..." : "Download as PDF"}
+        </button>
+      </div>
 
-        <ResumeHeader info={personalInfo} />
+      <ResumeHeader info={personalInfo} />
 
-        <ResumeSection title="Professional Summary">
-          <p className="m-0 text-justify">{summary}</p>
-        </ResumeSection>
+      <ResumeSection title="Professional Summary">
+        <p className="m-0 text-justify">{summary}</p>
+      </ResumeSection>
 
-        <ResumeSection title="Technical Skills">
-          <ResumeSkills skills={skills} />
-        </ResumeSection>
+      <ResumeSection title="Technical Skills">
+        <ResumeSkills skills={skills} />
+      </ResumeSection>
 
-        <ResumeSection title="Key Projects">
-          <ResumeProjects projects={projects} />
-        </ResumeSection>
+      <ResumeSection title="Key Projects">
+        <ResumeProjects projects={projects} />
+      </ResumeSection>
 
-        <ResumeSection title="Education">
-          <ResumeEducation education={education} />
-        </ResumeSection>
+      <ResumeSection title="Education">
+        <ResumeEducation education={education} />
+      </ResumeSection>
     </div>
   );
 }
