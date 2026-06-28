@@ -59,7 +59,6 @@ function ProjectsShowcase() {
 
           {filteredProjects.length === 0 && <ProjectEmptyState />}
 
-          <ProjectStats projects={projects} />
         </div>
       </section>
     </>

@@ -8,7 +8,7 @@ const ProjectStats = ({ project }: { project: IProject }) => {
         <div className="flex justify-between items-center py-3 border-b border-white/5">
           <span className="text-gray-400">Duration</span>
           <span className="font-medium">
-            {project?.duration || project.stats?.completionTime}
+            {project?.duration || project?.stats?.completionTime}
           </span>
         </div>
         <div className="flex justify-between items-center py-3 border-b border-white/5">
@@ -20,7 +20,7 @@ const ProjectStats = ({ project }: { project: IProject }) => {
         <div className="flex justify-between items-center py-3 border-b border-white/5">
           <span className="text-gray-400">Complexity</span>
           <span className="font-medium text-cyan-400">
-            {project?.stats?.complexity || project.stats?.complexity}
+            {project?.stats?.complexity || ""}
           </span>
         </div>
         <div className="flex justify-between items-center py-3">
