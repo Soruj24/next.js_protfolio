@@ -7,7 +7,7 @@ import NavBar from "@/components/layout/NavBar";
 import AboutSection from "@/features/about/components/AboutSection";
 import ContactSection from "@/features/contact/components/ContactSection";
 import HomeSection from "@/features/hero/components/HomeSection";
-import ProjectsShowcase from "@/features/projects/components/ProjectsShowcase";
+import FeaturedProjectsShowcase from "@/features/projects/components/FeaturedProjectsShowcase";
 import SkillsShowcase from "@/features/skills/components/SkillsShowcase";
 import ExperienceSection from "@/features/experience/components/ExperienceSection";
 import ServicesSection from "@/features/services/components/ServicesSection";
@@ -69,7 +69,7 @@ export default function Home() {
           <HomeSection data={settings} />
           {/* <AboutSection data={settings} /> */}
           <SkillsShowcase />
-          <ProjectsShowcase />
+          <FeaturedProjectsShowcase />
           <ExperienceSection />
           <ServicesSection />
           <GitHubStats />

@@ -22,6 +22,37 @@ export interface IProjectStats {
   likes: number;
 }
 
+export interface ITechDecision {
+  tech: string;
+  reason: string;
+  alternatives: string;
+  category: "framework" | "ui" | "state" | "data" | "animation" | "tooling" | "deployment" | "other";
+}
+
+export interface ICodeSnippet {
+  title: string;
+  language: string;
+  description: string;
+  code: string;
+}
+
+export interface IAccessibilityItem {
+  title: string;
+  description: string;
+  wcag?: string;
+}
+
+export interface ISEOItem {
+  title: string;
+  description: string;
+}
+
+export interface IFolderNode {
+  name: string;
+  type: "file" | "folder";
+  children?: IFolderNode[];
+}
+
 export interface IProject {
   _id?: string;
   id: string;
@@ -55,6 +86,13 @@ export interface IProject {
   metaDescription: string;
   seoTitle: string;
   performance: IPerformanceStats;
+  problem?: string;
+  solution?: string;
+  folderStructure?: IFolderNode[];
+  codeSnippets?: ICodeSnippet[];
+  techDecisions?: ITechDecision[];
+  accessibility?: IAccessibilityItem[];
+  seo?: ISEOItem[];
 }
 
 export interface IProjectDocument extends Omit<IProject, '_id'>, Document {
