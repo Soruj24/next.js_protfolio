@@ -3,9 +3,7 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+gsap.registerPlugin(ScrollTrigger);
 
 interface SectionTitleProps {
   title: string;
@@ -19,22 +17,17 @@ function SectionTitle({ title, subtitle }: SectionTitleProps) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Title characters animation
       const chars = titleRef.current?.querySelectorAll(".char");
       if (chars && chars.length > 0) {
         gsap.fromTo(
           chars,
-          {
-            opacity: 0,
-            y: 20,
-            rotateX: -90,
-          },
+          { opacity: 0, y: 30, rotateX: -60 },
           {
             opacity: 1,
             y: 0,
             rotateX: 0,
-            duration: 0.8,
-            stagger: 0.02,
+            duration: 0.7,
+            stagger: 0.015,
             ease: "back.out(1.7)",
             scrollTrigger: {
               trigger: containerRef.current,
@@ -45,18 +38,14 @@ function SectionTitle({ title, subtitle }: SectionTitleProps) {
         );
       }
 
-      // Subtitle animation
       gsap.fromTo(
         subtitleRef.current,
-        {
-          opacity: 0,
-          y: 20,
-        },
+        { opacity: 0, y: 15 },
         {
           opacity: 1,
           y: 0,
-          duration: 1,
-          delay: 0.4,
+          duration: 0.8,
+          delay: 0.3,
           ease: "power3.out",
           scrollTrigger: {
             trigger: containerRef.current,
@@ -71,13 +60,10 @@ function SectionTitle({ title, subtitle }: SectionTitleProps) {
   }, [title]);
 
   return (
-    <div ref={containerRef} className="text-center mb-24 relative">
-      {/* Decorative Line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50 blur-sm"></div>
-      
+    <div ref={containerRef} className="text-center mb-16 sm:mb-20 md:mb-24 relative">
       <h2
         ref={titleRef}
-        className="text-4xl sm:text-5xl md:text-7xl font-black mb-8 tracking-tight leading-tight flex flex-wrap justify-center gap-x-[0.2em]"
+        className="text-3xl sm:text-4xl md:text-6xl font-black mb-6 sm:mb-8 tracking-tighter leading-tight flex flex-wrap justify-center gap-x-[0.25em]"
       >
         {title.split(" ").map((word, wordIndex) => (
           <span key={wordIndex} className="whitespace-nowrap inline-flex">
@@ -93,17 +79,16 @@ function SectionTitle({ title, subtitle }: SectionTitleProps) {
           </span>
         ))}
       </h2>
-      
-      {/* Decorative Element */}
-      <div className="flex items-center justify-center gap-4 mb-8">
-        <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-cyan-500/50"></div>
-        <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(34,211,238,0.8)] animate-pulse"></div>
-        <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-cyan-500/50"></div>
+
+      <div className="flex items-center justify-center gap-3 mb-6 sm:mb-8">
+        <div className="h-[1px] w-10 sm:w-16 bg-gradient-to-r from-transparent to-cyan-500/40" />
+        <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(34,211,238,0.6)]" />
+        <div className="h-[1px] w-10 sm:w-16 bg-gradient-to-l from-transparent to-cyan-500/40" />
       </div>
 
       <p
         ref={subtitleRef}
-        className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light"
+        className="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-light"
       >
         {subtitle}
       </p>

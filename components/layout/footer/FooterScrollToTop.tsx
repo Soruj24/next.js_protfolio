@@ -1,12 +1,14 @@
-import React from "react";
+"use client";
+import { ArrowUp } from "lucide-react";
 
 const FooterScrollToTop: React.FC = () => {
   return (
     <button
-      className="footer-float px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl font-semibold text-white hover:shadow-2xl hover:shadow-cyan-500/25 transform hover:scale-105 transition-all duration-300 shadow-lg"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
+      aria-label="Scroll to top"
     >
-      ↑ Back to Top
+      <ArrowUp className="w-4 h-4" />
     </button>
   );
 };

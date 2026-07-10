@@ -1,156 +1,185 @@
-import React, { forwardRef } from "react";
-import {
-  LogOut,
-  User as UserIcon,
-  LayoutDashboard,
-  LogIn,
-  X,
-} from "lucide-react";
+"use client";
+import { useEffect, useRef, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, LogIn, LayoutDashboard, LogOut } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { signOut } from "next-auth/react";
 
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  navItems: Array<{
-    id: string;
-    label: string;
-    icon: string;
-    isLink?: boolean;
-  }>;
+  items: Array<{ id: string; label: string }>;
   activeSection: string;
-  handleNavClick: (id: string, isLink?: boolean) => void;
-  session: any;
-  backdropRef: React.RefObject<HTMLDivElement | null>;
+  onSelect: (id: string) => void;
 }
 
-const MobileMenu = forwardRef<HTMLDivElement, MobileMenuProps>(
-  (
-    {
-      isOpen,
-      onClose,
-      navItems,
-      activeSection,
-      handleNavClick,
-      session,
-      backdropRef,
+export default function MobileMenu({
+  isOpen,
+  onClose,
+  items,
+  activeSection,
+  onSelect,
+}: MobileMenuProps) {
+  const { data: session } = useSession();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+
+      if (e.key === "Tab" && panelRef.current) {
+        const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
     },
-    ref,
-  ) => {
-    return (
-      <>
-        {/* Mobile Menu Backdrop */}
-        <div
-          ref={backdropRef}
-          className={`fixed inset-0 bg-black/60 backdrop-blur-md z-[60] lg:hidden ${
-            isOpen ? "block" : "hidden"
-          }`}
-          onClick={onClose}
-        ></div>
+    [onClose]
+  );
 
-        {/* Mobile Menu Drawer */}
-        <div
-          ref={ref}
-          className={`fixed top-0 right-0 h-full w-screen sm:w-[360px] bg-[#0a0a0a] border-l border-white/10 z-[70] lg:hidden p-6 sm:p-8 flex flex-col shadow-2xl overflow-y-auto overscroll-contain ${
-            isOpen ? "translate-x-0" : "translate-x-full"
-          } transition-transform duration-500`}
-          style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-        >
-          <div className="flex justify-between items-center mb-8 sm:mb-12">
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-white/5 rounded-full transition-colors"
-            >
-              <X className="w-6 h-6 text-gray-400" />
-            </button>
-          </div>
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+      setTimeout(() => closeButtonRef.current?.focus(), 100);
+    }
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, handleKeyDown]);
 
-          <div className="space-y-4 flex-1">
-            {navItems.map((item) => (
+  const handleSelect = (id: string) => {
+    onSelect(id);
+    onClose();
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] lg:hidden"
+            onClick={onClose}
+            aria-hidden="true"
+          />
+
+          {/* Panel */}
+          <motion.div
+            ref={panelRef}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 400, damping: 35 }}
+            className="fixed top-0 right-0 h-full w-[min(360px,85vw)] bg-[#080c15]/98 backdrop-blur-2xl border-l border-white/[0.06] z-[70] lg:hidden flex flex-col"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.06]">
+              <span className="text-sm font-semibold text-white/80 tracking-tight">
+                Navigation
+              </span>
               <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id, item.isLink)}
-                className={`mobile-nav-item w-full flex items-center justify-between p-3 sm:p-4 rounded-xl border transition-all duration-300 ${
-                  activeSection === item.id
-                    ? "bg-white/5 border-cyan-500/30 text-white"
-                    : "bg-transparent border-white/10 hover:bg-white/5 text-gray-300"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-xl sm:text-2xl">
-                    {item.icon}
-                  </div>
-                  <span className="text-base sm:text-lg font-semibold">
-                    {item.label}
-                  </span>
-                </div>
-                <div
-                  className={`h-6 w-1 rounded-full ${activeSection === item.id ? "bg-gradient-to-b from-cyan-500 to-blue-500" : "bg-transparent"}`}
-                />
-              </button>
-            ))}
-          </div>
-
-          <div className="pt-8 border-t border-white/10 space-y-4">
-            {session ? (
-              <div className="space-y-4">
-                <div className="mobile-profile-item flex items-center space-x-4 p-4 bg-white/5 rounded-2xl border border-white/10">
-                  <Avatar className="h-12 w-12 border-2 border-cyan-500">
-                    <AvatarImage src={session.user?.image || ""} />
-                    <AvatarFallback className="bg-cyan-900 text-cyan-100">
-                      {session.user?.name?.charAt(0) || "U"}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-sm font-bold text-white leading-none">
-                      {session.user?.name}
-                    </p>
-                    <p className="text-[10px] text-gray-400 mt-1 uppercase tracking-widest">
-                      {session.user?.role || "User"}
-                    </p>
-                  </div>
-                </div>
-
-                {session.user?.role === "admin" && (
-                  <Link
-                    href="/admin"
-                    onClick={onClose}
-                    className="mobile-profile-item w-full flex items-center space-x-4 p-4 hover:bg-cyan-500/10 rounded-2xl transition-colors text-cyan-400"
-                  >
-                    <LayoutDashboard className="w-5 h-5" />
-                    <span className="font-medium">Admin Dashboard</span>
-                  </Link>
-                )}
-
-                <button
-                  onClick={() => {
-                    signOut();
-                    onClose();
-                  }}
-                  className="mobile-profile-item w-full flex items-center space-x-4 p-4 hover:bg-red-500/10 rounded-2xl transition-colors text-red-400"
-                >
-                  <LogOut className="w-5 h-5" />
-                  <span className="font-medium">Sign Out</span>
-                </button>
-              </div>
-            ) : (
-              <Link
-                href="/login"
+                ref={closeButtonRef}
                 onClick={onClose}
-                className="mobile-profile-item w-full flex items-center justify-center space-x-3 p-5 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-2xl text-white font-bold shadow-lg shadow-cyan-500/20"
+                className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/[0.08] transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+                aria-label="Close menu"
               >
-                <LogIn className="w-5 h-5" />
-                <span>Access Terminal</span>
-              </Link>
-            )}
-          </div>
-        </div>
-      </>
-    );
-  },
-);
+                <X className="w-4 h-4" />
+              </button>
+            </div>
 
-MobileMenu.displayName = "MobileMenu";
+            {/* Links */}
+            <nav className="flex-1 overflow-y-auto px-4 py-4" aria-label="Mobile navigation">
+              <div className="space-y-1">
+                {items.map((item, i) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                    <motion.button
+                      key={item.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.05 * i, duration: 0.3 }}
+                      onClick={() => handleSelect(item.id)}
+                      className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${
+                        isActive
+                          ? "text-white bg-white/[0.06] border border-white/[0.08]"
+                          : "text-gray-500 hover:text-gray-300 hover:bg-white/[0.03] border border-transparent"
+                      }`}
+                      aria-current={isActive ? "page" : undefined}
+                    >
+                      {item.label}
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </nav>
 
-export default MobileMenu;
+            {/* Footer */}
+            <div className="px-6 py-5 border-t border-white/[0.06]">
+              {session ? (
+                <div className="space-y-3">
+                  {session.user?.role === "admin" && (
+                    <Link
+                      href="/admin"
+                      onClick={onClose}
+                      className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-cyan-400 hover:bg-cyan-500/10 transition-colors"
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      Dashboard
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      signOut();
+                      onClose();
+                    }}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 transition-colors w-full outline-none focus-visible:ring-2 focus-visible:ring-red-500/50"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  onClick={onClose}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-white/[0.06] border border-white/[0.08] text-sm font-medium text-white hover:bg-white/[0.1] transition-all outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+                >
+                  <LogIn className="w-4 h-4" />
+                  Login
+                </Link>
+              )}
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}

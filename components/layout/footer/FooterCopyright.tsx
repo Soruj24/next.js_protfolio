@@ -7,8 +7,8 @@ interface FooterCopyrightProps {
 
 const FooterCopyright: React.FC<FooterCopyrightProps> = ({ year, fullName }) => {
   return (
-    <div className="footer-float text-gray-400 text-lg text-center md:text-left">
-      © {year} {fullName}. Built with ❤️ using Next.js & GSAP
+    <div className="text-gray-600 text-xs font-mono">
+      © {year} {fullName}. All rights reserved.
     </div>
   );
 };

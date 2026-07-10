@@ -1,18 +1,21 @@
-import React from "react";
+"use client";
+import { motion } from "framer-motion";
 
-interface ScrollProgressBarProps {
+interface ScrollProgressProps {
   progress: number;
 }
 
-const ScrollProgressBar: React.FC<ScrollProgressBarProps> = ({ progress }) => {
+export default function ScrollProgress({ progress }: ScrollProgressProps) {
   return (
-    <div className="absolute top-0 left-0 w-full h-[2px] bg-white/5 overflow-hidden">
-      <div
-        className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 shadow-[0_0_10px_rgba(6,182,212,0.5)] transition-all duration-300 ease-out"
-        style={{ width: `${progress}%` }}
-      ></div>
+    <div className="absolute top-0 left-0 w-full h-[1px] bg-white/[0.03]">
+      <motion.div
+        className="h-full origin-left"
+        style={{
+          width: `${progress}%`,
+          background: "linear-gradient(90deg, #06b6d4, #3b82f6, #8b5cf6)",
+        }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
+      />
     </div>
   );
-};
-
-export default ScrollProgressBar;
+}

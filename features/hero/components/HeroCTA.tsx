@@ -1,74 +1,87 @@
-import React, { forwardRef } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+"use client";
 
-const HeroCTA = forwardRef<HTMLDivElement>((props, ref) => {
-  const router = useRouter();
+import { motion } from "framer-motion";
+import { ArrowRight, Download, Mail } from "lucide-react";
+
+const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 1.2,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
+
+export default function HeroCTA() {
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <div
-      ref={ref}
-      className="flex flex-col sm:flex-row gap-5 md:gap-8 justify-center items-center mb-20"
+    <motion.div
+      variants={container}
+      initial="hidden"
+      animate="show"
+      className="flex flex-col sm:flex-row gap-3 sm:gap-4"
     >
-      {/* Resume */}
-      <Button
-        onClick={() => router.push("/resume")}
-        className="relative group px-8 py-4 text-lg font-semibold rounded-2xl
-        bg-gradient-to-r from-cyan-500 to-blue-600 text-white
-        shadow-lg hover:shadow-cyan-500/40 transition-all duration-300
-        overflow-hidden"
+      {/* Primary: View Projects */}
+      <motion.button
+        variants={item}
+        onClick={() => scrollTo("projects")}
+        whileHover={{ scale: 1.03, y: -1 }}
+        whileTap={{ scale: 0.97 }}
+        className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl
+          bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm
+          shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]
+          transition-shadow duration-500 overflow-hidden"
       >
-        <Download className="w-5 h-5 group-hover:animate-bounce mr-2" />
-        Resume
-      </Button>
-
-      {/* Explore Projects */}
-      <Button
-        onClick={() =>
-          document
-            .getElementById("projects")
-            ?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="relative group px-8 py-4 text-lg font-semibold rounded-2xl
-        bg-gradient-to-r from-cyan-500 to-blue-600 text-white
-        shadow-lg hover:shadow-cyan-500/40 transition-all duration-300
-        overflow-hidden"
-      >
-        <span
-          className="absolute inset-0 bg-white/20 opacity-0
-          group-hover:opacity-100 blur-xl transition duration-500"
-        />
-        <span className="relative flex items-center">
-          Explore Projects
-          <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-2">
-            →
-          </span>
+        <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <span className="relative flex items-center gap-2">
+          View Projects
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
         </span>
-      </Button>
+      </motion.button>
 
-      {/* Contact */}
-      <Button
-        onClick={() =>
-          document
-            .getElementById("contact")
-            ?.scrollIntoView({ behavior: "smooth" })
-        }
-        className="relative group px-8 py-4 text-lg font-semibold rounded-2xl
-        bg-black text-white shadow-lg
-        hover:shadow-white/30 transition-all duration-300 overflow-hidden"
+      {/* Secondary: Download Resume */}
+      <motion.button
+        variants={item}
+        onClick={() => window.open("/resume", "_blank")}
+        whileHover={{ scale: 1.03, y: -1 }}
+        whileTap={{ scale: 0.97 }}
+        className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl
+          bg-white/[0.06] border border-white/[0.1] text-white font-semibold text-sm
+          hover:bg-white/[0.1] hover:border-white/[0.2]
+          transition-all duration-300 backdrop-blur-sm"
       >
-        <span
-          className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent
-          opacity-0 group-hover:opacity-100 transition"
-        />
+        <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform duration-300" />
+        <span>Download Resume</span>
+      </motion.button>
 
-        <span className="relative">Get In Touch</span>
-      </Button>
-    </div>
+      {/* Tertiary: Hire Me */}
+      <motion.button
+        variants={item}
+        onClick={() => scrollTo("contact")}
+        whileHover={{ scale: 1.03, y: -1 }}
+        whileTap={{ scale: 0.97 }}
+        className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl
+          bg-white/[0.06] border border-white/[0.1] text-white font-semibold text-sm
+          hover:bg-white/[0.1] hover:border-white/[0.2]
+          transition-all duration-300 backdrop-blur-sm"
+      >
+        <Mail className="w-4 h-4" />
+        <span>Hire Me</span>
+      </motion.button>
+    </motion.div>
   );
-});
-
-HeroCTA.displayName = "HeroCTA";
-
-export default HeroCTA;
+}

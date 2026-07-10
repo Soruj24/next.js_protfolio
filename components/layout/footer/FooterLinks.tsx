@@ -2,30 +2,21 @@ import React from "react";
 
 const FooterLinks: React.FC = () => {
   const links = [
-    { label: "Resume", link: "/resume" },
-    { label: "Privacy", link: "#" },
-    { label: "Terms", link: "#" },
-    { label: "Contact", link: "#contact" },
+    { label: "Resume", href: "/resume" },
+    { label: "Privacy", href: "#" },
+    { label: "Sitemap", href: "/sitemap.xml" },
   ];
 
-  const handleClick = (link: string) => {
-    if (link.startsWith("#")) {
-      document.getElementById(link.slice(1))?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      window.open(link, "_blank");
-    }
-  };
-
   return (
-    <div className="flex space-x-8">
-      {links.map((item) => (
-        <button
-          key={item.label}
-          className="text-gray-400 hover:text-cyan-400 transition-colors duration-300 footer-float font-medium"
-          onClick={() => handleClick(item.link)}
+    <div className="flex items-center gap-6">
+      {links.map((link) => (
+        <a
+          key={link.label}
+          href={link.href}
+          className="text-xs text-gray-600 hover:text-gray-400 transition-colors duration-300 font-mono"
         >
-          {item.label}
-        </button>
+          {link.label}
+        </a>
       ))}
     </div>
   );
