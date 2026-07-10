@@ -1,21 +1,22 @@
 "use client";
+import dynamic from "next/dynamic";
 import ParticleBackground from "@/components/shared/ParticleBackground";
 import ThemeToggle from "@/components/shared/ThemeToggle";
 import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import NavBar from "@/components/layout/NavBar";
-import AboutSection from "@/features/about/components/AboutSection";
-import ContactSection from "@/features/contact/components/ContactSection";
 import HomeSection from "@/features/hero/components/HomeSection";
-import FeaturedProjectsShowcase from "@/features/projects/components/FeaturedProjectsShowcase";
-import SkillsShowcase from "@/features/skills/components/SkillsShowcase";
-import ExperienceSection from "@/features/experience/components/ExperienceSection";
-import ServicesSection from "@/features/services/components/ServicesSection";
-import TestimonialsSection from "@/features/testimonials/components/TestimonialsSection";
-import FAQSection from "@/features/faq/components/FAQSection";
-import GitHubStats from "@/features/github/components/GitHubStats";
 import personalData from "@/data/Personal.json";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+
+const SkillsShowcase = dynamic(() => import("@/features/skills/components/SkillsShowcase"), { ssr: false });
+const FeaturedProjectsShowcase = dynamic(() => import("@/features/projects/components/FeaturedProjectsShowcase"), { ssr: false });
+const ExperienceSection = dynamic(() => import("@/features/experience/components/ExperienceSection"), { ssr: false });
+const ServicesSection = dynamic(() => import("@/features/services/components/ServicesSection"), { ssr: false });
+const GitHubStats = dynamic(() => import("@/features/github/components/GitHubStats"), { ssr: false });
+const TestimonialsSection = dynamic(() => import("@/features/testimonials/components/TestimonialsSection"), { ssr: false });
+const FAQSection = dynamic(() => import("@/features/faq/components/FAQSection"), { ssr: false });
+const ContactSection = dynamic(() => import("@/features/contact/components/ContactSection"), { ssr: false });
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
@@ -65,17 +66,32 @@ export default function Home() {
           <ThemeToggle />
         </div>
 
-        <main>
+        <main id="main-content">
           <HomeSection data={settings} />
-          {/* <AboutSection data={settings} /> */}
-          <SkillsShowcase />
-          <FeaturedProjectsShowcase />
-          <ExperienceSection />
-          <ServicesSection />
-          <GitHubStats />
-          <TestimonialsSection />
-          <FAQSection />
-          <ContactSection />
+          <Suspense fallback={null}>
+            <SkillsShowcase />
+          </Suspense>
+          <Suspense fallback={null}>
+            <FeaturedProjectsShowcase />
+          </Suspense>
+          <Suspense fallback={null}>
+            <ExperienceSection />
+          </Suspense>
+          <Suspense fallback={null}>
+            <ServicesSection />
+          </Suspense>
+          <Suspense fallback={null}>
+            <GitHubStats />
+          </Suspense>
+          <Suspense fallback={null}>
+            <TestimonialsSection />
+          </Suspense>
+          <Suspense fallback={null}>
+            <FAQSection />
+          </Suspense>
+          <Suspense fallback={null}>
+            <ContactSection />
+          </Suspense>
         </main>
 
         <Footer data={settings} />

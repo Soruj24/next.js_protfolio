@@ -7,7 +7,7 @@ const ProjectEmptyState: React.FC = () => {
       <h3 className="text-2xl font-bold text-white mb-2">
         No matching intelligence found
       </h3>
-      <p className="text-gray-500 font-medium">
+      <p className="text-gray-400 font-medium">
         Adjust your parameters and try again.
       </p>
     </div>

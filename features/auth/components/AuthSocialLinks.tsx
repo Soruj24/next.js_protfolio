@@ -1,5 +1,5 @@
 import React from "react";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { Github, Chrome } from "lucide-react";
 import { signIn } from "next-auth/react";
 
 interface AuthSocialLinksProps {
@@ -24,14 +24,14 @@ const AuthSocialLinks: React.FC<AuthSocialLinksProps> = ({ label = "Multi-Channe
           onClick={() => signIn("github", { callbackUrl: "/admin" })}
           className="flex items-center justify-center gap-2 h-11 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors text-sm font-medium"
         >
-          <FaGithub size={18} /> GitHub
+          <Github size={18} /> GitHub
         </button>
         <button
           type="button"
           onClick={() => signIn("google", { callbackUrl: "/admin" })}
           className="flex items-center justify-center gap-2 h-11 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors text-sm font-medium"
         >
-          <FaGoogle size={16} className="text-red-500" /> Google
+          <Chrome size={16} className="text-red-500" /> Google
         </button>
       </div>
     </div>

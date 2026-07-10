@@ -58,10 +58,10 @@ export default function TechDecisionsSection({ techDecisions }: TechDecisionsSec
                 {decision.reason}
               </p>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold text-gray-700 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
                   Alternatives:
                 </span>
-                <span className="text-[11px] text-gray-600">{decision.alternatives}</span>
+                <span className="text-[11px] text-gray-400">{decision.alternatives}</span>
               </div>
             </motion.div>
           ))}

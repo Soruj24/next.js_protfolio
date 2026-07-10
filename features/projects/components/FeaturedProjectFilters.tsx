@@ -52,18 +52,18 @@ export default function FeaturedProjectFilters({
         <div className="flex-1 relative group">
           <div className="absolute inset-0 bg-cyan-500/10 rounded-2xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
           <div className="relative flex items-center bg-white/[0.03] border border-white/[0.06] rounded-2xl px-5 py-3.5 group-focus-within:border-cyan-500/30 transition-all duration-300">
-            <Search className="w-4 h-4 text-gray-500 mr-3 flex-shrink-0" />
+            <Search className="w-4 h-4 text-gray-400 mr-3 flex-shrink-0" />
             <input
               type="text"
               placeholder="Search by name, tech, or tag..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-1 bg-transparent text-white text-sm placeholder:text-gray-600 focus:outline-none font-medium"
+              className="flex-1 bg-transparent text-white text-sm placeholder:text-gray-400 focus:outline-none font-medium"
             />
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="ml-2 p-1 rounded-lg hover:bg-white/[0.06] text-gray-500 hover:text-white transition-colors"
+                className="ml-2 p-1 rounded-lg hover:bg-white/[0.06] text-gray-400 hover:text-white transition-colors"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -78,7 +78,7 @@ export default function FeaturedProjectFilters({
             className={`flex items-center gap-2 px-5 py-3.5 rounded-2xl text-sm font-medium transition-all duration-300 border ${
               selectedTech.length > 0
                 ? "bg-cyan-500/10 border-cyan-500/30 text-cyan-400"
-                : "bg-white/[0.03] border-white/[0.06] text-gray-500 hover:text-white hover:border-white/[0.12]"
+                : "bg-white/[0.03] border-white/[0.06] text-gray-400 hover:text-white hover:border-white/[0.12]"
             }`}
           >
             <SlidersHorizontal className="w-4 h-4" />
@@ -106,13 +106,13 @@ export default function FeaturedProjectFilters({
               >
                 <div className="p-3 border-b border-white/[0.06]">
                   <div className="flex items-center bg-white/[0.03] rounded-xl px-3 py-2">
-                    <Search className="w-3.5 h-3.5 text-gray-500 mr-2" />
+                    <Search className="w-3.5 h-3.5 text-gray-400 mr-2" />
                     <input
                       type="text"
                       placeholder="Filter technologies..."
                       value={techSearch}
                       onChange={(e) => setTechSearch(e.target.value)}
-                      className="flex-1 bg-transparent text-white text-xs placeholder:text-gray-600 focus:outline-none"
+                      className="flex-1 bg-transparent text-white text-xs placeholder:text-gray-400 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -126,7 +126,7 @@ export default function FeaturedProjectFilters({
                         className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200 ${
                           active
                             ? "bg-cyan-500/10 text-cyan-400"
-                            : "text-gray-500 hover:text-white hover:bg-white/[0.04]"
+                            : "text-gray-400 hover:text-white hover:bg-white/[0.04]"
                         }`}
                       >
                         <div
@@ -183,14 +183,14 @@ export default function FeaturedProjectFilters({
               className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 border ${
                 selectedCategory === cat
                   ? "bg-white/[0.08] text-white border-white/[0.12] shadow-lg shadow-white/[0.02]"
-                  : "bg-transparent text-gray-600 border-transparent hover:text-gray-400 hover:bg-white/[0.02]"
+                  : "bg-transparent text-gray-400 border-transparent hover:text-gray-400 hover:bg-white/[0.02]"
               }`}
             >
               {cat}
             </button>
           ))}
         </div>
-        <span className="text-xs text-gray-600 font-medium tabular-nums">
+        <span className="text-xs text-gray-400 font-medium tabular-nums">
           {totalResults} project{totalResults !== 1 ? "s" : ""}
         </span>
       </div>

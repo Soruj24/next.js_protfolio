@@ -154,7 +154,7 @@ export default function ContactForm({ email }: ContactFormProps) {
               </AnimatePresence>
 
               {/* Email fallback */}
-              <p className="text-center text-[11px] text-gray-700">
+              <p className="text-center text-[11px] text-gray-400">
                 Or email directly at{" "}
                 <a
                   href={`mailto:${email || "sorujmahmudb2h@gmail.com"}`}
@@ -188,7 +188,7 @@ function FormField({
     <div className="space-y-1.5">
       <label
         htmlFor={htmlFor}
-        className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest flex items-center gap-1"
+        className="text-[11px] font-semibold text-gray-400 uppercase tracking-widest flex items-center gap-1"
       >
         {label}
         {required && <span className="text-cyan-500">*</span>}
@@ -204,7 +204,7 @@ function FormField({
 }
 
 function inputClass(hasError: boolean): string {
-  return `w-full px-4 py-3 bg-white/[0.03] border rounded-xl text-sm text-white placeholder:text-gray-700 focus:outline-none transition-all duration-300 ${
+  return `w-full px-4 py-3 bg-white/[0.03] border rounded-xl text-sm text-white placeholder:text-gray-400 focus:outline-none transition-all duration-300 ${
     hasError
       ? "border-red-500/40 focus:border-red-500/60 focus:ring-1 focus:ring-red-500/20"
       : "border-white/[0.06] focus:border-cyan-500/40 focus:ring-1 focus:ring-cyan-500/15 hover:border-white/[0.1]"

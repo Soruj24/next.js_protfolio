@@ -40,7 +40,7 @@ export default function ArchitectureSection({ architecture }: ArchitectureSectio
           </h2>
         </div>
 
-        <p className="text-gray-500 text-sm leading-relaxed mb-8">
+        <p className="text-gray-400 text-sm leading-relaxed mb-8">
           {architecture}
         </p>
 
@@ -67,7 +67,7 @@ export default function ArchitectureSection({ architecture }: ArchitectureSectio
                   {layer.items.map((item) => (
                     <span
                       key={item}
-                      className="px-2.5 py-1 rounded-lg bg-white/[0.03] border border-white/[0.05] text-[11px] font-medium text-gray-500"
+                      className="px-2.5 py-1 rounded-lg bg-white/[0.03] border border-white/[0.05] text-[11px] font-medium text-gray-400"
                     >
                       {item}
                     </span>

@@ -27,7 +27,7 @@ const AboutStats: React.FC<AboutStatsProps> = ({ stats, addCardRef }) => {
           >
             {stat.value}
           </div>
-          <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-500 group-hover:text-gray-300 transition-colors">
+          <div className="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 group-hover:text-gray-300 transition-colors">
             {stat.label}
           </div>
         </div>

@@ -60,7 +60,7 @@ export default function HeroSocial() {
             whileHover={{ scale: 1.1, y: -2 }}
             whileTap={{ scale: 0.9 }}
             className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center
-              text-gray-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.15]
+              text-gray-400 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.15]
               transition-colors duration-300"
             aria-label={social.label}
           >

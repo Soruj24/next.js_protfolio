@@ -82,7 +82,7 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
   const resend = getResend();
   if (resend) {
     try {
-      console.log("Attempting to send via Resend...");
+      // Attempting Resend
       const from = process.env.RESEND_FROM || "Soruj.Dev Portfolio <onboarding@resend.dev>";
       const data = await resend.emails.send({
         from,
@@ -93,7 +93,7 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
 
       // Resend returns { id: '...' } on success
       if (data && !("error" in data)) {
-        console.log("Sent successfully via Resend");
+        // Sent via Resend
         return { success: true };
       }
     } catch (error) {
@@ -105,14 +105,14 @@ export const sendVerificationEmail = async (email: string, otp: string) => {
   const transporter = getTransporter();
   if (transporter) {
     try {
-      console.log("Attempting to send via Nodemailer...");
+      // Attempting Nodemailer
       await transporter.sendMail({
         from: '"Soruj.Dev" <sorujmahmudb2h@gmail.com>',
         to: email,
         subject: "Verify your email",
         html: emailHtml,
       });
-      console.log("Sent successfully via Nodemailer");
+      // Sent via Nodemailer
       return { success: true };
     } catch (error) {
       console.error("Nodemailer failed:", error);

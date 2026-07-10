@@ -65,7 +65,7 @@ export default function RelatedProjectsSection({ currentId, allProjects }: Relat
                   <h4 className="text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors mb-1">
                     {project.title}
                   </h4>
-                  <p className="text-[12px] text-gray-600 line-clamp-1">{project.description}</p>
+                  <p className="text-[12px] text-gray-400 line-clamp-1">{project.description}</p>
                 </div>
               </Link>
             </motion.div>

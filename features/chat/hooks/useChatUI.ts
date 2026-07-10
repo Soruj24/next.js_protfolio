@@ -41,7 +41,8 @@ export function useChatUI({ messagesLength, sendMessage }: UseChatUIOptions) {
 
   useEffect(() => {
     if (isOpen && !isMinimized) {
-      setTimeout(() => inputRef.current?.focus(), 200)
+      const timer = setTimeout(() => inputRef.current?.focus(), 200)
+      return () => clearTimeout(timer)
     }
   }, [isOpen, isMinimized])
 

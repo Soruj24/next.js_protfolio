@@ -22,7 +22,7 @@ const FooterSocials: React.FC<FooterSocialsProps> = ({ email }) => {
             href={social.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
+            className="w-9 h-9 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.15] transition-all duration-300"
             aria-label={social.label}
           >
             <Icon className="w-4 h-4" />

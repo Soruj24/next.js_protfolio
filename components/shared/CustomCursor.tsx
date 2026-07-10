@@ -62,27 +62,37 @@ export default function CustomCursor() {
     document.addEventListener("mousedown", onMouseDown);
     document.addEventListener("mouseup", onMouseUp);
 
-    // Add hover effect for interactive elements
-    const interactiveElements = document.querySelectorAll("button, a, input, textarea, .interactive");
-    
-    interactiveElements.forEach((el) => {
-      el.addEventListener("mouseenter", () => {
-        gsap.to(follower, {
-          scale: 2,
-          backgroundColor: "rgba(6, 182, 212, 0.2)",
-          borderColor: "rgba(6, 182, 212, 0.5)",
-          duration: 0.3,
-        });
+    // Add hover effect for interactive elements using event delegation
+    const handleInteractiveEnter = () => {
+      gsap.to(follower, {
+        scale: 2,
+        backgroundColor: "rgba(6, 182, 212, 0.2)",
+        borderColor: "rgba(6, 182, 212, 0.5)",
+        duration: 0.3,
       });
-      
-      el.addEventListener("mouseleave", () => {
-        gsap.to(follower, {
-          scale: 1,
-          backgroundColor: "transparent",
-          borderColor: "rgba(6, 182, 212, 0.3)",
-          duration: 0.3,
-        });
+    };
+
+    const handleInteractiveLeave = () => {
+      gsap.to(follower, {
+        scale: 1,
+        backgroundColor: "transparent",
+        borderColor: "rgba(6, 182, 212, 0.3)",
+        duration: 0.3,
       });
+    };
+
+    document.addEventListener("mouseover", (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target?.closest("button, a, input, textarea, .interactive")) {
+        handleInteractiveEnter();
+      }
+    });
+
+    document.addEventListener("mouseout", (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target?.closest("button, a, input, textarea, .interactive")) {
+        handleInteractiveLeave();
+      }
     });
 
     return () => {

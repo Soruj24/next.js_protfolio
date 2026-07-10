@@ -69,7 +69,7 @@ export default function ContactInfoPanel({ email }: ContactInfoPanelProps) {
             Extraordinary
           </span>
         </h3>
-        <p className="text-gray-500 text-sm leading-relaxed">
+        <p className="text-gray-400 text-sm leading-relaxed">
           Have a project in mind or want to discuss opportunities? I&apos;m
           always interested in hearing about new projects and creative ideas.
         </p>
@@ -92,7 +92,7 @@ export default function ContactInfoPanel({ email }: ContactInfoPanelProps) {
                 <Icon className={`w-4 h-4 ${item.accent}`} />
               </div>
               <div>
-                <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-0.5">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-0.5">
                   {item.label}
                 </p>
                 <p className="text-sm text-gray-300 font-medium">{item.value}</p>
@@ -116,12 +116,12 @@ export default function ContactInfoPanel({ email }: ContactInfoPanelProps) {
           </div>
           <div>
             <p className="text-xs font-semibold text-white">Schedule a Call</p>
-            <p className="text-[11px] text-gray-600">30-min consultation</p>
+            <p className="text-[11px] text-gray-400">30-min consultation</p>
           </div>
         </div>
         <button
           disabled
-          className="w-full py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.06] text-xs font-medium text-gray-600 cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.06] text-xs font-medium text-gray-400 cursor-not-allowed flex items-center justify-center gap-2"
         >
           <Calendar className="w-3.5 h-3.5" />
           Coming Soon
@@ -130,7 +130,7 @@ export default function ContactInfoPanel({ email }: ContactInfoPanelProps) {
 
       {/* Social Links */}
       <div className="space-y-3">
-        <p className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
           Connect
         </p>
         <div className="flex gap-2">
@@ -142,7 +142,7 @@ export default function ContactInfoPanel({ email }: ContactInfoPanelProps) {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.05] text-gray-500 text-xs font-medium hover:bg-white/[0.06] hover:border-white/[0.1] transition-all duration-300 ${social.color}`}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.05] text-gray-400 text-xs font-medium hover:bg-white/[0.06] hover:border-white/[0.1] transition-all duration-300 ${social.color}`}
                 aria-label={social.label}
               >
                 <Icon className="w-4 h-4" />
@@ -170,7 +170,7 @@ export default function ContactInfoPanel({ email }: ContactInfoPanelProps) {
             className="text-center p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]"
           >
             <p className="text-lg font-bold text-white">{stat.value}</p>
-            <p className="text-[10px] text-gray-600 uppercase tracking-wider mt-0.5">
+            <p className="text-[10px] text-gray-400 uppercase tracking-wider mt-0.5">
               {stat.label}
             </p>
           </motion.div>

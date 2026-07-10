@@ -13,7 +13,7 @@ const FooterLinks: React.FC = () => {
         <a
           key={link.label}
           href={link.href}
-          className="text-xs text-gray-600 hover:text-gray-400 transition-colors duration-300 font-mono"
+          className="text-xs text-gray-400 hover:text-gray-400 transition-colors duration-300 font-mono"
         >
           {link.label}
         </a>

@@ -19,14 +19,14 @@ function FolderNode({ node, depth = 0 }: { node: IFolderNode; depth?: number }) 
         className={`w-full flex items-center gap-2 py-1.5 px-2 rounded-lg text-[13px] font-medium transition-colors ${
           isFolder
             ? "text-gray-300 hover:bg-white/[0.03] cursor-pointer"
-            : "text-gray-500 cursor-default"
+            : "text-gray-400 cursor-default"
         }`}
         style={{ paddingLeft: `${depth * 20 + 8}px` }}
       >
         {isFolder ? (
           <>
             <ChevronRight
-              className={`w-3 h-3 text-gray-600 transition-transform duration-200 flex-shrink-0 ${
+              className={`w-3 h-3 text-gray-400 transition-transform duration-200 flex-shrink-0 ${
                 isOpen ? "rotate-90" : ""
               }`}
             />
@@ -35,7 +35,7 @@ function FolderNode({ node, depth = 0 }: { node: IFolderNode; depth?: number }) 
         ) : (
           <>
             <div className="w-3" />
-            <FileCode className="w-4 h-4 text-gray-600 flex-shrink-0" />
+            <FileCode className="w-4 h-4 text-gray-400 flex-shrink-0" />
           </>
         )}
         <span className="truncate">{node.name}</span>
@@ -76,7 +76,7 @@ export default function FolderStructureSection({ folderStructure }: FolderStruct
               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
             </div>
-            <span className="text-[10px] font-mono text-gray-600 ml-2">project-structure</span>
+            <span className="text-[10px] font-mono text-gray-400 ml-2">project-structure</span>
           </div>
           <div className="p-3 font-mono text-[13px]">
             {folderStructure.map((node) => (

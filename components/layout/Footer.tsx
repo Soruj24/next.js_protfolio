@@ -75,7 +75,7 @@ function Footer({ data }: FooterProps) {
                 S<span className="text-gradient-premium">.</span>M
               </span>
             </div>
-            <p className="text-sm text-gray-500 leading-relaxed mb-6 max-w-xs">
+            <p className="text-sm text-gray-400 leading-relaxed mb-6 max-w-xs">
               Building high-performance, accessible web applications with modern frontend technologies.
             </p>
             <FooterSocials email={email} />
@@ -83,9 +83,9 @@ function Footer({ data }: FooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
+            <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
               Navigation
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
@@ -94,7 +94,7 @@ function Footer({ data }: FooterProps) {
                       const id = link.href.replace("#", "");
                       document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="text-sm text-gray-500 hover:text-cyan-400 transition-colors duration-300"
+                    className="text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-300"
                   >
                     {link.label}
                   </button>
@@ -105,13 +105,13 @@ function Footer({ data }: FooterProps) {
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
+            <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
               Services
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {services.map((service) => (
                 <li key={service}>
-                  <span className="text-sm text-gray-500 hover:text-gray-300 transition-colors duration-300 cursor-default">
+                  <span className="text-sm text-gray-400 hover:text-gray-300 transition-colors duration-300 cursor-default">
                     {service}
                   </span>
                 </li>
@@ -121,20 +121,20 @@ function Footer({ data }: FooterProps) {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
+            <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
               Get in Touch
-            </h4>
+            </h2>
             <div className="space-y-4">
               <a
                 href={`mailto:${email}`}
-                className="block text-sm text-gray-500 hover:text-cyan-400 transition-colors duration-300 break-all"
+                className="block text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-300 break-all"
               >
                 {email}
               </a>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-400">
                 Tangail, Dhaka, Bangladesh
               </p>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-gray-400">
                 Open to freelance and full-time opportunities
               </p>
             </div>

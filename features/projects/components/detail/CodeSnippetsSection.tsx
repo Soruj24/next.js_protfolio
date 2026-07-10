@@ -55,11 +55,11 @@ function CodeBlock({ snippet }: { snippet: ICodeSnippet }) {
       <div className="px-5 py-4 border-b border-white/[0.04] flex items-center justify-between">
         <div>
           <h4 className="text-sm font-semibold text-white">{snippet.title}</h4>
-          <p className="text-[12px] text-gray-600 mt-0.5">{snippet.description}</p>
+          <p className="text-[12px] text-gray-400 mt-0.5">{snippet.description}</p>
         </div>
         <button
           onClick={copyCode}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-[11px] font-medium text-gray-500 hover:text-white hover:bg-white/[0.08] transition-all"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06] text-[11px] font-medium text-gray-400 hover:text-white hover:bg-white/[0.08] transition-all"
         >
           {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
           {copied ? "Copied" : "Copy"}

@@ -8,7 +8,7 @@ export default function FeaturedProjectsLoading() {
       {/* Header skeleton */}
       <div className="text-center space-y-4">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <FolderCode className="w-4 h-4 text-gray-700" />
+          <FolderCode className="w-4 h-4 text-gray-400" />
           <div className="h-3 w-24 bg-white/[0.04] rounded-lg" />
         </div>
         <div className="h-10 w-64 bg-white/[0.04] rounded-2xl mx-auto" />

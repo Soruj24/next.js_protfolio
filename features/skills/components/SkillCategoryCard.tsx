@@ -102,7 +102,7 @@ const SkillCategoryCard = forwardRef<HTMLDivElement, SkillCategoryCardProps>(
                   </div>
                 </div>
                 {"description" in skill && skill.description && (
-                  <p className="text-gray-500 text-xs mt-2 font-medium opacity-0 group-hover/skill:opacity-100 transform translate-y-2 group-hover/skill:translate-y-0 transition-all duration-300">
+                  <p className="text-gray-400 text-xs mt-2 font-medium opacity-0 group-hover/skill:opacity-100 transform translate-y-2 group-hover/skill:translate-y-0 transition-all duration-300">
                     {skill.description}
                   </p>
                 )}

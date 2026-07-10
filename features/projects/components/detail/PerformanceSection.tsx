@@ -83,7 +83,7 @@ export default function PerformanceSection({ performance }: PerformanceSectionPr
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-xl font-bold text-white">{avg}</span>
-              <span className="text-[9px] text-gray-600 uppercase tracking-wider">avg</span>
+              <span className="text-[9px] text-gray-400 uppercase tracking-wider">avg</span>
             </div>
           </div>
           <div>
@@ -107,7 +107,7 @@ export default function PerformanceSection({ performance }: PerformanceSectionPr
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[13px] font-medium text-gray-400">{metric.label}</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-gray-600">{getScoreLabel(metric.value!)}</span>
+                  <span className="text-[11px] text-gray-400">{getScoreLabel(metric.value!)}</span>
                   <span className={`text-sm font-bold ${getScoreColor(metric.value!)}`}>
                     {metric.value}
                   </span>

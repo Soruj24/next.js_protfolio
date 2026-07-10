@@ -146,10 +146,10 @@ export default function FeaturedProjectCard({
                 transition={{ duration: 0.3 }}
                 className="flex-shrink-0 mt-1"
               >
-                <ArrowUpRight className="w-5 h-5 text-gray-600 group-hover:text-cyan-400 transition-colors" />
+                <ArrowUpRight className="w-5 h-5 text-gray-400 group-hover:text-cyan-400 transition-colors" />
               </motion.div>
             </div>
-            <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">
+            <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">
               {project.description}
             </p>
           </div>
@@ -157,8 +157,8 @@ export default function FeaturedProjectCard({
           {/* Tech Stack */}
           <div className="space-y-2.5">
             <div className="flex items-center gap-2">
-              <Layers className="w-3.5 h-3.5 text-gray-600" />
-              <span className="text-[11px] font-semibold text-gray-600 uppercase tracking-wider">
+              <Layers className="w-3.5 h-3.5 text-gray-400" />
+              <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
                 Tech Stack
               </span>
             </div>
@@ -168,19 +168,19 @@ export default function FeaturedProjectCard({
           {/* Problem Solved */}
           <div className="space-y-2.5">
             <div className="flex items-center gap-2">
-              <Zap className="w-3.5 h-3.5 text-gray-600" />
-              <span className="text-[11px] font-semibold text-gray-600 uppercase tracking-wider">
+              <Zap className="w-3.5 h-3.5 text-gray-400" />
+              <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
                 Problem Solved
               </span>
             </div>
-            <p className="text-gray-500 text-xs leading-relaxed line-clamp-2">
+            <p className="text-gray-400 text-xs leading-relaxed line-clamp-2">
               {project.fullDescription}
             </p>
           </div>
 
           {/* Key Features */}
           <div className="space-y-2.5">
-            <span className="text-[11px] font-semibold text-gray-600 uppercase tracking-wider">
+            <span className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
               Key Features
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
@@ -189,7 +189,7 @@ export default function FeaturedProjectCard({
                   <div className="w-4 h-4 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
                     <Check className="w-2.5 h-2.5 text-cyan-400" />
                   </div>
-                  <span className="text-[11px] text-gray-500 truncate">{feature}</span>
+                  <span className="text-[11px] text-gray-400 truncate">{feature}</span>
                 </div>
               ))}
             </div>
@@ -199,11 +199,11 @@ export default function FeaturedProjectCard({
           <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-              <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                 Architecture
               </span>
             </div>
-            <p className="text-[11px] text-gray-500 leading-relaxed line-clamp-2">
+            <p className="text-[11px] text-gray-400 leading-relaxed line-clamp-2">
               {project.architecture}
             </p>
           </div>
@@ -213,7 +213,7 @@ export default function FeaturedProjectCard({
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest">
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                   Performance
                 </span>
               </div>
@@ -248,7 +248,7 @@ export default function FeaturedProjectCard({
 
           {/* Footer Row */}
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 text-[11px] text-gray-600">
+            <div className="flex items-center gap-3 text-[11px] text-gray-400">
               <span>{project.teamSize}</span>
               <span className="w-1 h-1 rounded-full bg-gray-700" />
               <span>{project.difficulty}</span>

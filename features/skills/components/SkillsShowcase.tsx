@@ -1,3 +1,4 @@
+"use client";
 import { useRef } from "react";
 import SectionTitle from "@/components/shared/SectionTitle";
 import SkillCategoryCard from "@/features/skills/components/SkillCategoryCard";

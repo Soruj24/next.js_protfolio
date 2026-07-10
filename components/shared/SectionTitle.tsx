@@ -88,7 +88,7 @@ function SectionTitle({ title, subtitle }: SectionTitleProps) {
 
       <p
         ref={subtitleRef}
-        className="text-base sm:text-lg md:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-light"
+        className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light"
       >
         {subtitle}
       </p>

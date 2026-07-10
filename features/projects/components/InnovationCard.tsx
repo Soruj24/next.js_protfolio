@@ -13,6 +13,7 @@ export default function InnovationCard({ item, index, cardRef }: InnovationCardP
   return (
     <div
       ref={cardRef}
+      data-card
       onClick={() => { const el = document.getElementById("case-studies"); if (el) el.scrollIntoView({ behavior: "smooth" }); }}
       className={`p-8 rounded-2xl bg-gradient-to-br ${theme.color} border ${theme.border} backdrop-blur-xl transition-all duration-300 group cursor-pointer`}
     >

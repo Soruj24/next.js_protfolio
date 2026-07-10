@@ -108,7 +108,7 @@ export default function MobileMenu({
               <button
                 ref={closeButtonRef}
                 onClick={onClose}
-                className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/[0.08] transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+                className="w-8 h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/[0.08] transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50"
                 aria-label="Close menu"
               >
                 <X className="w-4 h-4" />
@@ -130,7 +130,7 @@ export default function MobileMenu({
                       className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 ${
                         isActive
                           ? "text-white bg-white/[0.06] border border-white/[0.08]"
-                          : "text-gray-500 hover:text-gray-300 hover:bg-white/[0.03] border border-transparent"
+                          : "text-gray-400 hover:text-gray-300 hover:bg-white/[0.03] border border-transparent"
                       }`}
                       aria-current={isActive ? "page" : undefined}
                     >

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@/lib/resolvers/zod";
 import { contactFormSchema, type ContactFormData } from "@/lib/schemas/contact";
 
 type SubmitStatus = { success: boolean; message: string } | null;

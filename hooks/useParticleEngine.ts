@@ -41,11 +41,12 @@ export function useParticleEngine(canvasRef: React.RefObject<HTMLCanvasElement |
 
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
-    rmQuery.addEventListener?.("change", (e) => {
+    const handleReducedMotion = (e: MediaQueryListEvent) => {
       reducedMotion = e.matches;
       settings = getSettings(viewportW, reducedMotion);
       rebuildParticles();
-    });
+    };
+    rmQuery.addEventListener?.("change", handleReducedMotion);
 
     const handleMouseMove = (e: MouseEvent) => { mouseX = e.clientX; mouseY = e.clientY; };
     const handleClick = (e: MouseEvent) => {
@@ -157,6 +158,7 @@ export function useParticleEngine(canvasRef: React.RefObject<HTMLCanvasElement |
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("click", handleClick);
       document.removeEventListener("visibilitychange", handleVisibility);
+      rmQuery.removeEventListener?.("change", handleReducedMotion);
     };
   }, [canvasRef]);
 }

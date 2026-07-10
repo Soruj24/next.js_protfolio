@@ -35,7 +35,7 @@ const PaginationNav: React.FC<PaginationNavProps> = ({
       size="icon"
       onClick={onClick}
       disabled={disabled}
-      className={`w-12 h-12 rounded-2xl border border-white/5 text-gray-500 ${activeColor.hover} disabled:opacity-10 transition-all duration-300 hover:scale-110 active:scale-95`}
+      className={`w-12 h-12 rounded-2xl border border-white/5 text-gray-400 ${activeColor.hover} disabled:opacity-10 transition-all duration-300 hover:scale-110 active:scale-95`}
     >
       {children}
     </Button>
@@ -61,13 +61,13 @@ const PaginationNav: React.FC<PaginationNavProps> = ({
               className={`w-12 h-12 rounded-2xl font-black transition-all duration-500 text-sm ${
                 currentPage === page
                   ? `${activeColor.bg} text-white shadow-[0_0_30px_rgba(255,255,255,0.1)] ${activeColor.shadow} scale-110 border-white/20`
-                  : `text-gray-500 hover:text-white hover:bg-white/5 border border-white/5 hover:border-white/10`
+                  : `text-gray-400 hover:text-white hover:bg-white/5 border border-white/5 hover:border-white/10`
               }`}
             >
               {page.toString().padStart(2, '0')}
             </Button>
           ) : (
-            <span key={index} className="text-gray-700 px-2 font-black tracking-widest">
+            <span key={index} className="text-gray-400 px-2 font-black tracking-widest">
               {page}
             </span>
           )

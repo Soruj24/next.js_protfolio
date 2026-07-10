@@ -67,7 +67,7 @@ export default function EducationTimeline({ education }: EducationTimelineProps)
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-3">
+            <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-3">
               <MapPin className="w-3 h-3" />
               {edu.location}
             </div>

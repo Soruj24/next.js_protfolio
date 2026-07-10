@@ -26,7 +26,7 @@ export default function StickyTOC({ items, activeId }: StickyTOCProps) {
       {/* Desktop TOC */}
       <nav className="hidden xl:block sticky top-24 w-56 flex-shrink-0" aria-label="Table of contents">
         <div className="space-y-1">
-          <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-3 block">
+          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 block">
             On this page
           </span>
           {items.map((item) => {
@@ -38,7 +38,7 @@ export default function StickyTOC({ items, activeId }: StickyTOCProps) {
                 className={`relative w-full text-left px-3 py-1.5 rounded-lg text-[13px] transition-all duration-200 ${
                   isActive
                     ? "text-cyan-400 font-medium"
-                    : "text-gray-600 hover:text-gray-400"
+                    : "text-gray-400 hover:text-gray-400"
                 }`}
               >
                 {isActive && (
@@ -77,7 +77,7 @@ export default function StickyTOC({ items, activeId }: StickyTOCProps) {
             aria-label="Table of contents"
           >
             <div className="w-10 h-1 rounded-full bg-white/10 mx-auto mb-5" />
-            <span className="text-[10px] font-bold text-gray-600 uppercase tracking-widest mb-3 block">
+            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 block">
               On this page
             </span>
             <div className="space-y-1">

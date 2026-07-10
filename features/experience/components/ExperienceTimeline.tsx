@@ -80,10 +80,10 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-3">
+            <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-3">
               <MapPin className="w-3 h-3" />
               {exp.location}
-              <span className="mx-1 text-gray-600">|</span>
+              <span className="mx-1 text-gray-400">|</span>
               <span className="capitalize">{exp.type}</span>
             </div>
 

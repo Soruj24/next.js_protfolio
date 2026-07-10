@@ -29,7 +29,7 @@ export default function PerformanceBar({
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-[11px] font-medium text-gray-500 uppercase tracking-wider">
+        <span className="text-[11px] font-medium text-gray-400 uppercase tracking-wider">
           {label}
         </span>
         <span className={`text-[11px] font-bold ${getTextColor(value)}`}>

@@ -75,7 +75,7 @@ export default function TechStack({ technologies, compact = false }: TechStackPr
         </motion.span>
       ))}
       {remaining > 0 && (
-        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-white/[0.04] text-gray-500 border border-white/[0.06]">
+        <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-white/[0.04] text-gray-400 border border-white/[0.06]">
           +{remaining}
         </span>
       )}

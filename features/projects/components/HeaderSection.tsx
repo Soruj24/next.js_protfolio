@@ -1,6 +1,6 @@
 import { IProject } from "@/types";
 import Link from "next/link";
-import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
+import { ExternalLink, Github } from "lucide-react";
 
 const HeaderSection = ({ project }: { project: IProject }) => {
   return (
@@ -31,7 +31,7 @@ const HeaderSection = ({ project }: { project: IProject }) => {
             className="p-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 transition-all hover:scale-110 group"
             title="View Source Code"
           >
-            <FaGithub className="text-2xl group-hover:text-cyan-400" />
+            <Github className="text-2xl group-hover:text-cyan-400" />
           </Link>
         )}
         {project.liveUrl && (
@@ -41,7 +41,7 @@ const HeaderSection = ({ project }: { project: IProject }) => {
             rel="noopener noreferrer"
             className="px-8 py-4 bg-cyan-500 hover:bg-cyan-600 rounded-2xl font-bold transition-all hover:scale-105 flex items-center gap-2 shadow-[0_0_20px_rgba(6,182,212,0.3)]"
           >
-            <FaExternalLinkAlt />
+            <ExternalLink />
             <span>Live Demo</span>
           </Link>
         )}

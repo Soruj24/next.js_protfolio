@@ -28,7 +28,7 @@ export default function ContactSection() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] mb-6"
             >
               <MessageSquare className="w-4 h-4 text-cyan-400" />
-              <span className="text-xs font-semibold text-gray-500 uppercase tracking-widest">
+              <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
                 Get In Touch
               </span>
             </motion.div>
@@ -51,7 +51,7 @@ export default function ContactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-gray-500 text-base sm:text-lg max-w-xl mx-auto leading-relaxed"
+              className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed"
             >
               Have a project in mind or want to discuss opportunities? I&apos;d
               love to hear from you.

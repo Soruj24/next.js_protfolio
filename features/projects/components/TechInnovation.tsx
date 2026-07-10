@@ -21,12 +21,29 @@ export default function TechInnovation({ data }: TechInnovationProps) {
       cardsRef.current.forEach((card, index) => {
         if (!card) return;
         gsap.from(card, { y: 60, opacity: 0, scale: 0.9, duration: 0.8, delay: index * 0.1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none reverse" } });
-        card.addEventListener("mouseenter", () => gsap.to(card, { y: -10, scale: 1.02, duration: 0.3, ease: "power2.out", boxShadow: "0 20px 40px rgba(0,0,0,0.3)" }));
-        card.addEventListener("mouseleave", () => gsap.to(card, { y: 0, scale: 1, duration: 0.3, ease: "power2.in", boxShadow: "0 0px 0px rgba(0,0,0,0)" }));
       });
       gsap.to(".bg-particle", { y: "random(-20, 20)", x: "random(-20, 20)", duration: "random(2, 4)", repeat: -1, yoyo: true, ease: "sine.inOut", stagger: 0.2 });
     }, containerRef);
-    return () => ctx.revert();
+
+    const handleCardHover = (e: MouseEvent) => {
+      const card = (e.target as HTMLElement).closest("[data-card]");
+      if (!card) return;
+      if (e.type === "mouseenter") {
+        gsap.to(card, { y: -10, scale: 1.02, duration: 0.3, ease: "power2.out", boxShadow: "0 20px 40px rgba(0,0,0,0.3)" });
+      } else {
+        gsap.to(card, { y: 0, scale: 1, duration: 0.3, ease: "power2.in", boxShadow: "0 0px 0px rgba(0,0,0,0)" });
+      }
+    };
+
+    const container = containerRef.current;
+    container?.addEventListener("mouseenter", handleCardHover, true);
+    container?.addEventListener("mouseleave", handleCardHover, true);
+
+    return () => {
+      ctx.revert();
+      container?.removeEventListener("mouseenter", handleCardHover, true);
+      container?.removeEventListener("mouseleave", handleCardHover, true);
+    };
   }, [displayData]);
 
   return (

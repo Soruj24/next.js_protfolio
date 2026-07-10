@@ -57,7 +57,7 @@ export default function HomeSection({ data }: HomeSectionProps) {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-                className="text-sm sm:text-base text-gray-500 font-light tracking-wide mb-3"
+                className="text-sm sm:text-base text-gray-400 font-light tracking-wide mb-3"
               >
                 Hello, I&apos;m
               </motion.p>
@@ -99,7 +99,7 @@ export default function HomeSection({ data }: HomeSectionProps) {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="text-sm sm:text-base text-gray-500 leading-relaxed max-w-lg"
+              className="text-sm sm:text-base text-gray-400 leading-relaxed max-w-lg"
             >
               {tagline}
             </motion.p>
@@ -232,14 +232,14 @@ export default function HomeSection({ data }: HomeSectionProps) {
         transition={{ delay: 2.5, duration: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] font-mono text-gray-600 tracking-[0.2em] uppercase">
+        <span className="text-[10px] font-mono text-gray-400 tracking-[0.2em] uppercase">
           Scroll
         </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         >
-          <ChevronDown className="w-4 h-4 text-gray-600" />
+          <ChevronDown className="w-4 h-4 text-gray-400" />
         </motion.div>
       </motion.div>
     </section>
