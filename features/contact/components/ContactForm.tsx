@@ -1,149 +1,212 @@
-import React, { forwardRef } from "react";
-import MagneticButton from "@/components/shared/MagneticButton";
+"use client";
+import { motion } from "framer-motion";
+import { Send, Loader2 } from "lucide-react";
+import { AnimatePresence } from "framer-motion";
+import { useContactForm } from "../hooks/useContactForm";
+import SuccessAnimation from "./SuccessAnimation";
 
 interface ContactFormProps {
-  formData: {
-    name: string;
-    email: string;
-    subject: string;
-    message: string;
-  };
-  setFormData: (data: any) => void;
-  handleSubmit: (e: React.FormEvent) => void;
-  isSubmitting: boolean;
-  submitStatus: { success: boolean; message: string } | null;
-  onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => void;
-  onMouseLeave: () => void;
+  email?: string;
 }
 
-const ContactForm = forwardRef<HTMLDivElement, ContactFormProps>(
-  (
-    {
-      formData,
-      setFormData,
-      handleSubmit,
-      isSubmitting,
-      submitStatus,
-      onMouseMove,
-      onMouseLeave,
-    },
-    ref
-  ) => {
-    return (
-      <div
-        className="contact-element relative"
-        onMouseMove={onMouseMove}
-        onMouseLeave={onMouseLeave}
-        ref={ref}
-      >
-        {/* Form Glow Effect */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-[2.5rem] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
+export default function ContactForm({ email }: ContactFormProps) {
+  const {
+    register,
+    errors,
+    isSubmitting,
+    submitStatus,
+    isSuccess,
+    handleSubmit,
+  } = useContactForm();
 
-        <form
-          onSubmit={handleSubmit}
-          className="relative space-y-4 md:space-y-6 bg-[#030712]/80 backdrop-blur-2xl p-6 md:p-8 lg:p-10 rounded-[1.5rem] md:rounded-[2rem] border border-white/10 shadow-2xl"
-        >
-          <div className="space-y-1 md:space-y-2">
-            <label className="text-[10px] md:text-sm font-medium text-cyan-400/80 uppercase tracking-widest md:ml-1">
-              Full Name
-            </label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600"
-              required
-              minLength={2}
-              placeholder="Enter your name"
-            />
-          </div>
+  return (
+    <div className="relative">
+      {/* Glow */}
+      <div className="absolute -inset-px rounded-2xl bg-gradient-to-b from-cyan-500/10 via-transparent to-purple-500/10 opacity-50" />
 
-          <div className="space-y-1 md:space-y-2">
-            <label className="text-[10px] md:text-sm font-medium text-cyan-400/80 uppercase tracking-widest md:ml-1">
-              Email Address
-            </label>
-            <input
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600"
-              required
-              placeholder="Enter your email"
-            />
-          </div>
-
-          <div className="space-y-1 md:space-y-2">
-            <label className="text-[10px] md:text-sm font-medium text-cyan-400/80 uppercase tracking-widest md:ml-1">
-              Subject
-            </label>
-            <input
-              type="text"
-              value={formData.subject}
-              onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-              className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600"
-              required
-              minLength={5}
-              placeholder="Enter subject"
-            />
-          </div>
-
-          <div className="space-y-1 md:space-y-2">
-            <label className="text-[10px] md:text-sm font-medium text-cyan-400/80 uppercase tracking-widest md:ml-1">
-              Message
-            </label>
-            <textarea
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              rows={4}
-              className="w-full px-4 py-3 md:px-6 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/10 focus:outline-none text-sm md:text-base text-white transition-all duration-300 placeholder:text-gray-600 resize-none"
-              required
-              minLength={10}
-              placeholder="Enter your message"
-            />
-          </div>
-
-          <div className="pt-2">
-            <MagneticButton
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full relative group overflow-hidden"
+      <div className="relative rounded-2xl bg-[#080c15] border border-white/[0.06] p-6 sm:p-8">
+        <AnimatePresence mode="wait">
+          {isSuccess ? (
+            <SuccessAnimation key="success" />
+          ) : (
+            <motion.form
+              key="form"
+              onSubmit={handleSubmit}
+              className="space-y-5"
+              noValidate
+              aria-label="Contact form"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 transition-all duration-500 group-hover:scale-105"></div>
-              <div className="relative px-6 py-4 md:px-8 md:py-5 flex items-center justify-center font-bold text-base md:text-lg text-white">
-                {isSubmitting ? (
-                  <span className="flex items-center">
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-3"></div>
-                    Processing...
-                  </span>
-                ) : (
-                  <span className="flex items-center">
-                    Execute Transmission <span className="ml-2">→</span>
-                  </span>
-                )}
-              </div>
-            </MagneticButton>
-          </div>
-
-          <div className="success-message opacity-0 transform translate-y-10 text-center">
-            {submitStatus && (
-              <div
-                className={`inline-flex items-center px-4 py-2 border rounded-full text-sm font-medium ${
-                  submitStatus.success
-                    ? "bg-green-500/10 border-green-500/20 text-green-400"
-                    : "bg-red-500/10 border-red-500/20 text-red-400"
-                }`}
+              {/* Name */}
+              <FormField
+                label="Name"
+                htmlFor="contact-name"
+                error={errors.name?.message}
+                required
               >
-                <span className="mr-2">{submitStatus.success ? "⚡" : "❌"}</span>
-                {submitStatus.message}
-              </div>
-            )}
-          </div>
-        </form>
+                <input
+                  id="contact-name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Your name"
+                  {...register("name")}
+                  className={inputClass(!!errors.name)}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? "contact-name-error" : undefined}
+                />
+              </FormField>
+
+              {/* Email */}
+              <FormField
+                label="Email"
+                htmlFor="contact-email"
+                error={errors.email?.message}
+                required
+              >
+                <input
+                  id="contact-email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="your@email.com"
+                  {...register("email")}
+                  className={inputClass(!!errors.email)}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "contact-email-error" : undefined}
+                />
+              </FormField>
+
+              {/* Subject */}
+              <FormField
+                label="Subject"
+                htmlFor="contact-subject"
+                error={errors.subject?.message}
+                required
+              >
+                <input
+                  id="contact-subject"
+                  type="text"
+                  placeholder="Project inquiry"
+                  {...register("subject")}
+                  className={inputClass(!!errors.subject)}
+                  aria-invalid={!!errors.subject}
+                  aria-describedby={errors.subject ? "contact-subject-error" : undefined}
+                />
+              </FormField>
+
+              {/* Message */}
+              <FormField
+                label="Message"
+                htmlFor="contact-message"
+                error={errors.message?.message}
+                required
+              >
+                <textarea
+                  id="contact-message"
+                  rows={5}
+                  placeholder="Tell me about your project..."
+                  {...register("message")}
+                  className={`${inputClass(!!errors.message)} resize-none`}
+                  aria-invalid={!!errors.message}
+                  aria-describedby={errors.message ? "contact-message-error" : undefined}
+                />
+              </FormField>
+
+              {/* Submit */}
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className="w-full relative group overflow-hidden rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold py-3.5 text-sm shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#080c15]"
+              >
+                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative flex items-center justify-center gap-2">
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+                    </>
+                  )}
+                </span>
+              </motion.button>
+
+              {/* Status */}
+              <AnimatePresence>
+                {submitStatus && !isSuccess && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10, height: 0 }}
+                    animate={{ opacity: 1, y: 0, height: "auto" }}
+                    exit={{ opacity: 0, y: -10, height: 0 }}
+                    className={`text-center text-sm py-3 rounded-xl font-medium ${
+                      submitStatus.success
+                        ? "text-emerald-400 bg-emerald-500/10 border border-emerald-500/20"
+                        : "text-red-400 bg-red-500/10 border border-red-500/20"
+                    }`}
+                    role="alert"
+                  >
+                    {submitStatus.message}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Email fallback */}
+              <p className="text-center text-[11px] text-gray-700">
+                Or email directly at{" "}
+                <a
+                  href={`mailto:${email || "sorujmahmudb2h@gmail.com"}`}
+                  className="text-cyan-400/60 hover:text-cyan-400 transition-colors underline underline-offset-2 decoration-cyan-400/20"
+                >
+                  {email || "sorujmahmudb2h@gmail.com"}
+                </a>
+              </p>
+            </motion.form>
+          )}
+        </AnimatePresence>
       </div>
-    );
-  }
-);
+    </div>
+  );
+}
 
-ContactForm.displayName = "ContactForm";
+function FormField({
+  label,
+  htmlFor,
+  error,
+  required,
+  children,
+}: {
+  label: string;
+  htmlFor: string;
+  error?: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-1.5">
+      <label
+        htmlFor={htmlFor}
+        className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest flex items-center gap-1"
+      >
+        {label}
+        {required && <span className="text-cyan-500">*</span>}
+      </label>
+      {children}
+      {error && (
+        <p id={`${htmlFor}-error`} className="text-[11px] text-red-400 mt-1" role="alert">
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
 
-export default ContactForm;
+function inputClass(hasError: boolean): string {
+  return `w-full px-4 py-3 bg-white/[0.03] border rounded-xl text-sm text-white placeholder:text-gray-700 focus:outline-none transition-all duration-300 ${
+    hasError
+      ? "border-red-500/40 focus:border-red-500/60 focus:ring-1 focus:ring-red-500/20"
+      : "border-white/[0.06] focus:border-cyan-500/40 focus:ring-1 focus:ring-cyan-500/15 hover:border-white/[0.1]"
+  }`;
+}

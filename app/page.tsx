@@ -75,7 +75,7 @@ export default function Home() {
           <GitHubStats />
           <TestimonialsSection />
           <FAQSection />
-          <ContactSection data={settings.personal_info} />
+          <ContactSection />
         </main>
 
         <Footer data={settings} />
