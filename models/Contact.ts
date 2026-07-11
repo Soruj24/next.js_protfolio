@@ -5,7 +5,7 @@ export interface IContact {
   email: string;
   subject: string;
   message: string;
-  status: "pending" | "read" | "replied";
+  status: "pending" | "read" | "replied" | "archived";
   ipAddress?: string;
   userAgent?: string;
   reply?: string;
@@ -24,7 +24,7 @@ const ContactSchema = new Schema<IContactDocument>(
     message: { type: String, required: true },
     status: {
       type: String,
-      enum: ["pending", "read", "replied"],
+      enum: ["pending", "read", "replied", "archived"],
       default: "pending",
     },
     ipAddress: { type: String },
@@ -35,6 +35,9 @@ const ContactSchema = new Schema<IContactDocument>(
     collection: "contacts",
   }
 );
+
+ContactSchema.index({ status: 1, createdAt: -1 });
+ContactSchema.index({ createdAt: -1 });
 
 export const Contact =
   mongoose.models.Contact ||
