@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { IProject } from "@/types";
 import { useProjectManager } from "@/features/admin/hooks/useProjectManager";
+import type { StatusFilter } from "@/features/admin/hooks/useProjectManager";
 import ProjectTable from "./ProjectTable";
 import ProjectPreviewSheet from "./ProjectPreviewSheet";
 import VersionHistory from "./VersionHistory";

@@ -5,21 +5,20 @@ export const authConfig = {
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       if (user) {
-        token.role = (user as { role: string }).role;
+        token.role = (user as { role?: string }).role;
       }
       
-      // Handle session update
       if (trigger === "update" && session) {
         if (session.name) token.name = session.name;
         if (session.image) token.picture = session.image;
-        if (session.role) token.role = session.role;
+        if (session.role) token.role = session.role as string;
       }
       
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as { role?: string }).role = token.role as string;
+        session.user.role = token.role as string;
         session.user.name = token.name as string;
       }
       return session;

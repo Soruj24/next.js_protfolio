@@ -77,9 +77,9 @@ export interface IProject {
   challenges: string[];
   solutions: string[];
   featured: boolean;
-  archived: boolean;
-  published: boolean;
-  order: number;
+  archived?: boolean;
+  published?: boolean;
+  order?: number;
   difficulty: 'beginner' | 'medium' | 'intermediate' | 'advanced';
   duration: string;
   teamSize: string;

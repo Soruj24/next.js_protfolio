@@ -88,7 +88,7 @@ const navigation: NavSection[] = [
     items: [
       { name: "Projects", href: "/admin/projects", icon: FolderKanban, shortcut: "G P" },
       { name: "Skills", href: "/admin/skills", icon: Code2, shortcut: "G S" },
-      { name: "Inquiries", href: "/admin/inquiries", icon: Mail, badge: "3", badgeColor: "bg-cyan-400 text-black", shortcut: "G I" },
+      { name: "Inquiries", href: "/admin/inquiries", icon: Mail, badgeColor: "bg-cyan-400 text-black", shortcut: "G I" },
     ],
   },
   {
@@ -208,6 +208,35 @@ function usePinnedItems() {
   return { pinnedItems, togglePin, isPinned: (name: string) => pinned.includes(name) };
 }
 
+// ─── Unread Badge Hook ────────────────────────────────────────
+
+function useUnreadCount() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let active = true;
+    const fetchCount = async () => {
+      try {
+        const res = await fetch("/api/dashboard", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (active && typeof data.unreadMessageCount === "number") {
+            setCount(data.unreadMessageCount);
+          }
+        }
+      } catch {}
+    };
+    fetchCount();
+    const interval = setInterval(fetchCount, 60000);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, []);
+
+  return count;
+}
+
 // ─── NavItem Component ──────────────────────────────────────────
 
 function SidebarNavItem({
@@ -234,6 +263,7 @@ function SidebarNavItem({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => setMobileOpen(false)}
+      aria-current={isActive ? "page" : undefined}
       className={cn(
         "group relative flex items-center gap-2.5 rounded-lg transition-all duration-200 outline-none",
         isCollapsed ? "justify-center px-2 py-2.5" : "px-2.5 py-2",
@@ -506,7 +536,21 @@ export default function AdminSidebar() {
   const { collapsed, setCollapsed, mobileOpen, setMobileOpen } = useSidebar();
   const recent = useRecentlyVisited();
   const { pinnedItems, togglePin, isPinned } = usePinnedItems();
+  const unreadCount = useUnreadCount();
   const sidebarRef = useRef<HTMLElement>(null);
+
+  // Inject badge into navigation
+  const navigationWithBadge = useMemo(() => {
+    return navigation.map((section) => ({
+      ...section,
+      items: section.items.map((item) => {
+        if (item.name === "Inquiries" && unreadCount > 0) {
+          return { ...item, badge: String(unreadCount) };
+        }
+        return item;
+      }),
+    }));
+  }, [unreadCount]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -614,7 +658,7 @@ export default function AdminSidebar() {
 
       {/* ── Navigation ── */}
       <nav ref={sidebarRef} className="flex-1 overflow-y-auto scrollbar-hide px-3 py-1" role="navigation" aria-label="Sidebar">
-        {navigation.map((section) => (
+        {navigationWithBadge.map((section) => (
           <SidebarSection
             key={section.label}
             section={section}

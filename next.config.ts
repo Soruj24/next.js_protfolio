@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   transpilePackages: ['zod', '@langchain/core', '@langchain/community', 'langchain', '@hookform/resolvers'],
   images: {
     remotePatterns: [

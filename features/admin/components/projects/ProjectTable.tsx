@@ -24,15 +24,16 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { IProject } from "@/types";
+import type { SortField } from "@/features/admin/hooks/useProjectManager";
 
 interface ProjectTableProps {
   projects: IProject[];
   selectedIds: Set<string>;
   onSelect: (id: string) => void;
   onSelectAll: () => void;
-  sortField: string;
+  sortField: SortField;
   sortDir: "asc" | "desc";
-  onSort: (field: string) => void;
+  onSort: (field: SortField) => void;
   onDelete: (id: string) => void;
   onDuplicate: (id: string) => void;
   onArchive: (id: string) => void;
@@ -64,7 +65,7 @@ export default function ProjectTable({
 
   const allSelected = projects.length > 0 && projects.every((p) => selectedIds.has((p._id || p.id) as string));
 
-  const SortHeader = ({ field, children, className }: { field: string; children: React.ReactNode; className?: string }) => (
+  const SortHeader = ({ field, children, className }: { field: SortField; children: React.ReactNode; className?: string }) => (
     <th
       className={cn("px-4 py-3 text-left text-[10px] font-bold text-gray-500 uppercase tracking-wider cursor-pointer select-none hover:text-gray-300 transition-colors", className)}
       onClick={() => onSort(field)}

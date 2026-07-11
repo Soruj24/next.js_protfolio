@@ -26,40 +26,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          console.log("[Auth] No credentials provided");
           return null;
         }
-
-        console.log("[Auth] Received email:", credentials.email);
-        console.log("[Auth] Received password:", JSON.stringify(credentials.password));
-        console.log("[Auth] Password length:", (credentials.password as string).length);
 
         await connectDB();
         const user = await User.findOne({ email: credentials.email });
 
         if (!user) {
-          console.log("[Auth] User not found for email:", credentials.email);
           return null;
         }
 
-        console.log("[Auth] Stored hash:", user.password.substring(0, 30));
         const isPasswordMatch = await bcrypt.compare(
           credentials.password as string,
           user.password,
         );
-        console.log("[Auth] Password match:", isPasswordMatch);
 
         if (!isPasswordMatch) {
-          console.log("[Auth] Password mismatch for:", credentials.email);
           return null;
         }
 
         if (!user.isVerified && process.env.SKIP_EMAIL_VERIFICATION !== "true") {
-          console.log("[Auth] Email not verified for:", credentials.email);
           throw new Error("Email not verified");
         }
 
-        console.log("[Auth] Authorizing user:", user.email, "role:", user.role);
         return {
           id: user._id.toString(),
           name: user.name,

@@ -85,6 +85,15 @@ export interface SettingsState {
     two_factor_enabled: boolean;
     session_timeout: number;
     login_notifications: boolean;
+    last_password_change: string | null;
+    api_keys: {
+      id: string;
+      name: string;
+      key: string;
+      created: string;
+      last_used: string;
+      active: boolean;
+    }[];
   };
   // Notifications
   notifications: {
@@ -172,6 +181,8 @@ const DEFAULT_SETTINGS: SettingsState = {
     two_factor_enabled: false,
     session_timeout: 24,
     login_notifications: true,
+    last_password_change: null,
+    api_keys: [],
   },
   notifications: {
     email_notifications: true,
@@ -198,20 +209,21 @@ const DEFAULT_SETTINGS: SettingsState = {
   },
 };
 
-function deepMerge<T extends Record<string, unknown>>(target: T, source: Partial<T>): T {
+function deepMerge<T>(target: T, source: unknown): T {
   const output = { ...target };
-  for (const key in source) {
+  const sourceObj = source as Record<string, unknown>;
+  for (const key in sourceObj) {
     if (
-      source[key] &&
-      typeof source[key] === "object" &&
-      !Array.isArray(source[key])
+      sourceObj[key] &&
+      typeof sourceObj[key] === "object" &&
+      !Array.isArray(sourceObj[key])
     ) {
       (output as Record<string, unknown>)[key] = deepMerge(
         (target as Record<string, unknown>)[key] as Record<string, unknown>,
-        source[key] as Record<string, unknown>
+        sourceObj[key] as Record<string, unknown>
       );
-    } else if (source[key] !== undefined) {
-      (output as Record<string, unknown>)[key] = source[key];
+    } else if (sourceObj[key] !== undefined) {
+      (output as Record<string, unknown>)[key] = sourceObj[key];
     }
   }
   return output;
@@ -302,7 +314,7 @@ function serializeSettings(data: Record<string, unknown>): SettingsState {
 }
 
 export function useSettingsManager(initialData: Record<string, unknown>) {
-  const [settings, setSettings] = useState<SettingsState>(() =>
+  const [settings, setSettings] = useState<SettingsState>(
     deepMerge(DEFAULT_SETTINGS, serializeSettings(initialData))
   );
   const [initialSnapshot, setInitialSnapshot] = useState<string>("");
@@ -335,7 +347,9 @@ export function useSettingsManager(initialData: Record<string, unknown>) {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [isDirty]);
 
-  // Autosave
+  // Autosave - use ref to avoid stale closures
+  const handleSaveRef = useRef<((isAutosave?: boolean) => Promise<void>) | null>(null);
+
   useEffect(() => {
     if (!settings.data.autosave_enabled || !isDirty) {
       if (autosaveTimerRef.current) {
@@ -347,7 +361,7 @@ export function useSettingsManager(initialData: Record<string, unknown>) {
 
     autosaveTimerRef.current = setInterval(
       () => {
-        handleSave(true);
+        handleSaveRef.current?.(true);
       },
       settings.data.autosave_interval * 1000
     );
@@ -391,6 +405,11 @@ export function useSettingsManager(initialData: Record<string, unknown>) {
     },
     [settings, saving]
   );
+
+  // Keep autosave ref current
+  useEffect(() => {
+    handleSaveRef.current = handleSave;
+  }, [handleSave]);
 
   const updateSettings = useCallback(
     (section: keyof SettingsState, key: string, value: unknown) => {

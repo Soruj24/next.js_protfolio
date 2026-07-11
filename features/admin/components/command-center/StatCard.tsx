@@ -98,11 +98,8 @@ export default function StatCard({
   color,
 }: StatCardProps) {
   const colors = colorMap[color];
-  const Wrapper = href ? Link : "div";
-
-  return (
-    <Wrapper
-      {...(href ? { href } : {})}
+  const cardContent = (
+    <div
       className={cn(
         "group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-5 transition-all duration-300 hover:bg-white/[0.05] overflow-hidden block",
         colors.border,
@@ -135,6 +132,12 @@ export default function StatCard({
           <p className="text-xs text-gray-600 font-medium">{description}</p>
         </div>
       </div>
-    </Wrapper>
+    </div>
+  );
+
+  return href ? (
+    <Link href={href} className="block">{cardContent}</Link>
+  ) : (
+    cardContent
   );
 }

@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
         margin: { top: "18mm", bottom: "18mm", left: "16mm", right: "16mm" },
       });
 
-      return new NextResponse(pdf, {
+      return new NextResponse(Buffer.from(pdf), {
         headers: {
           "Content-Type": "application/pdf",
           "Content-Disposition":

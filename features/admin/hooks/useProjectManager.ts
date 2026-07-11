@@ -6,10 +6,10 @@ import type { IProject } from "@/types";
 
 const ITEMS_PER_PAGE = 10;
 
-type SortField = "title" | "category" | "status" | "createdAt" | "updatedAt" | "order";
+export type SortField = "title" | "category" | "status" | "createdAt" | "updatedAt" | "order";
 type SortDir = "asc" | "desc";
 type ViewMode = "grid" | "table";
-type StatusFilter = "all" | "published" | "draft" | "archived" | "featured";
+export type StatusFilter = "all" | "published" | "draft" | "archived" | "featured";
 
 interface UndoAction {
   id: string;
