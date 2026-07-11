@@ -5,10 +5,15 @@ interface AboutContentProps {
   professionalTitle: string;
   fullName: string;
   expProfessional: string;
+  coreTechnologies?: string[];
 }
 
+const DEFAULT_TECH = ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"];
+
 const AboutContent = forwardRef<HTMLDivElement, AboutContentProps>(
-  ({ professionalTitle, fullName, expProfessional }, ref) => {
+  ({ professionalTitle, fullName, expProfessional, coreTechnologies }, ref) => {
+    const techTags = coreTechnologies?.length ? coreTechnologies : DEFAULT_TECH;
+
     return (
       <div ref={ref} className="space-y-6">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium">
@@ -44,20 +49,18 @@ const AboutContent = forwardRef<HTMLDivElement, AboutContentProps>(
         </div>
 
         <div className="flex flex-wrap gap-3 pt-2">
-          {["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"].map(
-            (tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/[0.04] text-gray-400 border border-white/[0.06] hover:border-cyan-500/30 hover:text-cyan-400 transition-all duration-300"
-              >
-                {tech}
-              </span>
-            )
-          )}
+          {techTags.slice(0, 6).map((tech) => (
+            <span
+              key={tech}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium bg-white/[0.04] text-gray-400 border border-white/[0.06] hover:border-cyan-500/30 hover:text-cyan-400 transition-all duration-300"
+            >
+              {tech}
+            </span>
+          ))}
         </div>
       </div>
     );
-  }
+  },
 );
 
 AboutContent.displayName = "AboutContent";

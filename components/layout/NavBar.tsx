@@ -8,7 +8,19 @@ import NavLinks from "./navbar/NavLinks";
 import NavActions from "./navbar/NavActions";
 import MobileMenu from "./navbar/MobileMenu";
 import ScrollProgress from "./navbar/ScrollProgressBar";
-import { navItems } from "@/data/nav-items";
+import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
+
+const DEFAULT_NAV = [
+  { id: "home", label: "Home", icon: "🏠" },
+  { id: "about", label: "About", icon: "👨‍💻" },
+  { id: "skills", label: "Skills", icon: "⚡" },
+  { id: "projects", label: "Projects", icon: "🚀" },
+  { id: "experience", label: "Experience", icon: "💼" },
+  { id: "services", label: "Services", icon: "🎯" },
+  { id: "testimonials", label: "Testimonials", icon: "💬" },
+  { id: "faq", label: "FAQ", icon: "❓" },
+  { id: "contact", label: "Contact", icon: "📞" },
+];
 
 interface NavBarProps {
   activeSection: string;
@@ -18,6 +30,11 @@ interface NavBarProps {
 export default function NavBar({ activeSection, setActiveSection }: NavBarProps) {
   const { isVisible, isAtTop, scrollProgress } = useNavScroll();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { settings } = usePortfolioSettings();
+
+  const navItems = settings?.nav_items?.length
+    ? settings.nav_items.filter((n) => n.visible)
+    : DEFAULT_NAV;
 
   const handleSelect = useCallback(
     (id: string) => {

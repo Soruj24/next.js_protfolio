@@ -97,18 +97,39 @@ export async function GET() {
       pageViews: pageViewsByDay[day] || 0,
     }));
 
+    const now2 = new Date();
+    const recentActiveEvents = await AnalyticsEvent.find({
+      createdAt: { $gte: new Date(now2.getTime() - 5 * 60 * 1000) },
+    }).lean();
+    const liveVisitors = recentActiveEvents.length > 0 ? Math.max(1, Math.floor(recentActiveEvents.length / 3)) : 0;
+
+    const activePageCounts: Record<string, number> = {};
+    (recentActiveEvents as any[]).forEach((e: any) => {
+      if (e.page) activePageCounts[e.page] = (activePageCounts[e.page] || 0) + 1;
+    });
+
     const analytics = {
       overview: {
         totalVisitors: totalPageViews,
         totalPageViews,
-        totalProjectViews,
-        totalProjectLikes,
         avgBounceRate: 0,
         avgSessionDuration: 0,
         conversionRate: totalPageViews > 0 ? parseFloat(((totalContactSubmissions / totalPageViews) * 100).toFixed(1)) : 0,
+        liveVisitors,
+      },
+      realtime: {
+        liveVisitors,
+        activePages: Object.entries(activePageCounts)
+          .map(([page, visitors]) => ({ page, visitors }))
+          .sort((a, b) => b.visitors - a.visitors)
+          .slice(0, 10),
       },
       traffic: {
         sources: [] as { name: string; value: number; color: string }[],
+        referral: [] as { source: string; visits: number; percentage: number }[],
+      },
+      geography: {
+        countries: [] as { name: string; code: string; visitors: number; percentage: number }[],
       },
       devices: {
         types: toPercentArray(deviceCounts),
@@ -116,11 +137,17 @@ export async function GET() {
         os: toPercentArray(osCounts),
       },
       engagement: {
-        totalContactSubmissions: messageCount,
-        totalProjectViews,
-        totalProjectLikes,
+        githubClicks: 0,
+        resumeDownloads: 0,
+        contactSubmissions: messageCount,
+        projectViews: totalProjectViews,
+        projectLikes: totalProjectLikes,
+        avgTimeOnPage: 0,
+        pagesPerSession: 0,
       },
       weekly: weeklyData,
+      monthly: [] as { month: string; visitors: number; pageViews: number; projects: number; inquiries: number }[],
+      hourly: [] as { hour: string; visitors: number }[],
       topProjects,
       submissionsByDay: Object.entries(submissionsByDay).map(([date, count]) => ({ date, count })),
       recentActivities: activities.slice(0, 10),

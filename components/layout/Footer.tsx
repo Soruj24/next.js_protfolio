@@ -10,6 +10,13 @@ import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function getInitials(fullName: string): string {
+  if (!fullName) return "";
+  const parts = fullName.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return parts[0].charAt(0) + parts[parts.length - 1].charAt(0);
+}
+
 function Footer() {
   const footerRef = useRef<HTMLElement>(null);
   const currentYear = new Date().getFullYear();
@@ -18,6 +25,11 @@ function Footer() {
   const personalInfo = settings?.personal_info;
   const fullName = personalInfo?.full_name || "";
   const email = personalInfo?.email || "";
+  const initials = getInitials(fullName);
+
+  const quickLinks = settings?.nav_items
+    ?.filter((n) => n.visible)
+    .map((n) => ({ label: n.label, href: `#${n.id}` })) || [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -34,20 +46,11 @@ function Footer() {
             start: "top 95%",
             toggleActions: "play none none none",
           },
-        }
+        },
       );
     });
     return () => ctx.revert();
   }, []);
-
-  const quickLinks = [
-    { label: "Home", href: "#home" },
-    { label: "About", href: "#about" },
-    { label: "Projects", href: "#projects" },
-    { label: "Experience", href: "#experience" },
-    { label: "Services", href: "#services" },
-    { label: "Contact", href: "#contact" },
-  ];
 
   return (
     <footer
@@ -60,7 +63,7 @@ function Footer() {
           <div className="lg:col-span-1">
             <div className="mb-4">
               <span className="text-2xl font-black text-white tracking-tight">
-                S<span className="text-gradient-premium">.</span>M
+                {initials || "S"}<span className="text-gradient-premium">.</span>{initials ? initials.charAt(1) || "" : "M"}
               </span>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed mb-6 max-w-xs">
@@ -70,26 +73,28 @@ function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
-              Navigation
-            </h2>
-            <ul className="space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <button
-                    onClick={() => {
-                      const id = link.href.replace("#", "");
-                      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-300"
-                  >
-                    {link.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {quickLinks.length > 0 && (
+            <div>
+              <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
+                Navigation
+              </h2>
+              <ul className="space-y-3">
+                {quickLinks.map((link) => (
+                  <li key={link.label}>
+                    <button
+                      onClick={() => {
+                        const id = link.href.replace("#", "");
+                        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-300"
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Contact */}
           <div>

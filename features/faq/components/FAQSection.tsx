@@ -9,12 +9,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
+import { Loader2 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface FAQItem {
-  id?: string;
+  _id?: string;
   question: string;
   answer: string;
   category?: string;
@@ -22,9 +22,19 @@ interface FAQItem {
 
 export default function FAQSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const { loading } = usePortfolioSettings();
+  const [faqItems, setFaqItems] = useState<FAQItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    fetch("/api/faqs")
+      .then((r) => r.json())
+      .then((data) => setFaqItems(data))
+      .catch(() => setFaqItems([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    if (faqItems.length === 0) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".faq-container",
@@ -39,15 +49,21 @@ export default function FAQSection() {
             start: "top 75%",
             toggleActions: "play none none reverse",
           },
-        }
+        },
       );
     }, sectionRef);
     return () => ctx.revert();
-  }, []);
+  }, [faqItems]);
 
-  const faqItems: FAQItem[] = [];
+  if (loading) {
+    return (
+      <section id="faq" className="min-h-screen py-20 md:py-32 flex items-center justify-center">
+        <Loader2 size={24} className="text-gray-600 animate-spin" />
+      </section>
+    );
+  }
 
-  if (loading || faqItems.length === 0) return null;
+  if (faqItems.length === 0) return null;
 
   return (
     <section
@@ -67,8 +83,8 @@ export default function FAQSection() {
           <Accordion type="single" collapsible className="space-y-4">
             {faqItems.map((item, i) => (
               <AccordionItem
-                key={item.id || i}
-                value={item.id || `faq-${i}`}
+                key={item._id || i}
+                value={item._id || `faq-${i}`}
                 className="glass-card rounded-2xl px-6 border-white/10 data-[state=open]:border-cyan-500/30 transition-colors duration-300"
               >
                 <AccordionTrigger className="text-left text-white hover:text-cyan-400 py-6 text-base font-medium">

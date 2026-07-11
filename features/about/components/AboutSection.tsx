@@ -93,6 +93,7 @@ export default function AboutSection() {
               professionalTitle={professionalTitle}
               fullName={fullName}
               expProfessional={expProfessional}
+              coreTechnologies={settings?.technical_skills?.core_technologies}
             />
             <AboutStats
               stats={aboutStats}

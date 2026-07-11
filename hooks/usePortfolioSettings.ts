@@ -30,6 +30,29 @@ export interface PortfolioSettings {
   experience: {
     professional_experience: string;
   };
+  technical_skills: {
+    specializations: string[];
+    core_technologies: string[];
+  };
+  hero_typing_roles: string[];
+  nav_items: {
+    id: string;
+    label: string;
+    icon: string;
+    visible: boolean;
+  }[];
+  services: {
+    id: string;
+    title: string;
+    description: string;
+    features: string[];
+    gradient: string;
+  }[];
+  faqs: {
+    question: string;
+    answer: string;
+    category: string;
+  }[];
   experiences: {
     role: string;
     company: string;

@@ -155,6 +155,25 @@ export interface ISettings extends Document {
     avatar: string;
     color: string;
   }[];
+  hero_typing_roles: string[];
+  nav_items: {
+    id: string;
+    label: string;
+    icon: string;
+    visible: boolean;
+  }[];
+  services: {
+    id: string;
+    title: string;
+    description: string;
+    features: string[];
+    gradient: string;
+  }[];
+  faqs: {
+    question: string;
+    answer: string;
+    category: string;
+  }[];
   case_studies: {
     title: string;
     description: string;
@@ -345,6 +364,31 @@ const SettingsSchema = new Schema<ISettings>(
         impact: String,
         technologies: [String],
         image: String,
+      },
+    ],
+    hero_typing_roles: { type: [String], default: [] },
+    nav_items: [
+      {
+        id: { type: String, required: true },
+        label: { type: String, required: true },
+        icon: { type: String, default: "" },
+        visible: { type: Boolean, default: true },
+      },
+    ],
+    services: [
+      {
+        id: { type: String, required: true },
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        features: { type: [String], default: [] },
+        gradient: { type: String, default: "from-cyan-500 to-blue-500" },
+      },
+    ],
+    faqs: [
+      {
+        question: { type: String, required: true },
+        answer: { type: String, required: true },
+        category: { type: String, default: "general" },
       },
     ],
   },

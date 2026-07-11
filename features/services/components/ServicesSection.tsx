@@ -1,63 +1,20 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "@/components/shared/SectionTitle";
+import { Loader2 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface ServiceItem {
+  _id?: string;
   id: string;
   title: string;
   description: string;
   features: string[];
   gradient: string;
 }
-
-const defaultServices: ServiceItem[] = [
-  {
-    id: "svc-1",
-    title: "Frontend Development",
-    description: "Building scalable, performant web applications with React, Next.js, and TypeScript.",
-    features: ["React & Next.js Applications", "TypeScript Integration", "Component Architecture", "API Integration"],
-    gradient: "from-cyan-500 to-blue-500",
-  },
-  {
-    id: "svc-2",
-    title: "UI/UX Design Implementation",
-    description: "Transforming design mockups into pixel-perfect, interactive interfaces.",
-    features: ["Pixel-Perfect Implementation", "Design System Creation", "Responsive Layouts", "Cross-Browser Support"],
-    gradient: "from-purple-500 to-pink-500",
-  },
-  {
-    id: "svc-3",
-    title: "Responsive & Mobile-First",
-    description: "Crafting fluid experiences that work flawlessly across all devices and screen sizes.",
-    features: ["Mobile-First Strategy", "Fluid Typography", "Touch Interactions", "Progressive Enhancement"],
-    gradient: "from-green-500 to-emerald-500",
-  },
-  {
-    id: "svc-4",
-    title: "Performance Optimization",
-    description: "Maximizing Core Web Vitals, minimizing bundle sizes, and implementing advanced caching strategies.",
-    features: ["Core Web Vitals", "Bundle Optimization", "Image Optimization", "Lazy Loading"],
-    gradient: "from-orange-500 to-amber-500",
-  },
-  {
-    id: "svc-5",
-    title: "State Management",
-    description: "Implementing robust state management solutions with Redux Toolkit and Zustand.",
-    features: ["Redux Toolkit", "React Context", "Server State (React Query)", "Predictable Patterns"],
-    gradient: "from-rose-500 to-red-500",
-  },
-  {
-    id: "svc-6",
-    title: "Animations & Micro-Interactions",
-    description: "Creating delightful user experiences with Framer Motion, GSAP, and CSS animations.",
-    features: ["Framer Motion Animations", "GSAP Scroll Animations", "Micro-Interactions", "Page Transitions"],
-    gradient: "from-indigo-500 to-violet-500",
-  },
-];
 
 function ServiceCard({ service }: { service: ServiceItem }) {
   return (
@@ -86,8 +43,19 @@ function ServiceCard({ service }: { service: ServiceItem }) {
 
 export default function ServicesSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    fetch("/api/services")
+      .then((r) => r.json())
+      .then((data) => setServices(data))
+      .catch(() => setServices([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  useEffect(() => {
+    if (services.length === 0) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         ".service-card",
@@ -104,11 +72,21 @@ export default function ServicesSection() {
             start: "top 75%",
             toggleActions: "play none none reverse",
           },
-        }
+        },
       );
     }, sectionRef);
     return () => ctx.revert();
-  }, []);
+  }, [services]);
+
+  if (loading) {
+    return (
+      <section id="services" className="min-h-screen py-20 md:py-32 flex items-center justify-center">
+        <Loader2 size={24} className="text-gray-600 animate-spin" />
+      </section>
+    );
+  }
+
+  if (services.length === 0) return null;
 
   return (
     <section
@@ -125,8 +103,8 @@ export default function ServicesSection() {
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {defaultServices.map((service) => (
-            <ServiceCard key={service.id} service={service} />
+          {services.map((service) => (
+            <ServiceCard key={service._id || service.id} service={service} />
           ))}
         </div>
       </div>
