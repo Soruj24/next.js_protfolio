@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import Swal from "sweetalert2";
 import type { IProject } from "@/types";
 
 const ITEMS_PER_PAGE = 6;
@@ -47,7 +48,18 @@ export function useProjects() {
   const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this project?")) return;
+    const { isConfirmed } = await Swal.fire({
+      title: "Delete Project?",
+      text: "This project will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, delete it!",
+      background: "#1a1a2e",
+      color: "#e5e7eb",
+    });
+    if (!isConfirmed) return;
     try {
       const res = await fetch(`/api/projects/${id}`, { method: "DELETE" });
       if (res.ok) {

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import Swal from "sweetalert2";
 import type { Inquiry } from "@/types/admin";
 
 export function useInquiries() {
@@ -28,7 +29,18 @@ export function useInquiries() {
   useEffect(() => { fetchInquiries(); }, []);
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this inquiry?")) return;
+    const { isConfirmed } = await Swal.fire({
+      title: "Delete Inquiry?",
+      text: "This inquiry will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, delete it!",
+      background: "#1a1a2e",
+      color: "#e5e7eb",
+    });
+    if (!isConfirmed) return;
     try {
       const res = await fetch(`/api/contact?id=${id}`, { method: "DELETE" });
       if (res.ok) {

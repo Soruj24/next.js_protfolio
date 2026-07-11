@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import Swal from "sweetalert2";
 import type { ISkillCategory } from "@/models/Skill";
 
 const ITEMS_PER_PAGE = 4;
@@ -44,7 +45,18 @@ export function useSkills() {
   useEffect(() => { setCurrentPage(1); }, [searchQuery]);
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this skill category?")) return;
+    const { isConfirmed } = await Swal.fire({
+      title: "Delete Skill Category?",
+      text: "This category and all its skills will be permanently deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#ef4444",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Yes, delete it!",
+      background: "#1a1a2e",
+      color: "#e5e7eb",
+    });
+    if (!isConfirmed) return;
     try {
       const res = await fetch(`/api/skills/${id}`, { method: "DELETE" });
       if (res.ok) {
