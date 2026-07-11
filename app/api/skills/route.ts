@@ -2,32 +2,15 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { SkillCategory } from "@/models/Skill";
 import { requireAdmin } from "@/lib/auth/helpers";
-import { skillCategories as localSkills } from "@/data/skills";
 
 export async function GET() {
   try {
     await connectDB();
     const dbCategories = await SkillCategory.find({}).sort({ createdAt: -1 });
-    
-    // Combine DB categories with local ones, avoiding duplicates by title
-    const combined = [...dbCategories];
-    
-    localSkills.forEach(local => {
-      if (!combined.some(db => db.title === local.title)) {
-        // Add a temporary ID for local skills so the UI doesn't break
-        // but they won't be editable/deletable until saved to DB
-        combined.push({
-          ...local,
-          _id: `local-${local.title.toLowerCase().replace(/\s+/g, '-')}`,
-          isLocal: true
-        } as any);
-      }
-    });
-
-    return NextResponse.json(combined);
-  } catch (error: unknown) {
+    return NextResponse.json(dbCategories);
+  } catch (error) {
     console.error("Database error in skills API:", error);
-    return NextResponse.json(localSkills);
+    return NextResponse.json([], { status: 500 });
   }
 }
 

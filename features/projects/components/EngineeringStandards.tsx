@@ -3,7 +3,6 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "@/components/shared/SectionTitle";
-import { defaultStandards } from "@/constants/engineering-standards";
 import StandardCard from "./StandardCard";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,7 +12,7 @@ interface EngineeringStandardsProps { data?: any[]; }
 export default function EngineeringStandards({ data }: EngineeringStandardsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const displayData = data && data.length > 0 ? data : defaultStandards;
+  const displayData = data || [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {

@@ -1,24 +1,23 @@
 import { connectDB } from "@/config/db";
 import { Settings } from "@/models/Settings";
 import EnterpriseSettingsPage from "@/features/admin/components/settings/EnterpriseSettingsPage";
-import personalData from "@/data/Personal.json";
 
 export const dynamic = 'force-dynamic';
 
 async function getSettings() {
   const conn = await connectDB();
   if (!conn) {
-    return personalData;
+    return {};
   }
   try {
     const settings = await Settings.findOne().lean();
     if (!settings) {
-      return personalData;
+      return {};
     }
     return JSON.parse(JSON.stringify(settings));
   } catch (error) {
     console.error("Failed to fetch settings:", error);
-    return personalData;
+    return {};
   }
 }
 

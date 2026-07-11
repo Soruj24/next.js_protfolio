@@ -1,16 +1,31 @@
-import React from "react";
-import { Github, Linkedin, Mail } from "lucide-react";
+"use client";
+
+import { Github, Linkedin, Mail, ExternalLink } from "lucide-react";
+import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
 
 interface FooterSocialsProps {
   email: string;
 }
 
-const FooterSocials: React.FC<FooterSocialsProps> = ({ email }) => {
-  const socials = [
-    { icon: Github, label: "GitHub", link: "https://github.com/Soruj24" },
-    { icon: Linkedin, label: "LinkedIn", link: "https://linkedin.com/in/soruj-mahmud" },
-    { icon: Mail, label: "Email", link: `mailto:${email}` },
-  ];
+const iconMap: Record<string, typeof Github> = {
+  github: Github,
+  linkedin: Linkedin,
+  email: Mail,
+  website: ExternalLink,
+};
+
+export default function FooterSocials({ email }: FooterSocialsProps) {
+  const { settings } = usePortfolioSettings();
+
+  const socials = (settings?.social_links || [])
+    .filter((s) => s.visible)
+    .map((s) => ({
+      icon: iconMap[s.platform.toLowerCase()] || ExternalLink,
+      label: s.platform,
+      link: s.platform.toLowerCase() === "email" ? `mailto:${email || s.url}` : s.url,
+    }));
+
+  if (socials.length === 0) return null;
 
   return (
     <div className="flex items-center gap-3">
@@ -31,6 +46,4 @@ const FooterSocials: React.FC<FooterSocialsProps> = ({ email }) => {
       })}
     </div>
   );
-};
-
-export default FooterSocials;
+}

@@ -2,26 +2,22 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import personalData from "@/data/Personal.json";
 import FooterCopyright from "./footer/FooterCopyright";
 import FooterSocials from "./footer/FooterSocials";
 import FooterLinks from "./footer/FooterLinks";
 import FooterScrollToTop from "./footer/FooterScrollToTop";
+import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface FooterProps {
-  data?: Record<string, unknown>;
-}
-
-function Footer({ data }: FooterProps) {
+function Footer() {
   const footerRef = useRef<HTMLElement>(null);
   const currentYear = new Date().getFullYear();
+  const { settings } = usePortfolioSettings();
 
-  const displayData = data || personalData;
-  const personalInfo = (displayData.personal_info || {}) as Record<string, string>;
-  const fullName = personalInfo.full_name || "Soruj Mahmud";
-  const email = personalInfo.email || "sorujmahmudb2h@gmail.com";
+  const personalInfo = settings?.personal_info;
+  const fullName = personalInfo?.full_name || "";
+  const email = personalInfo?.email || "";
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -51,14 +47,6 @@ function Footer({ data }: FooterProps) {
     { label: "Experience", href: "#experience" },
     { label: "Services", href: "#services" },
     { label: "Contact", href: "#contact" },
-  ];
-
-  const services = [
-    "Frontend Development",
-    "UI/UX Implementation",
-    "Responsive Design",
-    "Performance Optimization",
-    "Component Architecture",
   ];
 
   return (
@@ -103,37 +91,25 @@ function Footer({ data }: FooterProps) {
             </ul>
           </div>
 
-          {/* Services */}
-          <div>
-            <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
-              Services
-            </h2>
-            <ul className="space-y-3">
-              {services.map((service) => (
-                <li key={service}>
-                  <span className="text-sm text-gray-400 hover:text-gray-300 transition-colors duration-300 cursor-default">
-                    {service}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* Contact */}
           <div>
             <h2 className="text-sm font-semibold text-white uppercase tracking-widest mb-6">
               Get in Touch
             </h2>
             <div className="space-y-4">
-              <a
-                href={`mailto:${email}`}
-                className="block text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-300 break-all"
-              >
-                {email}
-              </a>
-              <p className="text-sm text-gray-400">
-                Tangail, Dhaka, Bangladesh
-              </p>
+              {email && (
+                <a
+                  href={`mailto:${email}`}
+                  className="block text-sm text-gray-400 hover:text-cyan-400 transition-colors duration-300 break-all"
+                >
+                  {email}
+                </a>
+              )}
+              {personalInfo?.location && (
+                <p className="text-sm text-gray-400">
+                  {personalInfo.location}
+                </p>
+              )}
               <p className="text-xs text-gray-400">
                 Open to freelance and full-time opportunities
               </p>

@@ -1,6 +1,13 @@
 "use client";
 import { useState } from "react";
-import type { ServiceItem } from "@/data/services";
+interface ServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  features: string[];
+  gradient: string;
+  icon?: React.ComponentType<{ className?: string }>;
+}
 
 interface ServiceCardProps {
   service: ServiceItem;
@@ -24,7 +31,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         <div
           className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-6 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}
         >
-          <Icon className="w-7 h-7 text-white" />
+          {Icon && <Icon className="w-7 h-7 text-white" />}
         </div>
 
         <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors duration-300">

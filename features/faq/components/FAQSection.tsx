@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "@/components/shared/SectionTitle";
@@ -9,12 +9,20 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { faqItems } from "@/data/faq";
+import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
 
 gsap.registerPlugin(ScrollTrigger);
 
+interface FAQItem {
+  id?: string;
+  question: string;
+  answer: string;
+  category?: string;
+}
+
 export default function FAQSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { loading } = usePortfolioSettings();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -37,6 +45,10 @@ export default function FAQSection() {
     return () => ctx.revert();
   }, []);
 
+  const faqItems: FAQItem[] = [];
+
+  if (loading || faqItems.length === 0) return null;
+
   return (
     <section
       id="faq"
@@ -53,10 +65,10 @@ export default function FAQSection() {
 
         <div className="faq-container mt-16">
           <Accordion type="single" collapsible className="space-y-4">
-            {faqItems.map((item) => (
+            {faqItems.map((item, i) => (
               <AccordionItem
-                key={item.id}
-                value={item.id}
+                key={item.id || i}
+                value={item.id || `faq-${i}`}
                 className="glass-card rounded-2xl px-6 border-white/10 data-[state=open]:border-cyan-500/30 transition-colors duration-300"
               >
                 <AccordionTrigger className="text-left text-white hover:text-cyan-400 py-6 text-base font-medium">

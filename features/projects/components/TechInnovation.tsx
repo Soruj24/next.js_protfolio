@@ -3,7 +3,6 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "@/components/shared/SectionTitle";
-import { defaultInnovationData } from "@/constants/tech-innovation";
 import InnovationCard from "./InnovationCard";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,7 +12,7 @@ interface TechInnovationProps { data?: any[]; }
 export default function TechInnovation({ data }: TechInnovationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const displayData = data && data.length > 0 ? data : defaultInnovationData;
+  const displayData = data || [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {

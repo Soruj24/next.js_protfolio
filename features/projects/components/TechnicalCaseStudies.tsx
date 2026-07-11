@@ -3,7 +3,6 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "@/components/shared/SectionTitle";
-import { defaultCaseStudies } from "@/constants/case-studies";
 import CaseStudyCard from "./CaseStudyCard";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,7 +12,7 @@ interface TechnicalCaseStudiesProps { data?: any[]; }
 export default function TechnicalCaseStudies({ data }: TechnicalCaseStudiesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const displayData = data && data.length > 0 ? data : defaultCaseStudies;
+  const displayData = data || [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {

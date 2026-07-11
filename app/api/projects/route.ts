@@ -2,25 +2,15 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { Project } from "@/models/Project";
 import { requireAdmin } from "@/lib/auth/helpers";
-import { projects as localProjects } from "@/data/projects";
 
 export async function GET() {
   try {
     await connectDB();
     const dbProjects = await Project.find({}).sort({ order: 1, createdAt: -1 });
-    
-    const combinedProjects = [...dbProjects];
-    
-    localProjects.forEach(local => {
-      if (!combinedProjects.some(db => db.id === local.id)) {
-        combinedProjects.push(local);
-      }
-    });
-
-    return NextResponse.json(combinedProjects);
+    return NextResponse.json(dbProjects);
   } catch (error: unknown) {
-    console.error("Database connection failed, falling back to local projects:", error);
-    return NextResponse.json(localProjects);
+    console.error("Database error:", error);
+    return NextResponse.json([], { status: 500 });
   }
 }
 

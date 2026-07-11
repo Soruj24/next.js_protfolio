@@ -4,27 +4,26 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "@/components/shared/SectionTitle";
 import ScrollReveal from "@/components/shared/ScrollReveal";
-import personalData from "@/data/Personal.json";
 import AboutBackground from "@/features/about/components/AboutBackground";
 import AboutContent from "@/features/about/components/AboutContent";
 import AboutStats from "@/features/about/components/AboutStats";
 import AboutImage from "@/features/about/components/AboutImage";
-import { aboutStats } from "@/constants/about-stats";
+import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface AboutSectionProps {
-  data?: Record<string, unknown>;
-}
+export default function AboutSection() {
+  const { settings } = usePortfolioSettings();
+  const personalInfo = settings?.personal_info;
+  const expProfessional = settings?.experience?.professional_experience || "";
+  const fullName = personalInfo?.full_name || "";
+  const professionalTitle = personalInfo?.professional_title || "";
 
-export default function AboutSection({ data }: AboutSectionProps) {
-  const displayData = data || personalData;
-  const personalInfo = (displayData.personal_info || {}) as Record<string, string>;
-  const expProfessional =
-    ((displayData.experience || {}) as Record<string, string>).professional_experience ||
-    "Professional Frontend Developer";
-  const fullName = personalInfo.full_name || "Soruj Mahmud";
-  const professionalTitle = personalInfo.professional_title || "Frontend Developer";
+  const aboutStats = (settings?.standards || []).slice(0, 3).map((s) => ({
+    value: s.title,
+    label: s.metrics || "",
+    color: "from-cyan-500 to-blue-500",
+  }));
 
   const sectionRef = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);

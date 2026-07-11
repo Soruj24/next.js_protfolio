@@ -2,32 +2,42 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ChevronLeft, ChevronRight, Star, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, Quote, Loader2 } from "lucide-react";
 import SectionTitle from "@/components/shared/SectionTitle";
-import { testimonials } from "@/data/testimonials";
+import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
 
 gsap.registerPlugin(ScrollTrigger);
+
+interface Testimonial {
+  name: string;
+  role: string;
+  content: string;
+  avatar?: string;
+  color?: string;
+}
 
 export default function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const { settings, loading } = usePortfolioSettings();
+  const testimonials: Testimonial[] = settings?.testimonials || [];
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  }, []);
+  }, [testimonials.length]);
 
   const prevSlide = useCallback(() => {
     setCurrentIndex(
       (prev) => (prev - 1 + testimonials.length) % testimonials.length
     );
-  }, []);
+  }, [testimonials.length]);
 
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (!isAutoPlaying || testimonials.length === 0) return;
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
-  }, [isAutoPlaying, nextSlide]);
+  }, [isAutoPlaying, nextSlide, testimonials.length]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -49,6 +59,16 @@ export default function TestimonialsSection() {
     }, sectionRef);
     return () => ctx.revert();
   }, []);
+
+  if (loading) {
+    return (
+      <section id="testimonials" className="min-h-screen py-20 md:py-32 flex items-center justify-center">
+        <Loader2 size={24} className="text-gray-600 animate-spin" />
+      </section>
+    );
+  }
+
+  if (testimonials.length === 0) return null;
 
   const current = testimonials[currentIndex];
   const initials = current.name
@@ -75,15 +95,6 @@ export default function TestimonialsSection() {
             <Quote className="absolute top-6 left-6 sm:top-8 sm:left-8 w-12 h-12 text-cyan-500/10" />
 
             <div className="relative z-10">
-              <div className="flex items-center gap-1 mb-6">
-                {Array.from({ length: current.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 fill-amber-400 text-amber-400"
-                  />
-                ))}
-              </div>
-
               <blockquote className="text-lg sm:text-xl md:text-2xl text-gray-200 leading-relaxed font-light mb-10 min-h-[120px]">
                 &ldquo;{current.content}&rdquo;
               </blockquote>
@@ -94,12 +105,7 @@ export default function TestimonialsSection() {
                 </div>
                 <div>
                   <p className="text-white font-semibold">{current.name}</p>
-                  <p className="text-sm text-gray-400">
-                    {current.role} at {current.company}
-                  </p>
-                  <p className="text-xs text-cyan-400 mt-0.5">
-                    {current.projectType}
-                  </p>
+                  <p className="text-sm text-gray-400">{current.role}</p>
                 </div>
               </div>
             </div>

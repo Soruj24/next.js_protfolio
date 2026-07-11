@@ -1,25 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail } from "lucide-react";
-
-const socials = [
-  {
-    icon: Github,
-    href: "https://github.com/Soruj24",
-    label: "GitHub",
-  },
-  {
-    icon: Linkedin,
-    href: "https://linkedin.com/in/soruj-mahmud",
-    label: "LinkedIn",
-  },
-  {
-    icon: Mail,
-    href: "mailto:sorujmahmudb2h@gmail.com",
-    label: "Email",
-  },
-];
+import { Github, Linkedin, Mail, ExternalLink } from "lucide-react";
+import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
 
 const container = {
   hidden: {},
@@ -40,7 +23,26 @@ const item = {
   },
 };
 
+const iconMap: Record<string, typeof Github> = {
+  github: Github,
+  linkedin: Linkedin,
+  email: Mail,
+  website: ExternalLink,
+};
+
 export default function HeroSocial() {
+  const { settings } = usePortfolioSettings();
+
+  const socials = (settings?.social_links || [])
+    .filter((s) => s.visible)
+    .map((s) => ({
+      icon: iconMap[s.platform.toLowerCase()] || ExternalLink,
+      href: s.platform.toLowerCase() === "email" ? `mailto:${s.url}` : s.url,
+      label: s.platform,
+    }));
+
+  if (socials.length === 0) return null;
+
   return (
     <motion.div
       variants={container}

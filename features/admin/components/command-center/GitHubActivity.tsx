@@ -7,11 +7,14 @@ import { useGitHubMcp } from "@/features/admin/hooks/useGitHubMcp";
 function ContributionGraph() {
   const weeks = 20;
   const days = 7;
-  const levels = [0, 1, 2, 3, 4];
-  const grid = Array.from({ length: weeks }, () =>
-    Array.from({ length: days }, () => levels[Math.floor(Math.random() * levels.length)])
-  );
   const levelOpacity = ["opacity-0", "opacity-30", "opacity-50", "opacity-75", "opacity-100"];
+
+  const grid = Array.from({ length: weeks }, (_, wi) =>
+    Array.from({ length: days }, (_, di) => {
+      const seed = (wi * 7 + di * 13 + 42) % 100;
+      return seed < 30 ? 0 : seed < 55 ? 1 : seed < 75 ? 2 : seed < 90 ? 3 : 4;
+    })
+  );
 
   return (
     <div className="flex gap-[3px] overflow-hidden">

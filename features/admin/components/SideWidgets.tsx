@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Cpu, Activity } from "lucide-react";
+import { Cpu, Activity, Loader2 } from "lucide-react";
 import type { DashboardData } from "@/lib/services/dashboard";
+import { useEffect, useState } from "react";
 
 function QuickDeployment() {
   return (
@@ -33,13 +34,39 @@ function QuickDeployment() {
   );
 }
 
+interface SkillDistributionItem {
+  label: string;
+  value: number;
+  color: string;
+}
+
 function SkillDistribution() {
-  const items = [
-    { label: "Frontend", value: 45, color: "bg-cyan-500" },
-    { label: "Backend", value: 30, color: "bg-purple-500" },
-    { label: "Database", value: 15, color: "bg-orange-500" },
-    { label: "DevOps", value: 10, color: "bg-pink-500" },
-  ];
+  const [items, setItems] = useState<SkillDistributionItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/skills")
+      .then((r) => r.json())
+      .then((data) => {
+        const totalSkills = data.reduce(
+          (acc: number, cat: any) => acc + (cat.skills?.length || 0),
+          0
+        );
+        if (totalSkills === 0) {
+          setItems([]);
+          return;
+        }
+        const colors = ["bg-cyan-500", "bg-purple-500", "bg-orange-500", "bg-pink-500", "bg-emerald-500", "bg-amber-500"];
+        const distribution = data.map((cat: any, i: number) => ({
+          label: cat.title,
+          value: Math.round(((cat.skills?.length || 0) / totalSkills) * 100),
+          color: colors[i % colors.length],
+        }));
+        setItems(distribution);
+      })
+      .catch(() => setItems([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
@@ -47,29 +74,57 @@ function SkillDistribution() {
         <Activity className="text-orange-400" size={20} />
         Skill Distribution
       </h2>
-      <div className="space-y-4">
-        {items.map((item, i) => (
-          <div key={i} className="space-y-2">
-            <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest">
-              <span className="text-gray-400">{item.label}</span>
-              <span className="text-white">{item.value}%</span>
+      {loading ? (
+        <div className="flex justify-center py-6">
+          <Loader2 size={16} className="text-gray-500 animate-spin" />
+        </div>
+      ) : items.length > 0 ? (
+        <div className="space-y-4">
+          {items.map((item, i) => (
+            <div key={i} className="space-y-2">
+              <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest">
+                <span className="text-gray-400">{item.label}</span>
+                <span className="text-white">{item.value}%</span>
+              </div>
+              <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                <div className={`h-full ${item.color} rounded-full transition-all duration-1000 ease-out`} style={{ width: `${item.value}%` }} />
+              </div>
             </div>
-            <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-              <div className={`h-full ${item.color} rounded-full transition-all duration-1000 ease-out`} style={{ width: `${item.value}%` }} />
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-xs text-gray-600 text-center py-6">No skills yet</p>
+      )}
     </div>
   );
 }
 
-function ActivityLog() {
-  const logs = [
-    { label: "System Boot", time: "2m ago", color: "bg-green-500" },
-    { label: "DB Connected", time: "5m ago", color: "bg-blue-500" },
-    { label: "API Optimized", time: "1h ago", color: "bg-purple-500" },
-  ];
+function ActivityLog({ data: _data }: { data: DashboardData }) {
+  const [logs, setLogs] = useState<{ label: string; time: string; color: string }[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/activities?limit=5")
+      .then((r) => r.json())
+      .then((data) => {
+        const colorMap: Record<string, string> = {
+          profile: "bg-blue-500",
+          security: "bg-amber-500",
+          system: "bg-green-500",
+          project: "bg-purple-500",
+          contact: "bg-cyan-500",
+        };
+        setLogs(
+          data.slice(0, 5).map((a: any) => ({
+            label: a.title,
+            time: new Date(a.createdAt).toLocaleDateString(),
+            color: colorMap[a.type] || "bg-gray-500",
+          }))
+        );
+      })
+      .catch(() => setLogs([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-xl">
@@ -77,17 +132,25 @@ function ActivityLog() {
         <Activity className="text-orange-400" size={20} />
         Activity Log
       </h2>
-      <div className="space-y-6">
-        {logs.map((log, i) => (
-          <div key={i} className="flex items-start gap-3">
-            <div className={`mt-1.5 w-1.5 h-1.5 rounded-full ${log.color} shadow-[0_0_8px_rgba(0,0,0,0.5)]`} />
-            <div>
-              <p className="text-xs font-bold text-white uppercase tracking-wider">{log.label}</p>
-              <p className="text-[10px] text-gray-500 font-medium">{log.time}</p>
+      {loading ? (
+        <div className="flex justify-center py-6">
+          <Loader2 size={16} className="text-gray-500 animate-spin" />
+        </div>
+      ) : logs.length > 0 ? (
+        <div className="space-y-6">
+          {logs.map((log, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <div className={`mt-1.5 w-1.5 h-1.5 rounded-full ${log.color} shadow-[0_0_8px_rgba(0,0,0,0.5)]`} />
+              <div>
+                <p className="text-xs font-bold text-white uppercase tracking-wider">{log.label}</p>
+                <p className="text-[10px] text-gray-500 font-medium">{log.time}</p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-xs text-gray-600 text-center py-6">No activities yet</p>
+      )}
     </div>
   );
 }
@@ -97,7 +160,7 @@ export default function SideWidgets({ data }: { data: DashboardData }) {
     <div className="space-y-8">
       <QuickDeployment />
       <SkillDistribution />
-      {data.skillCount > 0 && <ActivityLog />}
+      {data.skillCount > 0 && <ActivityLog data={data} />}
     </div>
   );
 }

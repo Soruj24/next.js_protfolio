@@ -77,16 +77,8 @@ const ScoreCard = dynamic(
   () => import("./command-center/ScoreCard"),
   { ssr: false, loading: () => <SectionSkeleton /> },
 );
-const WeeklyActivityChart = dynamic(
-  () => import("./command-center/InteractiveCharts").then((m) => m.WeeklyActivityChart),
-  { ssr: false, loading: () => <ChartSkeleton /> },
-);
-const SkillDistributionChart = dynamic(
-  () => import("./command-center/InteractiveCharts").then((m) => m.SkillDistributionChart),
-  { ssr: false, loading: () => <ChartSkeleton /> },
-);
-const ProjectGrowthChart = dynamic(
-  () => import("./command-center/InteractiveCharts").then((m) => m.ProjectGrowthChart),
+const InteractiveCharts = dynamic(
+  () => import("./command-center/InteractiveCharts"),
   { ssr: false, loading: () => <ChartSkeleton /> },
 );
 const ActivityFeed = dynamic(
@@ -227,14 +219,9 @@ export default function DashboardPage({ data }: { data: DashboardData }) {
         </div>
       </div>
 
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-        <div className="lg:col-span-8">
-          <WeeklyActivityChart />
-        </div>
-        <div className="lg:col-span-4">
-          <SkillDistributionChart />
-        </div>
+      {/* Charts */}
+      <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
+        <InteractiveCharts />
       </div>
 
       {/* Messages + Activity + Quick Actions */}
@@ -266,10 +253,10 @@ export default function DashboardPage({ data }: { data: DashboardData }) {
         <GitHubActivity />
       </div>
 
-      {/* Growth Chart + Recent Commits */}
+      {/* Recent Updates + GitHub Activity */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
         <div className="lg:col-span-7">
-          <ProjectGrowthChart />
+          <RecentUpdates />
         </div>
         <div className="lg:col-span-5">
           <RecentCommits />

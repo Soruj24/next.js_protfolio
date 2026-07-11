@@ -6,7 +6,6 @@ import Footer from "@/components/layout/Footer";
 import LoadingScreen from "@/components/layout/LoadingScreen";
 import NavBar from "@/components/layout/NavBar";
 import HomeSection from "@/features/hero/components/HomeSection";
-import personalData from "@/data/Personal.json";
 import { useEffect, useState, Suspense } from "react";
 
 const SkillsShowcase = dynamic(() => import("@/features/skills/components/SkillsShowcase"), { ssr: false });
@@ -21,33 +20,10 @@ const ContactSection = dynamic(() => import("@/features/contact/components/Conta
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
   const [isLoading, setIsLoading] = useState(true);
-  const [settings, setSettings] = useState<Record<string, unknown>>(personalData as Record<string, unknown>);
 
   useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const response = await fetch("/api/settings");
-        if (response.ok) {
-          const data = await response.json();
-          if (data && Object.keys(data).length > 0) {
-            setSettings(data);
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch settings:", error);
-      }
-    };
-    fetchSettings();
     const timer = setTimeout(() => setIsLoading(false), 3000);
-    const onUpdated = (e: Event) => {
-      const customEvent = e as CustomEvent<Record<string, unknown>>;
-      if (customEvent?.detail) setSettings(customEvent.detail);
-    };
-    window.addEventListener("settings-updated", onUpdated);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("settings-updated", onUpdated);
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   if (isLoading) {
@@ -67,7 +43,7 @@ export default function Home() {
         </div>
 
         <main id="main-content">
-          <HomeSection data={settings} />
+          <HomeSection />
           <Suspense fallback={null}>
             <SkillsShowcase />
           </Suspense>
@@ -94,7 +70,7 @@ export default function Home() {
           </Suspense>
         </main>
 
-        <Footer data={settings} />
+        <Footer />
       </div>
     </>
   );

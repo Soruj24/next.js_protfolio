@@ -2,8 +2,20 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import type { ExperienceItem } from "@/data/experience";
 import { Calendar, MapPin, ExternalLink } from "lucide-react";
+
+interface ExperienceItem {
+  id?: string;
+  role: string;
+  company: string;
+  companyUrl?: string;
+  period: string;
+  location: string;
+  type?: string;
+  description: string;
+  achievements?: string[];
+  technologies: string[];
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -92,7 +104,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
             </p>
 
             <ul className="space-y-2 mb-4">
-              {exp.achievements.map((achievement, idx) => (
+              {(exp.achievements || []).map((achievement, idx) => (
                 <li
                   key={idx}
                   className="flex items-start gap-2 text-sm text-gray-300"

@@ -244,7 +244,7 @@ export default function SecuritySection({ settings, updateSettings }: SecuritySe
                       toast.error("Please enter a key name");
                       return;
                     }
-                    toast.success("API key created (demo mode)");
+                    toast.success("API key creation is not yet implemented");
                     setNewKeyName("");
                     setShowNewKeyForm(false);
                   }}

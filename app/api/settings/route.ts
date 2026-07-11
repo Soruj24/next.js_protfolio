@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { Settings } from "@/models/Settings";
 import { requireAdmin } from "@/lib/auth/helpers";
-import personalData from "@/data/Personal.json";
 
 export async function GET() {
   try {
@@ -10,13 +9,12 @@ export async function GET() {
     const settings = await Settings.findOne();
 
     if (!settings) {
-      return NextResponse.json(personalData);
+      return NextResponse.json({});
     }
 
     return NextResponse.json(settings);
   } catch (error: unknown) {
-    // Fallback to local data so the editor still shows content
-    return NextResponse.json(personalData);
+    return NextResponse.json({}, { status: 500 });
   }
 }
 

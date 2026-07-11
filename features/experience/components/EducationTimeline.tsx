@@ -2,8 +2,17 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import type { EducationItem } from "@/data/experience";
 import { Calendar, MapPin, GraduationCap } from "lucide-react";
+
+interface EducationItem {
+  id?: string;
+  degree: string;
+  institution: string;
+  period: string;
+  location?: string;
+  description?: string;
+  highlights?: string[];
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -77,7 +86,7 @@ export default function EducationTimeline({ education }: EducationTimelineProps)
             </p>
 
             <ul className="space-y-2">
-              {edu.highlights.map((highlight, idx) => (
+              {(edu.highlights || []).map((highlight, idx) => (
                 <li
                   key={idx}
                   className="flex items-start gap-2 text-sm text-gray-300"

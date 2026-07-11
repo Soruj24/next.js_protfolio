@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   AreaChart,
   Area,
@@ -10,38 +11,34 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
 } from "recharts";
-import { TrendingUp, BarChart3, PieChart as PieIcon } from "lucide-react";
+import { TrendingUp, BarChart3, Loader2 } from "lucide-react";
 
-const weeklyData = [
-  { day: "Mon", views: 42, visitors: 28 },
-  { day: "Tue", views: 68, visitors: 45 },
-  { day: "Wed", views: 95, visitors: 62 },
-  { day: "Thu", views: 78, visitors: 51 },
-  { day: "Fri", views: 112, visitors: 73 },
-  { day: "Sat", views: 89, visitors: 58 },
-  { day: "Sun", views: 64, visitors: 41 },
-];
+interface WeeklyData {
+  day: string;
+  visitors: number;
+  pageViews: number;
+}
 
-const monthlyData = [
-  { month: "Jan", projects: 2, inquiries: 8 },
-  { month: "Feb", projects: 3, inquiries: 12 },
-  { month: "Mar", projects: 5, inquiries: 18 },
-  { month: "Apr", projects: 4, inquiries: 15 },
-  { month: "May", projects: 7, inquiries: 22 },
-  { month: "Jun", projects: 6, inquiries: 28 },
-];
+interface MonthlyData {
+  date: string;
+  count: number;
+}
 
-const skillData = [
-  { name: "Frontend", value: 42, color: "#22d3ee" },
-  { name: "Backend", value: 28, color: "#a78bfa" },
-  { name: "Database", value: 15, color: "#f97316" },
-  { name: "DevOps", value: 10, color: "#ec4899" },
-  { name: "Mobile", value: 5, color: "#34d399" },
-];
+interface AnalyticsResponse {
+  weekly: WeeklyData[];
+  submissionsByDay: MonthlyData[];
+  overview: {
+    totalPageViews: number;
+    totalProjectViews: number;
+    conversionRate: number;
+  };
+  engagement: {
+    totalProjectViews: number;
+    totalProjectLikes: number;
+    totalContactSubmissions: number;
+  };
+}
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -65,7 +62,15 @@ function ChartTooltip({ active, payload, label }: CustomTooltipProps) {
   );
 }
 
-function WeeklyActivityChart() {
+function ChartSkeleton() {
+  return (
+    <div className="h-[240px] flex items-center justify-center">
+      <Loader2 size={20} className="text-gray-600 animate-spin" />
+    </div>
+  );
+}
+
+function WeeklyActivityChart({ data }: { data: WeeklyData[] }) {
   return (
     <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6 overflow-hidden">
       <div className="flex items-center justify-between mb-6">
@@ -74,7 +79,7 @@ function WeeklyActivityChart() {
             <TrendingUp size={16} className="text-cyan-400" />
             <h3 className="text-sm font-semibold text-white">Weekly Activity</h3>
           </div>
-          <p className="text-xs text-gray-500 font-medium">Page views & unique visitors</p>
+          <p className="text-xs text-gray-500 font-medium">Page views & visitors by day</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
@@ -90,7 +95,7 @@ function WeeklyActivityChart() {
 
       <div className="h-[240px] -ml-2">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={weeklyData}>
+          <AreaChart data={data}>
             <defs>
               <linearGradient id="viewsGradient" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.3} />
@@ -118,7 +123,7 @@ function WeeklyActivityChart() {
             <Tooltip content={<ChartTooltip />} />
             <Area
               type="monotone"
-              dataKey="views"
+              dataKey="pageViews"
               stroke="#22d3ee"
               strokeWidth={2}
               fill="url(#viewsGradient)"
@@ -141,25 +146,25 @@ function WeeklyActivityChart() {
   );
 }
 
-function ProjectGrowthChart() {
+function ContactSubmissionsChart({ data }: { data: MonthlyData[] }) {
   return (
     <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6 overflow-hidden">
       <div className="flex items-center justify-between mb-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <BarChart3 size={16} className="text-purple-400" />
-            <h3 className="text-sm font-semibold text-white">Growth Metrics</h3>
+            <h3 className="text-sm font-semibold text-white">Contact Submissions</h3>
           </div>
-          <p className="text-xs text-gray-500 font-medium">Projects & inquiries per month</p>
+          <p className="text-xs text-gray-500 font-medium">Submissions per day</p>
         </div>
       </div>
 
       <div className="h-[240px] -ml-2">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={monthlyData} barGap={4}>
+          <BarChart data={data.slice(-12)} barGap={4}>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
             <XAxis
-              dataKey="month"
+              dataKey="date"
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 11, fill: "rgba(255,255,255,0.3)", fontWeight: 500 }}
@@ -172,8 +177,7 @@ function ProjectGrowthChart() {
               dx={-8}
             />
             <Tooltip content={<ChartTooltip />} />
-            <Bar dataKey="projects" fill="#a78bfa" radius={[6, 6, 0, 0]} barSize={16} />
-            <Bar dataKey="inquiries" fill="#22d3ee" radius={[6, 6, 0, 0]} barSize={16} />
+            <Bar dataKey="count" fill="#a78bfa" radius={[6, 6, 0, 0]} barSize={16} name="Submissions" />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -181,62 +185,65 @@ function ProjectGrowthChart() {
   );
 }
 
-function SkillDistributionChart() {
+function EngagementStats({ data }: { data: AnalyticsResponse["engagement"] }) {
   return (
     <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6 overflow-hidden">
       <div className="flex items-center gap-2 mb-6">
-        <PieIcon size={16} className="text-amber-400" />
-        <h3 className="text-sm font-semibold text-white">Skill Distribution</h3>
+        <TrendingUp size={16} className="text-amber-400" />
+        <h3 className="text-sm font-semibold text-white">Engagement Overview</h3>
       </div>
-
-      <div className="flex items-center gap-6">
-        <div className="w-[160px] h-[160px] shrink-0">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={skillData}
-                cx="50%"
-                cy="50%"
-                innerRadius={48}
-                outerRadius={72}
-                paddingAngle={3}
-                dataKey="value"
-                stroke="none"
-              >
-                {skillData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
-                ))}
-              </Pie>
-              <Tooltip
-                content={({ active, payload }) => {
-                  if (!active || !payload?.[0]) return null;
-                  return (
-                    <div className="rounded-xl border border-white/10 bg-[#0a0a0f]/95 backdrop-blur-xl px-3 py-2 shadow-2xl shadow-black/50">
-                      <div className="flex items-center gap-2 text-sm">
-                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: payload[0].payload.color }} />
-                        <span className="text-white font-semibold">{payload[0].name}</span>
-                        <span className="text-gray-400 font-medium">{payload[0].value}%</span>
-                      </div>
-                    </div>
-                  );
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="flex-1 space-y-3">
-          {skillData.map((skill) => (
-            <div key={skill.name} className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: skill.color }} />
-              <span className="text-xs text-gray-400 font-medium flex-1">{skill.name}</span>
-              <span className="text-xs text-white font-bold tabular-nums">{skill.value}%</span>
-            </div>
-          ))}
-        </div>
+      <div className="grid grid-cols-3 gap-4">
+        {[
+          { label: "Project Views", value: data.totalProjectViews.toLocaleString(), color: "text-cyan-400" },
+          { label: "Project Likes", value: data.totalProjectLikes.toLocaleString(), color: "text-purple-400" },
+          { label: "Contact Forms", value: data.totalContactSubmissions.toLocaleString(), color: "text-amber-400" },
+        ].map((stat) => (
+          <div key={stat.label} className="text-center p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+            <p className={`text-xl font-bold ${stat.color} tabular-nums`}>{stat.value}</p>
+            <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mt-1">{stat.label}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-export { WeeklyActivityChart, ProjectGrowthChart, SkillDistributionChart };
+export { WeeklyActivityChart, ContactSubmissionsChart, EngagementStats };
+
+export default function InteractiveCharts() {
+  const [data, setData] = useState<AnalyticsResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/analytics")
+      .then((r) => r.json())
+      .then(setData)
+      .catch(() => setData(null))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6"><ChartSkeleton /></div>
+        <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6"><ChartSkeleton /></div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-12 text-center">
+        <p className="text-sm text-gray-500">No analytics data available</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      <WeeklyActivityChart data={data.weekly || []} />
+      <ContactSubmissionsChart data={data.submissionsByDay || []} />
+      <EngagementStats data={data.engagement} />
+    </div>
+  );
+}

@@ -1,13 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { skillCategories as localSkills } from "@/data/skills";
 import type { ISkillCategory } from "@/models/Skill";
 
 export function usePublicSkills() {
-  const [categories, setCategories] = useState<ISkillCategory[]>(
-    localSkills as ISkillCategory[],
-  );
+  const [categories, setCategories] = useState<ISkillCategory[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,11 +13,12 @@ export function usePublicSkills() {
         const res = await fetch("/api/skills");
         if (res.ok) {
           const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
+          if (Array.isArray(data)) {
             setCategories(data);
           }
         }
       } catch {
+        // Skills will remain empty
       } finally {
         setLoading(false);
       }
@@ -30,4 +28,3 @@ export function usePublicSkills() {
 
   return { categories, loading };
 }
-
