@@ -6,6 +6,7 @@ import { User } from "@/models/User";
 import { connectDB } from "@/config/db";
 import bcrypt from "bcryptjs";
 import { authConfig } from "./auth.config";
+import { notify } from "@/lib/services/notification";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
@@ -93,6 +94,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return false;
         }
       }
+
+      try {
+        await connectDB();
+        await notify.systemEvent(
+          "Admin Login",
+          `${user.name || user.email} signed in via ${account?.provider || "credentials"}`,
+        );
+      } catch {
+        // Notification failure should not block sign-in
+      }
+
       return true;
     },
   },

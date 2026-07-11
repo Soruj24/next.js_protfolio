@@ -9,6 +9,7 @@ import ErrorBoundary from "@/features/admin/components/ErrorBoundary";
 const NAV_ROUTES: Record<string, string> = {
   d: "/admin",
   a: "/admin/analytics",
+  t: "/admin/timeline",
   p: "/admin/projects",
   s: "/admin/skills",
   i: "/admin/inquiries",

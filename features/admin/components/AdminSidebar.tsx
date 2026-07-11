@@ -81,6 +81,7 @@ const navigation: NavSection[] = [
     items: [
       { name: "Dashboard", href: "/admin", icon: LayoutDashboard, shortcut: "G D" },
       { name: "Analytics", href: "/admin/analytics", icon: BarChart3, shortcut: "G A" },
+      { name: "Timeline", href: "/admin/timeline", icon: Clock, shortcut: "G T" },
     ],
   },
   {

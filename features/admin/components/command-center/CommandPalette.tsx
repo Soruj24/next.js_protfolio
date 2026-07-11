@@ -98,6 +98,7 @@ function toggleTheme() {
 const PAGE_ITEMS: Omit<PaletteItem, "action">[] = [
   { id: "page-dashboard", name: "Dashboard", hint: "Overview & metrics", icon: LayoutDashboard, iconColor: "text-cyan-400", section: "Pages", keywords: ["home", "overview", "metrics"] },
   { id: "page-analytics", name: "Analytics", hint: "Traffic & performance", icon: BarChart3, iconColor: "text-blue-400", section: "Pages", keywords: ["traffic", "stats", "charts"] },
+  { id: "page-timeline", name: "Timeline", hint: "Activity timeline", icon: Clock, iconColor: "text-amber-400", section: "Pages", keywords: ["activity", "events", "history"] },
   { id: "page-projects", name: "Projects", hint: "Manage portfolio", icon: FolderKanban, iconColor: "text-violet-400", section: "Pages", keywords: ["portfolio", "work"] },
   { id: "page-skills", name: "Skills", hint: "Skill categories", icon: Code2, iconColor: "text-emerald-400", section: "Pages", keywords: ["tech", "abilities"] },
   { id: "page-inquiries", name: "Inquiries", hint: "Contact messages", icon: Mail, iconColor: "text-amber-400", section: "Pages", keywords: ["messages", "contact", "inbox"] },

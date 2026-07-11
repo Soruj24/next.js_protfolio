@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { Settings } from "@/models/Settings";
 import { requireAdmin } from "@/lib/auth/helpers";
+import { notify } from "@/lib/services/notification";
 
 export async function GET() {
   try {
@@ -36,6 +37,15 @@ export async function POST(req: Request) {
       });
     } else {
       settings = await Settings.create(data);
+    }
+
+    try {
+      await notify.systemEvent(
+        "Settings Updated",
+        `Portfolio settings were updated by ${session?.user?.name || "admin"}`,
+      );
+    } catch {
+      // Notification failure should not block settings update
     }
 
     return NextResponse.json(settings);
