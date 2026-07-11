@@ -9,7 +9,8 @@ import {
   Users, Eye, MousePointerClick, Globe, Monitor, Smartphone,
   Tablet, BarChart3, Github, Download, Mail, Heart, Activity,
   ArrowUpRight, Radio, ExternalLink, RefreshCw, AlertTriangle,
-  FolderOpen,
+  FolderOpen, TrendingUp, GitCommit, Rocket, FolderKanban,
+  Code2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -40,7 +41,22 @@ interface AnalyticsData {
   hourly: Array<{ hour: string; visitors: number }>;
 }
 
-const COLORS = ["#22d3ee", "#a78bfa", "#34d399", "#f97316", "#ec4899", "#f59e0b", "#3b82f6", "#ef4444"];
+interface ChartsData {
+  visitorsOverTime: { date: string; visitors: number; pageViews: number; projectViews: number }[];
+  messagesOverTime: { date: string; count: number }[];
+  commitsPerWeek: { week: string; count: number }[];
+  deployments: { id: string; message: string; repo: string; timestamp: string; url: string }[];
+  repositories: { name: string; stars: number; forks: number; language: string | null; url: string }[];
+  projectCategories: { name: string; count: number }[];
+  techUsage: { name: string; count: number }[];
+  contactSources: { source: string; count: number; percentage: number }[];
+  deviceBreakdown: { name: string; count: number; percentage: number }[];
+  browserBreakdown: { name: string; count: number; percentage: number }[];
+  countryBreakdown: { name: string; count: number; percentage: number }[];
+  hourlyActivity: { hour: number; count: number }[];
+}
+
+const COLORS = ["#22d3ee", "#a78bfa", "#34d399", "#f97316", "#ec4899", "#f59e0b", "#3b82f6", "#ef4444", "#8b5cf6", "#06b6d4"];
 
 // ─── Animated Counter ───────────────────────────────────────────
 
@@ -48,7 +64,6 @@ function AnimatedCounter({ value, prefix = "", suffix = "", decimals = 0 }: {
   value: number; prefix?: string; suffix?: string; decimals?: number;
 }) {
   const [displayed, setDisplayed] = useState(0);
-
   useEffect(() => {
     const duration = 1200;
     const startTime = Date.now();
@@ -61,7 +76,6 @@ function AnimatedCounter({ value, prefix = "", suffix = "", decimals = 0 }: {
     };
     requestAnimationFrame(animate);
   }, [value, decimals]);
-
   return (
     <span>
       {prefix}{displayed.toLocaleString()}{suffix && <span className="text-sm text-gray-500 font-medium ml-1">{suffix}</span>}
@@ -104,7 +118,7 @@ function ChartTooltip({ active, payload, label }: any) {
         <div key={i} className="flex items-center gap-2 text-sm">
           <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
           <span className="text-gray-400 font-medium capitalize">{entry.name}:</span>
-          <span className="text-white font-bold tabular-nums">{entry.value.toLocaleString()}</span>
+          <span className="text-white font-bold tabular-nums">{typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}</span>
         </div>
       ))}
     </div>
@@ -150,19 +164,29 @@ function EmptyState({ message = "No data yet" }: { message?: string }) {
 // ─── Main Component ─────────────────────────────────────────────
 
 export default function AnalyticsDashboard() {
-  const [data, setData] = useState<AnalyticsData | null>(null);
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [charts, setCharts] = useState<ChartsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [period, setPeriod] = useState<"7d" | "30d" | "90d">("30d");
+  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/analytics?period=${period}`);
-      if (!res.ok) throw new Error("Failed to fetch analytics");
-      const d = await res.json();
-      setData(d);
+      const [analyticsRes, chartsRes] = await Promise.all([
+        fetch(`/api/analytics?period=${period}`),
+        fetch("/api/dashboard/charts", { cache: "no-store" }),
+      ]);
+      if (!analyticsRes.ok) throw new Error("Failed to fetch analytics");
+      const [analyticsData, chartsData] = await Promise.all([
+        analyticsRes.json(),
+        chartsRes.ok ? chartsRes.json() : null,
+      ]);
+      setAnalytics(analyticsData);
+      if (chartsData) setCharts(chartsData);
+      setLastRefresh(new Date());
     } catch (e) {
       setError(e instanceof Error ? e.message : "Unknown error");
     } finally {
@@ -172,10 +196,12 @@ export default function AnalyticsDashboard() {
 
   useEffect(() => {
     fetchData();
+    const interval = setInterval(fetchData, 60000);
+    return () => clearInterval(interval);
   }, [fetchData]);
 
-  // ── Error State ──
-  if (error && !data) {
+  // Error state
+  if (error && !analytics) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
         <div className="w-14 h-14 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4">
@@ -183,18 +209,15 @@ export default function AnalyticsDashboard() {
         </div>
         <h2 className="text-lg font-bold text-white mb-2">Failed to load analytics</h2>
         <p className="text-sm text-gray-500 mb-6 max-w-sm">{error}</p>
-        <button
-          onClick={fetchData}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all text-sm font-medium"
-        >
+        <button onClick={fetchData} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all text-sm font-medium">
           <RefreshCw size={14} /> Try again
         </button>
       </div>
     );
   }
 
-  // ── Loading State ──
-  if (loading && !data) {
+  // Loading state
+  if (loading && !analytics) {
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between animate-pulse">
@@ -209,18 +232,18 @@ export default function AnalyticsDashboard() {
             <div key={i} className="h-32 rounded-2xl bg-white/[0.02] border border-white/[0.06] animate-pulse" />
           ))}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-          <div className="lg:col-span-8 h-[350px] rounded-2xl bg-white/[0.02] border border-white/[0.06] animate-pulse" />
-          <div className="lg:col-span-4 h-[350px] rounded-2xl bg-white/[0.02] border border-white/[0.06] animate-pulse" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {[...Array(2)].map((_, i) => (
+            <div key={i} className="h-[350px] rounded-2xl bg-white/[0.02] border border-white/[0.06] animate-pulse" />
+          ))}
         </div>
       </div>
     );
   }
 
-  if (!data) return null;
+  if (!analytics) return null;
 
-  const { overview, realtime, devices, browsers, countries, referralSources, topProjects, weekly, hourly } = data;
-
+  const { overview, realtime, devices, browsers, countries, referralSources, topProjects, weekly, hourly } = analytics;
   const hasAnyData = overview.visitors > 0 || overview.pageViews > 0;
 
   return (
@@ -234,6 +257,7 @@ export default function AnalyticsDashboard() {
           </div>
           <p className="text-sm text-gray-500 font-medium">
             {hasAnyData ? `Real data for the last ${period === "7d" ? "7 days" : period === "30d" ? "30 days" : "90 days"}` : "No analytics data collected yet"}
+            <span className="text-gray-600 ml-2">· Refreshes every 60s · {lastRefresh.toLocaleTimeString()}</span>
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -247,12 +271,7 @@ export default function AnalyticsDashboard() {
               </button>
             ))}
           </div>
-          <button
-            onClick={fetchData}
-            disabled={loading}
-            className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all disabled:opacity-50"
-            title="Refresh"
-          >
+          <button onClick={fetchData} disabled={loading} className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all disabled:opacity-50" title="Refresh">
             <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
           </button>
         </div>
@@ -357,7 +376,19 @@ export default function AnalyticsDashboard() {
           <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-6">
             <Activity size={16} className="text-amber-400" /> Activity by Hour
           </h3>
-          {hourly.some((h) => h.visitors > 0) ? (
+          {charts?.hourlyActivity?.some((h) => h.count > 0) ? (
+            <div className="h-[220px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={charts.hourlyActivity}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+                  <XAxis dataKey="hour" axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: "rgba(255,255,255,0.25)" }} interval={2} dy={8} tickFormatter={(h) => `${h}:00`} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "rgba(255,255,255,0.25)" }} dx={-8} />
+                  <Tooltip content={<ChartTooltip />} />
+                  <Bar dataKey="count" name="Events" fill="#22d3ee" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          ) : hourly.some((h) => h.visitors > 0) ? (
             <div className="h-[220px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={hourly}>
@@ -380,9 +411,9 @@ export default function AnalyticsDashboard() {
             <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
               <Monitor size={16} className="text-cyan-400" /> Devices
             </h3>
-            {devices.length > 0 ? (
+            {(charts?.deviceBreakdown?.length ? charts.deviceBreakdown : devices).length > 0 ? (
               <div className="space-y-3">
-                {devices.map((device, i) => (
+                {(charts?.deviceBreakdown?.length ? charts.deviceBreakdown : devices).map((device, i) => (
                   <div key={device.name}>
                     <div className="flex items-center justify-between mb-1.5">
                       <div className="flex items-center gap-2">
@@ -432,12 +463,12 @@ export default function AnalyticsDashboard() {
               <Globe size={16} className="text-emerald-400" /> Top Countries
             </h3>
           </div>
-          {countries.length > 0 ? (
+          {(charts?.countryBreakdown?.length ? charts.countryBreakdown : countries).length > 0 ? (
             <div className="divide-y divide-white/[0.04]">
-              {countries.map((country, i) => (
+              {(charts?.countryBreakdown?.length ? charts.countryBreakdown : countries).map((country, i) => (
                 <div key={country.name} className="flex items-center gap-3 px-6 py-3 hover:bg-white/[0.02] transition-colors">
                   <span className="text-[10px] font-bold text-gray-600 w-4">{i + 1}</span>
-                  <span className="text-lg">{country.code ? getFlagEmoji(country.code) : "🌍"}</span>
+                  <span className="text-lg">{"code" in country && (country as any).code ? getFlagEmoji((country as any).code) : "🌍"}</span>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-semibold text-white truncate">{country.name}</p>
                     <div className="flex items-center gap-2 mt-0.5">
@@ -461,9 +492,9 @@ export default function AnalyticsDashboard() {
           <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
             <Globe size={16} className="text-blue-400" /> Browsers
           </h3>
-          {browsers.length > 0 ? (
+          {(charts?.browserBreakdown?.length ? charts.browserBreakdown : browsers).length > 0 ? (
             <div className="space-y-3">
-              {browsers.map((browser, i) => (
+              {(charts?.browserBreakdown?.length ? charts.browserBreakdown : browsers).map((browser, i) => (
                 <div key={browser.name}>
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="text-xs font-semibold text-gray-300">{browser.name}</span>
@@ -513,6 +544,54 @@ export default function AnalyticsDashboard() {
           )}
         </div>
       </div>
+
+      {/* ── TECH USAGE + CONTACT SOURCES ── */}
+      {charts && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Tech Usage */}
+          {charts.techUsage.length > 0 && (
+            <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-6">
+                <Code2 size={16} className="text-cyan-400" /> Tech Usage
+              </h3>
+              <div className="space-y-3">
+                {charts.techUsage.slice(0, 10).map((tech, i) => {
+                  const maxCount = Math.max(...charts.techUsage.map((t) => t.count));
+                  return (
+                    <div key={tech.name}>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xs font-semibold text-gray-300">{tech.name}</span>
+                        <span className="text-xs font-bold text-white tabular-nums">{tech.count}</span>
+                      </div>
+                      <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                        <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${maxCount > 0 ? (tech.count / maxCount) * 100 : 0}%`, backgroundColor: COLORS[i % COLORS.length] }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Contact Sources */}
+          {charts.contactSources.length > 0 && (
+            <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
+              <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-6">
+                <ExternalLink size={16} className="text-rose-400" /> Contact Sources
+              </h3>
+              <div className="space-y-2">
+                {charts.contactSources.map((src, i) => (
+                  <div key={src.source} className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
+                    <span className="text-xs text-gray-400 font-medium flex-1 truncate">{src.source}</span>
+                    <span className="text-xs text-white font-bold tabular-nums">{src.count}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* ── ENGAGEMENT SUMMARY ── */}
       {hasAnyData && (
