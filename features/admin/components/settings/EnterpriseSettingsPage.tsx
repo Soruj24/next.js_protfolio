@@ -99,7 +99,7 @@ export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettin
           />
         );
       case "content":
-        return <ContentSection />;
+        return <ContentSection initialData={initialData} />;
       default:
         return <ProfileSection settings={settings} updateSettings={updateSettings} />;
     }
