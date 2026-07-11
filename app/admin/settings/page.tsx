@@ -1,25 +1,20 @@
 import { connectDB } from "@/config/db";
 import { Settings } from "@/models/Settings";
-import SettingsForm from "@/features/admin/components/SettingsForm";
+import EnterpriseSettingsPage from "@/features/admin/components/settings/EnterpriseSettingsPage";
 import personalData from "@/data/Personal.json";
 
 export const dynamic = 'force-dynamic';
 
 async function getSettings() {
   const conn = await connectDB();
-  
   if (!conn) {
     return personalData;
   }
-
   try {
     const settings = await Settings.findOne().lean();
-    
     if (!settings) {
-      // If no settings in DB, use the JSON data as initial values
       return personalData;
     }
-    
     return JSON.parse(JSON.stringify(settings));
   } catch (error) {
     console.error("Failed to fetch settings:", error);
@@ -29,10 +24,9 @@ async function getSettings() {
 
 export default async function SettingsPage() {
   const settings = await getSettings();
-
   return (
-    <div className="container mx-auto py-10">
-      <SettingsForm initialData={settings} />
+    <div className="py-2">
+      <EnterpriseSettingsPage initialData={settings} />
     </div>
   );
 }
