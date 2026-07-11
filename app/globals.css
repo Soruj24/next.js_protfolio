@@ -272,6 +272,52 @@
     50% { transform: translateY(-20px); }
   }
 
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes count-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes status-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(34, 211, 238, 0); }
+  }
+
+  @keyframes grid-line {
+    from { opacity: 0; }
+    to { opacity: 0.03; }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out both;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out both;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.4s ease-out both;
+  }
+
+  .animate-status-pulse {
+    animation: status-pulse 2s ease-in-out infinite;
+  }
+
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -284,6 +330,49 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  .admin-grid-bg {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .cmdk-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    animation: fade-in 0.15s ease-out;
+  }
+
+  .cmdk-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 560px;
+    z-index: 1000;
+    animation: fade-in-up 0.2s ease-out;
+  }
+
+  .sidebar-collapsed {
+    width: 72px;
+  }
+
+  .sidebar-expanded {
+    width: 260px;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
