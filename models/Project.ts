@@ -53,6 +53,13 @@ export interface IFolderNode {
   children?: IFolderNode[];
 }
 
+export interface IProjectVersion {
+  version: number;
+  label: string;
+  snapshot: Partial<IProject>;
+  savedAt: Date | string;
+}
+
 export interface IProject {
   _id?: string;
   id: string;
@@ -70,6 +77,9 @@ export interface IProject {
   challenges: string[];
   solutions: string[];
   featured: boolean;
+  archived: boolean;
+  published: boolean;
+  order: number;
   difficulty: 'beginner' | 'medium' | 'intermediate' | 'advanced';
   duration: string;
   teamSize: string;
@@ -93,6 +103,7 @@ export interface IProject {
   techDecisions?: ITechDecision[];
   accessibility?: IAccessibilityItem[];
   seo?: ISEOItem[];
+  versions?: IProjectVersion[];
 }
 
 export interface IProjectDocument extends Omit<IProject, '_id'>, Document {
@@ -118,6 +129,13 @@ const ProjectStatsSchema = new Schema<IProjectStats>({
   complexity: { type: String, required: true },
   views: { type: Number, default: 0 },
   likes: { type: Number, default: 0 }
+}, { _id: false });
+
+const ProjectVersionSchema = new Schema<IProjectVersion>({
+  version: { type: Number, required: true },
+  label: { type: String, required: true },
+  snapshot: { type: Schema.Types.Mixed, required: true },
+  savedAt: { type: Date, default: Date.now },
 }, { _id: false });
 
 const ProjectSchema = new Schema<IProjectDocument>({
@@ -169,7 +187,11 @@ const ProjectSchema = new Schema<IProjectDocument>({
   futureImprovements: [{ type: String }],
   metaDescription: { type: String, required: true },
   seoTitle: { type: String, required: true },
-  performance: { type: PerformanceStatsSchema, required: true }
+  performance: { type: PerformanceStatsSchema, required: true },
+  archived: { type: Boolean, default: false },
+  published: { type: Boolean, default: true },
+  order: { type: Number, default: 0 },
+  versions: { type: [ProjectVersionSchema], default: [] },
 }, {
   timestamps: true,
   collection: 'projects'
@@ -180,5 +202,7 @@ ProjectSchema.index({ featured: 1, updatedAt: -1 });
 ProjectSchema.index({ category: 1, status: 1 });
 ProjectSchema.index({ tags: 1 });
 ProjectSchema.index({ difficulty: 1 });
+ProjectSchema.index({ archived: 1, published: 1 });
+ProjectSchema.index({ order: 1 });
 
 export const Project = mongoose.models.Project || mongoose.model<IProjectDocument>('Project', ProjectSchema);

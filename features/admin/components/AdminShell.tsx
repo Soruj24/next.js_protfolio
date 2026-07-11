@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import AdminSidebar from "@/features/admin/components/AdminSidebar";
+import AdminSidebar, { SidebarProvider } from "@/features/admin/components/AdminSidebar";
 import TopNavigation from "@/features/admin/components/command-center/TopNavigation";
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
@@ -59,18 +59,20 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }, [handleKeyboardShortcuts]);
 
   return (
-    <div className="flex h-dvh bg-[#020617] text-white selection:bg-cyan-500/30 selection:text-cyan-200">
-      <AdminSidebar />
+    <SidebarProvider>
+      <div className="flex h-dvh bg-[#020617] text-white selection:bg-cyan-500/30 selection:text-cyan-200 overflow-hidden">
+        <AdminSidebar />
 
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <TopNavigation />
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+          <TopNavigation />
 
-        <main className="flex-1 overflow-y-auto scrollbar-hide">
-          <div className="relative p-6 lg:p-8 max-w-[1600px] mx-auto">
-            {children}
-          </div>
-        </main>
+          <main className="flex-1 overflow-y-auto scrollbar-hide">
+            <div className="relative p-6 lg:p-8 max-w-[1600px] mx-auto">
+              {children}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }
