@@ -14,9 +14,9 @@ interface Stat {
 
 export default function DashboardStatsGrid({ data }: { data: DashboardData }) {
   const stats: Stat[] = [
-    { title: "Total Projects", value: data.projectCount, icon: FolderKanban, color: "from-cyan-500 to-blue-600", description: "Deployed projects", trend: "+2", href: "/admin/projects" },
-    { title: "Core Skills", value: data.skillCount, icon: Zap, color: "from-purple-500 to-pink-600", description: "Technical expertise", trend: "Stable", href: "/admin/skills" },
-    { title: "Inquiries", value: data.messageCount, icon: MessageSquare, color: "from-green-500 to-emerald-600", description: "Total messages", trend: data.unreadMessageCount > 0 ? `${data.unreadMessageCount} new` : "All read", href: "/admin/inquiries" },
+    { title: "Total Projects", value: data.projects.total, icon: FolderKanban, color: "from-cyan-500 to-blue-600", description: "Deployed projects", trend: `${data.projects.featured} featured`, href: "/admin/projects" },
+    { title: "Core Skills", value: data.skills.totalSkills, icon: Zap, color: "from-purple-500 to-pink-600", description: "Technical expertise", trend: `${data.skills.totalCategories} categories`, href: "/admin/skills" },
+    { title: "Inquiries", value: data.contacts.total, icon: MessageSquare, color: "from-green-500 to-emerald-600", description: "Total messages", trend: data.contacts.unread > 0 ? `${data.contacts.unread} new` : "All read", href: "/admin/inquiries" },
     { title: "System Status", value: "Online", icon: ShieldCheck, color: "from-orange-500 to-red-600", description: "API & DB active", trend: "100%" },
   ];
 

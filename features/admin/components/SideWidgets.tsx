@@ -165,7 +165,7 @@ export default function SideWidgets({ data }: { data: DashboardData }) {
     <div className="space-y-8">
       <QuickDeployment />
       <SkillDistribution />
-      {data.skillCount > 0 && <ActivityLog data={data} />}
+      {data.skills.totalSkills > 0 && <ActivityLog data={data} />}
     </div>
   );
 }
