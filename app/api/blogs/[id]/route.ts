@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { Blog } from "@/models/Blog";
 import { requireAdmin } from "@/lib/auth/helpers";
+import { notify } from "@/lib/services/notification";
 
 export async function GET(
   req: Request,
@@ -31,6 +32,7 @@ export async function PUT(
     await connectDB();
     const blog = await Blog.findByIdAndUpdate(id, data, { new: true, runValidators: true });
     if (!blog) return NextResponse.json({ error: "Not found" }, { status: 404 });
+    notify.blogUpdated(blog.title, blog.slug);
     return NextResponse.json(blog);
   } catch (error: unknown) {
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });

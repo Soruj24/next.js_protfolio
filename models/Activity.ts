@@ -1,11 +1,24 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export type ActivityType =
+  | "project"
+  | "blog"
+  | "contact"
+  | "security"
+  | "system"
+  | "analytics"
+  | "github"
+  | "deployment"
+  | "profile";
+
 export interface IActivity {
   _id?: string;
   title: string;
   description?: string;
-  type: "profile" | "security" | "system" | "project" | "contact";
+  type: ActivityType;
   icon?: string;
+  link?: string;
+  read: boolean;
   metadata?: Record<string, unknown>;
   createdAt?: Date;
 }
@@ -18,10 +31,12 @@ const ActivitySchema = new Schema<IActivityDocument>(
     description: { type: String, default: "" },
     type: {
       type: String,
-      enum: ["profile", "security", "system", "project", "contact"],
+      enum: ["project", "blog", "contact", "security", "system", "analytics", "github", "deployment", "profile"],
       required: true,
     },
     icon: { type: String, default: "" },
+    link: { type: String, default: "" },
+    read: { type: Boolean, default: false },
     metadata: { type: Schema.Types.Mixed, default: {} },
   },
   { timestamps: true, collection: "activities" }
@@ -29,6 +44,7 @@ const ActivitySchema = new Schema<IActivityDocument>(
 
 ActivitySchema.index({ createdAt: -1 });
 ActivitySchema.index({ type: 1 });
+ActivitySchema.index({ read: 1, createdAt: -1 });
 
 export const Activity =
   mongoose.models.Activity ||

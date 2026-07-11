@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { Blog } from "@/models/Blog";
 import { requireAdmin } from "@/lib/auth/helpers";
+import { notify } from "@/lib/services/notification";
 
 export async function GET() {
   try {
@@ -30,6 +31,7 @@ export async function POST(req: Request) {
     }
     await connectDB();
     const blog = await Blog.create(data);
+    if (data.published) notify.blogPublished(data.title, data.slug);
     return NextResponse.json(blog, { status: 201 });
   } catch (error: unknown) {
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });

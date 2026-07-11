@@ -11,6 +11,10 @@ const iconMap: Record<string, typeof Settings> = {
   system: CheckCircle2,
   project: User,
   contact: User,
+  blog: User,
+  analytics: User,
+  github: User,
+  deployment: User,
 };
 
 const colorMap: Record<string, string> = {
@@ -19,6 +23,10 @@ const colorMap: Record<string, string> = {
   system: "bg-green-500",
   project: "bg-purple-500",
   contact: "bg-amber-500",
+  blog: "bg-purple-500",
+  analytics: "bg-pink-500",
+  github: "bg-gray-500",
+  deployment: "bg-orange-500",
 };
 
 function timeAgo(dateStr: string | Date): string {
@@ -37,9 +45,9 @@ export default function ActivityLogPanel() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/activities")
+    fetch("/api/activities?limit=6")
       .then((r) => r.json())
-      .then(setActivities)
+      .then((result) => setActivities(result.data || []))
       .catch(() => setActivities([]))
       .finally(() => setLoading(false));
   }, []);

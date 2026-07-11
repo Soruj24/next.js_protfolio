@@ -3,6 +3,7 @@ import { connectDB } from "@/config/db";
 import { Contact } from "@/models/Contact";
 import { contactFormSchema } from "@/lib/schemas/contact";
 import { auth } from "@/auth";
+import { notify } from "@/lib/services/notification";
 
 export const dynamic = "force-dynamic";
 
@@ -97,6 +98,7 @@ export async function POST(request: NextRequest) {
         ipAddress: request.headers.get("x-forwarded-for") || "unknown",
         userAgent: request.headers.get("user-agent") || "unknown",
       });
+      notify.messageReceived(validation.data.name, validation.data.subject, String(contact._id));
       return NextResponse.json({ success: true, message: "Message sent successfully!", id: contact._id });
     } catch (saveError: unknown) {
       const message = saveError instanceof Error ? saveError.message : "Failed to save message";

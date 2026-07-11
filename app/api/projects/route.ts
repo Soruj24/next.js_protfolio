@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/config/db";
 import { Project } from "@/models/Project";
 import { requireAdmin } from "@/lib/auth/helpers";
+import { notify } from "@/lib/services/notification";
 
 export async function GET() {
   try {
@@ -22,6 +23,7 @@ export async function POST(req: Request) {
     const data = await req.json();
     await connectDB();
     const project = await Project.create(data);
+    notify.projectPublished(project.title || project.name || "Untitled", String(project._id));
     return NextResponse.json(project, { status: 201 });
   } catch (error: unknown) {
     return NextResponse.json(

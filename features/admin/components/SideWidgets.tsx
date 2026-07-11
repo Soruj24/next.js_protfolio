@@ -106,16 +106,21 @@ function ActivityLog({ data: _data }: { data: DashboardData }) {
   useEffect(() => {
     fetch("/api/activities?limit=5")
       .then((r) => r.json())
-      .then((data) => {
+      .then((result) => {
+        const activities = result.data || [];
         const colorMap: Record<string, string> = {
           profile: "bg-blue-500",
           security: "bg-amber-500",
           system: "bg-green-500",
           project: "bg-purple-500",
           contact: "bg-cyan-500",
+          blog: "bg-purple-500",
+          analytics: "bg-pink-500",
+          github: "bg-gray-500",
+          deployment: "bg-orange-500",
         };
         setLogs(
-          data.slice(0, 5).map((a: any) => ({
+          activities.slice(0, 5).map((a: any) => ({
             label: a.title,
             time: new Date(a.createdAt).toLocaleDateString(),
             color: colorMap[a.type] || "bg-gray-500",

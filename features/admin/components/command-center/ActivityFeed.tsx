@@ -1,121 +1,116 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
-  MessageSquare,
-  FolderPlus,
-  Settings,
-  Code2,
-  User,
-  CheckCircle2,
-  Zap,
-  Globe,
+  Zap, FolderGit2, FileText, MessageSquare, Shield, Settings,
+  BarChart3, GitCommitHorizontal, Rocket, Globe, Loader2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-interface ActivityItem {
-  id: string;
-  icon: typeof MessageSquare;
-  iconColor: string;
-  iconBg: string;
+interface Activity {
+  _id: string;
   title: string;
   description: string;
-  time: string;
+  type: string;
+  link?: string;
+  createdAt: string;
 }
 
-const activities: ActivityItem[] = [
-  {
-    id: "1",
-    icon: MessageSquare,
-    iconColor: "text-cyan-400",
-    iconBg: "bg-cyan-400/10",
-    title: "New inquiry submitted",
-    description: "John Doe sent a message via the contact form.",
-    time: "2 minutes ago",
-  },
-  {
-    id: "2",
-    icon: FolderPlus,
-    iconColor: "text-purple-400",
-    iconBg: "bg-purple-400/10",
-    title: "Project created",
-    description: "Added a new project to the portfolio.",
-    time: "1 hour ago",
-  },
-  {
-    id: "3",
-    icon: Code2,
-    iconColor: "text-emerald-400",
-    iconBg: "bg-emerald-400/10",
-    title: "Skills updated",
-    description: "Skill category 'Frontend' was modified.",
-    time: "3 hours ago",
-  },
-  {
-    id: "4",
-    icon: Settings,
-    iconColor: "text-amber-400",
-    iconBg: "bg-amber-400/10",
-    title: "Settings changed",
-    description: "Portfolio configuration was updated.",
-    time: "5 hours ago",
-  },
-  {
-    id: "5",
-    icon: Globe,
-    iconColor: "text-blue-400",
-    iconBg: "bg-blue-400/10",
-    title: "System deployed",
-    description: "Production build deployed successfully.",
-    time: "Yesterday",
-  },
-  {
-    id: "6",
-    icon: CheckCircle2,
-    iconColor: "text-green-400",
-    iconBg: "bg-green-400/10",
-    title: "Health check passed",
-    description: "All API endpoints responding normally.",
-    time: "Yesterday",
-  },
-];
+const typeConfig: Record<string, { icon: typeof Zap; color: string; bg: string }> = {
+  contact: { icon: MessageSquare, color: "text-cyan-400", bg: "bg-cyan-400/10" },
+  project: { icon: FolderGit2, color: "text-emerald-400", bg: "bg-emerald-400/10" },
+  blog: { icon: FileText, color: "text-purple-400", bg: "bg-purple-400/10" },
+  security: { icon: Shield, color: "text-amber-400", bg: "bg-amber-400/10" },
+  system: { icon: Settings, color: "text-blue-400", bg: "bg-blue-400/10" },
+  analytics: { icon: BarChart3, color: "text-pink-400", bg: "bg-pink-400/10" },
+  github: { icon: GitCommitHorizontal, color: "text-gray-300", bg: "bg-gray-300/10" },
+  deployment: { icon: Rocket, color: "text-orange-400", bg: "bg-orange-400/10" },
+  profile: { icon: Globe, color: "text-blue-400", bg: "bg-blue-400/10" },
+};
+
+function timeAgo(dateStr: string): string {
+  const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+  if (seconds < 60) return `${seconds}s ago`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d ago`;
+  return new Date(dateStr).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
 
 export default function ActivityFeed() {
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/activities?limit=8")
+      .then((r) => r.json())
+      .then((result) => setActivities(result.data || []))
+      .catch(() => setActivities([]))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6 overflow-hidden h-full">
+    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6 overflow-hidden h-full flex flex-col">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
           <Zap size={16} className="text-amber-400" />
           <h3 className="text-sm font-semibold text-white">Activity Feed</h3>
         </div>
-        <button className="text-[11px] font-semibold text-gray-500 hover:text-cyan-400 transition-colors px-2 py-1 rounded-lg hover:bg-white/5">
+        <Link
+          href="/admin/inquiries"
+          className="text-[11px] font-semibold text-gray-500 hover:text-cyan-400 transition-colors px-2 py-1 rounded-lg hover:bg-white/5"
+        >
           View all
-        </button>
+        </Link>
       </div>
 
-      <div className="space-y-0">
-        {activities.map((activity, index) => (
-          <div
-            key={activity.id}
-            className={cn(
-              "relative flex items-start gap-3 pb-5 group",
-              index === activities.length - 1 && "pb-0",
-            )}
-          >
-            {index < activities.length - 1 && (
-              <div className="absolute left-[15px] top-[30px] bottom-0 w-px bg-white/[0.06]" />
-            )}
-
-            <div className={cn("relative z-10 p-2 rounded-xl shrink-0", activity.iconBg)}>
-              <activity.icon size={14} className={activity.iconColor} />
-            </div>
-
-            <div className="flex-1 min-w-0 pt-0.5">
-              <p className="text-sm font-medium text-white leading-tight">{activity.title}</p>
-              <p className="text-xs text-gray-500 font-medium mt-0.5 line-clamp-2">{activity.description}</p>
-              <p className="text-[10px] text-gray-600 font-semibold mt-1.5 uppercase tracking-wider">{activity.time}</p>
-            </div>
+      <div className="flex-1 overflow-y-auto scrollbar-hide">
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 size={20} className="text-gray-600 animate-spin" />
           </div>
-        ))}
+        ) : activities.length > 0 ? (
+          <div className="space-y-0">
+            {activities.map((activity, index) => {
+              const config = typeConfig[activity.type] || typeConfig.system;
+              const Icon = config.icon;
+              return (
+                <div
+                  key={activity._id}
+                  className={cn(
+                    "relative flex items-start gap-3 pb-5 group",
+                    index === activities.length - 1 && "pb-0",
+                  )}
+                >
+                  {index < activities.length - 1 && (
+                    <div className="absolute left-[15px] top-[30px] bottom-0 w-px bg-white/[0.06]" />
+                  )}
+                  <div className={cn("relative z-10 p-2 rounded-xl shrink-0", config.bg)}>
+                    <Icon size={14} className={config.color} />
+                  </div>
+                  <div className="flex-1 min-w-0 pt-0.5">
+                    <p className="text-sm font-medium text-white leading-tight">{activity.title}</p>
+                    {activity.description && (
+                      <p className="text-xs text-gray-500 font-medium mt-0.5 line-clamp-2">{activity.description}</p>
+                    )}
+                    <p className="text-[10px] text-gray-600 font-semibold mt-1.5 uppercase tracking-wider">
+                      {timeAgo(activity.createdAt)}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center py-12">
+            <Zap size={20} className="text-gray-600 mb-2" />
+            <p className="text-xs text-gray-500 font-medium">No activity yet</p>
+          </div>
+        )}
       </div>
     </div>
   );

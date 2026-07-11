@@ -3,6 +3,7 @@ import { connectDB } from "@/config/db";
 import { Project } from "@/models/Project";
 import { isValidObjectId } from "@/lib/utils/validation";
 import { requireAdmin } from "@/lib/auth/helpers";
+import { notify } from "@/lib/services/notification";
 
 function getQuery(id: string) {
   return isValidObjectId(id) ? { _id: id } : { id: id };
@@ -44,6 +45,7 @@ export async function PUT(
       upsert: true,
     });
 
+    notify.projectUpdated(project?.title || project?.name || "Untitled", id);
     return NextResponse.json(project);
   } catch (error: unknown) {
     return NextResponse.json({ error: (error as Error).message || "Unknown error" }, { status: 500 });
@@ -65,6 +67,7 @@ export async function DELETE(
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
+    notify.projectDeleted(project.title || project.name || "Untitled");
     return NextResponse.json({ message: "Project deleted successfully" });
   } catch (error: unknown) {
     return NextResponse.json({ error: (error as Error).message || "Unknown error" }, { status: 500 });
@@ -114,6 +117,7 @@ export async function PATCH(
       case "publish": {
         const project = await Project.findOneAndUpdate(query, { $set: { published: actionData?.published ?? true } }, { new: true });
         if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
+        if (actionData?.published) notify.projectPublished(project.title || project.name || "Untitled", id);
         return NextResponse.json(project);
       }
       case "feature": {
