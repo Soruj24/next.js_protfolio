@@ -29,14 +29,14 @@ interface AnalyticsResponse {
   weekly: WeeklyData[];
   submissionsByDay: MonthlyData[];
   overview: {
-    totalPageViews: number;
-    totalProjectViews: number;
+    visitors: number;
+    sessions: number;
+    pageViews: number;
+    projectViews: number;
+    resumeDownloads: number;
+    contactSubmissions: number;
+    githubClicks: number;
     conversionRate: number;
-  };
-  engagement: {
-    totalProjectViews: number;
-    totalProjectLikes: number;
-    totalContactSubmissions: number;
   };
 }
 
@@ -185,7 +185,7 @@ function ContactSubmissionsChart({ data }: { data: MonthlyData[] }) {
   );
 }
 
-function EngagementStats({ data }: { data: AnalyticsResponse["engagement"] }) {
+function EngagementStats({ data }: { data: AnalyticsResponse["overview"] }) {
   return (
     <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6 overflow-hidden">
       <div className="flex items-center gap-2 mb-6">
@@ -194,9 +194,9 @@ function EngagementStats({ data }: { data: AnalyticsResponse["engagement"] }) {
       </div>
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: "Project Views", value: data.totalProjectViews.toLocaleString(), color: "text-cyan-400" },
-          { label: "Project Likes", value: data.totalProjectLikes.toLocaleString(), color: "text-purple-400" },
-          { label: "Contact Forms", value: data.totalContactSubmissions.toLocaleString(), color: "text-amber-400" },
+          { label: "Project Views", value: data.projectViews.toLocaleString(), color: "text-cyan-400" },
+          { label: "Resume Downloads", value: data.resumeDownloads.toLocaleString(), color: "text-purple-400" },
+          { label: "Contact Forms", value: data.contactSubmissions.toLocaleString(), color: "text-amber-400" },
         ].map((stat) => (
           <div key={stat.label} className="text-center p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
             <p className={`text-xl font-bold ${stat.color} tabular-nums`}>{stat.value}</p>
@@ -243,7 +243,7 @@ export default function InteractiveCharts() {
     <div className="space-y-6">
       <WeeklyActivityChart data={data.weekly || []} />
       <ContactSubmissionsChart data={data.submissionsByDay || []} />
-      <EngagementStats data={data.engagement} />
+      <EngagementStats data={data.overview} />
     </div>
   );
 }
