@@ -116,17 +116,17 @@ const DevelopmentHighlightSchema = new Schema<IDevelopmentHighlight>({
 }, { _id: false });
 
 const PerformanceStatsSchema = new Schema<IPerformanceStats>({
-  loadTime: { type: Number, required: true, min: 0, max: 100 },
-  accessibility: { type: Number, min: 0, max: 100 },
-  bestPractices: { type: Number, min: 0, max: 100 },
-  interactivity: { type: Number, min: 0, max: 100 },
-  seo: { type: Number, required: true, min: 0, max: 100 }
+  loadTime: { type: Number, default: 0, min: 0, max: 100 },
+  accessibility: { type: Number, default: 0, min: 0, max: 100 },
+  bestPractices: { type: Number, default: 0, min: 0, max: 100 },
+  interactivity: { type: Number, default: 0, min: 0, max: 100 },
+  seo: { type: Number, default: 0, min: 0, max: 100 }
 }, { _id: false });
 
 const ProjectStatsSchema = new Schema<IProjectStats>({
-  completionTime: { type: String, required: true },
-  teamSize: { type: String, required: true },
-  complexity: { type: String, required: true },
+  completionTime: { type: String, default: "" },
+  teamSize: { type: String, default: "1" },
+  complexity: { type: String, default: "intermediate" },
   views: { type: Number, default: 0 },
   likes: { type: Number, default: 0 }
 }, { _id: false });
@@ -147,7 +147,7 @@ const ProjectSchema = new Schema<IProjectDocument>({
   },
   title: { type: String, required: true },
   description: { type: String, required: true },
-  fullDescription: { type: String, required: true },
+  fullDescription: { type: String, default: "" },
   image: { type: String, required: true },
   technologies: [{ type: String, required: true }],
   features: [{ type: String, required: true }],
@@ -173,21 +173,21 @@ const ProjectSchema = new Schema<IProjectDocument>({
     required: true,
     enum: ['beginner', 'medium', 'intermediate', 'advanced'] 
   },
-  duration: { type: String, required: true },
+  duration: { type: String, default: "" },
   teamSize: { type: String, required: true },
-  completionDate: { type: Date, required: true },
+  completionDate: { type: Date, default: Date.now },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
   tags: [{ type: String }],
-  emoji: { type: String, required: true },
-  stats: { type: ProjectStatsSchema, required: true },
-  architecture: { type: String, required: true },
+  emoji: { type: String, default: "🚀" },
+  stats: { type: ProjectStatsSchema, default: () => ({}) },
+  architecture: { type: String, default: "" },
   developmentHighlights: [{ type: DevelopmentHighlightSchema }],
   lessonsLearned: [{ type: String }],
   futureImprovements: [{ type: String }],
-  metaDescription: { type: String, required: true },
-  seoTitle: { type: String, required: true },
-  performance: { type: PerformanceStatsSchema, required: true },
+  metaDescription: { type: String, default: "" },
+  seoTitle: { type: String, default: "" },
+  performance: { type: PerformanceStatsSchema, default: () => ({}) },
   archived: { type: Boolean, default: false },
   published: { type: Boolean, default: true },
   order: { type: Number, default: 0 },
