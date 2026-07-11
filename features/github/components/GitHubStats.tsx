@@ -2,9 +2,10 @@
 import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ExternalLink, GitBranch, Star, Users, Code2 } from "lucide-react";
+import { ExternalLink, GitBranch, Star, Users, Code2, Loader2 } from "lucide-react";
 import SectionTitle from "@/components/shared/SectionTitle";
 import AnimatedCounter from "@/components/shared/AnimatedCounter";
+import { useGitHubData } from "@/features/admin/hooks/useGitHubMcp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,15 +17,40 @@ interface StatItem {
   color: string;
 }
 
-const stats: StatItem[] = [
-  { label: "Projects Completed", value: 20, suffix: "+", icon: Code2, color: "text-cyan-400" },
-  { label: "GitHub Stars", value: 50, suffix: "+", icon: Star, color: "text-amber-400" },
-  { label: "Repositories", value: 30, suffix: "+", icon: GitBranch, color: "text-purple-400" },
-  { label: "Contributions", value: 500, suffix: "+", icon: Users, color: "text-emerald-400" },
-];
-
 export default function GitHubStats() {
   const sectionRef = useRef<HTMLElement>(null);
+  const { profile, repos, loading } = useGitHubData();
+
+  const stats: StatItem[] = [
+    {
+      label: "Projects Completed",
+      value: repos.filter((r) => !r.fork).length,
+      suffix: "+",
+      icon: Code2,
+      color: "text-cyan-400",
+    },
+    {
+      label: "GitHub Stars",
+      value: profile?.stars ?? 0,
+      suffix: "+",
+      icon: Star,
+      color: "text-amber-400",
+    },
+    {
+      label: "Repositories",
+      value: profile?.publicRepos ?? 0,
+      suffix: "+",
+      icon: GitBranch,
+      color: "text-purple-400",
+    },
+    {
+      label: "Followers",
+      value: profile?.followers ?? 0,
+      suffix: "",
+      icon: Users,
+      color: "text-emerald-400",
+    },
+  ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -43,11 +69,13 @@ export default function GitHubStats() {
             start: "top 75%",
             toggleActions: "play none none reverse",
           },
-        }
+        },
       );
     }, sectionRef);
     return () => ctx.revert();
   }, []);
+
+  const username = profile?.username || "Soruj24";
 
   return (
     <section
@@ -64,28 +92,36 @@ export default function GitHubStats() {
         />
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-16">
-          {stats.map((stat) => {
-            const Icon = stat.icon;
-            return (
-              <div
-                key={stat.label}
-                className="gh-stat glass-card-premium rounded-2xl p-6 sm:p-8 text-center group cursor-default"
-              >
-                <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <Icon className={`w-5 h-5 ${stat.color}`} />
+          {loading
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="glass-card-premium rounded-2xl p-6 sm:p-8 text-center animate-pulse">
+                  <div className="w-12 h-12 rounded-xl bg-white/[0.04] mx-auto mb-4" />
+                  <div className="h-8 w-20 bg-white/5 rounded mx-auto mb-2" />
+                  <div className="h-4 w-24 bg-white/5 rounded mx-auto" />
                 </div>
-                <p className="text-3xl sm:text-4xl font-black text-white mb-2">
-                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                </p>
-                <p className="text-xs sm:text-sm text-gray-400">{stat.label}</p>
-              </div>
-            );
-          })}
+              ))
+            : stats.map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <div
+                    key={stat.label}
+                    className="gh-stat glass-card-premium rounded-2xl p-6 sm:p-8 text-center group cursor-default"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <Icon className={`w-5 h-5 ${stat.color}`} />
+                    </div>
+                    <p className="text-3xl sm:text-4xl font-black text-white mb-2">
+                      <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                    </p>
+                    <p className="text-xs sm:text-sm text-gray-400">{stat.label}</p>
+                  </div>
+                );
+              })}
         </div>
 
         <div className="flex justify-center mt-12">
           <a
-            href="https://github.com/Soruj24"
+            href={`https://github.com/${username}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl glass-card-premium group"

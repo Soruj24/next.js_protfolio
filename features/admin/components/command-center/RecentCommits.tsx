@@ -3,8 +3,9 @@
 import { GitCommit, ArrowUpRight, GitBranch, Loader2 } from "lucide-react";
 import { useGitHubMcp } from "@/features/admin/hooks/useGitHubMcp";
 
-export default function RecentCommits({ username = "Soruj24" }: { username?: string }) {
-  const { recentCommits, loading } = useGitHubMcp();
+export default function RecentCommits({ username: propUsername }: { username?: string }) {
+  const { recentCommits, profile, loading } = useGitHubMcp();
+  const username = propUsername || profile?.username || "Soruj24";
 
   return (
     <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl overflow-hidden">
@@ -46,7 +47,7 @@ export default function RecentCommits({ username = "Soruj24" }: { username?: str
           recentCommits.map((commit) => (
             <a
               key={commit.hash}
-              href={commit.url || `https://github.com/${username}/${commit.repo}/commit/${commit.hash}`}
+              href={commit.url}
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-4 hover:bg-white/[0.02] transition-colors group"
@@ -62,7 +63,7 @@ export default function RecentCommits({ username = "Soruj24" }: { username?: str
                     <span className="text-gray-700">&middot;</span>
                     <div className="flex items-center gap-1">
                       <GitBranch size={10} className="text-gray-600" />
-                      <span className="text-[10px] text-purple-400/70 font-medium">{commit.branch}</span>
+                      <span className="text-[10px] text-purple-400/70 font-medium">main</span>
                     </div>
                     <span className="text-gray-700">&middot;</span>
                     <span className="text-[10px] text-purple-400/50 font-medium">{commit.repo}</span>

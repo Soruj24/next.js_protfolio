@@ -1,29 +1,38 @@
 "use client";
 
-import { GitCommit, GitPullRequest, Star, GitFork, ExternalLink, Loader2 } from "lucide-react";
+import { GitCommit, GitPullRequest, Star, GitFork, ExternalLink, Loader2, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useGitHubMcp } from "@/features/admin/hooks/useGitHubMcp";
+import type { ContributionDay } from "@/lib/github/service";
 
-function ContributionGraph() {
-  const weeks = 20;
-  const days = 7;
+function ContributionGraph({ data }: { data: ContributionDay[] }) {
   const levelOpacity = ["opacity-0", "opacity-30", "opacity-50", "opacity-75", "opacity-100"];
 
-  const grid = Array.from({ length: weeks }, (_, wi) =>
-    Array.from({ length: days }, (_, di) => {
-      const seed = (wi * 7 + di * 13 + 42) % 100;
-      return seed < 30 ? 0 : seed < 55 ? 1 : seed < 75 ? 2 : seed < 90 ? 3 : 4;
-    })
-  );
+  if (data.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-[110px] text-xs text-gray-600">
+        No contribution data available
+      </div>
+    );
+  }
+
+  const weeks: ContributionDay[][] = [];
+  for (let i = 0; i < data.length; i += 7) {
+    weeks.push(data.slice(i, i + 7));
+  }
 
   return (
     <div className="flex gap-[3px] overflow-hidden">
-      {grid.map((week, wi) => (
+      {weeks.map((week, wi) => (
         <div key={wi} className="flex flex-col gap-[3px]">
-          {week.map((level, di) => (
+          {week.map((day, di) => (
             <div
               key={di}
-              className={cn("w-[10px] h-[10px] rounded-[2px] bg-cyan-400 transition-opacity", levelOpacity[level])}
+              title={`${day.date}: ${day.count} contribution${day.count !== 1 ? "s" : ""}`}
+              className={cn(
+                "w-[10px] h-[10px] rounded-[2px] bg-cyan-400 transition-opacity cursor-default",
+                levelOpacity[day.level],
+              )}
             />
           ))}
         </div>
@@ -32,15 +41,18 @@ function ContributionGraph() {
   );
 }
 
-export default function GitHubActivity({ username = "Soruj24" }: { username?: string }) {
-  const { stats, recentCommits, loading } = useGitHubMcp();
+export default function GitHubActivity({ username: propUsername }: { username?: string }) {
+  const { stats, recentCommits, contributionGraph, contributors, loading } = useGitHubMcp();
+  const username = propUsername || stats ? "" : "Soruj24";
 
   const statCards = [
     { label: "Repos", value: stats?.publicRepos ?? 0, icon: GitPullRequest, color: "text-cyan-400 bg-cyan-400/10" },
     { label: "Stars", value: stats?.stars ?? 0, icon: Star, color: "text-amber-400 bg-amber-400/10" },
     { label: "Forks", value: stats?.forks ?? 0, icon: GitFork, color: "text-emerald-400 bg-emerald-400/10" },
-    { label: "Followers", value: stats?.followers ?? 0, icon: GitCommit, color: "text-purple-400 bg-purple-400/10" },
+    { label: "Followers", value: stats?.followers ?? 0, icon: Users, color: "text-purple-400 bg-purple-400/10" },
   ];
+
+  const totalContributions = contributionGraph.reduce((sum, d) => sum + d.count, 0);
 
   return (
     <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl overflow-hidden">
@@ -83,9 +95,43 @@ export default function GitHubActivity({ username = "Soruj24" }: { username?: st
         </div>
 
         <div className="mb-4">
-          <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-2">Contributions (last 20 weeks)</p>
-          <ContributionGraph />
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">
+              Contributions (last {contributionGraph.length} days)
+            </p>
+            {!loading && (
+              <p className="text-[10px] text-cyan-400 font-bold tabular-nums">
+                {totalContributions.toLocaleString()} total
+              </p>
+            )}
+          </div>
+          <ContributionGraph data={contributionGraph} />
         </div>
+
+        {contributors.length > 0 && (
+          <div className="mb-4">
+            <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider mb-2">Top Contributors</p>
+            <div className="flex items-center gap-2">
+              {contributors.slice(0, 5).map((c) => (
+                <a
+                  key={c.username}
+                  href={c.profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`${c.username}: ${c.contributions} contributions`}
+                  className="group"
+                >
+                  <img
+                    src={c.avatar}
+                    alt={c.username}
+                    className="w-7 h-7 rounded-full border border-white/10 group-hover:border-cyan-400/50 transition-colors"
+                  />
+                </a>
+              ))}
+              <span className="text-[10px] text-gray-600">{contributors.length} contributors</span>
+            </div>
+          </div>
+        )}
 
         <div className="space-y-0">
           {loading ? (
@@ -99,10 +145,10 @@ export default function GitHubActivity({ username = "Soruj24" }: { username?: st
               </div>
             ))
           ) : recentCommits.length ? (
-            recentCommits.map((commit) => (
+            recentCommits.slice(0, 5).map((commit) => (
               <a
                 key={commit.hash}
-                href={commit.url || `https://github.com/${username}/${commit.repo}/commit/${commit.hash}`}
+                href={commit.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 py-2.5 border-t border-white/[0.04] first:border-0 hover:bg-white/[0.02] rounded-lg transition-colors -mx-2 px-2 group"
@@ -116,12 +162,6 @@ export default function GitHubActivity({ username = "Soruj24" }: { username?: st
                     <code className="text-[10px] text-cyan-400/70 font-mono">{commit.hash}</code>
                     <span className="text-[10px] text-gray-600">in</span>
                     <span className="text-[10px] text-purple-400/70 font-medium">{commit.repo}</span>
-                    {commit.branch !== "main" && commit.branch !== "master" && (
-                      <>
-                        <span className="text-[10px] text-gray-600">@</span>
-                        <span className="text-[10px] text-amber-400/60 font-medium">{commit.branch}</span>
-                      </>
-                    )}
                   </div>
                 </div>
                 <span className="text-[10px] text-gray-600 font-semibold shrink-0">{commit.timeAgo}</span>

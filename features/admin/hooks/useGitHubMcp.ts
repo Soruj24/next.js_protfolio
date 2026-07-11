@@ -1,32 +1,43 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import type { GitHubDataResult } from "@/lib/github/service";
 
-interface GitHubStats {
-  publicRepos: number;
-  followers: number;
-  following: number;
-  stars: number;
-  forks: number;
+interface UseGitHubDataReturn extends GitHubDataResult {
+  loading: boolean;
+  error: boolean;
+  refetch: () => Promise<void>;
 }
 
-interface GitHubCommit {
-  hash: string;
-  message: string;
-  branch: string;
-  repo: string;
-  timestamp: string;
-  timeAgo: string;
-  url?: string;
-}
+const EMPTY_STATE: GitHubDataResult = {
+  profile: {
+    username: "",
+    name: null,
+    avatar: "",
+    bio: null,
+    company: null,
+    location: null,
+    blog: null,
+    twitter: null,
+    publicRepos: 0,
+    followers: 0,
+    following: 0,
+    stars: 0,
+    forks: 0,
+    joinedAt: "",
+  },
+  repos: [],
+  recentCommits: [],
+  issues: [],
+  pullRequests: [],
+  releases: [],
+  contributors: [],
+  languages: {},
+  contributionGraph: [],
+};
 
-interface GitHubData {
-  stats: GitHubStats | null;
-  recentCommits: GitHubCommit[];
-}
-
-export function useGitHubMcp() {
-  const [data, setData] = useState<GitHubData>({ stats: null, recentCommits: [] });
+export function useGitHubData(): UseGitHubDataReturn {
+  const [data, setData] = useState<GitHubDataResult>(EMPTY_STATE);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -34,7 +45,7 @@ export function useGitHubMcp() {
     try {
       setLoading(true);
       setError(false);
-      const res = await globalThis.fetch("/api/github");
+      const res = await fetch("/api/github");
       if (!res.ok) throw new Error("Failed to fetch");
       const json = await res.json();
       setData(json);
@@ -50,4 +61,33 @@ export function useGitHubMcp() {
   }, [fetchData]);
 
   return { ...data, loading, error, refetch: fetchData };
+}
+
+export function useGitHubMcp() {
+  const { profile, repos, recentCommits, issues, pullRequests, releases, contributors, languages, contributionGraph, loading, error, refetch } =
+    useGitHubData();
+
+  return {
+    stats: profile
+      ? {
+          publicRepos: profile.publicRepos,
+          followers: profile.followers,
+          following: profile.following,
+          stars: profile.stars,
+          forks: profile.forks,
+        }
+      : null,
+    profile,
+    repos,
+    recentCommits,
+    issues,
+    pullRequests,
+    releases,
+    contributors,
+    languages,
+    contributionGraph,
+    loading,
+    error,
+    refetch,
+  };
 }
