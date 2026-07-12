@@ -1,206 +1,30 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState } from "react";
 import {
   AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
 import {
-  Users, Eye, MousePointerClick, Globe, Monitor, Smartphone,
-  Tablet, BarChart3, Github, Download, Mail, Heart, Activity,
+  Users, Eye, Globe, Monitor,
+  BarChart3, Github, Download, Mail, Heart, Activity,
   ArrowUpRight, Radio, ExternalLink, RefreshCw, AlertTriangle,
-  FolderOpen, TrendingUp, GitCommit, Rocket, FolderKanban,
   Code2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-// ─── Types ──────────────────────────────────────────────────────
-
-interface AnalyticsData {
-  period: string;
-  overview: {
-    visitors: number;
-    sessions: number;
-    pageViews: number;
-    projectViews: number;
-    resumeDownloads: number;
-    contactSubmissions: number;
-    githubClicks: number;
-    conversionRate: number;
-  };
-  realtime: {
-    liveVisitors: number;
-    activePages: Array<{ page: string; visitors: number }>;
-  };
-  devices: Array<{ name: string; count: number; percentage: number }>;
-  browsers: Array<{ name: string; count: number; percentage: number }>;
-  countries: Array<{ name: string; code: string; count: number; percentage: number }>;
-  referralSources: Array<{ source: string; count: number; percentage: number }>;
-  topProjects: Array<{ title: string; category: string; views: number; likes: number }>;
-  weekly: Array<{ day: string; visitors: number }>;
-  hourly: Array<{ hour: string; visitors: number }>;
-}
-
-interface ChartsData {
-  visitorsOverTime: { date: string; visitors: number; pageViews: number; projectViews: number }[];
-  messagesOverTime: { date: string; count: number }[];
-  commitsPerWeek: { week: string; count: number }[];
-  deployments: { id: string; message: string; repo: string; timestamp: string; url: string }[];
-  repositories: { name: string; stars: number; forks: number; language: string | null; url: string }[];
-  projectCategories: { name: string; count: number }[];
-  techUsage: { name: string; count: number }[];
-  contactSources: { source: string; count: number; percentage: number }[];
-  deviceBreakdown: { name: string; count: number; percentage: number }[];
-  browserBreakdown: { name: string; count: number; percentage: number }[];
-  countryBreakdown: { name: string; count: number; percentage: number }[];
-  hourlyActivity: { hour: number; count: number }[];
-}
-
-const COLORS = ["#22d3ee", "#a78bfa", "#34d399", "#f97316", "#ec4899", "#f59e0b", "#3b82f6", "#ef4444", "#8b5cf6", "#06b6d4"];
-
-// ─── Animated Counter ───────────────────────────────────────────
-
-function AnimatedCounter({ value, prefix = "", suffix = "", decimals = 0 }: {
-  value: number; prefix?: string; suffix?: string; decimals?: number;
-}) {
-  const [displayed, setDisplayed] = useState(0);
-  useEffect(() => {
-    const duration = 1200;
-    const startTime = Date.now();
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplayed(Number((eased * value).toFixed(decimals)));
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }, [value, decimals]);
-  return (
-    <span>
-      {prefix}{displayed.toLocaleString()}{suffix && <span className="text-sm text-gray-500 font-medium ml-1">{suffix}</span>}
-    </span>
-  );
-}
-
-// ─── Metric Card ────────────────────────────────────────────────
-
-function MetricCard({ label, value, icon: Icon, color, prefix, suffix, decimals }: {
-  label: string; value: number; icon: typeof Users; color: string;
-  prefix?: string; suffix?: string; decimals?: number;
-}) {
-  return (
-    <div className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-5 hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-300 overflow-hidden">
-      <div className="absolute top-0 right-0 w-24 h-24 rounded-full opacity-0 blur-3xl group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `linear-gradient(to bottom left, ${color}20, transparent)` }} />
-      <div className="relative z-10">
-        <div className="flex items-start justify-between mb-3">
-          <div className="p-2.5 rounded-xl" style={{ background: `${color}15` }}>
-            <Icon size={18} style={{ color }} />
-          </div>
-        </div>
-        <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">{label}</p>
-        <div className="text-2xl font-bold text-white tabular-nums">
-          <AnimatedCounter value={value} prefix={prefix} suffix={suffix} decimals={decimals} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Chart Tooltip ──────────────────────────────────────────────
-
-function ChartTooltip({ active, payload, label }: any) {
-  if (!active || !payload) return null;
-  return (
-    <div className="rounded-xl border border-white/10 bg-[#0a0a0f]/95 backdrop-blur-xl px-4 py-3 shadow-2xl shadow-black/50">
-      <p className="text-xs font-semibold text-gray-400 mb-2">{label}</p>
-      {payload.map((entry: any, i: number) => (
-        <div key={i} className="flex items-center gap-2 text-sm">
-          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
-          <span className="text-gray-400 font-medium capitalize">{entry.name}:</span>
-          <span className="text-white font-bold tabular-nums">{typeof entry.value === "number" ? entry.value.toLocaleString() : entry.value}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// ─── Live Pulse ─────────────────────────────────────────────────
-
-function LivePulse({ count }: { count: number }) {
-  return (
-    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-      <div className="relative">
-        <div className="w-2 h-2 rounded-full bg-emerald-400" />
-        <div className="absolute inset-0 w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-      </div>
-      <span className="text-xs font-bold text-emerald-400">{count} live</span>
-    </div>
-  );
-}
-
-// ─── Device Icon ────────────────────────────────────────────────
-
-function DeviceIcon({ name }: { name: string }) {
-  const lower = name.toLowerCase();
-  if (lower.includes("desktop") || lower.includes("pc")) return <Monitor size={14} className="text-cyan-400" />;
-  if (lower.includes("mobile") || lower.includes("phone")) return <Smartphone size={14} className="text-purple-400" />;
-  return <Tablet size={14} className="text-amber-400" />;
-}
-
-// ─── Empty State ────────────────────────────────────────────────
-
-function EmptyState({ message = "No data yet" }: { message?: string }) {
-  return (
-    <div className="flex flex-col items-center justify-center py-12 text-center">
-      <div className="w-12 h-12 rounded-xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mb-3">
-        <FolderOpen size={20} className="text-gray-600" />
-      </div>
-      <p className="text-xs text-gray-500 font-medium">{message}</p>
-    </div>
-  );
-}
-
-// ─── Main Component ─────────────────────────────────────────────
+import { useAnalytics } from "@/features/admin/hooks/useAnalytics";
+import { ANALYTICS_COLORS, getFlagEmoji, PERIOD_OPTIONS } from "@/features/admin/lib/analytics";
+import AnalyticsMetricCard from "@/features/admin/components/analytics/AnalyticsMetricCard";
+import ChartTooltip from "@/features/admin/components/analytics/ChartTooltip";
+import LivePulse from "@/features/admin/components/analytics/LivePulse";
+import DeviceIcon from "@/features/admin/components/analytics/DeviceIcon";
+import EmptyState from "@/features/admin/components/analytics/EmptyState";
+import AnimatedCounter from "@/features/admin/components/analytics/AnimatedCounter";
 
 export default function AnalyticsDashboard() {
-  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
-  const [charts, setCharts] = useState<ChartsData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [period, setPeriod] = useState<"7d" | "30d" | "90d">("30d");
-  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
+  const { analytics, charts, loading, error, lastRefresh, refetch } = useAnalytics(period);
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const [analyticsRes, chartsRes] = await Promise.all([
-        fetch(`/api/analytics?period=${period}`),
-        fetch("/api/dashboard/charts", { cache: "no-store" }),
-      ]);
-      if (!analyticsRes.ok) throw new Error("Failed to fetch analytics");
-      const [analyticsData, chartsData] = await Promise.all([
-        analyticsRes.json(),
-        chartsRes.ok ? chartsRes.json() : null,
-      ]);
-      setAnalytics(analyticsData);
-      if (chartsData) setCharts(chartsData);
-      setLastRefresh(new Date());
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Unknown error");
-    } finally {
-      setLoading(false);
-    }
-  }, [period]);
-
-  useEffect(() => {
-    fetchData();
-    const interval = setInterval(fetchData, 60000);
-    return () => clearInterval(interval);
-  }, [fetchData]);
-
-  // Error state
   if (error && !analytics) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
@@ -209,14 +33,13 @@ export default function AnalyticsDashboard() {
         </div>
         <h2 className="text-lg font-bold text-white mb-2">Failed to load analytics</h2>
         <p className="text-sm text-gray-500 mb-6 max-w-sm">{error}</p>
-        <button onClick={fetchData} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all text-sm font-medium">
+        <button onClick={refetch} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all text-sm font-medium">
           <RefreshCw size={14} /> Try again
         </button>
       </div>
     );
   }
 
-  // Loading state
   if (loading && !analytics) {
     return (
       <div className="space-y-6">
@@ -248,7 +71,6 @@ export default function AnalyticsDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-3 mb-1">
@@ -262,7 +84,7 @@ export default function AnalyticsDashboard() {
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1 p-1 rounded-xl bg-white/[0.04] border border-white/[0.06]">
-            {(["7d", "30d", "90d"] as const).map((p) => (
+            {PERIOD_OPTIONS.map((p) => (
               <button key={p} onClick={() => setPeriod(p)} className={cn(
                 "px-3 py-1.5 rounded-lg text-xs font-bold transition-all",
                 period === p ? "bg-cyan-500 text-white" : "text-gray-500 hover:text-gray-300",
@@ -271,25 +93,22 @@ export default function AnalyticsDashboard() {
               </button>
             ))}
           </div>
-          <button onClick={fetchData} disabled={loading} className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all disabled:opacity-50" title="Refresh">
+          <button onClick={refetch} disabled={loading} className="p-2.5 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all disabled:opacity-50" title="Refresh">
             <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
           </button>
         </div>
       </div>
 
-      {/* ── OVERVIEW METRIC CARDS ── */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        <MetricCard label="Visitors" value={overview.visitors} icon={Users} color="#22d3ee" />
-        <MetricCard label="Sessions" value={overview.sessions} icon={Activity} color="#a78bfa" />
-        <MetricCard label="Page Views" value={overview.pageViews} icon={Eye} color="#34d399" />
-        <MetricCard label="Project Views" value={overview.projectViews} icon={BarChart3} color="#f97316" />
-        <MetricCard label="Resume Downloads" value={overview.resumeDownloads} icon={Download} color="#ec4899" />
-        <MetricCard label="Contact Submissions" value={overview.contactSubmissions} icon={Mail} color="#f59e0b" />
+        <AnalyticsMetricCard label="Visitors" value={overview.visitors} icon={Users} color="#22d3ee" />
+        <AnalyticsMetricCard label="Sessions" value={overview.sessions} icon={Activity} color="#a78bfa" />
+        <AnalyticsMetricCard label="Page Views" value={overview.pageViews} icon={Eye} color="#34d399" />
+        <AnalyticsMetricCard label="Project Views" value={overview.projectViews} icon={BarChart3} color="#f97316" />
+        <AnalyticsMetricCard label="Resume Downloads" value={overview.resumeDownloads} icon={Download} color="#ec4899" />
+        <AnalyticsMetricCard label="Contact Submissions" value={overview.contactSubmissions} icon={Mail} color="#f59e0b" />
       </div>
 
-      {/* ── WEEKLY TRAFFIC + REFERRAL SOURCES ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Weekly traffic chart */}
         <div className="lg:col-span-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -322,7 +141,6 @@ export default function AnalyticsDashboard() {
           )}
         </div>
 
-        {/* Referral sources */}
         <div className="lg:col-span-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
           <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-6">
             <ExternalLink size={16} className="text-purple-400" /> Referral Sources
@@ -334,7 +152,7 @@ export default function AnalyticsDashboard() {
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie data={referralSources} cx="50%" cy="50%" innerRadius={45} outerRadius={70} paddingAngle={3} dataKey="count" stroke="none">
-                        {referralSources.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+                        {referralSources.map((_, i) => <Cell key={i} fill={ANALYTICS_COLORS[i % ANALYTICS_COLORS.length]} />)}
                       </Pie>
                       <Tooltip content={({ active, payload }) => {
                         if (!active || !payload?.[0]) return null;
@@ -342,7 +160,7 @@ export default function AnalyticsDashboard() {
                         return (
                           <div className="rounded-xl border border-white/10 bg-[#0a0a0f]/95 px-3 py-2 shadow-2xl">
                             <div className="flex items-center gap-2 text-sm">
-                              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[referralSources.indexOf(d) % COLORS.length] }} />
+                              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: ANALYTICS_COLORS[referralSources.indexOf(d) % ANALYTICS_COLORS.length] }} />
                               <span className="text-white font-semibold">{d.source}</span>
                               <span className="text-gray-400">{d.count}</span>
                             </div>
@@ -356,7 +174,7 @@ export default function AnalyticsDashboard() {
               <div className="space-y-2">
                 {referralSources.map((src, i) => (
                   <div key={src.source} className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
+                    <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: ANALYTICS_COLORS[i % ANALYTICS_COLORS.length] }} />
                     <span className="text-xs text-gray-400 font-medium flex-1 truncate">{src.source}</span>
                     <span className="text-xs text-white font-bold tabular-nums">{src.count}</span>
                   </div>
@@ -369,9 +187,7 @@ export default function AnalyticsDashboard() {
         </div>
       </div>
 
-      {/* ── HOURLY ACTIVITY + DEVICES ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Hourly visitors */}
         <div className="lg:col-span-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
           <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-6">
             <Activity size={16} className="text-amber-400" /> Activity by Hour
@@ -405,7 +221,6 @@ export default function AnalyticsDashboard() {
           )}
         </div>
 
-        {/* Device breakdown */}
         <div className="lg:col-span-4 space-y-4">
           <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
             <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
@@ -423,7 +238,7 @@ export default function AnalyticsDashboard() {
                       <span className="text-xs font-bold text-white tabular-nums">{device.percentage}%</span>
                     </div>
                     <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-                      <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${device.percentage}%`, backgroundColor: COLORS[i % COLORS.length] }} />
+                      <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${device.percentage}%`, backgroundColor: ANALYTICS_COLORS[i % ANALYTICS_COLORS.length] }} />
                     </div>
                   </div>
                 ))}
@@ -433,7 +248,6 @@ export default function AnalyticsDashboard() {
             )}
           </div>
 
-          {/* Live Activity */}
           <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
             <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
               <Radio size={16} className="text-emerald-400" /> Live Activity
@@ -454,9 +268,7 @@ export default function AnalyticsDashboard() {
         </div>
       </div>
 
-      {/* ── COUNTRIES + BROWSERS + TOP PROJECTS ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Top countries */}
         <div className="lg:col-span-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl overflow-hidden">
           <div className="px-6 py-5 border-b border-white/[0.06]">
             <h3 className="text-sm font-semibold text-white flex items-center gap-2">
@@ -465,10 +277,10 @@ export default function AnalyticsDashboard() {
           </div>
           {(charts?.countryBreakdown?.length ? charts.countryBreakdown : countries).length > 0 ? (
             <div className="divide-y divide-white/[0.04]">
-              {(charts?.countryBreakdown?.length ? charts.countryBreakdown : countries).map((country, i) => (
+              {(charts?.countryBreakdown?.length ? charts.countryBreakdown : countries).map((country: any, i: number) => (
                 <div key={country.name} className="flex items-center gap-3 px-6 py-3 hover:bg-white/[0.02] transition-colors">
                   <span className="text-[10px] font-bold text-gray-600 w-4">{i + 1}</span>
-                  <span className="text-lg">{"code" in country && (country as any).code ? getFlagEmoji((country as any).code) : "🌍"}</span>
+                  <span className="text-lg">{country.code ? getFlagEmoji(country.code) : "🌍"}</span>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-semibold text-white truncate">{country.name}</p>
                     <div className="flex items-center gap-2 mt-0.5">
@@ -487,7 +299,6 @@ export default function AnalyticsDashboard() {
           )}
         </div>
 
-        {/* Browsers */}
         <div className="lg:col-span-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
           <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
             <Globe size={16} className="text-blue-400" /> Browsers
@@ -501,7 +312,7 @@ export default function AnalyticsDashboard() {
                     <span className="text-xs font-bold text-white tabular-nums">{browser.percentage}%</span>
                   </div>
                   <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-                    <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${browser.percentage}%`, backgroundColor: COLORS[i % COLORS.length] }} />
+                    <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${browser.percentage}%`, backgroundColor: ANALYTICS_COLORS[i % ANALYTICS_COLORS.length] }} />
                   </div>
                 </div>
               ))}
@@ -511,7 +322,6 @@ export default function AnalyticsDashboard() {
           )}
         </div>
 
-        {/* Top projects */}
         <div className="lg:col-span-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl overflow-hidden">
           <div className="px-6 py-5 border-b border-white/[0.06]">
             <h3 className="text-sm font-semibold text-white flex items-center gap-2">
@@ -545,10 +355,8 @@ export default function AnalyticsDashboard() {
         </div>
       </div>
 
-      {/* ── TECH USAGE + CONTACT SOURCES ── */}
       {charts && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Tech Usage */}
           {charts.techUsage.length > 0 && (
             <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
               <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-6">
@@ -564,7 +372,7 @@ export default function AnalyticsDashboard() {
                         <span className="text-xs font-bold text-white tabular-nums">{tech.count}</span>
                       </div>
                       <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-                        <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${maxCount > 0 ? (tech.count / maxCount) * 100 : 0}%`, backgroundColor: COLORS[i % COLORS.length] }} />
+                        <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${maxCount > 0 ? (tech.count / maxCount) * 100 : 0}%`, backgroundColor: ANALYTICS_COLORS[i % ANALYTICS_COLORS.length] }} />
                       </div>
                     </div>
                   );
@@ -572,8 +380,6 @@ export default function AnalyticsDashboard() {
               </div>
             </div>
           )}
-
-          {/* Contact Sources */}
           {charts.contactSources.length > 0 && (
             <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
               <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-6">
@@ -582,7 +388,7 @@ export default function AnalyticsDashboard() {
               <div className="space-y-2">
                 {charts.contactSources.map((src, i) => (
                   <div key={src.source} className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
+                    <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: ANALYTICS_COLORS[i % ANALYTICS_COLORS.length] }} />
                     <span className="text-xs text-gray-400 font-medium flex-1 truncate">{src.source}</span>
                     <span className="text-xs text-white font-bold tabular-nums">{src.count}</span>
                   </div>
@@ -593,7 +399,6 @@ export default function AnalyticsDashboard() {
         </div>
       )}
 
-      {/* ── ENGAGEMENT SUMMARY ── */}
       {hasAnyData && (
         <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6">
           <h3 className="text-sm font-semibold text-white mb-4">Engagement Summary</h3>
@@ -621,9 +426,4 @@ export default function AnalyticsDashboard() {
       )}
     </div>
   );
-}
-
-function getFlagEmoji(countryCode: string): string {
-  const codePoints = countryCode.toUpperCase().split("").map((char) => 0x1f1a5 + char.charCodeAt(0));
-  return String.fromCodePoint(...codePoints);
 }

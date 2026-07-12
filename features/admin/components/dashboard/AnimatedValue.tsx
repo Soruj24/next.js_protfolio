@@ -1,0 +1,26 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+export default function AnimatedValue({ value, suffix }: { value: number; suffix?: string }) {
+  const [displayed, setDisplayed] = useState(0);
+  useEffect(() => {
+    if (value === 0) { setDisplayed(0); return; }
+    const duration = 1000;
+    const startTime = Date.now();
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayed(Number((eased * value).toFixed(value % 1 !== 0 ? 1 : 0)));
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }, [value]);
+  return (
+    <span>
+      {displayed.toLocaleString()}
+      {suffix && <span className="text-sm text-gray-500 font-medium ml-1">{suffix}</span>}
+    </span>
+  );
+}

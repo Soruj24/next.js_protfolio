@@ -6,85 +6,15 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from "recharts";
 import {
-  TrendingUp, BarChart3, GitCommit, Rocket, FolderKanban,
-  Code2, ExternalLink, Users, RefreshCw, Loader2,
+  BarChart3, GitCommit, Rocket, FolderKanban,
+  Code2, ExternalLink, Users, RefreshCw,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-
-// ── Types ──────────────────────────────────────────────────────
-
-interface ChartsData {
-  visitorsOverTime: { date: string; visitors: number; pageViews: number; projectViews: number }[];
-  messagesOverTime: { date: string; count: number }[];
-  commitsPerWeek: { week: string; count: number }[];
-  deployments: { id: string; message: string; repo: string; timestamp: string; url: string }[];
-  repositories: { name: string; stars: number; forks: number; language: string | null; url: string }[];
-  projectCategories: { name: string; count: number }[];
-  techUsage: { name: string; count: number }[];
-  contactSources: { source: string; count: number; percentage: number }[];
-  deviceBreakdown: { name: string; count: number; percentage: number }[];
-  browserBreakdown: { name: string; count: number; percentage: number }[];
-  countryBreakdown: { name: string; count: number; percentage: number }[];
-  hourlyActivity: { hour: number; count: number }[];
-}
-
-const COLORS = ["#22d3ee", "#a78bfa", "#34d399", "#f97316", "#ec4899", "#f59e0b", "#3b82f6", "#ef4444", "#8b5cf6", "#06b6d4"];
-
-// ── Shared ─────────────────────────────────────────────────────
-
-function ChartTooltip({ active, payload, label }: any) {
-  if (!active || !payload) return null;
-  return (
-    <div className="rounded-xl border border-white/10 bg-[#0a0a0f]/95 backdrop-blur-xl px-4 py-3 shadow-2xl shadow-black/50">
-      <p className="text-xs font-semibold text-gray-400 mb-2">{label}</p>
-      {payload.map((entry: any, i: number) => (
-        <div key={i} className="flex items-center gap-2 text-sm">
-          <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
-          <span className="text-gray-400 font-medium capitalize">{entry.name}:</span>
-          <span className="text-white font-bold tabular-nums">{entry.value.toLocaleString()}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ChartCard({ title, subtitle, icon: Icon, iconColor, children, className }: {
-  title: string; subtitle?: string; icon: typeof TrendingUp; iconColor: string;
-  children: React.ReactNode; className?: string;
-}) {
-  return (
-    <div className={cn("rounded-2xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-xl p-6 overflow-hidden", className)}>
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <Icon size={16} className={iconColor} />
-            <h3 className="text-sm font-semibold text-white">{title}</h3>
-          </div>
-          {subtitle && <p className="text-xs text-gray-500 font-medium">{subtitle}</p>}
-        </div>
-      </div>
-      {children}
-    </div>
-  );
-}
-
-function EmptyState({ message }: { message: string }) {
-  return (
-    <div className="h-[200px] flex items-center justify-center">
-      <p className="text-xs text-gray-500">{message}</p>
-    </div>
-  );
-}
-
-function Skeleton() {
-  return (
-    <div className="h-[240px] flex items-center justify-center">
-      <Loader2 size={20} className="text-gray-600 animate-spin" />
-    </div>
-  );
-}
-
-// ── Chart: Visitors Over Time ──────────────────────────────────
+import type { ChartsData } from "@/features/admin/types/interactive-charts";
+import { COLORS } from "@/features/admin/data/interactive-charts";
+import ChartTooltip from "@/features/admin/components/command-center/charts/ChartTooltip";
+import ChartCard from "@/features/admin/components/command-center/charts/ChartCard";
+import EmptyState from "@/features/admin/components/command-center/charts/EmptyState";
+import Skeleton from "@/features/admin/components/command-center/charts/Skeleton";
 
 function VisitorsOverTimeChart({ data }: { data: ChartsData["visitorsOverTime"] }) {
   if (!data.length) return <EmptyState message="No visitor data yet" />;
@@ -104,29 +34,21 @@ function VisitorsOverTimeChart({ data }: { data: ChartsData["visitorsOverTime"] 
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data}>
             <defs>
-              <linearGradient id="visitorsGradDash" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.3} />
-                <stop offset="100%" stopColor="#22d3ee" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="pageViewsGradDash" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#a78bfa" stopOpacity={0.2} />
-                <stop offset="100%" stopColor="#a78bfa" stopOpacity={0} />
-              </linearGradient>
+              <linearGradient id="visitorsGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#22d3ee" stopOpacity={0.3} /><stop offset="100%" stopColor="#22d3ee" stopOpacity={0} /></linearGradient>
+              <linearGradient id="pageViewsGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#a78bfa" stopOpacity={0.2} /><stop offset="100%" stopColor="#a78bfa" stopOpacity={0} /></linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
             <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "rgba(255,255,255,0.3)" }} dy={8} tickFormatter={(v) => v.slice(5)} />
             <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "rgba(255,255,255,0.3)" }} dx={-8} />
             <Tooltip content={<ChartTooltip />} />
-            <Area type="monotone" dataKey="visitors" stroke="#22d3ee" strokeWidth={2} fill="url(#visitorsGradDash)" dot={false} activeDot={{ r: 4, strokeWidth: 2, stroke: "#0a0a0f", fill: "#22d3ee" }} />
-            <Area type="monotone" dataKey="pageViews" stroke="#a78bfa" strokeWidth={2} fill="url(#pageViewsGradDash)" dot={false} activeDot={{ r: 4, strokeWidth: 2, stroke: "#0a0a0f", fill: "#a78bfa" }} />
+            <Area type="monotone" dataKey="visitors" stroke="#22d3ee" strokeWidth={2} fill="url(#visitorsGrad)" dot={false} activeDot={{ r: 4, strokeWidth: 2, stroke: "#0a0a0f", fill: "#22d3ee" }} />
+            <Area type="monotone" dataKey="pageViews" stroke="#a78bfa" strokeWidth={2} fill="url(#pageViewsGrad)" dot={false} activeDot={{ r: 4, strokeWidth: 2, stroke: "#0a0a0f", fill: "#a78bfa" }} />
           </AreaChart>
         </ResponsiveContainer>
       </div>
     </ChartCard>
   );
 }
-
-// ── Chart: Messages Over Time ──────────────────────────────────
 
 function MessagesOverTimeChart({ data }: { data: ChartsData["messagesOverTime"] }) {
   if (!data.length) return <EmptyState message="No message data yet" />;
@@ -147,8 +69,6 @@ function MessagesOverTimeChart({ data }: { data: ChartsData["messagesOverTime"] 
   );
 }
 
-// ── Chart: Commits Per Week ────────────────────────────────────
-
 function CommitsPerWeekChart({ data }: { data: ChartsData["commitsPerWeek"] }) {
   if (!data.length) return <EmptyState message="No commit data yet" />;
   return (
@@ -168,8 +88,6 @@ function CommitsPerWeekChart({ data }: { data: ChartsData["commitsPerWeek"] }) {
   );
 }
 
-// ── Chart: Project Categories ──────────────────────────────────
-
 function ProjectCategoriesChart({ data }: { data: ChartsData["projectCategories"] }) {
   if (!data.length) return <EmptyState message="No projects yet" />;
   return (
@@ -183,7 +101,7 @@ function ProjectCategoriesChart({ data }: { data: ChartsData["projectCategories"
               </Pie>
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.[0]) return null;
-                const d = payload[0].payload;
+                const d = payload[0].payload as { name: string; count: number };
                 return (
                   <div className="rounded-xl border border-white/10 bg-[#0a0a0f]/95 px-3 py-2 shadow-2xl">
                     <div className="flex items-center gap-2 text-sm">
@@ -211,8 +129,6 @@ function ProjectCategoriesChart({ data }: { data: ChartsData["projectCategories"
   );
 }
 
-// ── Chart: Tech Usage ──────────────────────────────────────────
-
 function TechUsageChart({ data }: { data: ChartsData["techUsage"] }) {
   if (!data.length) return <EmptyState message="No tech data yet" />;
   const maxCount = Math.max(...data.map((t) => t.count));
@@ -226,10 +142,7 @@ function TechUsageChart({ data }: { data: ChartsData["techUsage"] }) {
               <span className="text-xs font-bold text-white tabular-nums">{tech.count}</span>
             </div>
             <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-1000 ease-out"
-                style={{ width: `${maxCount > 0 ? (tech.count / maxCount) * 100 : 0}%`, backgroundColor: COLORS[i % COLORS.length] }}
-              />
+              <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${maxCount > 0 ? (tech.count / maxCount) * 100 : 0}%`, backgroundColor: COLORS[i % COLORS.length] }} />
             </div>
           </div>
         ))}
@@ -237,8 +150,6 @@ function TechUsageChart({ data }: { data: ChartsData["techUsage"] }) {
     </ChartCard>
   );
 }
-
-// ── Chart: Contact Sources ─────────────────────────────────────
 
 function ContactSourcesChart({ data }: { data: ChartsData["contactSources"] }) {
   if (!data.length) return <EmptyState message="No referral data yet" />;
@@ -253,7 +164,7 @@ function ContactSourcesChart({ data }: { data: ChartsData["contactSources"] }) {
               </Pie>
               <Tooltip content={({ active, payload }) => {
                 if (!active || !payload?.[0]) return null;
-                const d = payload[0].payload;
+                const d = payload[0].payload as { source: string; count: number };
                 return (
                   <div className="rounded-xl border border-white/10 bg-[#0a0a0f]/95 px-3 py-2 shadow-2xl">
                     <div className="flex items-center gap-2 text-sm">
@@ -281,8 +192,6 @@ function ContactSourcesChart({ data }: { data: ChartsData["contactSources"] }) {
   );
 }
 
-// ── Chart: Repositories ────────────────────────────────────────
-
 function RepositoriesChart({ data }: { data: ChartsData["repositories"] }) {
   if (!data.length) return <EmptyState message="No repositories yet" />;
   const maxStars = Math.max(...data.map((r) => r.stars));
@@ -294,9 +203,7 @@ function RepositoriesChart({ data }: { data: ChartsData["repositories"] }) {
             <div className="flex items-center justify-between mb-1.5">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-semibold text-white">{repo.name}</span>
-                {repo.language && (
-                  <span className="text-[10px] text-gray-500 font-medium px-1.5 py-0.5 rounded bg-white/5">{repo.language}</span>
-                )}
+                {repo.language && <span className="text-[10px] text-gray-500 font-medium px-1.5 py-0.5 rounded bg-white/5">{repo.language}</span>}
               </div>
               <div className="flex items-center gap-3 text-xs text-gray-500 font-medium tabular-nums">
                 <span>★ {repo.stars}</span>
@@ -304,10 +211,7 @@ function RepositoriesChart({ data }: { data: ChartsData["repositories"] }) {
               </div>
             </div>
             <div className="h-2 rounded-full bg-white/5 overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-1000 ease-out"
-                style={{ width: `${maxStars > 0 ? (repo.stars / maxStars) * 100 : 0}%`, backgroundColor: COLORS[i % COLORS.length] }}
-              />
+              <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${maxStars > 0 ? (repo.stars / maxStars) * 100 : 0}%`, backgroundColor: COLORS[i % COLORS.length] }} />
             </div>
           </div>
         ))}
@@ -315,8 +219,6 @@ function RepositoriesChart({ data }: { data: ChartsData["repositories"] }) {
     </ChartCard>
   );
 }
-
-// ── Chart: Deployments ─────────────────────────────────────────
 
 function DeploymentsChart({ data }: { data: ChartsData["deployments"] }) {
   if (!data.length) return <EmptyState message="No deployments yet" />;
@@ -345,8 +247,6 @@ function DeploymentsChart({ data }: { data: ChartsData["deployments"] }) {
   );
 }
 
-// ── Main Component ─────────────────────────────────────────────
-
 export default function InteractiveCharts() {
   const [data, setData] = useState<ChartsData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -361,7 +261,7 @@ export default function InteractiveCharts() {
         setLastRefresh(new Date());
       }
     } catch {
-      // keep existing data
+      /* keep existing data */
     } finally {
       setLoading(false);
     }
@@ -393,7 +293,6 @@ export default function InteractiveCharts() {
 
   return (
     <div className="space-y-6">
-      {/* Refresh indicator */}
       <div className="flex items-center justify-between">
         <p className="text-[10px] text-gray-600 font-semibold uppercase tracking-wider">
           Auto-refreshes every 60s · Last: {lastRefresh.toLocaleTimeString()}
@@ -403,25 +302,21 @@ export default function InteractiveCharts() {
         </button>
       </div>
 
-      {/* Row 1: Visitors + Messages */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <VisitorsOverTimeChart data={data.visitorsOverTime} />
         <MessagesOverTimeChart data={data.messagesOverTime} />
       </div>
 
-      {/* Row 2: Commits + Categories */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <CommitsPerWeekChart data={data.commitsPerWeek} />
         <ProjectCategoriesChart data={data.projectCategories} />
       </div>
 
-      {/* Row 3: Tech Usage + Contact Sources */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <TechUsageChart data={data.techUsage} />
         <ContactSourcesChart data={data.contactSources} />
       </div>
 
-      {/* Row 4: Repositories + Deployments */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <RepositoriesChart data={data.repositories} />
         <DeploymentsChart data={data.deployments} />
@@ -429,5 +324,3 @@ export default function InteractiveCharts() {
     </div>
   );
 }
-
-export { VisitorsOverTimeChart, MessagesOverTimeChart, CommitsPerWeekChart, ProjectCategoriesChart, TechUsageChart, ContactSourcesChart, RepositoriesChart, DeploymentsChart };
