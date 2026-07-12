@@ -52,7 +52,9 @@ export async function getSettings(): Promise<Record<string, unknown> | null> {
 
 export async function getProjects(): Promise<unknown[]> {
   await connectDB();
-  const projects = await Project.find({}).sort({ featured: -1, createdAt: -1 }).lean();
+  const projects = await Project.find({})
+    .sort({ featured: -1, createdAt: -1 })
+    .lean();
   return JSON.parse(JSON.stringify(projects));
 }
 
@@ -64,7 +66,9 @@ export async function getSkills(): Promise<unknown[]> {
 
 export async function getServices(): Promise<unknown[]> {
   await connectDB();
-  const services = await Service.find({ active: true }).sort({ order: 1 }).lean();
+  const services = await Service.find({ active: true })
+    .sort({ order: 1 })
+    .lean();
   return JSON.parse(JSON.stringify(services));
 }
 
@@ -76,12 +80,16 @@ export async function getFAQs(): Promise<unknown[]> {
 
 export async function getCertificates(): Promise<unknown[]> {
   await connectDB();
-  const certs = await Certificate.find({ active: true }).sort({ order: 1 }).lean();
+  const certs = await Certificate.find({ active: true })
+    .sort({ order: 1 })
+    .lean();
   return JSON.parse(JSON.stringify(certs));
 }
 
 export async function getBlogs(): Promise<unknown[]> {
   await connectDB();
-  const blogs = await Blog.find({ published: true }).sort({ publishedAt: -1 }).lean();
+  const blogs = await Blog.find({ published: true })
+    .sort({ publishedAt: -1 })
+    .lean();
   return JSON.parse(JSON.stringify(blogs));
 }

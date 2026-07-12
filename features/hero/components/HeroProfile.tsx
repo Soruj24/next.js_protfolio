@@ -49,7 +49,7 @@ export default function HeroProfile() {
       {/* Photo container */}
       <div className="relative w-[260px] h-[260px] sm:w-[290px] sm:h-[290px] rounded-full overflow-hidden border border-white/[0.1] bg-[#0a0f1e]">
         <Image
-          src="/soruj.jpg"
+          src="./../../../public/soruj.jpg"
           alt="Soruj Mahmud - Frontend Developer"
           fill
           className="object-cover"

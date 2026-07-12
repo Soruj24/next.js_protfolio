@@ -95,21 +95,13 @@ export default function HomeSection() {
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96">
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 blur-3xl animate-pulse" />
               <div className="absolute inset-2 rounded-full bg-gradient-to-br from-cyan-500/10 to-purple-500/10 blur-2xl" />
-              {profile?.avatar ? (
-                <Image
-                  src={profile.avatar}
-                  alt={pi?.full_name || "Profile"}
-                  fill
-                  className="object-cover rounded-full relative z-10"
-                  priority
-                />
-              ) : (
-                <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center relative z-10">
-                  <span className="text-6xl font-bold text-white/20">
-                    {(pi?.full_name || "S")[0]}
-                  </span>
-                </div>
-              )}
+              <Image
+                src={profile?.avatar || "/soruj.jpg"}
+                alt={pi?.full_name || "Profile"}
+                fill
+                className="object-cover rounded-full relative z-10"
+                priority
+              />
             </div>
           </motion.div>
         </div>

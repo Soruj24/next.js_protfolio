@@ -8,14 +8,38 @@ import NavBar from "@/components/layout/NavBar";
 import HomeSection from "@/features/hero/components/HomeSection";
 import { useEffect, useState, Suspense } from "react";
 
-const SkillsShowcase = dynamic(() => import("@/features/skills/components/SkillsShowcase"), { ssr: false });
-const FeaturedProjectsShowcase = dynamic(() => import("@/features/projects/components/FeaturedProjectsShowcase"), { ssr: false });
-const ExperienceSection = dynamic(() => import("@/features/experience/components/ExperienceSection"), { ssr: false });
-const ServicesSection = dynamic(() => import("@/features/services/components/ServicesSection"), { ssr: false });
-const GitHubStats = dynamic(() => import("@/features/github/components/GitHubStats"), { ssr: false });
-const TestimonialsSection = dynamic(() => import("@/features/testimonials/components/TestimonialsSection"), { ssr: false });
-const FAQSection = dynamic(() => import("@/features/faq/components/FAQSection"), { ssr: false });
-const ContactSection = dynamic(() => import("@/features/contact/components/ContactSection"), { ssr: false });
+const SkillsShowcase = dynamic(
+  () => import("@/features/skills/components/SkillsShowcase"),
+  { ssr: false },
+);
+const FeaturedProjectsShowcase = dynamic(
+  () => import("@/features/projects/components/FeaturedProjectsShowcase"),
+  { ssr: false },
+);
+const ExperienceSection = dynamic(
+  () => import("@/features/experience/components/ExperienceSection"),
+  { ssr: false },
+);
+const ServicesSection = dynamic(
+  () => import("@/features/services/components/ServicesSection"),
+  { ssr: false },
+);
+const GitHubStats = dynamic(
+  () => import("@/features/github/components/GitHubStats"),
+  { ssr: false },
+);
+const TestimonialsSection = dynamic(
+  () => import("@/features/testimonials/components/TestimonialsSection"),
+  { ssr: false },
+);
+const FAQSection = dynamic(
+  () => import("@/features/faq/components/FAQSection"),
+  { ssr: false },
+);
+const ContactSection = dynamic(
+  () => import("@/features/contact/components/ContactSection"),
+  { ssr: false },
+);
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
