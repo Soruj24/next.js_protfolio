@@ -28,12 +28,51 @@ import CaseStudiesTab from "@/features/admin/components/CaseStudiesTab";
 import TestimonialsTab from "@/features/admin/components/TestimonialsTab";
 import GuidelinesTab from "@/features/admin/components/GuidelinesTab";
 import { ISettings } from "@/models/Settings";
+import type { SettingsState } from "@/features/admin/hooks/useSettingsManager";
+
+function splitCommas(val: string | string[] | undefined | null): string[] {
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  return (val as string).split(",").map((s) => s.trim()).filter(Boolean);
+}
+
+function transformFormData(data: SettingsFormInput): Partial<SettingsState> {
+  return {
+    experiences: data.experiences.map((exp) => ({
+      ...exp,
+      technologies: splitCommas(exp.technologies),
+    })),
+    expertise: data.expertise.map((exp) => ({
+      ...exp,
+      skills: splitCommas(exp.skills),
+    })),
+    standards: data.standards.map((std) => ({
+      ...std,
+      features: splitCommas(std.features),
+    })),
+    testimonials: data.testimonials,
+    case_studies: data.case_studies.map((cs) => ({
+      ...cs,
+      technologies: splitCommas(cs.technologies),
+    })),
+    response_guidelines: data.response_guidelines,
+    innovation: data.innovation,
+    technical_skills: {
+      specializations: splitCommas(data.technical_skills.specializations),
+      core_technologies: splitCommas(data.technical_skills.core_technologies),
+    },
+    experience: data.experience,
+    education: data.education,
+  };
+}
 
 interface ContentSectionProps {
   initialData?: ISettings | Record<string, unknown> | null;
+  settings: SettingsState;
+  setSettings: React.Dispatch<React.SetStateAction<SettingsState>>;
 }
 
-export default function ContentSection({ initialData }: ContentSectionProps) {
+export default function ContentSection({ initialData, settings, setSettings }: ContentSectionProps) {
   const defaultValues = getSettingsDefaultValues(
     initialData as ISettings | null | undefined
   );
@@ -42,6 +81,14 @@ export default function ContentSection({ initialData }: ContentSectionProps) {
     resolver: zodResolver(settingsSchema) as unknown as Resolver<SettingsFormInput>,
     defaultValues: defaultValues as unknown as SettingsFormInput,
   });
+
+  const handleSubmit = (data: SettingsFormInput) => {
+    const transformed = transformFormData(data);
+    setSettings((prev) => ({
+      ...prev,
+      ...transformed,
+    }));
+  };
 
   return (
     <div className="space-y-6 animate-fade-in-up">
@@ -59,7 +106,7 @@ export default function ContentSection({ initialData }: ContentSectionProps) {
         </CardHeader>
         <CardContent className="p-6">
           <Form {...form}>
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form onSubmit={form.handleSubmit(handleSubmit)}>
               <Tabs defaultValue="assistant" className="w-full">
                 <TabsList className="bg-gray-800 border-gray-700 w-full justify-start overflow-x-auto overflow-y-hidden h-auto flex-nowrap p-1 mb-4">
                   <TabsTrigger value="assistant" className="flex-shrink-0">Smart Guide</TabsTrigger>

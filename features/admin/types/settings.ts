@@ -105,4 +105,86 @@ export interface SettingsState {
     backup_frequency: "daily" | "weekly" | "monthly" | "never";
     retention_days: number;
   };
+  experiences: {
+    year: string;
+    role: string;
+    company: string;
+    description: string;
+    technologies: string[];
+  }[];
+  expertise: {
+    title: string;
+    description: string;
+    icon: string;
+    skills: string[];
+    color: string;
+  }[];
+  standards: {
+    title: string;
+    description: string;
+    icon: string;
+    metrics: string;
+    features: string[];
+  }[];
+  testimonials: {
+    name: string;
+    role: string;
+    content: string;
+    avatar: string;
+    color: string;
+  }[];
+  case_studies: {
+    title: string;
+    description: string;
+    challenge: string;
+    solution: string;
+    impact: string;
+    technologies: string[];
+    image: string;
+  }[];
+  response_guidelines: {
+    be_concise: boolean;
+    be_informative: boolean;
+    professional_tone: boolean;
+    redirect_uncertain_queries: string;
+    language: string;
+  };
+  innovation: {
+    title: string;
+    description: string;
+    icon: string;
+    color: string;
+  }[];
+  technical_skills: {
+    specializations: string[];
+    core_technologies: string[];
+  };
+  experience: {
+    professional_experience: string;
+    project_experience: string;
+    focus: string;
+  };
+  education: {
+    background: string;
+    additional_info: string;
+  };
+  hero_typing_roles: string[];
+  nav_items: {
+    id: string;
+    label: string;
+    icon: string;
+    visible: boolean;
+  }[];
+  services: {
+    id: string;
+    title: string;
+    description: string;
+    features: string[];
+    gradient: string;
+  }[];
+  faqs: {
+    question: string;
+    answer: string;
+    category: string;
+  }[];
 }

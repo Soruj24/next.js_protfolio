@@ -51,48 +51,48 @@ export const settingsSchema = z.object({
   }),
   innovation: z.array(
     z.object({
-      title: z.string().min(1, "Title is required"),
-      description: z.string().min(1, "Description is required"),
-      icon: z.string().min(1, "Icon is required"),
-      color: z.string().min(1, "Color is required"),
+      title: z.string(),
+      description: z.string(),
+      icon: z.string(),
+      color: z.string(),
     })
   ),
   expertise: z.array(
     z.object({
-      title: z.string().min(1, "Title is required"),
-      description: z.string().min(1, "Description is required"),
-      icon: z.string().min(1, "Icon is required"),
-      skills: z.string().min(1, "Skills are required"),
-      color: z.string().min(1, "Color is required"),
+      title: z.string(),
+      description: z.string(),
+      icon: z.string(),
+      skills: z.string(),
+      color: z.string(),
     })
   ),
   standards: z.array(
     z.object({
-      title: z.string().min(1, "Title is required"),
-      description: z.string().min(1, "Description is required"),
-      icon: z.string().min(1, "Icon is required"),
-      metrics: z.string().min(1, "Metrics are required"),
-      features: z.string().min(1, "Features are required"),
+      title: z.string(),
+      description: z.string(),
+      icon: z.string(),
+      metrics: z.string(),
+      features: z.string(),
     })
   ),
   testimonials: z.array(
     z.object({
-      name: z.string().min(1, "Name is required"),
-      role: z.string().min(1, "Role is required"),
-      content: z.string().min(1, "Content is required"),
-      avatar: z.string().min(1, "Avatar URL is required"),
-      color: z.string().min(1, "Color is required"),
+      name: z.string(),
+      role: z.string(),
+      content: z.string(),
+      avatar: z.string(),
+      color: z.string(),
     })
   ),
   case_studies: z.array(
     z.object({
-      title: z.string().min(1, "Title is required"),
-      description: z.string().min(1, "Description is required"),
-      challenge: z.string().min(1, "Challenge is required"),
-      solution: z.string().min(1, "Solution is required"),
-      impact: z.string().min(1, "Impact is required"),
-      technologies: z.string().min(1, "Technologies are required"),
-      image: z.string().min(1, "Image URL is required"),
+      title: z.string(),
+      description: z.string(),
+      challenge: z.string(),
+      solution: z.string(),
+      impact: z.string(),
+      technologies: z.string(),
+      image: z.string(),
     })
   ),
 });

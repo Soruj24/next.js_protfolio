@@ -11,7 +11,10 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useSettingsManager, SettingsSection } from "@/features/admin/hooks/useSettingsManager";
+import {
+  useSettingsManager,
+  SettingsSection,
+} from "@/features/admin/hooks/useSettingsManager";
 import SettingsSidebar from "@/features/admin/components/settings/SettingsSidebar";
 import ProfileSection from "@/features/admin/components/settings/ProfileSection";
 import PortfolioSection from "@/features/admin/components/settings/PortfolioSection";
@@ -27,8 +30,11 @@ interface EnterpriseSettingsPageProps {
   initialData: Record<string, unknown>;
 }
 
-export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettingsPageProps) {
-  const [activeSection, setActiveSection] = useState<SettingsSection>("profile");
+export default function EnterpriseSettingsPage({
+  initialData,
+}: EnterpriseSettingsPageProps) {
+  const [activeSection, setActiveSection] =
+    useState<SettingsSection>("profile");
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
 
   const {
@@ -46,6 +52,7 @@ export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettin
     exportSettings,
     importSettings,
     getChangedCount,
+    setSettings,
   } = useSettingsManager(initialData);
 
   // Keyboard shortcut to save
@@ -65,11 +72,20 @@ export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettin
   const renderSection = () => {
     switch (activeSection) {
       case "profile":
-        return <ProfileSection settings={settings} updateSettings={updateSettings} />;
+        return (
+          <ProfileSection settings={settings} updateSettings={updateSettings} />
+        );
       case "portfolio":
-        return <PortfolioSection settings={settings} updateSettings={updateSettings} />;
+        return (
+          <PortfolioSection
+            settings={settings}
+            updateSettings={updateSettings}
+          />
+        );
       case "seo":
-        return <SEOSection settings={settings} updateSettings={updateSettings} />;
+        return (
+          <SEOSection settings={settings} updateSettings={updateSettings} />
+        );
       case "social":
         return (
           <SocialLinksSection
@@ -80,13 +96,26 @@ export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettin
           />
         );
       case "appearance":
-        return <AppearanceSection settings={settings} updateSettings={updateSettings} />;
+        return (
+          <AppearanceSection
+            settings={settings}
+            updateSettings={updateSettings}
+          />
+        );
       case "notifications":
         return (
-          <NotificationsSection settings={settings} updateSettings={updateSettings} />
+          <NotificationsSection
+            settings={settings}
+            updateSettings={updateSettings}
+          />
         );
       case "security":
-        return <SecuritySection settings={settings} updateSettings={updateSettings} />;
+        return (
+          <SecuritySection
+            settings={settings}
+            updateSettings={updateSettings}
+          />
+        );
       case "data":
         return (
           <DataSection
@@ -99,9 +128,17 @@ export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettin
           />
         );
       case "content":
-        return <ContentSection initialData={initialData} />;
+        return (
+          <ContentSection
+            initialData={initialData}
+            settings={settings}
+            setSettings={setSettings}
+          />
+        );
       default:
-        return <ProfileSection settings={settings} updateSettings={updateSettings} />;
+        return (
+          <ProfileSection settings={settings} updateSettings={updateSettings} />
+        );
     }
   };
 
@@ -124,7 +161,9 @@ export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettin
           {isDirty && (
             <div className="hidden sm:flex items-center gap-1.5 text-xs text-amber-400">
               <AlertTriangle size={12} />
-              <span>{changedCount} unsaved change{changedCount !== 1 ? "s" : ""}</span>
+              <span>
+                {changedCount} unsaved change{changedCount !== 1 ? "s" : ""}
+              </span>
             </div>
           )}
           {!isDirty && lastSaved && (
@@ -153,7 +192,7 @@ export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettin
               "w-full sm:w-auto min-h-[40px] font-medium transition-all",
               isDirty
                 ? "bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-500/20"
-                : "bg-gray-800 text-gray-500 cursor-not-allowed"
+                : "bg-gray-800 text-gray-500 cursor-not-allowed",
             )}
           >
             {saving ? (
@@ -174,12 +213,20 @@ export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettin
         >
           <span className="capitalize">{activeSection.replace("_", " ")}</span>
           <svg
-            className={cn("w-4 h-4 transition-transform", isMobileNavOpen && "rotate-180")}
+            className={cn(
+              "w-4 h-4 transition-transform",
+              isMobileNavOpen && "rotate-180",
+            )}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </button>
         {isMobileNavOpen && (
@@ -219,7 +266,9 @@ export default function EnterpriseSettingsPage({ initialData }: EnterpriseSettin
           <div className="flex items-center justify-between max-w-4xl mx-auto">
             <div className="flex items-center gap-2 text-sm text-amber-400">
               <AlertTriangle size={14} />
-              <span>{changedCount} unsaved change{changedCount !== 1 ? "s" : ""}</span>
+              <span>
+                {changedCount} unsaved change{changedCount !== 1 ? "s" : ""}
+              </span>
             </div>
             <div className="flex gap-2">
               <Button

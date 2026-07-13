@@ -14,6 +14,16 @@ const nextConfig = {
         hostname: 'ibb.co.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: '**.gstatic.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'encrypted-tbn0.gstatic.com',
+        pathname: '/**',
+      },
     ],
   },
 }

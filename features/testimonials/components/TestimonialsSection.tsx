@@ -29,7 +29,7 @@ export default function TestimonialsSection() {
 
   const prevSlide = useCallback(() => {
     setCurrentIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
     );
   }, [testimonials.length]);
 
@@ -54,7 +54,7 @@ export default function TestimonialsSection() {
             start: "top 75%",
             toggleActions: "play none none reverse",
           },
-        }
+        },
       );
     }, sectionRef);
     return () => ctx.revert();
@@ -62,7 +62,10 @@ export default function TestimonialsSection() {
 
   if (loading) {
     return (
-      <section id="testimonials" className="min-h-screen py-20 md:py-32 flex items-center justify-center">
+      <section
+        id="testimonials"
+        className="min-h-screen py-20 md:py-32 flex items-center justify-center"
+      >
         <Loader2 size={24} className="text-gray-600 animate-spin" />
       </section>
     );

@@ -16,20 +16,45 @@ import ProjectPagination from "./ProjectPagination";
 
 export default function ProjectManager() {
   const {
-    loading, searchQuery, setSearchQuery,
-    filterCategory, setFilterCategory,
-    statusFilter, setStatusFilter,
-    currentPage, setCurrentPage, totalPages,
-    paginatedProjects, filteredProjects, ITEMS_PER_PAGE,
-    selectedIds, toggleSelect, toggleSelectAll, clearSelection,
-    sortField, sortDir, sort,
-    viewMode, setViewMode,
-    previewProject, setPreviewProject,
-    confirmAction, setConfirmAction,
-    versionHistory, setVersionHistory,
+    loading,
+    searchQuery,
+    setSearchQuery,
+    filterCategory,
+    setFilterCategory,
+    statusFilter,
+    setStatusFilter,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+    paginatedProjects,
+    filteredProjects,
+    ITEMS_PER_PAGE,
+    selectedIds,
+    toggleSelect,
+    toggleSelectAll,
+    clearSelection,
+    sortField,
+    sortDir,
+    sort,
+    viewMode,
+    setViewMode,
+    previewProject,
+    setPreviewProject,
+    confirmAction,
+    setConfirmAction,
+    versionHistory,
+    setVersionHistory,
     categories,
-    deleteProject, duplicateProject, toggleArchive, togglePublish, toggleFeatured, saveVersion,
-    bulkDelete, bulkArchive, bulkPublish, bulkFeature,
+    deleteProject,
+    duplicateProject,
+    toggleArchive,
+    togglePublish,
+    toggleFeatured,
+    saveVersion,
+    bulkDelete,
+    bulkArchive,
+    bulkPublish,
+    bulkFeature,
   } = useProjectManager();
 
   if (loading) return <ProjectManagerSkeleton />;
@@ -38,12 +63,18 @@ export default function ProjectManager() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Projects</h1>
+          <h1 className="text-3xl font-bold text-white tracking-tight">
+            Projects
+          </h1>
           <p className="text-sm text-gray-500 font-medium mt-1">
-            {filteredProjects.length} project{filteredProjects.length !== 1 ? "s" : ""} total
+            {filteredProjects.length} project
+            {filteredProjects.length !== 1 ? "s" : ""} total
           </p>
         </div>
-        <Button asChild className="bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white px-6 py-5 rounded-xl font-bold shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-[1.02]">
+        <Button
+          asChild
+          className="bg-gradient-to-r from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 text-white px-6 py-5 rounded-xl font-bold shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-[1.02]"
+        >
           <Link href="/admin/projects/new">
             <Plus className="mr-2" size={18} />
             New Project
@@ -71,8 +102,18 @@ export default function ProjectManager() {
 
       {filteredProjects.length === 0 ? (
         <ProjectManagerEmptyState
-          hasActiveFilters={!!(searchQuery || filterCategory !== "All" || statusFilter !== "all")}
-          onClearFilters={() => { setSearchQuery(""); setFilterCategory("All"); setStatusFilter("all"); }}
+          hasActiveFilters={
+            !!(
+              searchQuery ||
+              filterCategory !== "All" ||
+              statusFilter !== "all"
+            )
+          }
+          onClearFilters={() => {
+            setSearchQuery("");
+            setFilterCategory("All");
+            setStatusFilter("all");
+          }}
         />
       ) : viewMode === "table" ? (
         <ProjectTable
@@ -119,8 +160,14 @@ export default function ProjectManager() {
         onPageChange={setCurrentPage}
       />
 
-      <ProjectPreviewSheet project={previewProject} onClose={() => setPreviewProject(null)} />
-      <VersionHistory project={versionHistory} onClose={() => setVersionHistory(null)} />
+      <ProjectPreviewSheet
+        project={previewProject}
+        onClose={() => setPreviewProject(null)}
+      />
+      <VersionHistory
+        project={versionHistory}
+        onClose={() => setVersionHistory(null)}
+      />
       <ConfirmAction
         open={!!confirmAction}
         onClose={() => setConfirmAction(null)}
