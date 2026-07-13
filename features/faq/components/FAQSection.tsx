@@ -20,6 +20,39 @@ interface FAQItem {
   category?: string;
 }
 
+const defaultFAQs: FAQItem[] = [
+  {
+    question: "What tech stack do you specialize in?",
+    answer: "I specialize in the modern JavaScript/TypeScript ecosystem: Next.js and React for the frontend, Node.js for the backend, PostgreSQL or MongoDB for databases, and Tailwind CSS for styling. I also have experience with Framer Motion, GSAP, Prisma, and various cloud platforms.",
+    category: "general",
+  },
+  {
+    question: "Do you work with clients remotely?",
+    answer: "Yes, I work fully remotely and have experience collaborating with clients across different time zones. I use tools like Slack, Discord, Jira, and Figma to maintain clear communication and transparency throughout the project.",
+    category: "process",
+  },
+  {
+    question: "What is your typical project timeline?",
+    answer: "It depends on the scope. A landing page typically takes 1-2 weeks, a full marketing site 3-6 weeks, and a complex web application 6-12 weeks. I'll provide a detailed timeline during the initial consultation based on your specific requirements.",
+    category: "process",
+  },
+  {
+    question: "How do you ensure website accessibility?",
+    answer: "I follow WCAG 2.2 AA guidelines as a baseline. This includes semantic HTML, proper ARIA attributes, keyboard navigation support, sufficient color contrast, screen reader testing, and regular audits using axe DevTools and Lighthouse.",
+    category: "quality",
+  },
+  {
+    question: "Can you work with existing codebases?",
+    answer: "Absolutely. I have experience migrating legacy JavaScript codebases to modern TypeScript, refactoring class components to functional components, and improving performance in existing Next.js applications. I always prioritize incremental improvements to minimize disruption.",
+    category: "process",
+  },
+  {
+    question: "What is your approach to project pricing?",
+    answer: "I typically work on a fixed-price basis for well-defined projects with clear requirements. For ongoing work or maintenance, I offer weekly or monthly retainers. Every project starts with a free discovery call to understand your needs and provide an accurate estimate.",
+    category: "general",
+  },
+];
+
 export default function FAQSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [faqItems, setFaqItems] = useState<FAQItem[]>([]);
@@ -28,8 +61,8 @@ export default function FAQSection() {
   useEffect(() => {
     fetch("/api/faqs")
       .then((r) => r.json())
-      .then((data) => setFaqItems(data))
-      .catch(() => setFaqItems([]))
+      .then((data) => setFaqItems(data.length > 0 ? data : defaultFAQs))
+      .catch(() => setFaqItems(defaultFAQs))
       .finally(() => setLoading(false));
   }, []);
 

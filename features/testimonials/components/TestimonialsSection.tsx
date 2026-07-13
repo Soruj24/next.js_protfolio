@@ -16,12 +16,33 @@ interface Testimonial {
   color?: string;
 }
 
+const defaultTestimonials: Testimonial[] = [
+  {
+    name: "Alex Chen",
+    role: "Senior Frontend Engineer at TechCorp",
+    content: "An exceptional developer with a keen eye for detail. The accessibility-first approach and clean architecture in every project sets a high bar. A pleasure to collaborate with.",
+    color: "cyan",
+  },
+  {
+    name: "Sarah Johnson",
+    role: "Product Designer at DesignStudio",
+    content: "Working together was seamless. The ability to translate complex design mockups into pixel-perfect, responsive interfaces is outstanding. Always thinks about the user first.",
+    color: "purple",
+  },
+  {
+    name: "Marcus Williams",
+    role: "Open Source Maintainer",
+    content: "Quality contributions with thorough testing and documentation. Understands modern TypeScript patterns deeply and writes code that's a joy to review. A rising talent.",
+    color: "pink",
+  },
+];
+
 export default function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const { settings, loading } = usePortfolioSettings();
-  const testimonials: Testimonial[] = settings?.testimonials || [];
+  const testimonials: Testimonial[] = settings?.testimonials?.length ? settings.testimonials : defaultTestimonials;
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);

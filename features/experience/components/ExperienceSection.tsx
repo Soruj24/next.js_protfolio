@@ -7,10 +7,41 @@ import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const defaultExperiences = [
+  {
+    role: "Frontend Developer",
+    company: "Freelance / Self-Employed",
+    year: "2025",
+    description: "Building high-performance web applications using Next.js, React, and TypeScript. Delivering pixel-perfect, accessible UI components for clients.",
+    technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+  },
+  {
+    role: "Open Source Contributor",
+    company: "GitHub Community",
+    year: "2024",
+    description: "Contributed TypeScript type definitions, bug fixes, and documentation improvements to several open-source React and Node.js projects.",
+    technologies: ["TypeScript", "Node.js", "Git", "CI/CD"],
+  },
+  {
+    role: "Full-Stack Developer — E-Commerce Platform",
+    company: "Personal Project",
+    year: "2024",
+    description: "Designed and built a full-featured e-commerce platform with Next.js, including payment integration with Stripe, admin dashboard, and real-time inventory management.",
+    technologies: ["Next.js", "PostgreSQL", "Prisma", "Stripe", "Tailwind CSS"],
+  },
+  {
+    role: "Computer Science Foundations",
+    company: "Harvard CS50x",
+    year: "2023",
+    description: "Completed Harvard's CS50x covering algorithms, data structures, memory management, web development, and cybersecurity fundamentals.",
+    technologies: ["C", "Python", "SQL", "JavaScript", "Flask"],
+  },
+];
+
 export default function ExperienceSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { settings } = usePortfolioSettings();
-  const experiences = settings?.experiences || [];
+  const experiences = settings?.experiences?.length ? settings.experiences : defaultExperiences;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -33,8 +64,6 @@ export default function ExperienceSection() {
     }, sectionRef);
     return () => ctx.revert();
   }, []);
-
-  if (experiences.length === 0) return null;
 
   return (
     <section

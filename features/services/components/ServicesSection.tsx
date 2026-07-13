@@ -16,6 +16,37 @@ interface ServiceItem {
   gradient: string;
 }
 
+const defaultServices: ServiceItem[] = [
+  {
+    id: "frontend-dev",
+    title: "Frontend Development",
+    description: "Building responsive, performant web applications with modern frameworks and best-in-class developer tooling.",
+    features: ["Custom React/Next.js applications", "Component library & design systems", "Server-side rendering & static generation", "Progressive Web App implementation"],
+    gradient: "from-cyan-500 to-blue-600",
+  },
+  {
+    id: "ui-ux",
+    title: "UI/UX Engineering",
+    description: "Translating design visions into seamless, accessible interfaces with smooth animations and thoughtful micro-interactions.",
+    features: ["Figma-to-code conversion", "Accessibility-first markup (WCAG AA+)", "Framer Motion & GSAP animations", "Responsive & adaptive layouts"],
+    gradient: "from-purple-500 to-pink-600",
+  },
+  {
+    id: "performance",
+    title: "Performance Optimization",
+    description: "Auditing and optimizing web applications for speed, Core Web Vitals, and smooth runtime performance.",
+    features: ["Lighthouse & Web Vitals optimization", "Code splitting & lazy loading", "Image & font optimization", "Bundle size analysis & reduction"],
+    gradient: "from-emerald-500 to-teal-600",
+  },
+  {
+    id: "consulting",
+    title: "Technical Consulting",
+    description: "Advising teams on architecture decisions, code quality, and development workflows for scalable frontend projects.",
+    features: ["Architecture review & planning", "Code review & quality gates", "Mentoring & pair programming", "Migration & modernization strategy"],
+    gradient: "from-amber-500 to-orange-600",
+  },
+];
+
 function ServiceCard({ service }: { service: ServiceItem }) {
   return (
     <article className="service-card group relative glass-card rounded-2xl p-8 transition-all duration-500 hover:shadow-[0_0_40px_rgba(34,211,238,0.08)] hover:border-white/20 cursor-default">
@@ -49,8 +80,8 @@ export default function ServicesSection() {
   useEffect(() => {
     fetch("/api/services")
       .then((r) => r.json())
-      .then((data) => setServices(data))
-      .catch(() => setServices([]))
+      .then((data) => setServices(data.length > 0 ? data : defaultServices))
+      .catch(() => setServices(defaultServices))
       .finally(() => setLoading(false));
   }, []);
 
