@@ -10,7 +10,6 @@ export default function AnalyticsOverviewInline({ analytics }: { analytics: Dash
     visitors: analytics.visitors,
     sessions: analytics.sessions,
     projectViews: analytics.projectViews,
-    resumeDownloads: analytics.resumeDownloads,
     conversionRate: analytics.conversionRate,
   };
 

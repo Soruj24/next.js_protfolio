@@ -11,7 +11,7 @@ export function createEmptyDashboardData(systemStatus: "offline" | "degraded" = 
     skills: { totalCategories: 0, totalSkills: 0, topSkills: [] },
     blogs: { total: 0, published: 0, totalViews: 0, totalReadTime: 0, recentBlogs: [] },
     contacts: { total: 0, unread: 0, byStatus: [], recentMessages: [] },
-    analytics: { visitors: 0, sessions: 0, pageViews: 0, projectViews: 0, resumeDownloads: 0, contactSubmissions: 0, githubClicks: 0, conversionRate: 0, topCountry: "N/A", topDevice: "N/A", topBrowser: "N/A", liveVisitors: 0 },
+    analytics: { visitors: 0, sessions: 0, pageViews: 0, projectViews: 0, contactSubmissions: 0, githubClicks: 0, conversionRate: 0, topCountry: "N/A", topDevice: "N/A", topBrowser: "N/A", liveVisitors: 0 },
     activities: { total: 0, unread: 0, byType: [], recentActivities: [] },
     github: { repos: 0, stars: 0, forks: 0, followers: 0, recentCommits: [] },
     performance: { accessibility: 0, bestPractices: 0, seo: 0, interactivity: 0 },
@@ -64,7 +64,7 @@ export function processBlogData(blogAgg: BlogAggResult[]) {
   return { total: safeNum(data.total), published: safeNum(data.published), totalViews: safeNum(data.totalViews), totalReadTime: safeNum(data.totalReadTime) };
 }
 
-interface AnalyticsAggResult { visitors?: number; pageViews?: number; projectViews?: number; resumeDownloads?: number; contactSubmissions?: number; githubClicks?: number }
+interface AnalyticsAggResult { visitors?: number; pageViews?: number; projectViews?: number; contactSubmissions?: number; githubClicks?: number }
 
 export function processAnalyticsData(analyticsAgg: AnalyticsAggResult[]) {
   const data = analyticsAgg[0] || {};
@@ -72,7 +72,7 @@ export function processAnalyticsData(analyticsAgg: AnalyticsAggResult[]) {
   const pageViews = safeNum(data.pageViews);
   const sessions = visitors > 0 ? Math.ceil(pageViews / Math.max(visitors, 1)) : 0;
   const conversionRate = pageViews > 0 ? parseFloat(((safeNum(data.contactSubmissions) / pageViews) * 100).toFixed(1)) : 0;
-  return { visitors, sessions, pageViews, projectViews: safeNum(data.projectViews), resumeDownloads: safeNum(data.resumeDownloads), contactSubmissions: safeNum(data.contactSubmissions), githubClicks: safeNum(data.githubClicks), conversionRate };
+  return { visitors, sessions, pageViews, projectViews: safeNum(data.projectViews), contactSubmissions: safeNum(data.contactSubmissions), githubClicks: safeNum(data.githubClicks), conversionRate };
 }
 
 interface RealtimeEvent { userAgent?: string; device?: string; browser?: string; country?: string }

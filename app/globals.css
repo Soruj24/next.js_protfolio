@@ -422,85 +422,11 @@
   }
 }
 
-@media print {
-  body {
-    background: white !important;
-    background-color: white !important;
-  }
-  body::before {
-    display: none !important;
-  }
-  .mesh-gradient {
-    background: white !important;
-    background-color: white !important;
-    background-image: none !important;
-  }
-  .noise-bg::before {
-    display: none !important;
-  }
-  .custom-cursor,
-  #custom-cursor,
-  [class*="cursor"] {
-    display: none !important;
-  }
-  .content-wrapper {
-    position: static !important;
-    z-index: auto !important;
-  }
-  .fixed,
-  .sticky {
-    position: static !important;
-  }
-  nav,
-  footer,
-  .toaster,
-  [data-sonner-toaster],
-  [data-radix-popper-content-wrapper] {
-    display: none !important;
-  }
-  div:has(> .resume-page) {
-    background: white !important;
-  }
-  .resume-page {
-    padding: 0 !important;
-    max-width: none !important;
-  }
-  .resume-page .glass-card {
-    background: white !important;
-    border: 1px solid #e5e7eb !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-  }
-  .resume-page .text-gradient-premium {
-    -webkit-text-fill-color: #2b4c7e !important;
-    background: none !important;
-    color: #2b4c7e !important;
-  }
-  .resume-page .animate-ping {
-    display: none !important;
-  }
-  .resume-page button {
-    display: none !important;
-  }
-  .resume-preview {
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    border-radius: 0 !important;
-    overflow: visible !important;
-  }
-  .resume-preview-toolbar {
-    display: none !important;
-  }
-  .resume-preview-scroll {
-    overflow: visible !important;
-    max-height: none !important;
-  }
-  .resume-preview .resume-doc-content {
-    padding: 0 !important;
-  }
-  [role="dialog"] {
-    display: none !important;
-  }
-}
+/* ═══════════════════════════════════════════════════════
+   PRINT STYLESHEET — Dedicated, self-contained
+   A4 portrait · 18mm margins · ATS-friendly
+   Only .ats-resume content is printable.
+   ═══════════════════════════════════════════════════════ */
+
+  
+ 

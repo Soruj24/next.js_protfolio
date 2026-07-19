@@ -28,7 +28,6 @@ export const analyticsMetricConfig = [
   { key: "visitors" as const, label: "Unique Visitors", icon: Users, color: "purple", suffix: "" },
   { key: "sessions" as const, label: "Sessions", icon: MousePointerClick, color: "emerald", suffix: "" },
   { key: "projectViews" as const, label: "Project Views", icon: Eye, color: "amber", suffix: "" },
-  { key: "resumeDownloads" as const, label: "Resume Downloads", icon: TrendingUp, color: "rose", suffix: "" },
   { key: "conversionRate" as const, label: "Conversion Rate", icon: Globe, color: "blue", suffix: "%" },
 ];
 
@@ -37,7 +36,6 @@ export const analyticsColorMap: Record<string, { iconBg: string; iconText: strin
   purple: { iconBg: "bg-purple-400/10", iconText: "text-purple-400", trend: "text-purple-400 bg-purple-400/10 border-purple-400/20", bar: "bg-purple-400" },
   emerald: { iconBg: "bg-emerald-400/10", iconText: "text-emerald-400", trend: "text-emerald-400 bg-emerald-400/10 border-emerald-400/20", bar: "bg-emerald-400" },
   amber: { iconBg: "bg-amber-400/10", iconText: "text-amber-400", trend: "text-amber-400 bg-amber-400/10 border-amber-400/20", bar: "bg-amber-400" },
-  rose: { iconBg: "bg-rose-400/10", iconText: "text-rose-400", trend: "text-rose-400 bg-rose-400/10 border-rose-400/20", bar: "bg-rose-400" },
   blue: { iconBg: "bg-blue-400/10", iconText: "text-blue-400", trend: "text-blue-400 bg-blue-400/10 border-blue-400/20", bar: "bg-blue-400" },
 };
 

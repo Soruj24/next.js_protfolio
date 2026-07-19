@@ -13,7 +13,7 @@ export const PUBLIC_ROUTES = [
   "/verify-otp",
 ];
 
-export const HIDDEN_CHAT_ROUTES = ["/resume"];
+export const HIDDEN_CHAT_ROUTES: string[] = [];
 
 export const ADMIN_ROLE = "admin";
 

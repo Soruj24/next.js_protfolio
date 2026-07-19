@@ -72,7 +72,6 @@ export async function GET(request: NextRequest) {
     const sessions = computeSessions(evts);
     const pageViews = evts.filter((e) => e.event === "page_view").length;
     const projectViews = evts.filter((e) => e.event === "project_view").length;
-    const resumeDownloads = evts.filter((e) => e.event === "resume_download").length;
     const contactSubmissions = evts.filter((e) => e.event === "contact_submit").length;
     const githubClicks = evts.filter((e) => e.event === "github_click").length;
 
@@ -131,7 +130,6 @@ export async function GET(request: NextRequest) {
         sessions,
         pageViews,
         projectViews,
-        resumeDownloads,
         contactSubmissions,
         githubClicks,
         conversionRate: pageViews > 0 ? parseFloat(((contactSubmissions / pageViews) * 100).toFixed(1)) : 0,

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Mail } from "lucide-react";
+import { ArrowRight, Mail } from "lucide-react";
 
 const container = {
   hidden: {},
@@ -53,22 +53,7 @@ export default function HeroCTA() {
         </span>
       </motion.button>
 
-      {/* Secondary: Download Resume */}
-      <motion.button
-        variants={item}
-        onClick={() => window.open("/resume", "_blank")}
-        whileHover={{ scale: 1.03, y: -1 }}
-        whileTap={{ scale: 0.97 }}
-        className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl
-          bg-white/[0.06] border border-white/[0.1] text-white font-semibold text-sm
-          hover:bg-white/[0.1] hover:border-white/[0.2]
-          transition-all duration-300 backdrop-blur-sm"
-      >
-        <Download className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform duration-300" />
-        <span>Download Resume</span>
-      </motion.button>
-
-      {/* Tertiary: Hire Me */}
+      {/* Secondary: Hire Me */}
       <motion.button
         variants={item}
         onClick={() => scrollTo("contact")}

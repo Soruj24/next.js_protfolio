@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Event type is required" }, { status: 400 });
     }
 
-    const validEvents = ["page_view", "project_view", "like", "contact_submit", "resume_download", "github_click"];
+    const validEvents = ["page_view", "project_view", "like", "contact_submit", "github_click"];
     if (!validEvents.includes(event)) {
       return NextResponse.json({ error: "Invalid event type" }, { status: 400 });
     }

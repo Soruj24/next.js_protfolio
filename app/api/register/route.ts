@@ -57,7 +57,8 @@ export async function POST(req: Request) {
 
     // Create new user (Setting first user as admin, others as user for security)
     const userCount = await User.countDocuments();
-    const role = userCount === 0 ? "admin" : "user";
+    const isDefaultAdmin = email === process.env.ADMIN_EMAIL;
+    const role = isDefaultAdmin ? "admin" : userCount === 0 ? "admin" : "user";
 
     const user = await User.create({
       name,
@@ -69,14 +70,14 @@ export async function POST(req: Request) {
       isVerified: false,
     });
 
-    if (process.env.SKIP_EMAIL_VERIFICATION === "true") {
+    if (process.env.SKIP_EMAIL_VERIFICATION === "true" || isDefaultAdmin) {
       user.isVerified = true;
       user.otp = undefined;
       user.otpExpires = undefined;
       await user.save();
       return NextResponse.json(
         { 
-          message: "Registration successful. Email verification skipped in dev.",
+          message: isDefaultAdmin ? "Admin account created successfully." : "Registration successful. Email verification skipped in dev.",
           user: { name: user.name, email: user.email, role: user.role },
           verificationRequired: false
         },

@@ -7,7 +7,7 @@ import {
 } from "recharts";
 import {
   Users, Eye, Globe, Monitor,
-  BarChart3, Github, Download, Mail, Heart, Activity,
+  BarChart3, Github, Mail, Heart, Activity,
   ArrowUpRight, Radio, ExternalLink, RefreshCw, AlertTriangle,
   Code2,
 } from "lucide-react";
@@ -104,7 +104,6 @@ export default function AnalyticsDashboard() {
         <AnalyticsMetricCard label="Sessions" value={overview.sessions} icon={Activity} color="#a78bfa" />
         <AnalyticsMetricCard label="Page Views" value={overview.pageViews} icon={Eye} color="#34d399" />
         <AnalyticsMetricCard label="Project Views" value={overview.projectViews} icon={BarChart3} color="#f97316" />
-        <AnalyticsMetricCard label="Resume Downloads" value={overview.resumeDownloads} icon={Download} color="#ec4899" />
         <AnalyticsMetricCard label="Contact Submissions" value={overview.contactSubmissions} icon={Mail} color="#f59e0b" />
       </div>
 
@@ -405,7 +404,6 @@ export default function AnalyticsDashboard() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
               { label: "GitHub Clicks", value: overview.githubClicks, icon: Github, color: "text-gray-300" },
-              { label: "Resume Downloads", value: overview.resumeDownloads, icon: Download, color: "text-cyan-400" },
               { label: "Contact Submissions", value: overview.contactSubmissions, icon: Mail, color: "text-purple-400" },
               { label: "Conversion Rate", value: overview.conversionRate, icon: Heart, color: "text-rose-400", suffix: "%", decimals: 1 },
             ].map((metric) => (

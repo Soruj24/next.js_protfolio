@@ -38,7 +38,6 @@ export interface AnalyticsStats {
   sessions: number;
   pageViews: number;
   projectViews: number;
-  resumeDownloads: number;
   contactSubmissions: number;
   githubClicks: number;
   conversionRate: number;

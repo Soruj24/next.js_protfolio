@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface IAnalyticsEvent {
   _id?: string;
-  event: "page_view" | "project_view" | "like" | "contact_submit" | "resume_download" | "github_click";
+  event: "page_view" | "project_view" | "like" | "contact_submit" | "github_click";
   page?: string;
   projectId?: string;
   referrer?: string;
@@ -20,7 +20,7 @@ const AnalyticsEventSchema = new Schema<IAnalyticsEventDocument>(
   {
     event: {
       type: String,
-      enum: ["page_view", "project_view", "like", "contact_submit", "resume_download", "github_click"],
+      enum: ["page_view", "project_view", "like", "contact_submit", "github_click"],
       required: true,
     },
     page: { type: String, default: "/" },

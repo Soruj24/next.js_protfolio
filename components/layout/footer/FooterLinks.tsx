@@ -2,7 +2,6 @@ import React from "react";
 
 const FooterLinks: React.FC = () => {
   const links = [
-    { label: "Resume", href: "/resume" },
     { label: "Privacy", href: "#" },
     { label: "Sitemap", href: "/sitemap.xml" },
   ];

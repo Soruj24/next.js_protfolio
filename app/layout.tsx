@@ -94,7 +94,7 @@ export default function RootLayout({
         <JsonLd />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased mesh-gradient noise-bg min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReduxProvider>
           <NextAuthProvider>
