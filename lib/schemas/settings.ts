@@ -42,6 +42,14 @@ export const settingsSchema = z.object({
     background: z.string(),
     additional_info: z.string(),
   }),
+  educations: z.array(
+    z.object({
+      degree: z.string(),
+      institution: z.string(),
+      period: z.string(),
+      description: z.string().optional(),
+    })
+  ),
   response_guidelines: z.object({
     be_concise: z.boolean(),
     be_informative: z.boolean(),

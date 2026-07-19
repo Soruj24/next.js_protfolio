@@ -8,6 +8,7 @@ import { Toaster } from "sonner";
 import ConditionalChatBot from "@/features/chat/components/ConditionalChatBot";
 import { RecentlyViewedProvider } from "@/components/providers/RecentlyViewedContext";
 import JsonLd from "@/components/seo/JsonLd";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -98,15 +99,17 @@ export default function RootLayout({
         <ReduxProvider>
           <NextAuthProvider>
             <RecentlyViewedProvider>
-              <a
+              <Link
                 href="#main-content"
                 className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-cyan-500 focus:text-white focus:outline-none"
               >
                 Skip to content
-              </a>
+              </Link>
               <CustomCursor />
               <ConditionalChatBot />
-              <div className="relative z-10 content-wrapper" id="main-content">{children}</div>
+              <div className="relative z-10 content-wrapper" id="main-content">
+                {children}
+              </div>
               <Toaster position="top-right" />
             </RecentlyViewedProvider>
           </NextAuthProvider>

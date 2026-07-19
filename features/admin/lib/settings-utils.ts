@@ -40,6 +40,7 @@ export function serializeSettings(data: Record<string, unknown>): SettingsState 
   const technicalSkills = (safe.technical_skills || {}) as Record<string, unknown>;
   const experience = (safe.experience || {}) as Record<string, unknown>;
   const education = (safe.education || {}) as Record<string, unknown>;
+  const educations = (safe.educations || []) as Record<string, unknown>[];
   const heroTypingRoles = (safe.hero_typing_roles || []) as string[];
   const navItems = (safe.nav_items || []) as Record<string, unknown>[];
   const services = (safe.services || []) as Record<string, unknown>[];
@@ -115,6 +116,12 @@ export function serializeSettings(data: Record<string, unknown>): SettingsState 
   };
   result.experience = { ...DEFAULT_SETTINGS.experience, ...pickDefined(experience) };
   result.education = { ...DEFAULT_SETTINGS.education, ...pickDefined(education) };
+  result.educations = educations.map((e) => ({
+    degree: (e.degree as string) || "",
+    institution: (e.institution as string) || "",
+    period: (e.period as string) || "",
+    description: (e.description as string) || "",
+  }));
   result.hero_typing_roles = Array.isArray(heroTypingRoles) ? heroTypingRoles : [];
   result.nav_items = navItems.map((n) => ({
     id: (n.id as string) || "",

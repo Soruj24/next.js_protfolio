@@ -16,6 +16,7 @@ export function getSettingsDefaultValues(initialData?: ISettings | null): Settin
       experience: { professional_experience: "", project_experience: "", focus: "" },
       experiences: [],
       education: { background: "", additional_info: "" },
+      educations: [],
       response_guidelines: {
         be_concise: true, be_informative: true, professional_tone: true,
         redirect_uncertain_queries: "", language: "English",
@@ -44,6 +45,12 @@ export function getSettingsDefaultValues(initialData?: ISettings | null): Settin
       technologies: splitCommas(exp.technologies),
     })) || [],
     education: initialData.education || { background: "", additional_info: "" },
+    educations: initialData.educations?.map((edu) => ({
+      degree: edu.degree || "",
+      institution: edu.institution || "",
+      period: edu.period || "",
+      description: edu.description || "",
+    })) || [],
     response_guidelines: initialData.response_guidelines || {
       be_concise: true, be_informative: true, professional_tone: true,
       redirect_uncertain_queries: "", language: "English",

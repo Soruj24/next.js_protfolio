@@ -114,6 +114,12 @@ export interface ISettings extends Document {
     background: string;
     additional_info: string;
   };
+  educations: {
+    degree: string;
+    institution: string;
+    period: string;
+    description?: string;
+  }[];
   experiences: {
     year: string;
     role: string;
@@ -304,6 +310,14 @@ const SettingsSchema = new Schema<ISettings>(
       background: String,
       additional_info: String,
     },
+    educations: [
+      {
+        degree: String,
+        institution: String,
+        period: String,
+        description: String,
+      },
+    ],
     experiences: [
       {
         year: String,

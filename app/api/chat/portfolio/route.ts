@@ -66,9 +66,9 @@ export async function GET() {
       lines.push("");
     }
 
-    if (settings.education && Array.isArray(settings.education)) {
+    if (settings.educations && Array.isArray(settings.educations)) {
       lines.push("## EDUCATION");
-      (settings.education as Record<string, unknown>[]).forEach((edu, i) => {
+      (settings.educations as Record<string, unknown>[]).forEach((edu, i) => {
         lines.push(`Education ${i + 1}:`);
         lines.push(...flattenObject(edu));
       });

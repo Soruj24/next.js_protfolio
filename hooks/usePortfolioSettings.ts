@@ -61,6 +61,10 @@ export interface PortfolioSettings {
     technologies: string[];
   }[];
   education: {
+    background: string;
+    additional_info: string;
+  };
+  educations: {
     degree: string;
     institution: string;
     period: string;

@@ -29,7 +29,8 @@ export default function Resume() {
   const sectionRef = useRef<HTMLElement>(null);
   const { settings, loading } = usePortfolioSettings();
   const experiences: ExperienceItem[] = settings?.experiences || [];
-  const education: EducationItem[] = settings?.education || [];
+  const raw = settings as unknown as Record<string, unknown> | null | undefined;
+  const education: EducationItem[] = Array.isArray(raw?.educations) ? (raw!.educations as EducationItem[]) : [];
 
   useEffect(() => {
     const ctx = gsap.context(() => {

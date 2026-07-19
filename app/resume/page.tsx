@@ -1,10 +1,10 @@
-import Resume from "@/features/resume/components/Resume";
+import ResumeCenter from "@/features/resume/components/ResumeCenter";
 
 export const metadata = {
-  title: "Resume - Soruj Mahmud",
-  description: "Front-End Developer Resume",
+  title: "Resume Center - Soruj Mahmud",
+  description: "Professional resume, experience, and credentials of Soruj Mahmud - Front-End Developer",
 };
 
 export default function ResumePage() {
-  return <Resume />;
+  return <ResumeCenter />;
 }

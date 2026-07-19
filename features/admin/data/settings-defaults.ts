@@ -110,6 +110,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
     background: "",
     additional_info: "",
   },
+  educations: [],
   hero_typing_roles: [],
   nav_items: [],
   services: [],

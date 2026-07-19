@@ -168,6 +168,12 @@ export interface SettingsState {
     background: string;
     additional_info: string;
   };
+  educations: {
+    degree: string;
+    institution: string;
+    period: string;
+    description?: string;
+  }[];
   hero_typing_roles: string[];
   nav_items: {
     id: string;

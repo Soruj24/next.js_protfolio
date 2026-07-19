@@ -21,6 +21,7 @@ import AssistantTab from "@/features/admin/components/AssistantTab";
 import PersonalInfoTab from "@/features/admin/components/PersonalInfoTab";
 import SkillsTab from "@/features/admin/components/SkillsTab";
 import ExperiencesTab from "@/features/admin/components/ExperiencesTab";
+import EducationsTab from "@/features/admin/components/EducationsTab";
 import InnovationTab from "@/features/admin/components/InnovationTab";
 import ExpertiseTab from "@/features/admin/components/ExpertiseTab";
 import StandardsTab from "@/features/admin/components/StandardsTab";
@@ -63,6 +64,7 @@ function transformFormData(data: SettingsFormInput): Partial<SettingsState> {
     },
     experience: data.experience,
     education: data.education,
+    educations: data.educations,
   };
 }
 
@@ -113,6 +115,7 @@ export default function ContentSection({ initialData, settings, setSettings }: C
                   <TabsTrigger value="personal" className="flex-shrink-0">Personal Info</TabsTrigger>
                   <TabsTrigger value="skills" className="flex-shrink-0">Skills</TabsTrigger>
                   <TabsTrigger value="experiences" className="flex-shrink-0">Experiences</TabsTrigger>
+                  <TabsTrigger value="educations" className="flex-shrink-0">Education</TabsTrigger>
                   <TabsTrigger value="innovation" className="flex-shrink-0">Innovation</TabsTrigger>
                   <TabsTrigger value="expertise" className="flex-shrink-0">Expertise</TabsTrigger>
                   <TabsTrigger value="standards" className="flex-shrink-0">Standards</TabsTrigger>
@@ -125,6 +128,7 @@ export default function ContentSection({ initialData, settings, setSettings }: C
                 <TabsContent value="personal" className="space-y-4 mt-4"><PersonalInfoTab /></TabsContent>
                 <TabsContent value="skills" className="space-y-4 mt-4"><SkillsTab /></TabsContent>
                 <TabsContent value="experiences" className="space-y-4 mt-4"><ExperiencesTab /></TabsContent>
+                <TabsContent value="educations" className="space-y-4 mt-4"><EducationsTab /></TabsContent>
                 <TabsContent value="innovation" className="space-y-4 mt-4"><InnovationTab /></TabsContent>
                 <TabsContent value="expertise" className="space-y-4 mt-4"><ExpertiseTab /></TabsContent>
                 <TabsContent value="standards" className="space-y-4 mt-4"><StandardsTab /></TabsContent>
