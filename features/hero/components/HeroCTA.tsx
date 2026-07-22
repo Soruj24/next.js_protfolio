@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight, Download, Mail } from "lucide-react";
 
 const container = {
   hidden: {},
@@ -50,6 +50,23 @@ export default function HeroCTA() {
         <span className="relative flex items-center gap-2">
           View Projects
           <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
+        </span>
+      </motion.button>
+      {/* Primary: Resume Download Button  */}
+      <motion.button
+        variants={item}
+        onClick={() => scrollTo("projects")}
+        whileHover={{ scale: 1.03, y: -1 }}
+        whileTap={{ scale: 0.97 }}
+        className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl
+          bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-sm
+          shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)]
+          transition-shadow duration-500 overflow-hidden"
+      >
+        <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <span className="relative flex items-center gap-2">
+          Download Resume
+          <Download className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
         </span>
       </motion.button>
 

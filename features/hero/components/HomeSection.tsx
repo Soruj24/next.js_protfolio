@@ -34,7 +34,9 @@ export default function HomeSection() {
             >
               <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                {profile?.availability === "available" ? "Available for Work" : profile?.availability || "Available for Work"}
+                {profile?.availability === "available"
+                  ? "Available for Work"
+                  : profile?.availability || "Available for Work"}
               </span>
             </motion.div>
 
@@ -89,7 +91,11 @@ export default function HomeSection() {
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
+            transition={{
+              duration: 1,
+              delay: 0.4,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
             className="relative"
           >
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96">
@@ -118,9 +124,15 @@ export default function HomeSection() {
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           className="flex flex-col items-center gap-2 cursor-pointer"
-          onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+          onClick={() =>
+            document
+              .getElementById("about")
+              ?.scrollIntoView({ behavior: "smooth" })
+          }
         >
-          <span className="text-xs text-gray-500 font-medium uppercase tracking-widest">Scroll</span>
+          <span className="text-xs text-gray-500 font-medium uppercase tracking-widest">
+            Scroll
+          </span>
           <ChevronDown className="w-4 h-4 text-gray-500" />
         </motion.div>
       </motion.div>
