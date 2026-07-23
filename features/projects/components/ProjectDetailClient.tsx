@@ -103,7 +103,7 @@ export default function ProjectDetailClient({
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-20 relative z-10">
           {/* Back button */}
           <div className="mb-10">
-            <BackButton fallbackUrl="/projects">
+            <BackButton fallbackUrl="/">
               <ArrowLeft className="w-4 h-4" />
             </BackButton>
           </div>
@@ -206,19 +206,19 @@ export default function ProjectDetailClient({
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                     {project.liveUrl && (
                       <Button asChild size="lg" className="bg-cyan-500 hover:bg-cyan-400 text-black font-semibold">
-                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                        <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
                           <Globe className="w-4 h-4 mr-2" />
                           Live Demo
                           <ExternalLink className="w-3.5 h-3.5 ml-2 opacity-70" />
-                        </a>
+                        </Link>
                       </Button>
                     )}
                     {project.githubUrl && (
                       <Button asChild variant="outline" size="lg" className="bg-white/5 border-white/10 text-white hover:bg-white/10 font-semibold">
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                        <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                           <Github className="w-4 h-4 mr-2" />
                           View Code
-                        </a>
+                        </Link>
                       </Button>
                     )}
                   </div>

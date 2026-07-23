@@ -17,7 +17,7 @@ export async function GET(
     const { id } = await params;
     await connectDB();
     const project = await Project.findOne(getQuery(id));
-    
+
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
@@ -38,7 +38,7 @@ export async function PUT(
 
     const data = await req.json();
     await connectDB();
-    
+
     const project = await Project.findOneAndUpdate(getQuery(id), data, {
       new: true,
       runValidators: true,
@@ -63,7 +63,7 @@ export async function DELETE(
 
     await connectDB();
     const project = await Project.findOneAndDelete(getQuery(id));
-    
+
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
     }
@@ -105,7 +105,7 @@ export async function PATCH(
         duplicateData.published = false;
         duplicateData.order = 0;
         duplicateData.versions = [];
-        
+
         const duplicate = await Project.create(duplicateData);
         return NextResponse.json(duplicate, { status: 201 });
       }
@@ -128,7 +128,7 @@ export async function PATCH(
       case "save-version": {
         const project = await Project.findOne(query);
         if (!project) return NextResponse.json({ error: "Project not found" }, { status: 404 });
-        
+
         const versionNumber = (project.versions?.length || 0) + 1;
         const snapshot = project.toObject();
         delete snapshot._id;
