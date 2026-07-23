@@ -83,9 +83,9 @@ export default function Home() {
           <Suspense fallback={null}>
             <GitHubStats />
           </Suspense>
-          <Suspense fallback={null}>
+          {/* <Suspense fallback={null}>
             <TestimonialsSection />
-          </Suspense>
+          </Suspense> */}
           <Suspense fallback={null}>
             <FAQSection />
           </Suspense>

@@ -29,13 +29,13 @@ const defaultExperiences = [
     description: "Designed and built a full-featured e-commerce platform with Next.js, including payment integration with Stripe, admin dashboard, and real-time inventory management.",
     technologies: ["Next.js", "PostgreSQL", "Prisma", "Stripe", "Tailwind CSS"],
   },
-  {
-    role: "Computer Science Foundations",
-    company: "Harvard CS50x",
-    year: "2023",
-    description: "Completed Harvard's CS50x covering algorithms, data structures, memory management, web development, and cybersecurity fundamentals.",
-    technologies: ["C", "Python", "SQL", "JavaScript", "Flask"],
-  },
+  // {
+  //   role: "Computer Science Foundations",
+  //   company: "Harvard CS50x",
+  //   year: "2023",
+  //   description: "Completed Harvard's CS50x covering algorithms, data structures, memory management, web development, and cybersecurity fundamentals.",
+  //   technologies: ["C", "Python", "SQL", "JavaScript", "Flask"],
+  // },
 ];
 
 export default function ExperienceSection() {
