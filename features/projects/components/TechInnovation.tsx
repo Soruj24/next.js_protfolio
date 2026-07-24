@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SectionTitle from "@/components/shared/SectionTitle";
@@ -13,6 +13,14 @@ export default function TechInnovation({ data }: TechInnovationProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
   const displayData = data || [];
+
+  const particles = useMemo(() => {
+    return Array.from({ length: 10 }, (_, i) => ({
+      id: i,
+      top: `${((i * 37 + 13) % 85) + 5}%`,
+      left: `${((i * 53 + 17) % 85) + 5}%`,
+    }));
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -48,8 +56,8 @@ export default function TechInnovation({ data }: TechInnovationProps) {
   return (
     <section id="innovation" className="min-h-screen py-24 bg-[#0a0a1a] relative overflow-hidden" ref={containerRef}>
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(10)].map((_, i) => (
-          <div key={i} className="bg-particle absolute w-64 h-64 rounded-full bg-gradient-to-br from-purple-500/5 to-cyan-500/5 blur-3xl" style={{ top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%` }} />
+        {particles.map((p) => (
+          <div key={p.id} className="bg-particle absolute w-64 h-64 rounded-full bg-gradient-to-br from-purple-500/5 to-cyan-500/5 blur-3xl" style={{ top: p.top, left: p.left }} />
         ))}
       </div>
 

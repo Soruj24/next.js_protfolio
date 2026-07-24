@@ -142,8 +142,7 @@ const ProjectSchema = new Schema<IProjectDocument>({
   id: { 
     type: String, 
     required: true, 
-    unique: true,
-    index: true 
+    unique: true
   },
   title: { type: String, required: true },
   description: { type: String, required: true },

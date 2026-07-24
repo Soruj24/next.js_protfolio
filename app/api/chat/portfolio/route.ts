@@ -3,6 +3,7 @@ import { connectDB } from "@/config/db";
 import { Settings } from "@/models/Settings";
 import { Project } from "@/models/Project";
 import { SkillCategory } from "@/models/Skill";
+import { portfolioLangGraph } from "@/features/chat/lib/portfolioGraph";
 
 export const dynamic = "force-dynamic";
 
@@ -126,5 +127,51 @@ export async function GET() {
   } catch (error: unknown) {
     console.error("Portfolio API Error:", error);
     return new NextResponse("Portfolio data unavailable", { status: 500 });
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const userMessage: string = body.message || "";
+    const history: Array<{ role: string; content: string }> = body.history || [];
+
+    if (!userMessage.trim()) {
+      return new NextResponse("Message is required", { status: 400 });
+    }
+
+    // Execute LangGraph StateGraph pipeline
+    const result = await portfolioLangGraph.invoke({
+      query: userMessage,
+      history,
+    });
+
+    const aiResponseText: string = result.response || "Hello! I am Soruj AI.";
+
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        const chunkSize = 6;
+        for (let i = 0; i < aiResponseText.length; i += chunkSize) {
+          const chunk = aiResponseText.slice(i, i + chunkSize);
+          controller.enqueue(encoder.encode(chunk));
+          await new Promise((r) => setTimeout(r, 15));
+        }
+        controller.close();
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+      },
+    });
+  } catch (error) {
+    console.error("POST Chat Route Error:", error);
+    const fallbackText = "Hello! I am Soruj AI (powered by LangGraph). Soruj Mahmud is a Frontend Developer specializing in React, Next.js, and UI/UX design. Contact him at sorujmahmudb2h@gmail.com!";
+    return new Response(fallbackText, {
+      headers: { "Content-Type": "text/plain; charset=utf-8" },
+    });
   }
 }
