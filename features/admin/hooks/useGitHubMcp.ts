@@ -46,9 +46,12 @@ export function useGitHubData(): UseGitHubDataReturn {
       setLoading(true);
       setError(false);
       const res = await fetch("/api/github");
-      if (!res.ok) throw new Error("Failed to fetch");
       const json = await res.json();
-      setData(json);
+      if (!res.ok || json.error) {
+        setError(true);
+      } else {
+        setData(json);
+      }
     } catch {
       setError(true);
     } finally {

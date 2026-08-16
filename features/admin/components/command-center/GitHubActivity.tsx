@@ -42,7 +42,7 @@ function ContributionGraph({ data }: { data: ContributionDay[] }) {
 }
 
 export default function GitHubActivity({ username: propUsername }: { username?: string }) {
-  const { stats, recentCommits, contributionGraph, contributors, loading } = useGitHubMcp();
+  const { stats, recentCommits, contributionGraph, contributors, loading, error } = useGitHubMcp();
   const username = propUsername || stats ? "" : "Soruj24";
 
   const statCards = [
@@ -76,23 +76,30 @@ export default function GitHubActivity({ username: propUsername }: { username?: 
       </div>
 
       <div className="px-6 py-4">
-        <div className="grid grid-cols-4 gap-3 mb-5">
-          {statCards.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center mx-auto mb-2", stat.color)}>
-                <stat.icon size={16} />
-              </div>
-              <p className="text-lg font-bold text-white tabular-nums">
-                {loading ? (
-                  <span className="inline-block w-8 h-5 bg-white/5 rounded animate-pulse" />
-                ) : (
-                  stat.value.toLocaleString()
-                )}
-              </p>
-              <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">{stat.label}</p>
+        {error ? (
+          <div className="text-center py-8">
+            <p className="text-gray-400 text-sm mb-1">Unable to load GitHub data</p>
+            <p className="text-gray-500 text-xs">Rate limit exceeded or API error. Add GITHUB_TOKEN to .env.local.</p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-4 gap-3 mb-5">
+              {statCards.map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <div className={cn("w-9 h-9 rounded-xl flex items-center justify-center mx-auto mb-2", stat.color)}>
+                    <stat.icon size={16} />
+                  </div>
+                  <p className="text-lg font-bold text-white tabular-nums">
+                    {loading ? (
+                      <span className="inline-block w-8 h-5 bg-white/5 rounded animate-pulse" />
+                    ) : (
+                      stat.value.toLocaleString()
+                    )}
+                  </p>
+                  <p className="text-[10px] text-gray-500 font-semibold uppercase tracking-wider">{stat.label}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
         <div className="mb-4">
           <div className="flex items-center justify-between mb-2">
@@ -171,6 +178,8 @@ export default function GitHubActivity({ username: propUsername }: { username?: 
             <p className="text-xs text-gray-600 text-center py-4">No recent commits found</p>
           )}
         </div>
+          </>
+        )}
       </div>
     </div>
   );

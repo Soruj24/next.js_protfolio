@@ -11,9 +11,30 @@ export async function ghFetch<T>(path: string): Promise<T | null> {
       headers: getAuthHeaders(),
       signal: controller.signal,
     });
+
+    // Check rate limit
+    const remaining = res.headers.get("x-ratelimit-remaining");
+    if (remaining !== null && parseInt(remaining, 10) < 5) {
+      console.warn(
+        `[GitHub API] Rate limit low: ${remaining} requests remaining. ` +
+        `Set GITHUB_TOKEN env var to increase limit from 60 to 5000 req/hour.`
+      );
+    }
+
+    if (res.status === 403 || res.status === 429) {
+      console.error(
+        `[GitHub API] Rate limited (${res.status}) on ${path}. ` +
+        `Set GITHUB_TOKEN env var to increase limit.`
+      );
+      return null;
+    }
+
     if (!res.ok) return null;
     return (await res.json()) as T;
-  } catch {
+  } catch (err) {
+    if (err instanceof DOMException && err.name === "AbortError") {
+      console.error(`[GitHub API] Timeout on ${path}`);
+    }
     return null;
   } finally {
     clearTimeout(timeout);

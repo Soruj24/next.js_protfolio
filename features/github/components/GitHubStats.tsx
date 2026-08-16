@@ -8,7 +8,6 @@ import {
   Star,
   Users,
   Code2,
-  Loader2,
 } from "lucide-react";
 import SectionTitle from "@/components/shared/SectionTitle";
 import AnimatedCounter from "@/components/shared/AnimatedCounter";
@@ -27,8 +26,7 @@ interface StatItem {
 
 export default function GitHubStats() {
   const sectionRef = useRef<HTMLElement>(null);
-  const { profile, repos, loading } = useGitHubData();
-console.log("repo",repos)
+  const { profile, repos, loading, error } = useGitHubData();
   const stats: StatItem[] = [
     {
       label: "Projects Completed",
@@ -111,6 +109,13 @@ console.log("repo",repos)
                   <div className="h-4 w-24 bg-white/5 rounded mx-auto" />
                 </div>
               ))
+            : error
+            ? (
+                <div className="col-span-2 lg:col-span-4 text-center py-12">
+                  <p className="text-gray-400 text-sm mb-2">Unable to load GitHub data</p>
+                  <p className="text-gray-500 text-xs">API rate limit may have been exceeded. Try again later.</p>
+                </div>
+              )
             : stats.map((stat) => {
                 const Icon = stat.icon;
                 return (

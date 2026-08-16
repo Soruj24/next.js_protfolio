@@ -22,6 +22,7 @@ export async function GET() {
         contributors: [],
         languages: {},
         contributionGraph: [],
+        error: "Failed to fetch GitHub data",
       },
       { status: 500 },
     );
