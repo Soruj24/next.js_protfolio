@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import CustomCursor from "@/components/shared/CustomCursor";
 import { NextAuthProvider } from "@/components/providers/NextAuthProvider";
 import ReduxProvider from "@/components/providers/ReduxProvider";
-import { Toaster } from "sonner";
-import ConditionalChatBot from "@/features/chat/components/ConditionalChatBot";
 import { RecentlyViewedProvider } from "@/components/providers/RecentlyViewedContext";
 import JsonLd from "@/components/seo/JsonLd";
-import Link from "next/link";
+import PortfolioChrome from "@/components/PortfolioChrome";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -99,18 +96,7 @@ export default function RootLayout({
         <ReduxProvider>
           <NextAuthProvider>
             <RecentlyViewedProvider>
-              <Link
-                href="#main-content"
-                className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-cyan-500 focus:text-white focus:outline-none"
-              >
-                Skip to content
-              </Link>
-              <CustomCursor />
-              <ConditionalChatBot />
-              <div className="relative z-10 content-wrapper" id="main-content">
-                {children}
-              </div>
-              <Toaster position="top-right" />
+              <PortfolioChrome>{children}</PortfolioChrome>
             </RecentlyViewedProvider>
           </NextAuthProvider>
         </ReduxProvider>

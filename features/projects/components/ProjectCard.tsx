@@ -58,7 +58,13 @@ function ProjectCard({ project, index }: ProjectCardProps) {
               {project.category}
             </span>
           </div>
-          <ProjectLinks githubUrl={project.githubUrl} liveUrl={project.liveUrl} />
+          <ProjectLinks
+            githubUrl={project.githubUrl}
+            liveUrl={project.liveUrl}
+            documentationUrl={project.documentationUrl}
+            caseStudyUrl={project.caseStudyUrl}
+            demoVideoUrl={project.demoVideoUrl}
+          />
         </div>
       </div>
 

@@ -21,6 +21,11 @@ const ProjectSchema = new Schema(
         desc: { type: String, required: true },
         tags: { type: [String], default: [] },
         stack: { type: String, default: "" },
+        githubUrl: { type: String, default: "" },
+        liveUrl: { type: String, default: "" },
+        documentationUrl: { type: String, default: "" },
+        caseStudyUrl: { type: String, default: "" },
+        demoVideoUrl: { type: String, default: "" },
     },
     { _id: false }
 );

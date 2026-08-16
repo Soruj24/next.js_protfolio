@@ -53,9 +53,11 @@ export default function HeroCTA() {
         </span>
       </motion.button>
       {/* Primary: Resume Download Button  */}
-      <motion.button
+      <motion.a
         variants={item}
-        onClick={() => scrollTo("projects")}
+        href="/resume/print"
+        target="_blank"
+        rel="noopener noreferrer"
         whileHover={{ scale: 1.03, y: -1 }}
         whileTap={{ scale: 0.97 }}
         className="group relative inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl
@@ -68,7 +70,7 @@ export default function HeroCTA() {
           Download Resume
           <Download className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
         </span>
-      </motion.button>
+      </motion.a>
 
       {/* Secondary: Hire Me */}
       <motion.button

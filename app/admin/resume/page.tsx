@@ -16,7 +16,17 @@ import { useEffect, useState } from "react";
  */
 
 type SkillGroup = { label: string; items: string };
-type Project = { title: string; desc: string; tags: string[]; stack: string };
+type Project = {
+  title: string;
+  desc: string;
+  tags: string[];
+  stack: string;
+  githubUrl: string;
+  liveUrl: string;
+  documentationUrl: string;
+  caseStudyUrl: string;
+  demoVideoUrl: string;
+};
 type Education = { title: string; institute: string };
 
 type ResumeData = {
@@ -48,7 +58,7 @@ const EMPTY: ResumeData = {
   linkedin: "",
   summary: [""],
   skills: [{ label: "", items: "" }],
-  projects: [{ title: "", desc: "", tags: [], stack: "" }],
+  projects: [{ title: "", desc: "", tags: [], stack: "", githubUrl: "", liveUrl: "", documentationUrl: "", caseStudyUrl: "", demoVideoUrl: "" }],
   education: [{ title: "", institute: "" }],
   competencies: [],
   softSkills: [],
@@ -287,12 +297,57 @@ export default function AdminResumePage() {
                   setData({ ...data, projects: next });
                 }}
               />
+              <Field
+                label="GitHub Repository URL"
+                value={p.githubUrl}
+                onChange={(v) => {
+                  const next = [...data.projects];
+                  next[i] = { ...next[i], githubUrl: v };
+                  setData({ ...data, projects: next });
+                }}
+              />
+              <Field
+                label="Live Demo URL"
+                value={p.liveUrl}
+                onChange={(v) => {
+                  const next = [...data.projects];
+                  next[i] = { ...next[i], liveUrl: v };
+                  setData({ ...data, projects: next });
+                }}
+              />
+              <Field
+                label="Documentation URL"
+                value={p.documentationUrl}
+                onChange={(v) => {
+                  const next = [...data.projects];
+                  next[i] = { ...next[i], documentationUrl: v };
+                  setData({ ...data, projects: next });
+                }}
+              />
+              <Field
+                label="Case Study URL"
+                value={p.caseStudyUrl}
+                onChange={(v) => {
+                  const next = [...data.projects];
+                  next[i] = { ...next[i], caseStudyUrl: v };
+                  setData({ ...data, projects: next });
+                }}
+              />
+              <Field
+                label="Demo Video URL"
+                value={p.demoVideoUrl}
+                onChange={(v) => {
+                  const next = [...data.projects];
+                  next[i] = { ...next[i], demoVideoUrl: v };
+                  setData({ ...data, projects: next });
+                }}
+              />
             </RemovableRow>
           ))}
           <button
             type="button"
             onClick={() =>
-              setData({ ...data, projects: [...data.projects, { title: "", desc: "", tags: [], stack: "" }] })
+              setData({ ...data, projects: [...data.projects, { title: "", desc: "", tags: [], stack: "", githubUrl: "", liveUrl: "", documentationUrl: "", caseStudyUrl: "", demoVideoUrl: "" }] })
             }
             className="text-sm text-emerald-800 hover:underline"
           >

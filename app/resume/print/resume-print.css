@@ -1,0 +1,441 @@
+@page {
+  size: A4 portrait;
+  margin: 16mm 15mm 16mm 15mm;
+}
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html,
+  body {
+    width: 210mm;
+    margin: 0;
+    padding: 0;
+    font-size: 9.5pt;
+    line-height: 1.4;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  p, li, tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .resume-print {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .resume-print-header {
+    border-bottom: 1.5pt solid #1a1a1a;
+    padding-bottom: 6pt;
+    margin-bottom: 8pt;
+  }
+
+  .resume-print-name {
+    font-size: 18pt;
+    font-weight: 700;
+    color: #1a1a1a !important;
+    margin: 0 0 1pt 0;
+    letter-spacing: 0.02em;
+  }
+
+  .resume-print-headline {
+    font-size: 9.5pt;
+    color: #333 !important;
+    margin: 0 0 1pt 0;
+    font-weight: 500;
+  }
+
+  .resume-print-subline {
+    font-size: 8.5pt;
+    color: #555 !important;
+    margin: 0 0 4pt 0;
+    font-style: italic;
+  }
+
+  .resume-print-contact {
+    font-size: 8pt;
+    color: #444 !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3pt 10pt;
+  }
+
+  .resume-print-contact a {
+    color: #444 !important;
+  }
+
+  .resume-print-section-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #1a1a1a !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 0.75pt solid #999;
+    padding-bottom: 2pt;
+    margin-top: 8pt;
+    margin-bottom: 4pt;
+  }
+
+  .resume-print-paragraph {
+    font-size: 9pt;
+    color: #222 !important;
+    margin: 0 0 3pt 0;
+    line-height: 1.4;
+  }
+
+  .resume-print-skill-row {
+    display: flex;
+    gap: 6pt;
+    margin-bottom: 2pt;
+    font-size: 9pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .resume-print-skill-label {
+    font-weight: 700;
+    color: #333 !important;
+    min-width: 60pt;
+    flex-shrink: 0;
+  }
+
+  .resume-print-skill-items {
+    color: #222 !important;
+    flex: 1;
+  }
+
+  .resume-print-project {
+    margin-bottom: 6pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .resume-print-project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8pt;
+  }
+
+  .resume-print-project-title {
+    font-size: 9.5pt;
+    font-weight: 700;
+    margin: 0;
+    color: #111 !important;
+  }
+
+  .resume-print-project-links {
+    display: flex;
+    gap: 8pt;
+    flex-shrink: 0;
+  }
+
+  .resume-print-project-link {
+    font-size: 8pt;
+    color: #444 !important;
+    text-decoration: underline !important;
+  }
+
+  .resume-print-project-desc {
+    font-size: 9pt;
+    color: #222 !important;
+    margin: 1pt 0 2pt 0;
+    line-height: 1.35;
+  }
+
+  .resume-print-project-tags {
+    font-size: 8pt;
+    color: #555 !important;
+    margin: 0 0 1pt 0;
+  }
+
+  .resume-print-project-stack {
+    font-size: 8pt;
+    color: #666 !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 0;
+  }
+
+  .resume-print-edu-item {
+    font-size: 9pt;
+    margin-bottom: 2pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .resume-print-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3pt;
+    margin-bottom: 3pt;
+  }
+
+  .resume-print-pill {
+    font-size: 8pt;
+    color: #333 !important;
+    border: 0.5pt solid #bbb;
+    border-radius: 6pt;
+    padding: 1pt 5pt;
+  }
+
+  .resume-print-no-print {
+    display: none !important;
+  }
+}
+
+/* Screen styles */
+.resume-print {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  color: #1a1a1a;
+  background: #fff;
+  min-height: 100vh;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.resume-print-header {
+  border-bottom: 2px solid #1a1a1a;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.resume-print-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 2px 0;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.resume-print-headline {
+  font-size: 13px;
+  color: #333;
+  margin: 0 0 2px 0;
+  font-weight: 500;
+}
+
+.resume-print-subline {
+  font-size: 12px;
+  color: #666;
+  margin: 0 0 8px 0;
+  font-style: italic;
+}
+
+.resume-print-contact {
+  font-size: 11.5px;
+  color: #555;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+
+.resume-print-contact a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.resume-print-contact a:hover {
+  text-decoration: underline;
+}
+
+.resume-print-section-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 3px;
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+.resume-print-paragraph {
+  font-size: 12px;
+  color: #333;
+  margin: 0 0 5px 0;
+  line-height: 1.5;
+}
+
+.resume-print-skill-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 3px;
+  font-size: 12px;
+}
+
+.resume-print-skill-label {
+  font-weight: 700;
+  color: #333;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.resume-print-skill-items {
+  color: #444;
+  flex: 1;
+  line-height: 1.45;
+}
+
+.resume-print-project {
+  margin-bottom: 10px;
+}
+
+.resume-print-project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.resume-print-project-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+  color: #111;
+}
+
+.resume-print-project-links {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.resume-print-project-link {
+  font-size: 10.5px;
+  color: #555;
+  text-decoration: underline;
+}
+
+.resume-print-project-link:hover {
+  color: #111;
+}
+
+.resume-print-project-desc {
+  font-size: 12px;
+  color: #333;
+  margin: 0 0 3px 0;
+  line-height: 1.45;
+}
+
+.resume-print-project-tags {
+  font-size: 10.5px;
+  color: #666;
+  margin: 0 0 2px 0;
+}
+
+.resume-print-project-stack {
+  font-size: 10.5px;
+  color: #777;
+  font-family: "Courier New", monospace;
+  margin: 0;
+}
+
+.resume-print-edu-item {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.resume-print-edu-title {
+  font-weight: 600;
+  color: #222;
+}
+
+.resume-print-edu-institute {
+  color: #555;
+}
+
+.resume-print-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.resume-print-pill {
+  font-size: 10.5px;
+  color: #444;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+.resume-print-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #666;
+  text-decoration: none;
+  margin-bottom: 20px;
+  padding: 6px 14px;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  transition: all 0.15s ease;
+}
+
+.resume-print-back:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.resume-print-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.resume-print-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 5px 8px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.resume-print-btn-primary {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.resume-print-btn-primary:hover {
+  background: #333;
+}

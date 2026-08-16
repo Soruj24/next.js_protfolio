@@ -6,6 +6,7 @@ import {
   Settings,
   Clock,
   BarChart3,
+  LinkIcon,
 } from "lucide-react";
 import type { NavSection } from "@/features/admin/types/sidebar";
 
@@ -23,6 +24,7 @@ export const navigation: NavSection[] = [
     items: [
       { name: "Projects", href: "/admin/projects", icon: FolderKanban, shortcut: "G P" },
       { name: "Skills", href: "/admin/skills", icon: Code2, shortcut: "G S" },
+      { name: "Links", href: "/admin/links", icon: LinkIcon, shortcut: "G L" },
       {
         name: "Inquiries",
         href: "/admin/inquiries",

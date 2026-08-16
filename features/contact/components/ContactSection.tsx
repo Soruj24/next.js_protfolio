@@ -5,9 +5,11 @@ import ContactForm from "./ContactForm";
 import ContactInfoPanel from "./ContactInfoPanel";
 import ContactBackground from "./ContactBackground";
 import ScrollReveal from "@/components/shared/ScrollReveal";
+import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
 
 export default function ContactSection() {
-  const email = "sorujmahmudb2h@gmail.com";
+  const { settings } = usePortfolioSettings();
+  const email = settings?.personal_info?.email || "sorujmahmudb2h@gmail.com";
 
   return (
     <section

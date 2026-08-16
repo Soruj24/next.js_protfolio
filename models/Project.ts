@@ -71,6 +71,9 @@ export interface IProject {
   features: string[];
   githubUrl?: string;
   liveUrl?: string;
+  documentationUrl?: string;
+  caseStudyUrl?: string;
+  demoVideoUrl?: string;
   category: 'SaaS' | 'Fullstack' | 'Mobile' | 'Frontend' | 'Backend' | 'Blockchain' | 'IOT' | 'E-Commerce' | 'Portfolio' | 'Analytics';
   status: 'completed' | 'in-progress' | 'planned';
   screenshots: string[];
@@ -152,6 +155,9 @@ const ProjectSchema = new Schema<IProjectDocument>({
   features: [{ type: String, required: true }],
   githubUrl: { type: String },
   liveUrl: { type: String },
+  documentationUrl: { type: String },
+  caseStudyUrl: { type: String },
+  demoVideoUrl: { type: String },
   category: { 
     type: String, 
     required: true,
