@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback, useRef, useReducer } from "react";
 import { useRouter } from "next/navigation";
-import { Command } from "cmdk";
 import {
   LayoutDashboard, FolderKanban, Search, Sun, Moon, LogOut,
   Clock, Zap, X, type LucideIcon,
@@ -21,6 +20,16 @@ function projectReducer(state: ProjectState, action: { type: "load" } | { type: 
     case "done": return { loading: false, projects: action.projects, fetched: true };
     default: return state;
   }
+}
+
+function matchItem(q: string, item: PaletteItem): boolean {
+  if (!q) return true;
+  const lower = q.toLowerCase();
+  return (
+    item.name.toLowerCase().includes(lower) ||
+    (item.hint?.toLowerCase().includes(lower) ?? false) ||
+    (item.keywords?.some((k) => k.toLowerCase().includes(lower)) ?? false)
+  );
 }
 
 export default function CommandPalette() {
@@ -154,7 +163,7 @@ export default function CommandPalette() {
           />
 
           <div className="fixed top-[15%] left-1/2 -translate-x-1/2 w-full max-w-[580px] z-[1000] animate-[cmdk-slide-in_0.2s_ease-out]">
-            <Command className="rounded-2xl border border-white/[0.08] bg-[#0a0a0f]/95 backdrop-blur-2xl shadow-2xl shadow-black/60 overflow-hidden" loop shouldFilter={true}>
+            <div className="rounded-2xl border border-white/[0.08] bg-[#0a0a0f]/95 backdrop-blur-2xl shadow-2xl shadow-black/60 overflow-hidden">
               <div className="flex items-center gap-3 px-5 border-b border-white/[0.06]">
                 <div className="relative">
                   <Search size={16} className="text-gray-500 shrink-0" />
@@ -162,10 +171,16 @@ export default function CommandPalette() {
                     <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
                   )}
                 </div>
-                <Command.Input
+                <input
                   ref={inputRef}
                   value={query}
-                  onValueChange={setQuery}
+                  onChange={(e) => setQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                      setOpen(false);
+                      setQuery("");
+                    }
+                  }}
                   placeholder="Search pages, projects, settings, actions..."
                   className="flex-1 bg-transparent py-4 text-[15px] text-white placeholder:text-gray-600 focus:outline-none font-medium"
                 />
@@ -177,92 +192,86 @@ export default function CommandPalette() {
                 <kbd className="px-2 py-1 text-[10px] font-mono font-semibold text-gray-600 bg-white/5 border border-white/10 rounded-lg">ESC</kbd>
               </div>
 
-              <Command.List className="max-h-[400px] overflow-y-auto p-2 scrollbar-hide">
-                <Command.Empty className="py-16 text-center">
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center">
-                      <Search size={20} className="text-gray-600" />
-                    </div>
-                    <div>
-                      <p className="text-sm text-gray-400 font-medium">No results found</p>
-                      <p className="text-xs text-gray-600 mt-1">Try a different search term</p>
-                    </div>
-                  </div>
-                </Command.Empty>
-
+              <div className="max-h-[400px] overflow-y-auto p-2 scrollbar-hide">
                 {!query && recentItems.length > 0 && (
                   <>
-                    <Command.Group heading={<span className="flex items-center gap-1.5"><Clock size={12} className="text-gray-500" />Recent</span>} className="px-2 py-2">
+                    <div className="px-2 py-2">
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                        <Clock size={12} />
+                        Recent
+                      </div>
                       {recentItems.map((item) => (
                         <CommandItem key={`recent-${item.id}`} item={item} onSelect={() => runAndClose(item.action, item.id)} isRecent />
                       ))}
-                    </Command.Group>
-                    <Command.Separator className="my-1 h-px bg-white/[0.06]" />
+                    </div>
+                    <div className="my-1 h-px bg-white/[0.06]" />
                   </>
                 )}
 
                 {Object.entries(groupedItems).map(([section, items]) => {
                   const SectionIcon: LucideIcon = SECTION_ICONS[section] || LayoutDashboard;
                   const color = SECTION_COLORS[section] || "text-gray-400";
-                  const filtered = query
-                    ? items.filter((item) => {
-                        const q = query.toLowerCase();
-                        return (
-                          item.name.toLowerCase().includes(q) ||
-                          item.hint?.toLowerCase().includes(q) ||
-                          item.keywords?.some((k) => k.toLowerCase().includes(q))
-                        );
-                      })
-                    : items;
+                  const filtered = items.filter((item) => matchItem(query, item));
                   if (filtered.length === 0) return null;
                   return (
-                    <Command.Group
-                      key={section}
-                      heading={
-                        <span className="flex items-center gap-1.5">
-                          <SectionIcon size={12} className={color} />
-                          {section}
-                          <span className="text-[10px] text-gray-600 ml-1">{filtered.length}</span>
-                        </span>
-                      }
-                      className="px-2 py-2"
-                    >
+                    <div key={section} className="px-2 py-2">
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                        <SectionIcon size={12} className={color} />
+                        {section}
+                        <span className="text-[10px] text-gray-600 ml-1">{filtered.length}</span>
+                      </div>
                       {filtered.map((item) => (
                         <CommandItem key={item.id} item={item} onSelect={() => runAndClose(item.action, item.id)} />
                       ))}
-                    </Command.Group>
+                    </div>
                   );
                 })}
 
+                {query && allItems.filter((item) => matchItem(query, item)).length === 0 && (
+                  <div className="py-16 text-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center">
+                        <Search size={20} className="text-gray-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-400 font-medium">No results found</p>
+                        <p className="text-xs text-gray-600 mt-1">Try a different search term</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 {!query && (
                   <>
-                    <Command.Separator className="my-1 h-px bg-white/[0.06]" />
-                    <Command.Group heading={<span className="flex items-center gap-1.5"><Zap size={12} className="text-gray-500" />Quick</span>} className="px-2 py-2">
-                      <Command.Item
-                        value="toggle-theme"
-                        onSelect={() => runAndClose(() => { toggleTheme(); setCurrentTheme(getTheme()); })}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-400 cursor-pointer transition-all duration-150 data-[selected=true]:bg-white/[0.06] data-[selected=true]:text-white group"
+                    <div className="my-1 h-px bg-white/[0.06]" />
+                    <div className="px-2 py-2">
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
+                        <Zap size={12} />
+                        Quick
+                      </div>
+                      <button
+                        onClick={() => runAndClose(() => { toggleTheme(); setCurrentTheme(getTheme()); })}
+                        className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm text-gray-400 cursor-pointer transition-all duration-150 hover:bg-white/[0.06] hover:text-white group"
                       >
                         <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center">
                           {currentTheme === "dark" ? <Sun size={14} className="text-amber-400" /> : <Moon size={14} className="text-blue-400" />}
                         </div>
                         <span className="font-medium">Toggle Theme</span>
                         <span className="ml-auto text-[11px] text-gray-600">{currentTheme === "dark" ? "Light" : "Dark"} mode</span>
-                      </Command.Item>
-                      <Command.Item
-                        value="logout"
-                        onSelect={() => runAndClose(() => signOut({ callbackUrl: "/" }))}
-                        className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-gray-400 cursor-pointer transition-all duration-150 data-[selected=true]:bg-red-500/10 data-[selected=true]:text-red-400 group"
+                      </button>
+                      <button
+                        onClick={() => runAndClose(() => signOut({ callbackUrl: "/" }))}
+                        className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm text-gray-400 cursor-pointer transition-all duration-150 hover:bg-red-500/10 hover:text-red-400 group"
                       >
                         <div className="w-7 h-7 rounded-lg bg-red-500/10 flex items-center justify-center">
                           <LogOut size={14} className="text-red-400" />
                         </div>
                         <span className="font-medium">Log Out</span>
-                      </Command.Item>
-                    </Command.Group>
+                      </button>
+                    </div>
                   </>
                 )}
-              </Command.List>
+              </div>
 
               <div className="flex items-center justify-between px-5 py-3 border-t border-white/[0.06] bg-white/[0.015]">
                 <div className="flex items-center gap-3 text-[11px] text-gray-600">
@@ -276,15 +285,10 @@ export default function CommandPalette() {
                     <kbd className="inline-flex items-center justify-center h-5 px-1.5 text-[10px] font-mono bg-white/5 border border-white/10 rounded">&#9166;</kbd>
                     <span>Open</span>
                   </span>
-                  <span className="w-px h-3 bg-white/10" />
-                  <span className="flex items-center gap-1">
-                    <kbd className="inline-flex items-center justify-center h-5 px-1.5 text-[10px] font-mono bg-white/5 border border-white/10 rounded">Tab</kbd>
-                    <span>Group</span>
-                  </span>
                 </div>
                 <span className="text-[11px] text-gray-700 font-medium"><span className="text-gray-600">NEXT</span> DEV</span>
               </div>
-            </Command>
+            </div>
           </div>
         </>
       )}

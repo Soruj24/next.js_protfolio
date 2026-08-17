@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, ExternalLink } from "lucide-react";
 import { usePortfolioSettings } from "@/hooks/usePortfolioSettings";
+import type { SocialLink } from "@/hooks/usePortfolioSettings";
 
 const container = {
   hidden: {},
@@ -28,18 +29,16 @@ const iconMap: Record<string, typeof Github> = {
   linkedin: Linkedin,
   email: Mail,
   website: ExternalLink,
+  portfolio: ExternalLink,
+  twitter: ExternalLink,
+  facebook: ExternalLink,
+  youtube: ExternalLink,
+  instagram: ExternalLink,
 };
 
 export default function HeroSocial() {
   const { settings } = usePortfolioSettings();
-
-  const socials = (settings?.social_links || [])
-    .filter((s) => s.visible)
-    .map((s) => ({
-      icon: iconMap[s.platform.toLowerCase()] || ExternalLink,
-      href: s.platform.toLowerCase() === "email" ? `mailto:${s.url}` : s.url,
-      label: s.platform,
-    }));
+  const socials = settings?.socials ?? [];
 
   if (socials.length === 0) return null;
 
@@ -50,8 +49,8 @@ export default function HeroSocial() {
       animate="show"
       className="flex items-center gap-2"
     >
-      {socials.map((social) => {
-        const Icon = social.icon;
+      {socials.map((social: SocialLink) => {
+        const Icon = iconMap[social.label.toLowerCase()] || ExternalLink;
         return (
           <motion.a
             key={social.label}

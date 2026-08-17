@@ -241,9 +241,9 @@ const SettingsSchema = new Schema<ISettings>(
     },
     social_links: [
       {
-        platform: { type: String, default: "" },
-        url: { type: String, default: "" },
-        username: { type: String, default: "" },
+        platform: { type: String, required: true, trim: true },
+        url: { type: String, required: true, trim: true },
+        username: { type: String, default: "", trim: true },
         visible: { type: Boolean, default: true },
       },
     ],

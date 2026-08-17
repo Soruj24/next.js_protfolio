@@ -19,7 +19,7 @@ export default function ContactSection() {
       <ContactBackground />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
-        {/* Header */}
+        {/* Header */} 
         <ScrollReveal>
           <div className="text-center mb-16 sm:mb-20">
             <motion.div
@@ -70,6 +70,7 @@ export default function ContactSection() {
               <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
               <div className="h-px w-16 bg-gradient-to-l from-transparent to-cyan-500/30" />
             </motion.div>
+            
           </div>
         </ScrollReveal>
 
@@ -78,7 +79,7 @@ export default function ContactSection() {
           {/* Info Panel - 2 cols */}
           <div className="lg:col-span-2 order-2 lg:order-1">
             <ScrollReveal delay={0.1}>
-              <ContactInfoPanel email={email} />
+              <ContactInfoPanel />
             </ScrollReveal>
           </div>
 

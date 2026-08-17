@@ -1,6 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { normalizeSocialLinks, type SocialLink } from "@/lib/social-utils";
+
+export type { SocialLink };
 
 export interface PortfolioSettings {
   personal_info: {
@@ -27,6 +30,7 @@ export interface PortfolioSettings {
     username: string;
     visible: boolean;
   }[];
+  socials: SocialLink[];
   experience: {
     professional_experience: string;
   };
@@ -86,18 +90,25 @@ export interface PortfolioSettings {
   }[];
 }
 
+function withNormalizedSocials(raw: PortfolioSettings): PortfolioSettings {
+  const socials = normalizeSocialLinks(raw.social_links || []);
+  return { ...raw, socials };
+}
+
 let cachedSettings: PortfolioSettings | null = null;
 let cacheTimestamp = 0;
 const CACHE_TTL = 60000;
 
 export function usePortfolioSettings() {
-  const [settings, setSettings] = useState<PortfolioSettings | null>(cachedSettings);
+  const [settings, setSettings] = useState<PortfolioSettings | null>(
+    cachedSettings ? withNormalizedSocials(cachedSettings) : null
+  );
   const [loading, setLoading] = useState(!cachedSettings);
   const [error, setError] = useState<string | null>(null);
 
   const fetchSettings = useCallback(async () => {
     if (cachedSettings && Date.now() - cacheTimestamp < CACHE_TTL) {
-      setSettings(cachedSettings);
+      setSettings(withNormalizedSocials(cachedSettings));
       setLoading(false);
       return;
     }
@@ -108,7 +119,7 @@ export function usePortfolioSettings() {
       const data = await res.json();
       cachedSettings = data.settings;
       cacheTimestamp = Date.now();
-      setSettings(data.settings);
+      setSettings(withNormalizedSocials(data.settings));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {

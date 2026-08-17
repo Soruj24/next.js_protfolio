@@ -69,7 +69,7 @@ function Footer() {
             <p className="text-sm text-gray-400 leading-relaxed mb-6 max-w-xs">
               Building high-performance, accessible web applications with modern frontend technologies.
             </p>
-            <FooterSocials email={email} />
+            <FooterSocials />
           </div>
 
           {/* Quick Links */}

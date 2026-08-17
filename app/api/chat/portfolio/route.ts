@@ -52,11 +52,15 @@ export async function GET() {
       lines.push("");
     }
 
-    if (settings.social_links) {
+    if (settings.social_links && Array.isArray(settings.social_links)) {
       lines.push("## SOCIAL LINKS");
-      const socials = settings.social_links as Record<string, unknown>;
-      for (const [key, val] of Object.entries(socials)) {
-        if (typeof val === "string") lines.push(`${key}: ${val}`);
+      const socials = settings.social_links as Record<string, unknown>[];
+      for (const s of socials) {
+        const platform = String(s.platform || "");
+        const url = String(s.url || "");
+        if (platform && url) {
+          lines.push(`${platform}: ${url}`);
+        }
       }
       lines.push("");
     }

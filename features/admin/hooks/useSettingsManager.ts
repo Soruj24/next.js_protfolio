@@ -64,10 +64,15 @@ export function useSettingsManager(initialData: Record<string, unknown>) {
       if (saving) return;
       setSaving(true);
       try {
+        const cleanedSocialLinks = settings.social_links.filter(
+          (s) => s.platform.trim().length > 0 && s.url.trim().length > 0
+        );
+        const payload = { ...settings, social_links: cleanedSocialLinks };
+
         const response = await fetch("/api/settings", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(settings),
+          body: JSON.stringify(payload),
         });
 
         if (!response.ok) throw new Error("Failed to save settings");

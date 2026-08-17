@@ -54,7 +54,18 @@ export function serializeSettings(data: Record<string, unknown>): SettingsState 
   result.portfolio = { ...DEFAULT_SETTINGS.portfolio, ...pickDefined(portfolio) };
   result.seo = { ...DEFAULT_SETTINGS.seo, ...pickDefined(seo), twitter_card: (seo.twitter_card as "summary" | "summary_large_image") || "summary_large_image" };
   result.social_links = Array.isArray(social)
-    ? social.map((s) => ({ platform: (s.platform as string) || "", url: (s.url as string) || "", username: (s.username as string) || "", visible: s.visible !== false }))
+    ? social
+        .filter((s) => {
+          const platform = ((s.platform as string) || "").trim();
+          const url = ((s.url as string) || "").trim();
+          return platform.length > 0 && url.length > 0;
+        })
+        .map((s) => ({
+          platform: (s.platform as string) || "",
+          url: (s.url as string) || "",
+          username: (s.username as string) || "",
+          visible: s.visible !== false,
+        }))
     : [];
   result.theme = { ...DEFAULT_SETTINGS.theme, ...pickDefined(theme), mode: (theme.mode as "dark" | "light" | "system") || "dark" };
   result.security = { ...DEFAULT_SETTINGS.security, ...Object.fromEntries(Object.entries(security).filter(([k, v]) => v !== undefined && v !== null && k !== "api_keys" && k !== "last_password_change")) };
