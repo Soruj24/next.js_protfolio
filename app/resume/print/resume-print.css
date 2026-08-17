@@ -209,7 +209,8 @@
     padding: 1pt 5pt;
   }
 
-  .resume-print-no-print {
+  .resume-print-no-print,
+  .resume-toolbar {
     display: none !important;
   }
 }
@@ -223,6 +224,86 @@
   background: #fff;
   min-height: 100vh;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ── Toolbar ────────────────────────────────────────────────── */
+.resume-toolbar {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 24px 0;
+}
+
+.resume-toolbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.resume-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  white-space: nowrap;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.resume-toolbar-btn:focus-visible {
+  outline: 2px solid #0d9488;
+  outline-offset: 2px;
+}
+
+.resume-toolbar-btn-outline {
+  background: #fff;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.resume-toolbar-btn-outline:hover {
+  background: #f9fafb;
+  color: #111827;
+  border-color: #9ca3af;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.resume-toolbar-btn-primary {
+  background: #0f766e;
+  color: #fff;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 2px rgba(15, 118, 110, 0.25);
+}
+
+.resume-toolbar-btn-primary:hover {
+  background: #0d5f58;
+  box-shadow: 0 2px 6px rgba(15, 118, 110, 0.35);
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 640px) {
+  .resume-toolbar {
+    padding: 16px 16px 0;
+  }
+
+  .resume-toolbar-inner {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .resume-toolbar-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 18px;
+  }
 }
 
 .resume-print-header {
@@ -391,51 +472,4 @@
   border: 1px solid #ddd;
   border-radius: 999px;
   padding: 2px 9px;
-}
-
-.resume-print-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: #666;
-  text-decoration: none;
-  margin-bottom: 20px;
-  padding: 6px 14px;
-  border: 1px solid #ddd;
-  border-radius: 999px;
-  transition: all 0.15s ease;
-}
-
-.resume-print-back:hover {
-  background: #f5f5f5;
-  color: #333;
-}
-
-.resume-print-actions {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 24px;
-}
-
-.resume-print-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 5px 8px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.resume-print-btn-primary {
-  background: #1a1a1a;
-  color: #fff;
-}
-
-.resume-print-btn-primary:hover {
-  background: #333;
 }

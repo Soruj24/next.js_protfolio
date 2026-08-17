@@ -16,15 +16,6 @@ export default function ResumePrintPage() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    if (data) {
-      const timer = setTimeout(() => {
-        window.print();
-      }, 600);
-      return () => clearTimeout(timer);
-    }
-  }, [data]);
-
   if (!data) {
     return (
       <div style={{ padding: 40, textAlign: "center", color: "#666" }}>
@@ -35,21 +26,25 @@ export default function ResumePrintPage() {
 
   return (
     <div>
-      <div
-        className="resume-print-no-print resume-print-actions"
-        style={{ maxWidth: 800, margin: "0 auto", padding: "16px 24px 0" }}
-      >
-        <Link href="/resume" className="resume-print-back">
-          <ArrowLeft size={14} />
-          Back to Resume
-        </Link>
-        <button
-          onClick={() => window.print()}
-          className="resume-print-btn resume-print-btn-primary"
-        >
-          <Printer size={14} />
-          Print / Save as PDF
-        </button>
+      <div className="resume-toolbar" role="toolbar" aria-label="Resume actions">
+        <div className="resume-toolbar-inner">
+          <Link
+            href="/resume"
+            className="resume-toolbar-btn resume-toolbar-btn-outline"
+            aria-label="Go back to resume"
+          >
+            <ArrowLeft size={15} strokeWidth={2} />
+            <span>Back to Resume</span>
+          </Link>
+          <button
+            onClick={() => window.print()}
+            className="resume-toolbar-btn resume-toolbar-btn-primary"
+            aria-label="Print or save resume as PDF"
+          >
+            <Printer size={15} strokeWidth={2} />
+            <span>Print / Save as PDF</span>
+          </button>
+        </div>
       </div>
 
       <div className="resume-print">
