@@ -29,7 +29,7 @@ export default function ResumePrintPage() {
       <div className="resume-toolbar" role="toolbar" aria-label="Resume actions">
         <div className="resume-toolbar-inner">
           <Link
-            href="/resume"
+            href="/"
             className="resume-toolbar-btn resume-toolbar-btn-outline"
             aria-label="Go back to resume"
           >
